@@ -1,0 +1,300 @@
+{
+  "name": "Aiprosol — UGC sentiment digest (Friday)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 16 * * 5"
+            }
+          ]
+        }
+      },
+      "id": "2aa5d436-0304-4a0c-8973-4f48ddc3db70",
+      "name": "Friday 16:00",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "tweet",
+        "operation": "search",
+        "searchText": "Aiprosol",
+        "additionalFields": {
+          "resultType": "recent"
+        }
+      },
+      "id": "37201e76-62a3-4f85-83a2-29586f6c903a",
+      "name": "Twitter mentions",
+      "type": "n8n-nodes-base.twitter",
+      "typeVersion": 2,
+      "position": [
+        440,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://api.linkedin.com/v2/socialActions/{{ $env.LI_COMPANY_ID }}/comments"
+      },
+      "id": "a171e2c0-3dde-46ef-9b57-874b1562fdeb",
+      "name": "LinkedIn comments",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        440,
+        250
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://itunes.apple.com/rss/customerreviews/id=APP_ID/sortBy=mostRecent/json"
+      },
+      "id": "758dead3-e7aa-45c4-8de1-9ae17727840f",
+      "name": "App store reviews",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        440,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "getAll",
+        "databaseId": "NPS_DB_ID"
+      },
+      "id": "bb4b057d-29b6-4a82-90da-f705438e60b5",
+      "name": "NPS comments",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        440,
+        550
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "getAll",
+        "filters": {
+          "q": "label:customer-support newer_than:7d"
+        }
+      },
+      "id": "b507e162-820a-4d6d-b485-b7c17c41a82b",
+      "name": "Support emails",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        440,
+        700
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition"
+      },
+      "id": "a540da03-ecd1-4e02-a6e1-88ddef288895",
+      "name": "Merge UGC",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        640,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Synthesise this week's user-generated content about Aiprosol. Sections: Top 3 themes, Sentiment %s, Most-quoted phrase customers used, One thing to fix, One thing to amplify."
+            },
+            {
+              "role": "user",
+              "content": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        }
+      },
+      "id": "e2f82bb7-5f01-4f86-90cb-415d51d4ed0a",
+      "name": "AI themes + sentiment",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        840,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "send",
+        "to": "founders@aiprosol.com",
+        "subject": "=Weekly UGC digest — {{ $now.format('dd MMM') }}",
+        "message": "={{ $json.message.content }}"
+      },
+      "id": "517f4564-3c11-498e-9049-5ec390636114",
+      "name": "Email founders",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1040,
+        400
+      ]
+    }
+  ],
+  "connections": {
+    "Friday 16:00": {
+      "main": [
+        [
+          {
+            "node": "Twitter mentions",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "LinkedIn comments",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "App store reviews",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "NPS comments",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Support emails",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Twitter mentions": {
+      "main": [
+        [
+          {
+            "node": "Merge UGC",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LinkedIn comments": {
+      "main": [
+        [
+          {
+            "node": "Merge UGC",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "App store reviews": {
+      "main": [
+        [
+          {
+            "node": "Merge UGC",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "NPS comments": {
+      "main": [
+        [
+          {
+            "node": "Merge UGC",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Support emails": {
+      "main": [
+        [
+          {
+            "node": "Merge UGC",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "Merge UGC": {
+      "main": [
+        [
+          {
+            "node": "AI themes + sentiment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI themes + sentiment": {
+      "main": [
+        [
+          {
+            "node": "Email founders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "marketing"
+    },
+    {
+      "name": "voice-of-customer"
+    },
+    {
+      "name": "pattern-4"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-playbook-v1"
+  },
+  "pinData": {},
+  "versionId": "ba765507-9d18-4dcb-aa2c-c5a15db91e0d",
+  "id": "0dc72c22-edec-4ace-bfc4-7c443921c56b",
+  "_aiprosol": {
+    "description": "Friday 16:00 → mentions/reviews/NPS/support → AI themes + sentiment → founder digest",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

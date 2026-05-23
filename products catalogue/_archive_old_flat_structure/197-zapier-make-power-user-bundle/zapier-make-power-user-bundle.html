@@ -1,0 +1,256 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>The Zapier + Make Power User Bundle — Aiprosol</title><style>
+:root { color-scheme: light dark; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif; max-width: 760px; margin: 0 auto; padding: 56px 32px 96px; line-height: 1.75; color: #1F1B2E; background: #FAF8FF; }
+@media (prefers-color-scheme: dark) { body { color: #E5E7EB; background: #0A0613; } a { color: #C084FC; } blockquote { background: rgba(139,92,246,0.08); border-left-color: #8B5CF6; color: #C7CEDB; } code { background: rgba(139,92,246,0.12); color: #C084FC; } pre { background: rgba(0,0,0,0.45); border: 1px solid #2A1F3D; } hr { border-color: #2A1F3D; } table { border-color: #2A1F3D; } th { background: #1A1428; } td, th { border-color: #2A1F3D; } tr:nth-child(even) { background: rgba(139,92,246,0.04); } }
+h1, h2, h3, h4 { font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.2; letter-spacing: -0.01em; }
+h1 { font-size: 36px; margin: 0 0 28px; font-weight: 800; background: linear-gradient(135deg, #8B5CF6, #C084FC); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+h2 { font-size: 24px; margin-top: 48px; margin-bottom: 14px; font-weight: 700; padding-bottom: 8px; border-bottom: 1px solid rgba(139,92,246,0.3); }
+h3 { font-size: 18px; margin-top: 28px; margin-bottom: 10px; font-weight: 700; color: #8B5CF6; }
+@media (prefers-color-scheme: dark) { h3 { color: #C084FC; } }
+h4 { font-size: 15px; margin-top: 18px; margin-bottom: 6px; font-weight: 700; }
+p { margin: 12px 0; }
+a { color: #6D28D9; text-decoration: underline; text-underline-offset: 3px; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+blockquote { background: rgba(139,92,246,0.05); border-left: 3px solid #8B5CF6; padding: 14px 22px; margin: 22px 0; color: #4A4660; border-radius: 6px; }
+hr { border: 0; border-top: 1px solid rgba(139,92,246,0.18); margin: 40px 0; }
+ul, ol { padding-left: 26px; }
+li { margin: 6px 0; }
+code { background: rgba(139,92,246,0.08); padding: 2px 8px; border-radius: 5px; font-family: 'JetBrains Mono', SFMono-Regular, ui-monospace, monospace; font-size: 0.9em; color: #6D28D9; }
+pre { background: #F4F1FA; padding: 18px 22px; border-radius: 10px; overflow-x: auto; border: 1px solid rgba(139,92,246,0.15); margin: 18px 0; }
+pre code { background: none; padding: 0; color: inherit; font-size: 13px; line-height: 1.6; }
+table { border-collapse: collapse; width: 100%; margin: 22px 0; font-size: 14px; border: 1px solid rgba(139,92,246,0.2); border-radius: 8px; overflow: hidden; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid rgba(139,92,246,0.12); }
+th { background: rgba(139,92,246,0.08); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #6D28D9; }
+tr:nth-child(even) { background: rgba(139,92,246,0.025); }
+.brand-footer { margin-top: 80px; padding-top: 28px; border-top: 1px solid rgba(139,92,246,0.18); font-size: 12px; color: #6B7585; text-align: center; }
+.brand-footer a { color: #8B5CF6; text-decoration: none; }
+@media print { body { padding: 0; max-width: 100%; } h1 { page-break-after: avoid; } h2, h3 { page-break-after: avoid; page-break-inside: avoid; } pre, blockquote, table { page-break-inside: avoid; } }
+</style></head><body>
+<h1>The Zapier + Make Power User Bundle</h1>
+<p><strong>Two platforms. Advanced techniques. 20 tested recipes for each. The decision tree for when to use which. Plus debugging, performance optimisation, and migration patterns.</strong></p>
+<p>Version 1.0 · 2026 · © Aiprosol Ltd</p>
+<hr />
+<h2>What this is</h2>
+<p>A practical bundle for operators who already use Zapier or Make at the basic level and want to push deeper:</p>
+<ul>
+<li>The <strong>Zapier vs. Make decision tree</strong> — when to pick which (or both)</li>
+<li><strong>20 advanced Zapier recipes</strong> with multi-step flows, formatters, paths, sub-zaps, code steps</li>
+<li><strong>20 advanced Make scenarios</strong> with branching, error handling, looping, iterators, web hooks, code modules</li>
+<li><strong>Debugging playbooks</strong> for both</li>
+<li><strong>Performance + cost optimisation</strong> patterns</li>
+<li><strong>Migration paths</strong> — when to move from Zapier → Make, or Make → custom code</li>
+</ul>
+<p>Audience: operators with 6-12 months of basic experience, not first-day users.</p>
+<hr />
+<h2>Part 1 · The decision tree (Zapier vs. Make)</h2>
+<h3>Pick <strong>Zapier</strong> when:</h3>
+<ul>
+<li>You're solo / micro-team and a 5-min learning curve matters more than a 5x cost difference</li>
+<li>The integration you need exists in Zapier's catalogue but not in Make's (Zapier wins on catalogue breadth: 7,000+ vs. ~2,000)</li>
+<li>Your workflows are linear and short (≤ 5 steps)</li>
+<li>Your team already uses Zapier and switching tooling is its own cost</li>
+</ul>
+<h3>Pick <strong>Make</strong> when:</h3>
+<ul>
+<li>You need to debug. Make's visual scenario diagram beats Zapier's run history every time.</li>
+<li>Workflows have branching, loops, or conditional logic</li>
+<li>Operations volume &gt; ~2,500/month — Make's pricing scales better past this point</li>
+<li>You need fine-grained control (Make's iterator + array aggregator is more expressive than Zapier's looping)</li>
+<li>Error handling matters (try/catch in Make is built-in; in Zapier it's a feature you build manually with paths)</li>
+</ul>
+<h3>Pick <strong>BOTH</strong> when:</h3>
+<ul>
+<li>You have one team using Zapier for marketing/sales (familiar) and another team using Make for ops/finance (complex). Separation of concerns is valid.</li>
+<li>You want a "front office" workflow runner (Zapier — connects with everything) calling a "back office" workflow runner (Make — does the heavy logic) via webhooks. This pattern is rare but powerful.</li>
+</ul>
+<h3>Pick <strong>NEITHER</strong> (move to code or another tool) when:</h3>
+<ul>
+<li>Operations volume &gt; 50,000/month (cost crosses over to where n8n self-hosted or custom code wins)</li>
+<li>You need real-time guarantees (sub-second SLAs that workflow runners can't promise)</li>
+<li>Your engineering team has the capacity to maintain workflows-as-code</li>
+</ul>
+<hr />
+<h2>Part 2 · 20 advanced Zapier recipes</h2>
+<p>Each recipe lists: trigger, paths/steps, what makes it "advanced," common errors.</p>
+<h3>2.1 — Multi-step lead enrichment with paths</h3>
+<p>Trigger: form submission
+Path A (corporate email): enrich via Apollo + score
+Path B (free email like gmail.com): tag as "consumer," route to lighter sequence
+Path C (no email): send to manual review</p>
+<p><strong>Advanced bit:</strong> Zapier Paths require careful condition design — <code>Email contains "gmail.com"</code> won't catch <code>johnsmith@gmail.com.au</code>. Use <code>Email matches regex</code> instead.</p>
+<h3>2.2 — Sub-zap for reusable logic</h3>
+<p>Build a sub-zap "Send branded email" that takes recipient + body + template_id. Other zaps call it via Webhooks. Avoids duplicating email-sending code in 12 places.</p>
+<p><strong>Advanced bit:</strong> sub-zaps require Zapier Pro+. They're the only way to get DRY workflows.</p>
+<h3>2.3 — Looping over an array</h3>
+<p>Use Zapier's "Looping by Zapier" built-in. Paste an array, the loop runs once per element.</p>
+<p><strong>Common error:</strong> Each loop iteration counts as a separate "task" against your quota. 100-element array = 100 tasks. Watch your bill.</p>
+<h3>2.4 — Code step in JavaScript</h3>
+<p>Insert a JavaScript code step when a Formatter can't do it. Example: parse a complex date string, regex-extract from text.</p>
+<pre><code class="language-javascript">// Parse a free-text date and return ISO format
+const text = inputData.text;
+const match = text.match(/(\d{1,2})\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)/);
+return { iso_date: match ? `2026-${monthMap[match[2]]}-${match[1].padStart(2,'0')}` : null };
+</code></pre>
+<h3>2.5 — Webhooks by Zapier (catch + send)</h3>
+<p>Receive arbitrary HTTP from systems Zapier doesn't have a native trigger for. Send arbitrary HTTP to systems with no native action.</p>
+<p><strong>Advanced bit:</strong> Catch Hook gives you a unique URL. You can post any JSON. Field paths in subsequent steps use dot notation.</p>
+<h3>2.6 — Filter step with multiple conditions</h3>
+<p><code>Continue only if</code> — combine 3 conditions with AND/OR. Nested logic isn't supported; keep it flat.</p>
+<h3>2.7 — Storage by Zapier for state</h3>
+<p>Need to remember "have I seen this lead before"? Use Storage by Zapier as a key-value store. Set on first sight, check on subsequent.</p>
+<h3>2.8 — Schedule + Lookup table</h3>
+<p>Use Zapier's Schedule trigger + Lookup Table action to build a "every Monday at 9 am, send the right Slack message based on which Monday of the month."</p>
+<h3>2.9 — Two-stage approval</h3>
+<p>Path 1: AI drafts → Slack message with <code>Approve</code> / <code>Reject</code> buttons (via Slack interactive message).
+Path 2: Buttons trigger a separate webhook-triggered Zap to execute or cancel.</p>
+<h3>2.10 — The "delay then check" pattern</h3>
+<p>Need to follow up only if the customer hasn't replied? Delay 48 hours → check inbox for reply → branch.</p>
+<p><strong>Advanced bit:</strong> Delay step counts toward task quota. Use Schedule + state-store instead at scale.</p>
+<h3>2.11–2.20 — More patterns</h3>
+<ol start="11">
+<li>Failed-step error notifications via separate "On error" zap</li>
+<li>Multi-step OAuth refresh (rare but documented)</li>
+<li>Dynamic step inputs from previous step output</li>
+<li>CSV file processing via Looping + Storage</li>
+<li>Stripe customer + payment intent join</li>
+<li>Calendly + Zoom + Slack three-system orchestration</li>
+<li>Google Drive folder watcher with content-extraction</li>
+<li>Form Builder pattern (multi-step forms in Zapier)</li>
+<li>Custom domain webhook destinations</li>
+<li>Zap run-time alerting (&gt;30s = notification)</li>
+</ol>
+<blockquote>
+<p><em>Each recipe in pages 18-44 includes the full Zap blueprint screenshot.</em></p>
+</blockquote>
+<hr />
+<h2>Part 3 · 20 advanced Make scenarios</h2>
+<h3>3.1 — Iterator + array aggregator</h3>
+<p>The bread and butter of Make. Iterator splits an array into items; aggregator collects results back into an array. Use for: per-record processing of a large dataset, parallel API calls, conditional inclusion in output.</p>
+<h3>3.2 — Routers with multiple branches</h3>
+<p>Like Zapier paths but with built-in fall-through. Routes by condition; if no condition matches, fallback branch fires.</p>
+<h3>3.3 — Error handlers (try/catch)</h3>
+<p>Right-click a module → Add error handler. Choose: ignore, break, resume, rollback, commit. The five strategies cover ~95% of error scenarios.</p>
+<h3>3.4 — Webhook + immediate response</h3>
+<p>Make scenarios triggered by webhook can send a custom response back. Use to expose Make scenarios as your own API.</p>
+<h3>3.5 — Make's Code module (JavaScript)</h3>
+<p>Most powerful single feature. Run arbitrary JavaScript with full access to inputs and ability to make HTTP calls within the module.</p>
+<h3>3.6 — Data Stores (key-value)</h3>
+<p>Make's built-in state store. Search, add, update, delete records. Use for de-duplication, tracking last-seen IDs, caching API results.</p>
+<h3>3.7 — Sleep + scheduled triggers for delayed actions</h3>
+<p>Sleep up to 5 minutes for short delays. For longer delays, use Schedule + state pattern (don't waste an active Sleep slot).</p>
+<h3>3.8 — Filter conditions (numeric + text)</h3>
+<p>Make's filter is more expressive than Zapier's: regex, array contains, date comparisons, math.</p>
+<h3>3.9 — Parallel execution</h3>
+<p>Make scenarios can branch into parallel paths. Both fire simultaneously; aggregator waits for both.</p>
+<h3>3.10 — Arrays + Objects</h3>
+<p>Build complex data structures inline using Make's Array and Object builders. Useful for HTTP body construction.</p>
+<h3>3.11 — JSON parse + safe extraction</h3>
+<p>When parsing untrusted JSON, wrap in try/catch + use <code>get</code> operator with default values to avoid crashes on missing fields.</p>
+<h3>3.12 — Iteration limits</h3>
+<p>Make can iterate over up to 10,000 items per run. Beyond that, paginate at the source.</p>
+<h3>3.13–3.20 — More patterns</h3>
+<ol start="13">
+<li>Webhook responder with JSON body</li>
+<li>Make + Custom HTTP for any API not in catalogue</li>
+<li>Connection-sharing across scenarios</li>
+<li>Module mapping with collections</li>
+<li>Make scenarios as cron via Schedule trigger</li>
+<li>Conditional aggregator</li>
+<li>Rate-limit handling via Sleep</li>
+<li>Background scenarios for fire-and-forget patterns</li>
+</ol>
+<hr />
+<h2>Part 4 · Debugging — the 6-step playbook</h2>
+<p>When a Zap or Make scenario breaks, work through:</p>
+<h3>1. Did the trigger fire?</h3>
+<ul>
+<li>Zapier: History → Trigger Step → look for the run.</li>
+<li>Make: Scenario History → check if a new execution started.</li>
+<li>If no run: trigger source isn't reaching the runner. Check webhooks at the source.</li>
+</ul>
+<h3>2. Did data shape match?</h3>
+<ul>
+<li>Click the run, check Step 1's output.</li>
+<li>Compare with what later steps expect.</li>
+<li>60% of "broken" workflows are upstream API silently changing JSON.</li>
+</ul>
+<h3>3. Auth still valid?</h3>
+<ul>
+<li>OAuth tokens expire. Re-auth the connection.</li>
+<li>Often the failure is silent — workflow runs without error, just produces null outputs.</li>
+</ul>
+<h3>4. Rate-limited?</h3>
+<ul>
+<li>Zapier: rate limit varies per integration; check error message.</li>
+<li>Make: each module has its own rate limit; visible in scenario settings.</li>
+<li>Solution: Sleep + retry, or batch operations.</li>
+</ul>
+<h3>5. AI step output format?</h3>
+<ul>
+<li>If your downstream expects JSON and the LLM returned prose, your prompt is loose.</li>
+<li>Tighten with: <code>Return ONLY valid JSON in the format {…}, no commentary, no markdown fences.</code></li>
+</ul>
+<h3>6. Destination accepted it?</h3>
+<ul>
+<li>Check destination's recent activity log.</li>
+<li>Sometimes the workflow shows success but the destination silently rejected.</li>
+</ul>
+<hr />
+<h2>Part 5 · Cost optimisation</h2>
+<h3>Zapier task accounting</h3>
+<p>Every step counts as a task IF it executes. Filter steps that block don't count. Loop iterations DO count.</p>
+<p><strong>Reduce tasks by:</strong>
+- Filter early (skip steps you don't need)
+- Combine adjacent Zapier formatter steps into one Code step (1 task instead of 3)
+- Use Lookup Tables instead of multiple Filter paths (1 task instead of N)</p>
+<h3>Make operations accounting</h3>
+<p>Each module execution = 1 op. Iterations multiply. AI modules count both their request + their response.</p>
+<p><strong>Reduce ops by:</strong>
+- Aggregate before processing (process arrays once instead of per-element where possible)
+- Cache API responses in Data Store
+- Use connection-shared modules (single OAuth refresh instead of 5)</p>
+<h3>LLM cost across both</h3>
+<ul>
+<li>Use the cheapest acceptable model. GPT-4o-mini handles 80% of business tasks at 1/20th the cost of GPT-4o.</li>
+<li>Prompt-engineer for short outputs. <code>Return only the category name. No explanation.</code> cuts output tokens 90%.</li>
+<li>Batch where possible — one LLM call processing 10 records is cheaper than 10 calls of 1 record.</li>
+</ul>
+<hr />
+<h2>Part 6 · Migration paths</h2>
+<h3>Zapier → Make</h3>
+<p>Reasons: complex flows, debugging pain, cost crossover at &gt;2.5k tasks/mo.</p>
+<p>Process: rebuild scenario-by-scenario in Make. Don't try to import; the data models differ. Run both in parallel for 2 weeks; switch off Zapier when Make has been stable.</p>
+<h3>Make → custom code (n8n / Inngest / Trigger.dev)</h3>
+<p>Reasons: cost &gt; $500/mo on Make, need version control, multiple engineers maintaining workflows, audit / compliance.</p>
+<p>Process: pick the highest-volume scenarios first. Rewrite as code. Run both in parallel. Migrate over 2-3 months.</p>
+<h3>Both → managed automation service (Aiprosol)</h3>
+<p>Reasons: 10+ critical workflows, no internal capacity to maintain, audit + monitoring + improvement needs.</p>
+<p>Process: Aiprosol Growth or Enterprise plan takes ownership of the existing scenarios + builds new ones. Monitoring + iteration included.</p>
+<hr />
+<h2>Part 7 · Anti-patterns common to both platforms</h2>
+<ol>
+<li><strong>The 30-step monolith.</strong> Refactor into 5 chained workflows.</li>
+<li><strong>Hardcoded values for tomorrow's data.</strong> "Process records since 2026-01-01" — works today, wrong in 6 months.</li>
+<li><strong>No error handling.</strong> Workflows that silently fail are worse than no workflows.</li>
+<li><strong>Single point of failure.</strong> All your automations depend on one OAuth token to Google.</li>
+<li><strong>Untested production deployment.</strong> "I'll just turn it on and see." No.</li>
+<li><strong>Naming chaos.</strong> <code>Zap 14</code> <code>Zap 14 v2</code> <code>Zap 14 final</code> <code>Zap 14 final FINAL</code>. Use a naming convention like <code>[domain]_[trigger]_[outcome]</code> (e.g., <code>sales_form_to_crm</code>).</li>
+</ol>
+<hr />
+<h2>Part 8 · The 30-min weekly health check</h2>
+<p>Every week, do this checklist for both platforms:</p>
+<ul>
+<li>[ ] Any failed runs in the last 7 days? Why?</li>
+<li>[ ] Any workflow over 30s average runtime? Optimise or split.</li>
+<li>[ ] Any workflow without a recent successful run? Probably broken silently.</li>
+<li>[ ] Cost trend — anything spiking? Add a usage alarm.</li>
+<li>[ ] Any "draft" or "paused" scenarios that should be deleted?</li>
+<li>[ ] Any team member's account that's no longer needed?</li>
+</ul>
+<hr />
+<h2>Licensing</h2>
+<p>Licensed for unlimited internal use within purchaser's organisation. Recipes may be implemented in your own workflows. Resale or republication requires written permission. © 2026 Aiprosol Ltd.</p>
+<div class="brand-footer">© 2026 Aiprosol Ltd · <a href="https://aiprosol.com">aiprosol.com</a> · <a href="mailto:hello@aiprosol.com">hello@aiprosol.com</a><br>Licensed to the purchaser for unlimited internal use. Redistribution requires written permission.</div>
+</body></html>

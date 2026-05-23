@@ -1,0 +1,241 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>The Aiprosol Workflow Automation Playbook — Aiprosol</title><style>
+:root { color-scheme: light dark; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif; max-width: 760px; margin: 0 auto; padding: 56px 32px 96px; line-height: 1.75; color: #1F1B2E; background: #FAF8FF; }
+@media (prefers-color-scheme: dark) { body { color: #E5E7EB; background: #0A0613; } a { color: #C084FC; } blockquote { background: rgba(139,92,246,0.08); border-left-color: #8B5CF6; color: #C7CEDB; } code { background: rgba(139,92,246,0.12); color: #C084FC; } pre { background: rgba(0,0,0,0.45); border: 1px solid #2A1F3D; } hr { border-color: #2A1F3D; } table { border-color: #2A1F3D; } th { background: #1A1428; } td, th { border-color: #2A1F3D; } tr:nth-child(even) { background: rgba(139,92,246,0.04); } }
+h1, h2, h3, h4 { font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.2; letter-spacing: -0.01em; }
+h1 { font-size: 36px; margin: 0 0 28px; font-weight: 800; background: linear-gradient(135deg, #8B5CF6, #C084FC); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+h2 { font-size: 24px; margin-top: 48px; margin-bottom: 14px; font-weight: 700; padding-bottom: 8px; border-bottom: 1px solid rgba(139,92,246,0.3); }
+h3 { font-size: 18px; margin-top: 28px; margin-bottom: 10px; font-weight: 700; color: #8B5CF6; }
+@media (prefers-color-scheme: dark) { h3 { color: #C084FC; } }
+h4 { font-size: 15px; margin-top: 18px; margin-bottom: 6px; font-weight: 700; }
+p { margin: 12px 0; }
+a { color: #6D28D9; text-decoration: underline; text-underline-offset: 3px; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+blockquote { background: rgba(139,92,246,0.05); border-left: 3px solid #8B5CF6; padding: 14px 22px; margin: 22px 0; color: #4A4660; border-radius: 6px; }
+hr { border: 0; border-top: 1px solid rgba(139,92,246,0.18); margin: 40px 0; }
+ul, ol { padding-left: 26px; }
+li { margin: 6px 0; }
+code { background: rgba(139,92,246,0.08); padding: 2px 8px; border-radius: 5px; font-family: 'JetBrains Mono', SFMono-Regular, ui-monospace, monospace; font-size: 0.9em; color: #6D28D9; }
+pre { background: #F4F1FA; padding: 18px 22px; border-radius: 10px; overflow-x: auto; border: 1px solid rgba(139,92,246,0.15); margin: 18px 0; }
+pre code { background: none; padding: 0; color: inherit; font-size: 13px; line-height: 1.6; }
+table { border-collapse: collapse; width: 100%; margin: 22px 0; font-size: 14px; border: 1px solid rgba(139,92,246,0.2); border-radius: 8px; overflow: hidden; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid rgba(139,92,246,0.12); }
+th { background: rgba(139,92,246,0.08); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #6D28D9; }
+tr:nth-child(even) { background: rgba(139,92,246,0.025); }
+.brand-footer { margin-top: 80px; padding-top: 28px; border-top: 1px solid rgba(139,92,246,0.18); font-size: 12px; color: #6B7585; text-align: center; }
+.brand-footer a { color: #8B5CF6; text-decoration: none; }
+@media print { body { padding: 0; max-width: 100%; } h1 { page-break-after: avoid; } h2, h3 { page-break-after: avoid; page-break-inside: avoid; } pre, blockquote, table { page-break-inside: avoid; } }
+</style></head><body>
+<h1>The Aiprosol Workflow Automation Playbook</h1>
+<p><strong>The strategic and tactical guide to designing, building, and running automated workflows in any business. Principles, patterns, anti-patterns, and 25 production-grade workflow templates.</strong></p>
+<p>Version 1.0 · 2026 · © Aiprosol Ltd</p>
+<hr />
+<h2>Why this playbook exists</h2>
+<p>Most automation guides are one of two kinds:</p>
+<ol>
+<li><strong>Tool-centric:</strong> "Here's how to use Zapier." Useful for Day 1, useless when your needs grow past the tool's idioms.</li>
+<li><strong>Hype-centric:</strong> "AI will run your business." Inspiring, but won't help you build a working invoice-routing workflow on Tuesday.</li>
+</ol>
+<p>This is the third kind: a <strong>principles + patterns + templates</strong> playbook for operators. We start with how to think about workflow design, give you the patterns that work in practice, name the patterns that fail, and end with 25 templates you can implement directly.</p>
+<p>The audience: ops leaders, COOs, founders, automation engineers running 10-200-person businesses.</p>
+<hr />
+<h2>Part 1 · Principles (the non-negotiable rules)</h2>
+<h3>Principle 1 — <strong>A workflow has one job</strong></h3>
+<p>The single most common mistake: building one mega-workflow that "handles everything for new leads." It triggers on form submission, validates the email, looks up the company, scores the lead, drafts an email, books a call, creates a CRM record, posts to Slack, generates a brief, sends Slack DM to the rep, updates a Google Sheet.</p>
+<p>When that workflow breaks (and it will), you don't know why. Was it the form? The validation? The CRM? The Slack message?</p>
+<p><strong>Rule:</strong> every workflow does ONE thing. If you need to do five things, build five workflows that hand off via webhooks or shared state.</p>
+<h3>Principle 2 — <strong>Every workflow has an observable success state</strong></h3>
+<p>A workflow you can't tell is working ≠ a workflow that's working. Every workflow needs:</p>
+<ul>
+<li>A way to see <strong>the last 24 hours of runs</strong> (success/failure/skip)</li>
+<li>A way to see <strong>what triggered each run</strong></li>
+<li>A way to see <strong>what each step output</strong></li>
+</ul>
+<p>Make and n8n give you this for free. Zapier hides it behind upgrade tiers. Pay for it.</p>
+<h3>Principle 3 — <strong>Failure is data</strong></h3>
+<p>When a step fails, the workflow should:</p>
+<ol>
+<li>Retry with backoff (3 attempts at 30s/2min/10min)</li>
+<li>If still failing → post to a <code>#automations-errors</code> Slack channel with the input data</li>
+<li>Continue if possible, OR halt and flag for human review</li>
+</ol>
+<p>Workflows that silently fail are worse than no workflow at all — you build false confidence in a system that doesn't actually work.</p>
+<h3>Principle 4 — <strong>Idempotency is required</strong></h3>
+<p>Run the same workflow twice with the same input → exactly the same outcome. Build for retries, build for "what if this fires twice from a webhook glitch."</p>
+<p>How: include a <code>unique_id</code> field in your trigger data. Every destination action checks "have I seen this id?" before acting. Most CRMs / databases support upsert (insert-or-update) operations. Use them.</p>
+<h3>Principle 5 — <strong>Humans in the loop until you trust it</strong></h3>
+<p>Every new automation goes through three phases:</p>
+<ul>
+<li><strong>Phase 1 (week 1-2):</strong> Output → human review → human action</li>
+<li><strong>Phase 2 (week 3-4):</strong> Output → human review → automatic action (human can intercept)</li>
+<li><strong>Phase 3 (month 2+):</strong> Fully automatic, human only sees errors</li>
+</ul>
+<p>Skipping straight to Phase 3 is how organisations end up with embarrassing AI-generated emails sent to customers.</p>
+<h3>Principle 6 — <strong>The data shape is the contract</strong></h3>
+<p>The hardest debugging session of your career is when a workflow worked yesterday and broke today because an upstream tool changed its JSON shape.</p>
+<p>Mitigation: use a <strong>schema validation step</strong> early in every workflow. Reject inputs that don't match. Log what was rejected. This catches breaking changes before they cascade.</p>
+<p>Example in Make: a <code>JSON parse + filter</code> step that requires specific field names, types, and value ranges before allowing the rest of the workflow to run.</p>
+<h3>Principle 7 — <strong>Workflow cost is real cost</strong></h3>
+<p>A workflow you build "free" today on Make's free tier will become $X/month at scale. Model the cost up front:</p>
+<pre><code>runs_per_month × ops_per_run × $/op + ai_runs × $/ai_call = monthly_cost
+</code></pre>
+<p>A workflow that does 3 ops per run, runs 5,000 times/month, costs ~$15 on Make Pro. Add 1 OpenAI step per run at $0.005 = $25 more. = $40/month for one workflow.</p>
+<p>If the workflow saves 10 hrs/wk of operator time at $50/hr loaded cost → $2,167/month. ROI = 54×. But run that math before you build.</p>
+<hr />
+<h2>Part 2 · The 7 patterns that work</h2>
+<p>These are the 7 architectural patterns Aiprosol uses to compose workflows. Memorise them; everything else is variation.</p>
+<h3>Pattern 1 — Linear pipeline</h3>
+<pre><code>trigger → validate → enrich → process → store → notify
+</code></pre>
+<p>The workhorse. ~70% of business workflows are this shape. Examples: form submission → CRM record. Stripe payment → revenue logger. Email → categorised filing.</p>
+<h3>Pattern 2 — Branching by classifier</h3>
+<pre><code>trigger → AI classifier → router → [branch A | branch B | branch C]
+</code></pre>
+<p>When the same trigger needs different handling. Inbound email is the canonical example: classify into sales / support / billing / vendor → route to the right downstream workflow.</p>
+<p>Critical: the classifier's accuracy determines the workflow's value. Validate classification accuracy on a sample of 50+ real examples before going live.</p>
+<h3>Pattern 3 — Fan-out</h3>
+<pre><code>trigger → [parallel: action A · action B · action C] → aggregator → notify
+</code></pre>
+<p>When one event needs to trigger several independent actions. New customer signs up → simultaneously: provision their account, send welcome email, post to team channel, create project workspace, schedule kickoff. Aggregator collects results to confirm everything completed.</p>
+<h3>Pattern 4 — Scheduled aggregation</h3>
+<pre><code>schedule (e.g., daily 8am) → query multiple sources → aggregate → format → distribute
+</code></pre>
+<p>The "weekly business review" pattern. Pulls from Stripe + HubSpot + Slack + GA4 → assembles a single report → emails it.</p>
+<h3>Pattern 5 — Polling-with-state</h3>
+<pre><code>schedule → query &quot;what's new since {last_run}&quot; → process new items → save {last_run}
+</code></pre>
+<p>When the source doesn't have a webhook (or webhooks are unreliable). You poll on a schedule, track what you've already seen via a state store (Google Sheet, Make Data Store, simple DB), only act on new items.</p>
+<h3>Pattern 6 — Approval gate</h3>
+<pre><code>trigger → AI draft → human approval (Slack button / Notion review) → execute on approval
+</code></pre>
+<p>For workflows where automatic action is too risky. AI drafts the email / contract / report → posts to Slack with <code>Approve</code> / <code>Edit</code> / <code>Reject</code> buttons → only sends when approved.</p>
+<h3>Pattern 7 — Long-running orchestrator</h3>
+<pre><code>trigger (e.g., contract signed) → schedule N delayed actions over weeks/months
+</code></pre>
+<p>Customer onboarding. Day 0: welcome email. Day 1: kickoff scheduling. Day 7: first deliverable. Day 30: check-in. Day 90: NPS request. Each scheduled action is its own workflow that runs at the right time.</p>
+<p>Make handles this via the "Sleep" module + state in a Google Sheet. Don't actually use Make's sleep for &gt;24hr — it's wasteful. Better: schedule a future job using Google Calendar or a cron-style scheduler.</p>
+<hr />
+<h2>Part 3 · The 5 anti-patterns to never use</h2>
+<h3>Anti-pattern 1 — "Stack of band-aids"</h3>
+<p>Three different tools doing the same job because each was added when the previous one frustrated you. Standardise. Pick ONE workflow tool as primary, ONE LLM as primary. Migrate the others.</p>
+<h3>Anti-pattern 2 — "The mystery monolith"</h3>
+<p>A 30-step workflow nobody fully understands. When it breaks, nobody can debug. Refactor into 5-10 step workflows that hand off cleanly.</p>
+<h3>Anti-pattern 3 — "Set and forget"</h3>
+<p>A workflow that ran for 18 months, you never looked at it. Now it has 12% silent failure rate, your CRM has 8,000 duplicate records. Fix: every workflow has a weekly health check (auto-generated: "Workflow X ran 312 times this week, 3 failures, average duration 4.2s, estimated cost $11").</p>
+<h3>Anti-pattern 4 — "AI as the trigger"</h3>
+<p>Using an LLM as the FIRST step in a workflow. Don't. LLMs are slow, non-deterministic, and expensive. Use a deterministic trigger (webhook, schedule, form submission), THEN use the LLM for classification or content generation in the middle.</p>
+<h3>Anti-pattern 5 — "Silent automation"</h3>
+<p>Automations the rest of the team doesn't know exist. When you go on holiday, the team can't troubleshoot. Solution: a single shared spreadsheet listing every automation with what it does, its trigger, its owner, where the source-of-truth config lives.</p>
+<hr />
+<h2>Part 4 · 25 production-grade templates</h2>
+<p>Each template is documented with: trigger, steps, expected output, failure modes, recommended phase 1-3 progression.</p>
+<h3>Templates 1-5 · Sales</h3>
+<ol>
+<li><strong>Inbound lead → CRM + lead score + Slack</strong> <em>(Pattern 1)</em></li>
+<li><strong>Discovery-call recording → action items + draft proposal</strong> <em>(Pattern 1 + AI)</em></li>
+<li><strong>Stale-deal radar</strong> <em>(Pattern 4)</em></li>
+<li><strong>Pipeline review prep auto-doc</strong> <em>(Pattern 4)</em></li>
+<li><strong>Deal stage change → next-step email draft</strong> <em>(Pattern 1)</em></li>
+</ol>
+<h3>Templates 6-10 · Customer success</h3>
+<ol start="6">
+<li><strong>Welcome packet (60-second send)</strong> <em>(Pattern 3 — fan-out)</em></li>
+<li><strong>Onboarding milestone tracker</strong> <em>(Pattern 7 — long-running)</em></li>
+<li><strong>At-risk early-warning</strong> <em>(Pattern 4)</em></li>
+<li><strong>QBR auto-draft from usage data</strong> <em>(Pattern 4)</em></li>
+<li><strong>NPS detractor recovery loop</strong> <em>(Pattern 2 — classify response)</em></li>
+</ol>
+<h3>Templates 11-15 · Operations</h3>
+<ol start="11">
+<li><strong>Slack daily summariser</strong> <em>(Pattern 4)</em></li>
+<li><strong>Meeting → action items extraction</strong> <em>(Pattern 1 + AI)</em></li>
+<li><strong>Vendor renewal radar</strong> <em>(Pattern 4)</em></li>
+<li><strong>Document filing auto-router</strong> <em>(Pattern 2)</em></li>
+<li><strong>Team standup async aggregator</strong> <em>(Pattern 4)</em></li>
+</ol>
+<h3>Templates 16-20 · Documents &amp; finance</h3>
+<ol start="16">
+<li><strong>Invoice OCR → accounting</strong> <em>(Pattern 1 + vision)</em></li>
+<li><strong>Receipt photo → categorised expense</strong> <em>(Pattern 1 + vision)</em></li>
+<li><strong>Contract redline assistant</strong> <em>(Pattern 6 — approval gate)</em></li>
+<li><strong>Tax document auto-collator</strong> <em>(Pattern 4)</em></li>
+<li><strong>Cash position daily snapshot</strong> <em>(Pattern 4)</em></li>
+</ol>
+<h3>Templates 21-25 · Marketing &amp; content</h3>
+<ol start="21">
+<li><strong>Inbound customer question → blog idea</strong> <em>(Pattern 4)</em></li>
+<li><strong>Competitor changelog monitor</strong> <em>(Pattern 5 — polling)</em></li>
+<li><strong>Cross-channel content distribution</strong> <em>(Pattern 3 — fan-out)</em></li>
+<li><strong>SEO auto-audit weekly</strong> <em>(Pattern 4)</em></li>
+<li><strong>User-generated content sentiment digest</strong> <em>(Pattern 4 + AI)</em></li>
+</ol>
+<blockquote>
+<p><strong>For each template:</strong> the playbook (full PDF) includes the Make scenario JSON export, the OpenAI prompts used, and the failure-mode runbook. Pages 28-94.</p>
+</blockquote>
+<hr />
+<h2>Part 5 · The migration map (existing workflow → automated workflow)</h2>
+<p>If you already have manual processes and want to automate them, the order is:</p>
+<ol>
+<li><strong>Document the manual process</strong> — write what happens today, step by step, by whom, when</li>
+<li><strong>Find the automation candidates</strong> — steps that are predictable + recurring + bounded</li>
+<li><strong>Build the AI-as-suggestion version first</strong> — automate the work but keep human approval</li>
+<li><strong>Measure for 2 weeks</strong> — quality, edge cases, false positives</li>
+<li><strong>Move to AI-as-action</strong> — remove the human-in-the-loop where confidence is high</li>
+<li><strong>Keep humans in for</strong> — edge cases, escalations, anything customer-facing where tone is critical</li>
+</ol>
+<hr />
+<h2>Part 6 · The "build vs. buy vs. service" decision framework</h2>
+<p>For any automation, ask:</p>
+<table>
+<thead>
+<tr>
+<th>If true...</th>
+<th>Then...</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The pattern is generic + stable + commodity</td>
+<td><strong>Buy</strong> an off-the-shelf tool (e.g., Cal.com for booking)</td>
+</tr>
+<tr>
+<td>The pattern is specific to your business + bounded</td>
+<td><strong>Build</strong> with Make/Zapier/n8n</td>
+</tr>
+<tr>
+<td>The pattern requires deep integration + scale + audit</td>
+<td><strong>Service</strong> (hire Aiprosol or equivalent)</td>
+</tr>
+</tbody>
+</table>
+<p>The mistake: trying to build something that should be bought, OR buying something that needs to be built. Roughly: tools cover the bottom 60% of needs, custom workflows the next 30%, services the top 10%.</p>
+<hr />
+<h2>Part 7 · How to know your automation portfolio is healthy</h2>
+<p>Quarterly review questions:</p>
+<ol>
+<li>How many automations do we have? (If you can't say, that's the answer.)</li>
+<li>How many ran successfully last week? (Should be &gt; 95%.)</li>
+<li>How many hours/week are we estimated to be saving? (Re-measure quarterly.)</li>
+<li>How many cost more than they save? (Should be 0.)</li>
+<li>How many would survive your departure? (If &lt;80%, document NOW.)</li>
+<li>What's the next one to build? (Always have an answer.)</li>
+</ol>
+<hr />
+<h2>Part 8 · Common debugging patterns</h2>
+<p>When something breaks, work through in this order:</p>
+<ol>
+<li><strong>Trigger side:</strong> did the upstream actually fire? Check source's event log.</li>
+<li><strong>Auth/permission:</strong> silent OAuth expiry is the #1 hidden killer. Re-auth the connection.</li>
+<li><strong>Data shape:</strong> did the upstream change its JSON? Add a schema validation step.</li>
+<li><strong>Rate limit:</strong> Slack 1 msg/sec, Twitter 50/15min, etc. Add backoff.</li>
+<li><strong>AI step output format:</strong> if you expected JSON and got prose, your prompt is loose. Tighten with <code>Return only valid JSON in the format {…}, no commentary.</code></li>
+<li><strong>Destination side:</strong> did the destination accept it? Look at the destination tool's recent log.</li>
+</ol>
+<p>If still stuck, post the workflow URL + what it should do + what it does to <code>hello@aiprosol.com</code> — we have a 7-day post-purchase free debugging policy.</p>
+<hr />
+<h2>Licensing</h2>
+<p>Licensed for unlimited internal use within the purchaser's organisation. Resale, republication, or use as derivative training material requires written permission. © 2026 Aiprosol Ltd.</p>
+<div class="brand-footer">© 2026 Aiprosol Ltd · <a href="https://aiprosol.com">aiprosol.com</a> · <a href="mailto:hello@aiprosol.com">hello@aiprosol.com</a><br>Licensed to the purchaser for unlimited internal use. Redistribution requires written permission.</div>
+</body></html>

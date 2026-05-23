@@ -1,0 +1,271 @@
+{
+  "name": "Aiprosol — Inbound lead → CRM + score + Slack",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-capture",
+        "responseMode": "responseNode"
+      },
+      "id": "e5080d41-8995-41bf-b6ab-762b9cd5160e",
+      "name": "Webhook · /lead",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1",
+              "name": "email",
+              "value": "={{ $json.email }}",
+              "type": "string"
+            },
+            {
+              "id": "2",
+              "name": "name",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "3",
+              "name": "company",
+              "value": "={{ $json.company }}",
+              "type": "string"
+            },
+            {
+              "id": "4",
+              "name": "employee_count",
+              "value": "={{ $json.employees }}",
+              "type": "number"
+            }
+          ]
+        }
+      },
+      "id": "2346717d-d962-48e5-b8ac-a58ebc6e1640",
+      "name": "Validate fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o-mini"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You are a B2B sales scoring engine. Score this lead 0-100 against this ICP: 10-200 employee professional services or SaaS in UK/EU/US. Return JSON: {\"score\": int, \"reasoning\": string, \"tier\": \"hot|warm|watch|cold\"}"
+            },
+            {
+              "role": "user",
+              "content": "Lead: name={{ $json.name }} company={{ $json.company }} employees={{ $json.employee_count }} role={{ $json.role || 'unknown' }} stated_problem={{ $json.problem || 'unknown' }}"
+            }
+          ]
+        },
+        "options": {
+          "responseFormat": "json_object"
+        }
+      },
+      "id": "d9122f98-e6f8-4471-83c8-ad394f5e1cd0",
+      "name": "Score with OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const parsed = JSON.parse($input.first().json.message.content); return [{json: {...parsed, ...$('Validate fields').first().json}}];"
+      },
+      "id": "88cfb4ce-e113-437f-837b-377e7ad35adc",
+      "name": "Parse score",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        840,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "contact",
+        "operation": "create",
+        "additionalFields": {
+          "properties": {
+            "property": [
+              {
+                "property": "email",
+                "value": "={{ $json.email }}"
+              },
+              {
+                "property": "firstname",
+                "value": "={{ $json.name }}"
+              },
+              {
+                "property": "company",
+                "value": "={{ $json.company }}"
+              },
+              {
+                "property": "lead_score",
+                "value": "={{ $json.score }}"
+              },
+              {
+                "property": "lead_tier",
+                "value": "={{ $json.tier }}"
+              }
+            ]
+          }
+        }
+      },
+      "id": "371b98fb-8fae-4012-82c9-8f78ea6ab576",
+      "name": "HubSpot — Create contact",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "#sales-inbound",
+        "text": "=🔥 New {{ $json.tier }} lead — score {{ $json.score }}/100\\n*{{ $json.name }}* at *{{ $json.company }}* ({{ $json.employee_count }} ppl)\\nProblem: {{ $('Validate fields').first().json.problem || 'not stated' }}\\nReasoning: {{ $json.reasoning }}"
+      },
+      "id": "d749e758-9b33-4314-8044-bf8642118fee",
+      "name": "Slack — Notify sales",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        1240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"ok\":true,\"score\":{{ $('Parse score').first().json.score }}}"
+      },
+      "id": "c80e29ae-a16c-440c-be45-f8447e18cfb9",
+      "name": "Respond 201",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1440,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook · /lead": {
+      "main": [
+        [
+          {
+            "node": "Validate fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate fields": {
+      "main": [
+        [
+          {
+            "node": "Score with OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Score with OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Parse score",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse score": {
+      "main": [
+        [
+          {
+            "node": "HubSpot — Create contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HubSpot — Create contact": {
+      "main": [
+        [
+          {
+            "node": "Slack — Notify sales",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slack — Notify sales": {
+      "main": [
+        [
+          {
+            "node": "Respond 201",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "sales"
+    },
+    {
+      "name": "lead-gen"
+    },
+    {
+      "name": "pattern-1"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-playbook-v1"
+  },
+  "pinData": {},
+  "versionId": "6b23924d-d5f3-458b-b732-8bf1c3d12119",
+  "id": "0760c7c5-92e8-49d6-ac52-0b1fe841017f",
+  "_aiprosol": {
+    "description": "Inbound lead form → AI lead-scoring → HubSpot create → Slack notify",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

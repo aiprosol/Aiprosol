@@ -1,0 +1,219 @@
+{
+  "name": "Aiprosol — Nurture Email 5 (Day 21) — graceful close",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 9 * * *"
+            }
+          ]
+        }
+      },
+      "id": "170c402a-83f5-4fab-92b8-76b2b4d31257",
+      "name": "Wait until day 21",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "contact",
+        "operation": "getAll",
+        "filters": {
+          "propertiesCollection": {
+            "properties": [
+              "email",
+              "captured_at",
+              "role",
+              "industry",
+              "primary_problem"
+            ]
+          }
+        }
+      },
+      "id": "f7e1d346-a751-4209-8895-c2a633a284cc",
+      "name": "Find leads at day 21",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const cutoff = Date.now() - 21*24*60*60*1000; return $input.all().filter(i => Math.abs(new Date(i.json.captured_at).getTime() - cutoff) < 24*60*60*1000 && i.json.lead_tier === 'warm');"
+      },
+      "id": "104c7019-9be2-4c9b-936f-ed2ddfb0a9a1",
+      "name": "Filter to today's send batch",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Write Email 5 of a 5-touch nurture sequence. Brief: 'I'm going to stop reaching out unless you say otherwise.' Last CTA. Warm tone, not guilt.. Tone: warm, specific, no marketing fluff. 150-250 words."
+            },
+            {
+              "role": "user",
+              "content": "=Lead: role={{ $json.role }}, industry={{ $json.industry }}, stated problem={{ $json.primary_problem }}"
+            }
+          ]
+        }
+      },
+      "id": "6e399f16-0c28-488c-a84b-04a902e9e233",
+      "name": "AI-personalise body",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        840,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "send",
+        "to": "={ $('Find leads at day ' + str(21) + ').first().json.email }",
+        "subject": "=Closing your file?",
+        "message": "={{ $json.message.content }}"
+      },
+      "id": "ff3ece61-dc16-49f3-b76c-416320657d5f",
+      "name": "Gmail send",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1040,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "contact",
+        "operation": "update",
+        "contactId": "={ $('Find leads at day ' + str(21) + ').first().json.id }",
+        "additionalFields": {
+          "properties": {
+            "property": [
+              {
+                "property": "nurture_email_5_sent",
+                "value": "={{ $now.toISO() }}"
+              }
+            ]
+          }
+        }
+      },
+      "id": "962c2919-4682-4aef-a026-530d6f07e38a",
+      "name": "Log send",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2,
+      "position": [
+        1240,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Wait until day 21": {
+      "main": [
+        [
+          {
+            "node": "Find leads at day 21",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find leads at day 21": {
+      "main": [
+        [
+          {
+            "node": "Filter to today's send batch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter to today's send batch": {
+      "main": [
+        [
+          {
+            "node": "AI-personalise body",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI-personalise body": {
+      "main": [
+        [
+          {
+            "node": "Gmail send",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail send": {
+      "main": [
+        [
+          {
+            "node": "Log send",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "lead-gen"
+    },
+    {
+      "name": "nurture"
+    },
+    {
+      "name": "day-21"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "92b690f4-e5e2-41c7-ac0d-b426def717d9",
+  "id": "e20a5387-3f96-4528-ab6e-8ddaa68db31f",
+  "_aiprosol": {
+    "description": "Day 21 trigger → AI-personalised body → Gmail send → log",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

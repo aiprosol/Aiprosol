@@ -1,0 +1,270 @@
+{
+  "name": "Aiprosol — Chat qualifier → email capture",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "chat-message"
+      },
+      "id": "86a45d5a-8950-4579-bba0-d14b5cd1565e",
+      "name": "Chat webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "sheet",
+        "operation": "read",
+        "documentId": "CHAT_LOG_SHEET_ID",
+        "filters": {
+          "values": [
+            {
+              "lookupColumn": "session_id",
+              "lookupValue": "={{ $json.session_id }}"
+            }
+          ]
+        }
+      },
+      "id": "4f26b1ba-796b-4e51-b698-8f0440f516d7",
+      "name": "Get conversation history",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "sheet",
+        "operation": "append",
+        "documentId": "CHAT_LOG_SHEET_ID",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "session_id",
+              "fieldValue": "={{ $json.session_id }}"
+            },
+            {
+              "fieldId": "role",
+              "fieldValue": "user"
+            },
+            {
+              "fieldId": "content",
+              "fieldValue": "={{ $json.content }}"
+            },
+            {
+              "fieldId": "timestamp",
+              "fieldValue": "={{ $now.toISO() }}"
+            }
+          ]
+        }
+      },
+      "id": "09fbe891-e508-425b-830f-ce373094ee19",
+      "name": "Append this message",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You're Arora, Aiprosol's AI CEO. Help the visitor. After ~3 substantive exchanges, naturally offer to email a personalised plan. Return JSON {reply:string, ready_for_capture:boolean}"
+            },
+            {
+              "role": "user",
+              "content": "=History: {{ JSON.stringify($('Get conversation history').all()) }}\\n\\nNew message: {{ $('Chat webhook').first().json.content }}"
+            }
+          ]
+        },
+        "options": {
+          "responseFormat": "json_object"
+        }
+      },
+      "id": "eaaa7e88-99f9-4996-8b00-437c5facd941",
+      "name": "AI reply + intent",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        840,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true
+          },
+          "conditions": [
+            {
+              "id": "1",
+              "leftValue": "={{ JSON.parse($json.message.content).ready_for_capture }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ]
+        }
+      },
+      "id": "80efb7b8-7d63-4fe3-a638-34c7df39925a",
+      "name": "If ready_for_capture",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://aiprosol.com/api/capture-lead",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"name\":\"{{ $('Chat webhook').first().json.visitor_name }}\",\"email\":\"{{ $('Chat webhook').first().json.visitor_email }}\",\"source\":\"chat\"}"
+      },
+      "id": "4f34ada4-f2a8-45b0-9659-6ce782b0c717",
+      "name": "Capture email step",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1240,
+        250
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"reply\":\"{{ JSON.parse($('AI reply + intent').first().json.message.content).reply }}\"}"
+      },
+      "id": "39cce58b-c244-4c56-89aa-0efc908131e6",
+      "name": "Respond to widget",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1240,
+        400
+      ]
+    }
+  ],
+  "connections": {
+    "Chat webhook": {
+      "main": [
+        [
+          {
+            "node": "Get conversation history",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get conversation history": {
+      "main": [
+        [
+          {
+            "node": "Append this message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append this message": {
+      "main": [
+        [
+          {
+            "node": "AI reply + intent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI reply + intent": {
+      "main": [
+        [
+          {
+            "node": "If ready_for_capture",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If ready_for_capture": {
+      "main": [
+        [
+          {
+            "node": "Capture email step",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to widget",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Capture email step": {
+      "main": [
+        [
+          {
+            "node": "Respond to widget",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "lead-gen"
+    },
+    {
+      "name": "chat"
+    },
+    {
+      "name": "pattern-2"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "c032c439-53f0-4ccc-8c9c-06c0ae85420d",
+  "id": "648f5f3c-3a40-4ddc-8bbe-1fac468e195d",
+  "_aiprosol": {
+    "description": "Chat message webhook → conversation memory → trigger capture at depth 3",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

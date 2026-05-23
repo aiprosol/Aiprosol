@@ -1,0 +1,262 @@
+{
+  "name": "Aiprosol — Suppression + geo routing",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-pre-route"
+      },
+      "id": "fd75373f-130a-4091-957e-6352e1dedcc1",
+      "name": "Lead webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "sheet",
+        "operation": "read",
+        "documentId": "SUPPRESSION_SHEET_ID",
+        "filters": {
+          "values": [
+            {
+              "lookupColumn": "email",
+              "lookupValue": "={{ $json.email }}"
+            }
+          ]
+        }
+      },
+      "id": "1babdfed-2367-4f91-aec4-d2e285574dc9",
+      "name": "Check suppression list",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true
+          },
+          "conditions": [
+            {
+              "id": "1",
+              "leftValue": "={{ $items().length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ]
+        }
+      },
+      "id": "369f3278-8be2-40de-bbc9-052fcad7f0ee",
+      "name": "If suppressed",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1",
+              "name": "action",
+              "value": "halted-suppression",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "id": "28ce2b20-bcf8-4219-9e5e-c9f317cbdc44",
+      "name": "Halt — suppressed",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        840,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.country_code }}",
+                    "rightValue": "US,UK,GB,CA,AU,NZ,IE,DE,FR,NL,SE,NO,DK,FI",
+                    "operator": {
+                      "type": "string",
+                      "operation": "regex"
+                    }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "core-market"
+            },
+            {
+              "conditions": {
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.country_code }}",
+                    "rightValue": "IN,SG,JP,AE,SA,BR,MX",
+                    "operator": {
+                      "type": "string",
+                      "operation": "regex"
+                    }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "secondary-market"
+            }
+          ]
+        }
+      },
+      "id": "e7a14fbe-007d-4876-a201-92c9e25daa10",
+      "name": "Switch by region",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [
+        840,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://aiprosol.com/api/internal/lead-score",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}"
+      },
+      "id": "76f494d7-ac75-4a2c-b218-7f365549847b",
+      "name": "Route to main scoring",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1040,
+        350
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://aiprosol.com/api/internal/lead-nurture-slow",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}"
+      },
+      "id": "fc65d401-395f-4b59-b5e6-9ae3f1e45bf7",
+      "name": "Route to slow nurture",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1040,
+        450
+      ]
+    }
+  ],
+  "connections": {
+    "Lead webhook": {
+      "main": [
+        [
+          {
+            "node": "Check suppression list",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check suppression list": {
+      "main": [
+        [
+          {
+            "node": "If suppressed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If suppressed": {
+      "main": [
+        [
+          {
+            "node": "Halt — suppressed",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Switch by region",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch by region": {
+      "main": [
+        [
+          {
+            "node": "Route to main scoring",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Route to slow nurture",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "lead-gen"
+    },
+    {
+      "name": "routing"
+    },
+    {
+      "name": "pattern-2"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "14e9a19b-02ac-497d-a044-f0fd91e2d748",
+  "id": "b7818b4b-b89a-4cc0-a3b3-5af695a63880",
+  "_aiprosol": {
+    "description": "Lead → check suppression → geo check → size check → route to right sequence",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

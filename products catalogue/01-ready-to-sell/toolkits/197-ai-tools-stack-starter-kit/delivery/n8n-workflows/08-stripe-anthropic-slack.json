@@ -1,0 +1,112 @@
+{
+  "name": "Aiprosol Stack — Stripe failed payment → Claude → Slack escalation",
+  "nodes": [
+    {
+      "parameters": {
+        "events": [
+          "payment_intent.payment_failed"
+        ]
+      },
+      "id": "897ae564-d5a7-45d2-a4b7-e284eeafce76",
+      "name": "Stripe payment failed",
+      "type": "n8n-nodes-base.stripeTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "model": "claude-3-5-sonnet-20241022",
+        "messages": {
+          "values": [
+            {
+              "role": "user",
+              "content": "=Draft a kind payment-recovery email (NOT pushy). Plus 0-100 churn risk score. Customer: {{ JSON.stringify($json) }}"
+            }
+          ]
+        }
+      },
+      "id": "37a108fc-3237-4e8f-99af-2035ba43d7cc",
+      "name": "Claude recovery draft",
+      "type": "@n8n/n8n-nodes-langchain.anthropic",
+      "typeVersion": 1,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "#cs",
+        "text": "=💳 Payment failed — {{ $('Stripe payment failed').first().json.customer }}\\n{{ $json.content }}"
+      },
+      "id": "97ed76f0-0b62-4baf-b0ee-22977126e75f",
+      "name": "Slack CS lead",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        640,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Stripe payment failed": {
+      "main": [
+        [
+          {
+            "node": "Claude recovery draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude recovery draft": {
+      "main": [
+        [
+          {
+            "node": "Slack CS lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "stack"
+    },
+    {
+      "name": "stripe"
+    },
+    {
+      "name": "claude"
+    },
+    {
+      "name": "slack"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "28241a30-eaf4-4217-ab63-6e5161565679",
+  "id": "4c0d2d40-8c40-4490-9537-bbdadd83c1ef",
+  "_aiprosol": {
+    "description": "Stripe payment.failed → Claude drafts customer-friendly recovery email + risk assessment → Slack ping the CS lead.",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "name": "Sales \u00b7 Closed-won \u2192 welcome email + Drive folder + Slack",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "deal-closed-won",
+        "responseMode": "lastNode"
+      },
+      "id": "bdfab1f3-bec5-48b4-a427-0db758a39fd9",
+      "name": "Deal closed-won webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "sendTo": "={{ $json.body.email }}",
+        "subject": "Welcome to Aiprosol \u2014 your onboarding starts now",
+        "message": "=Hi {{ $json.body.name }}, you're in. Here's the kickoff: https://aiprosol.com/onboarding. First-week checklist included."
+      },
+      "id": "d5eb5124-5765-4122-a574-70b3a0f18425",
+      "name": "Welcome email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 1,
+      "position": [
+        460,
+        200
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_ME",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "resource": "folder",
+        "name": "=Onboarding \u00b7 {{ $json.body.company }}"
+      },
+      "id": "1f777366-e43d-4172-8006-1a70d20a910a",
+      "name": "Create onboarding folder",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 1,
+      "position": [
+        460,
+        400
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "REPLACE_ME",
+          "name": "Drive"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "post",
+        "channel": "onboarding",
+        "text": "=:wave: New customer \u2014 {{ $('Deal closed-won webhook').item.json.body.company }} ({{ $('Deal closed-won webhook').item.json.body.email }})"
+      },
+      "id": "06cbe739-0a6c-4f99-bb1c-a904518d67bc",
+      "name": "Slack #onboarding",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        680,
+        300
+      ],
+      "credentials": {
+        "slackApi": {
+          "id": "REPLACE_ME",
+          "name": "Slack workspace"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Deal closed-won webhook": {
+      "main": [
+        [
+          {
+            "node": "Welcome email",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Create onboarding folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Welcome email": {
+      "main": [
+        [
+          {
+            "node": "Slack #onboarding",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "7139f1ac-26aa-4e73-962e-a629aba2109c",
+  "id": "2640cfd2-f3c9-48d7-9db0-f640efc24527",
+  "meta": {
+    "instanceId": "aiprosol-starter-library-v1"
+  },
+  "tags": [],
+  "pinData": {}
+}

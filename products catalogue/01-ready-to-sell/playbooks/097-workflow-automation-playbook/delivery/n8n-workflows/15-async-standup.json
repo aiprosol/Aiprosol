@@ -1,0 +1,234 @@
+{
+  "name": "Aiprosol — Async standup aggregator",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "30 9 * * 1-5"
+            }
+          ]
+        }
+      },
+      "id": "7e6c5ca8-2190-4125-97ca-504ee65d3c9b",
+      "name": "Weekday 9:30",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1",
+              "name": "members",
+              "value": "=[\"U01\",\"U02\",\"U03\",\"U04\"]",
+              "type": "array"
+            }
+          ]
+        }
+      },
+      "id": "fe9c7a9a-1f4b-4a1d-a4a2-a296e6fc67a4",
+      "name": "Team list",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "select": "user",
+        "user": "={{ $json }}",
+        "text": "Standup time! In one message: (1) What did you ship yesterday? (2) What's today? (3) Any blockers?"
+      },
+      "id": "2b1a6b06-8563-4e9e-a676-28edec4a0d89",
+      "name": "DM each member",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resume": "timeInterval",
+        "amount": 30,
+        "unit": "minutes"
+      },
+      "id": "afb99046-be43-4597-afb3-4a3e1ac3fb8b",
+      "name": "Wait 30 min",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        840,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "getAll",
+        "channel": "={{ $json.dm_channel_id }}"
+      },
+      "id": "254d21f6-f0d8-4e5a-96c7-7e3707e0a7ad",
+      "name": "Read DM threads",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        1040,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Summarise the team standup. Sections: Yesterday shipped, Today's priorities, Blockers (call them out clearly with names), Cross-team coordination needed."
+            },
+            {
+              "role": "user",
+              "content": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        }
+      },
+      "id": "9ecd1fa6-f1c3-4be4-bcc5-c5840cb5c7c8",
+      "name": "AI standup summary",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        1240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "#standup",
+        "text": "=📋 *Standup — {{ $now.format('EEE dd MMM') }}*\\n\\n{{ $json.message.content }}"
+      },
+      "id": "c7f6f588-9207-4045-ae5d-c107c0b23f86",
+      "name": "Post to #standup",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        1440,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Weekday 9:30": {
+      "main": [
+        [
+          {
+            "node": "Team list",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Team list": {
+      "main": [
+        [
+          {
+            "node": "DM each member",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DM each member": {
+      "main": [
+        [
+          {
+            "node": "Wait 30 min",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 30 min": {
+      "main": [
+        [
+          {
+            "node": "Read DM threads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read DM threads": {
+      "main": [
+        [
+          {
+            "node": "AI standup summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI standup summary": {
+      "main": [
+        [
+          {
+            "node": "Post to #standup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "operations"
+    },
+    {
+      "name": "team"
+    },
+    {
+      "name": "pattern-4"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-playbook-v1"
+  },
+  "pinData": {},
+  "versionId": "a8e64be7-2dea-4ac4-abdc-d5ed61957407",
+  "id": "4fd41633-9325-4ecb-b8c7-5679f4db04ac",
+  "_aiprosol": {
+    "description": "Weekday 9:30 → DM team prompts → collect by 10:00 → AI summary → #standup",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

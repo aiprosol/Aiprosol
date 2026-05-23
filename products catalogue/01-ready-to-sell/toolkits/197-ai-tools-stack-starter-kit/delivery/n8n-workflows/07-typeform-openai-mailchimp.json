@@ -1,0 +1,113 @@
+{
+  "name": "Aiprosol Stack — Typeform survey → OpenAI synthesis → Mailchimp",
+  "nodes": [
+    {
+      "parameters": {
+        "formId": "SURVEY_ID"
+      },
+      "id": "1d03a049-6836-403b-ae8e-22e1470bd890",
+      "name": "Typeform response",
+      "type": "n8n-nodes-base.typeformTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Pick the right 5-email sequence to add this respondent to based on their answers."
+            },
+            {
+              "role": "user",
+              "content": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        }
+      },
+      "id": "0fe5f0d8-b14f-40de-b992-a262e59234ef",
+      "name": "AI synthesis",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "memberTag",
+        "operation": "create",
+        "list": "LIST_ID"
+      },
+      "id": "cd466228-5f22-41bd-b2d2-0feacf5d9871",
+      "name": "Mailchimp add",
+      "type": "n8n-nodes-base.mailchimp",
+      "typeVersion": 2,
+      "position": [
+        640,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Typeform response": {
+      "main": [
+        [
+          {
+            "node": "AI synthesis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI synthesis": {
+      "main": [
+        [
+          {
+            "node": "Mailchimp add",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "stack"
+    },
+    {
+      "name": "typeform"
+    },
+    {
+      "name": "mailchimp"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "0e824401-8bd2-4b76-8711-61a6651e2cdb",
+  "id": "d0d87340-731b-4b4a-b67a-6bf19d9042a9",
+  "_aiprosol": {
+    "description": "Survey responses → AI synthesises themes → personalised follow-up email sequence in Mailchimp.",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

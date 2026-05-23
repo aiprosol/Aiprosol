@@ -1,0 +1,152 @@
+{
+  "name": "Aiprosol Stack — Gmail meeting request → Claude → Calendar suggestion",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "filters": {
+          "q": "(\"meeting\" OR \"call\") in:inbox"
+        }
+      },
+      "id": "c8f31956-ba08-4b43-a01a-e8eb15b9521b",
+      "name": "Gmail trigger",
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "event",
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "primary"
+        },
+        "additionalFields": {
+          "timeMin": "={{ $now.toISO() }}",
+          "timeMax": "={{ $now.plus(7, 'days').toISO() }}"
+        }
+      },
+      "id": "e36fea50-c6a2-4a44-bea6-18bb60a26fdd",
+      "name": "Read free slots",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "model": "claude-3-5-sonnet-20241022",
+        "messages": {
+          "values": [
+            {
+              "role": "user",
+              "content": "=From the email body, infer if they want a call and pick 3 good slots from my calendar availability. Email: {{ $('Gmail trigger').first().json.snippet }}\\nMy slots: {{ JSON.stringify($json) }}"
+            }
+          ]
+        }
+      },
+      "id": "22898787-917b-454d-9705-845cab5dc06e",
+      "name": "Claude intent + slots",
+      "type": "@n8n/n8n-nodes-langchain.anthropic",
+      "typeVersion": 1,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "reply",
+        "messageId": "={{ $('Gmail trigger').first().json.id }}",
+        "message": "={{ $json.content }}\\n\\nBook a slot: https://cal.com/youraccount"
+      },
+      "id": "9b98e386-87bf-40fc-b8ac-d79325705e17",
+      "name": "Reply with options",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        840,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Gmail trigger": {
+      "main": [
+        [
+          {
+            "node": "Read free slots",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read free slots": {
+      "main": [
+        [
+          {
+            "node": "Claude intent + slots",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude intent + slots": {
+      "main": [
+        [
+          {
+            "node": "Reply with options",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "stack"
+    },
+    {
+      "name": "gmail"
+    },
+    {
+      "name": "claude"
+    },
+    {
+      "name": "calendar"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "0cecab90-803e-4dbb-b4f6-d376179c381f",
+  "id": "eda65f40-8d4e-44ed-be1a-6564c72ff6df",
+  "_aiprosol": {
+    "description": "Email with 'meeting' or 'call' in the body triggers Claude to detect intent, propose 3 calendar slots from your availability, and reply with a Calendly link.",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

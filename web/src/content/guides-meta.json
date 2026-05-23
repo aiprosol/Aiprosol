@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "definitive-guide-ai-automation-smbs-2026",
+    "title": "The Definitive Guide to AI Automation for SMBs in 2026",
+    "description": "A 30-minute operating manual for SMB owners deciding whether and how to invest in AI automation. The 5-step audit, 7 core patterns, 5 anti-patterns, build-vs-buy framework, and 90-day deployment plan.",
+    "publishedDate": "2026-05-15",
+    "updatedDate": "2026-05-15",
+    "readTime": 30
+  },
+  {
+    "slug": "definitive-guide-lead-generation-automation-2026",
+    "title": "The Definitive Guide to Lead Generation Automation in 2026",
+    "description": "The system Aiprosol designs for sub-3-minute response time + 21x qualification lift. The 4-component scoring model, 5-touch nurture sequence, routing decision tree, dashboard spec, and the 30-day implementation plan.",
+    "publishedDate": "2026-05-15",
+    "updatedDate": "2026-05-15",
+    "readTime": 30
+  },
+  {
+    "slug": "definitive-guide-customer-support-ai-2026",
+    "title": "The Definitive Guide to AI Customer Support in 2026",
+    "description": "How to deploy AI customer support without burning CSAT. The deflection math, 5-layer escalation system, RAG over your knowledge base, 4-week phased rollout, and the dashboard you need.",
+    "publishedDate": "2026-05-15",
+    "updatedDate": "2026-05-15",
+    "readTime": 30
+  }
+]

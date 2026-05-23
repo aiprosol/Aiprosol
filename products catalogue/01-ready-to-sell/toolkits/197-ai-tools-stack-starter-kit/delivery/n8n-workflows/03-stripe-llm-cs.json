@@ -1,0 +1,144 @@
+{
+  "name": "Aiprosol Stack — Stripe new customer → LLM kickoff brief → CS workspace",
+  "nodes": [
+    {
+      "parameters": {
+        "events": [
+          "customer.created"
+        ]
+      },
+      "id": "7d548acc-bd36-4e43-b487-1f137a84345f",
+      "name": "Stripe new customer",
+      "type": "n8n-nodes-base.stripeTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://company.clearbit.com/v2/companies/find?domain={{ $json.email.split('@')[1] }}"
+      },
+      "id": "fe2dcc36-ccfc-45b2-8ddd-4477ef6e2e3a",
+      "name": "Lookup industry from domain",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Write a 200-word kickoff brief for our CS team. Sections: their context, likely goals, 3 onboarding priorities."
+            },
+            {
+              "role": "user",
+              "content": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        }
+      },
+      "id": "b6701e75-a6bc-4b11-b867-9be54801f616",
+      "name": "Draft kickoff brief",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "create",
+        "databaseId": "CS_DB_ID",
+        "title": "={{ $('Stripe new customer').first().json.name || $('Stripe new customer').first().json.email }}"
+      },
+      "id": "f910f5b1-2852-4ced-8b60-d1e12c5758b2",
+      "name": "Create CS workspace",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        840,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Stripe new customer": {
+      "main": [
+        [
+          {
+            "node": "Lookup industry from domain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lookup industry from domain": {
+      "main": [
+        [
+          {
+            "node": "Draft kickoff brief",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Draft kickoff brief": {
+      "main": [
+        [
+          {
+            "node": "Create CS workspace",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "stack"
+    },
+    {
+      "name": "stripe"
+    },
+    {
+      "name": "openai"
+    },
+    {
+      "name": "notion"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "514697c6-a782-434b-999e-7f04d09c96ca",
+  "id": "d5ef29be-fe41-4ceb-b7ef-84decd0ada37",
+  "_aiprosol": {
+    "description": "Every new Stripe customer triggers an LLM-generated welcome brief (with their industry context) and creates a Notion CS workspace page with the brief embedded.",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

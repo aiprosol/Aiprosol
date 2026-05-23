@@ -1,0 +1,116 @@
+{
+  "name": "Aiprosol Stack — Monday.com status change → OpenAI summary → Slack",
+  "nodes": [
+    {
+      "parameters": {
+        "events": [
+          "status_changed"
+        ]
+      },
+      "id": "5a89b799-0ea5-4b00-b32e-29811671410d",
+      "name": "Monday status change",
+      "type": "n8n-nodes-base.mondayComTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o-mini"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "1-paragraph summary of this Monday.com status change with context."
+            },
+            {
+              "role": "user",
+              "content": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        }
+      },
+      "id": "4c1004f6-bb94-4564-9bd7-d87f46a8b05f",
+      "name": "Summarise change",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "#projects",
+        "text": "={{ $json.message.content }}"
+      },
+      "id": "4251e368-4ee1-4c7f-806b-79839dfd4e36",
+      "name": "Slack ping",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        640,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Monday status change": {
+      "main": [
+        [
+          {
+            "node": "Summarise change",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarise change": {
+      "main": [
+        [
+          {
+            "node": "Slack ping",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "stack"
+    },
+    {
+      "name": "monday"
+    },
+    {
+      "name": "slack"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "2c261da3-d91b-4d7d-bd01-038a4094eee9",
+  "id": "ff5aa711-24c9-4a6a-bf2b-71df6a582447",
+  "_aiprosol": {
+    "description": "Status column changes in Monday.com → OpenAI generates a 1-paragraph context summary → posts to relevant Slack channel.",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Lead Generation Automation Playbook — Aiprosol</title>
+<style>
+:root { color-scheme: light dark; }
+* { box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif;
+  max-width: 760px; margin: 0 auto; padding: 56px 32px 96px;
+  line-height: 1.75; color: #1F1B2E; background: #FAF8FF;
+}
+@media (prefers-color-scheme: dark) {
+  body { color: #E5E7EB; background: #0A0613; }
+  a { color: #C084FC; }
+  blockquote { background: rgba(139, 92, 246, 0.08); border-left-color: #8B5CF6; color: #C7CEDB; }
+  code { background: rgba(139, 92, 246, 0.12); color: #C084FC; }
+  pre { background: rgba(0,0,0,0.45); border: 1px solid #2A1F3D; }
+  hr { border-color: #2A1F3D; }
+  table { border-color: #2A1F3D; }
+  th { background: #1A1428; }
+  td, th { border-color: #2A1F3D; }
+  tr:nth-child(even) { background: rgba(139, 92, 246, 0.04); }
+}
+h1, h2, h3, h4 { font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.2; letter-spacing: -0.01em; }
+h1 { font-size: 36px; margin: 0 0 28px; font-weight: 800; background: linear-gradient(135deg, #8B5CF6, #C084FC); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+h2 { font-size: 24px; margin-top: 48px; margin-bottom: 14px; font-weight: 700; padding-bottom: 8px; border-bottom: 1px solid rgba(139,92,246,0.3); }
+h3 { font-size: 18px; margin-top: 28px; margin-bottom: 10px; font-weight: 700; color: #8B5CF6; }
+@media (prefers-color-scheme: dark) { h3 { color: #C084FC; } }
+h4 { font-size: 15px; margin-top: 18px; margin-bottom: 6px; font-weight: 700; }
+p { margin: 12px 0; }
+a { color: #6D28D9; text-decoration: underline; text-underline-offset: 3px; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+blockquote { background: rgba(139,92,246,0.05); border-left: 3px solid #8B5CF6; padding: 14px 22px; margin: 22px 0; color: #4A4660; border-radius: 6px; }
+hr { border: 0; border-top: 1px solid rgba(139,92,246,0.18); margin: 40px 0; }
+ul, ol { padding-left: 26px; }
+li { margin: 6px 0; }
+code { background: rgba(139,92,246,0.08); padding: 2px 8px; border-radius: 5px; font-family: 'JetBrains Mono', SFMono-Regular, ui-monospace, monospace; font-size: 0.9em; color: #6D28D9; }
+pre { background: #F4F1FA; padding: 18px 22px; border-radius: 10px; overflow-x: auto; border: 1px solid rgba(139,92,246,0.15); margin: 18px 0; }
+pre code { background: none; padding: 0; color: inherit; font-size: 13px; line-height: 1.6; }
+table { border-collapse: collapse; width: 100%; margin: 22px 0; font-size: 14px; border: 1px solid rgba(139,92,246,0.2); border-radius: 8px; overflow: hidden; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid rgba(139,92,246,0.12); }
+th { background: rgba(139,92,246,0.08); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #6D28D9; }
+tr:nth-child(even) { background: rgba(139,92,246,0.025); }
+.brand-footer { margin-top: 80px; padding-top: 28px; border-top: 1px solid rgba(139,92,246,0.18); font-size: 12px; color: #6B7585; text-align: center; }
+.brand-footer a { color: #8B5CF6; text-decoration: none; }
+.brand-footer a:hover { text-decoration: underline; }
+@media print {
+  body { padding: 0; max-width: 100%; }
+  h1 { page-break-after: avoid; }
+  h2, h3 { page-break-after: avoid; page-break-inside: avoid; }
+  pre, blockquote, table { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<h1>The Lead Generation Automation Playbook</h1>
+
+<p><strong>The most-bought Aiprosol product. Sub-3-minute response architecture, lead scoring engine, CRM sync. Pays back in week 1.</strong></p>
+
+<p>Version 1.0 · 2026 · Includes scoring model + 5-touch email sequence + cold outreach library + the lead-relevant n8n workflow starters from the shared <code>n8n-workflows/</code> folder</p>
+
+<hr>
+
+<h2>Why this exists</h2>
+
+<p>Most B2B lead-gen automations leak money for one reason: <strong>slow response time</strong>. The data is brutal:</p>
+
+<ul><li>Respond inside 3 minutes → 21x more likely to qualify the lead</li><li>Respond inside 5 minutes → 9x more likely  </li><li>Respond inside 30 minutes → baseline</li><li>Respond after 24 hours → competitor already in the room</li></ul>
+Yet 67% of B2B companies take &gt;24h to respond to inbound leads. The reason isn't capacity — it's that nobody has built the system. This playbook is the system.
+
+<hr>
+
+<h2>Part 1 · The 4-Component Scoring Model (100 points)</h2>
+
+<p>Every inbound lead gets scored on four axes. Total 0–100. Score drives routing.</p>
+
+<h3>FIT (40 points)</h3>
+*Is this the kind of customer who'd succeed with us?*
+
+<table><thead><tr><th>Signal</th><th>Points</th></tr></thead><tbody><tr><td>Company size 10–500 employees</td><td>+15</td></tr><tr><td>Revenue band $1M–$50M annual</td><td>+10</td></tr><tr><td>Industry in our top-7 ICP (Legal, Finance, RE, SaaS, Pro Services, E-com, Health)</td><td>+10</td></tr><tr><td>Title is decision-maker (Founder, COO, Head of Ops, CTO)</td><td>+5</td></tr></tbody></table>
+<h3>INTENT (30 points)</h3>
+*How explicitly are they asking for what we sell?*
+
+<table><thead><tr><th>Signal</th><th>Points</th></tr></thead><tbody><tr><td>Filled the ROI Audit form (vs. newsletter)</td><td>+15</td></tr><tr><td>Reported manual hours/week ≥ 30</td><td>+10</td></tr><tr><td>Wrote &gt;100 chars in primary-challenge field</td><td>+5</td></tr></tbody></table>
+<h3>ENGAGEMENT (20 points)</h3>
+*Behavioural breadcrumbs.*
+
+<table><thead><tr><th>Signal</th><th>Points</th></tr></thead><tbody><tr><td>Visited ≥ 3 pages in same session</td><td>+5</td></tr><tr><td>Viewed pricing page</td><td>+5</td></tr><tr><td>Returned within 7 days</td><td>+5</td></tr><tr><td>Engaged with prior email (open + click)</td><td>+5</td></tr></tbody></table>
+<h3>URGENCY (10 points)</h3>
+*Are they buying now, or in 6 months?*
+
+<table><thead><tr><th>Signal</th><th>Points</th></tr></thead><tbody><tr><td>Mentioned "next quarter," "this week," "ASAP"</td><td>+5</td></tr><tr><td>Currently on a competitor's tool (switch signal)</td><td>+5</td></tr></tbody></table>
+<h3>Routing thresholds</h3>
+
+<table><thead><tr><th>Score</th><th>Route</th><th>SLA</th></tr></thead><tbody><tr><td>85–100</td><td>"Hot": SDR Slack ping + Calendly book link</td><td>5 minutes</td></tr><tr><td>65–84</td><td>"Warm": SDR queue with same-day call SLA</td><td>4 hours</td></tr><tr><td>40–64</td><td>"Nurture": 5-touch email sequence</td><td>Auto</td></tr><tr><td>0–39</td><td>"Future": archive to long-term nurture, quarterly re-score</td><td>Auto</td></tr></tbody></table>
+<hr>
+
+<h2>Part 2 · The Sub-3-Minute Response Architecture</h2>
+
+<p>The goal: from form submission → first acknowledgment in the lead's inbox in &lt;180 seconds.</p>
+
+<p><pre><code>
+[Form submit]
+     ↓
+[Validate + enrich] (Clearbit/Apollo, 5-15s)
+     ↓
+[Score using model above] (1s)
+     ↓
+[Decision]
+   ├── Hot (≥85) → personalised email + Calendly link + Slack to AE (45s)
+   ├── Warm (65-84) → personalised email + 4h SLA queue (45s)
+   ├── Nurture (40-64) → enter 5-touch sequence (5s)
+   └── Future (&lt;40) → archive (1s)
+     ↓
+[Log to CRM with score, segment, source attribution] (3s)
+</code></pre></p>
+
+<p>Total: ~60-90 seconds. Well inside the 3-minute window.</p>
+
+<p><strong>Critical infrastructure:</strong> <ul><li>Form posts directly to your serverless function or workflow tool — NOT to a CRM that processes async</li><li>Enrichment is fire-and-forget if it takes &gt;15s</li><li>The acknowledgment email is templated; only the personalisation tokens are dynamic</li><li>The CRM log is the LAST step, never blocking the response</li></ul> <hr></p>
+
+<h2>Part 3 · The 5-Touch Nurture Sequence</h2>
+
+<p>For Warm leads (65–84) who don't book a call within 48 hours, and for Nurture (40–64) automatically.</p>
+
+<h3>Touch 1 — Immediate (within minutes of form)</h3>
+
+<p><strong>Subject:</strong> Your {{industry}} automation audit is ready</p>
+
+<p><strong>Body:</strong> <blockquote>Hi {{firstName}},<br><br>Thanks for spending 60 seconds on the ROI Audit. Based on what you shared, here's what I'd prioritise:<br><br><strong>Your top opportunity</strong>: {{topOpportunity}}<br><strong>Estimated weekly hours reclaimable</strong>: {{weeklyHrs}}<br><strong>Annual saving at your hourly cost</strong>: ${{annualSaving}}<br><br>If you want to walk through this together, my calendar is at {{calendlyLink}}.<br><br>Otherwise, hit reply with one question and I'll send back a tailored answer within 24 hours.<br><br>— Srijan, Founder</blockquote> <strong>Send timing</strong>: immediately. Personalisation tokens come from form payload + scoring model.</p>
+
+<h3>Touch 2 — Day 3 — Relevant case study</h3>
+
+<p><strong>Subject:</strong> {{competitorOrSimilar}} reclaimed 38 hrs/week. Here's how they did it.</p>
+
+<p><strong>Body</strong>: 2-paragraph snapshot of an anonymised, industry-matched case study. CTA to read full version.</p>
+
+<h3>Touch 3 — Day 7 — A specific objection killer</h3>
+
+<p><strong>Subject:</strong> "Won't the AI just hallucinate?" — and other things people ask</p>
+
+<p><strong>Body</strong>: Direct, plain-language answer to the most common objection in their industry. Link to /how-we-measure.</p>
+
+<h3>Touch 4 — Day 14 — Permission-based check-in</h3>
+
+<p><strong>Subject:</strong> Should I keep these emails coming, or pause?</p>
+
+<p><strong>Body</strong>: 3-button respond: Keep going · Pause 30 days · Unsubscribe. Hit "Keep going" → continues sequence. The pause button matters more than you'd think — it builds trust and saves your domain reputation.</p>
+
+<h3>Touch 5 — Day 21 — Lo-fi offer</h3>
+
+<p><strong>Subject:</strong> Want me to draft 1 automation for you this week — free?</p>
+
+<p><strong>Body</strong>: Offer a 30-min "build one with you" session. Free, no pitch. Open conversations that book paid plans later.</p>
+
+<hr>
+
+<h2>Part 4 · n8n workflow starters (in the `n8n-workflows/` folder)</h2>
+
+<p>The shared starter library includes the 4 lead-relevant flows you can extend:</p>
+
+<table><thead><tr><th>File</th><th>What it does</th><th>Map to this playbook</th></tr></thead><tbody><tr><td><code>03-sales-form-score-route-slack.json</code></td><td>Form submit → score → Slack route</td><td>Sub-3-min architecture (Part 2)</td></tr><tr><td><code>08-sales-cold-reply-intent-classifier.json</code></td><td>Cold reply → AI intent → branch</td><td>Reply triage post-sequence</td></tr><tr><td><code>02-sales-calendly-ai-prep-brief.json</code></td><td>Calendly booking → AE prep brief</td><td>Convert step</td></tr><tr><td><code>01-sales-stripe-charge-to-hubspot.json</code></td><td>Closed-won → deal stage update</td><td>Convert step + downstream CRM sync</td></tr></tbody></table>
+The 4 above are the production-shaped starters. The other 8 lead-gen workflows referenced in this playbook (capture-multi-source, score-only sub-workflow, score-to-segment router, round-robin SDR, 5-touch orchestrator, pause/unsubscribe handler, 90-day re-engagement, closed-won onboarding kickoff) are documented as extensions you build on top of the same patterns. Build the master capture workflow first — the others fall out naturally.
+
+<h3>Honest scope</h3>
+
+<p>You're paying $127 for the <strong>system</strong> (scoring model, sequence copy, routing tree, dashboard spec, cold outreach library) — not 12 prebuilt workflows. The 4 starters above are the seed; the patterns are universally applicable to extend.</p>
+
+<hr>
+
+<h2>Part 5 · The Routing Decision Tree</h2>
+
+<p><pre><code>
+New lead in
+    ↓
+[Email valid?] → No → archive ("bad data")
+    ↓ Yes
+[Score]
+    ↓
+[Score ≥ 85?] → Yes → HOT branch
+    ↓ No
+[Score 65-84?] → Yes → WARM branch
+    ↓ No
+[Score 40-64?] → Yes → NURTURE (auto-enter sequence)
+    ↓ No
+[Archive as FUTURE]
+
+HOT branch:
+    → Send acknowledgment email
+    → Slack #leads-hot with @AE-on-rota
+    → Open Calendly link in email body
+    → SLA: AE responds within 5 min
+    → If no AE response in 10 min → escalate to founder
+
+WARM branch:
+    → Send acknowledgment email
+    → Add to SDR daily queue
+    → SLA: SDR responds same business day
+    → If no SDR response in 4 hr → escalate to manager
+</code></pre></p>
+
+<hr>
+
+<h2>Part 6 · The Dashboard Spec</h2>
+
+<p>Leading + lagging indicators. Refresh daily. Source of truth for whether the system is working.</p>
+
+<p><strong>Leading (responsive — predicts next week's revenue)</strong> <ul><li>Leads/day by source (form / LinkedIn / referral / cold reply)</li><li>Median + p95 time-to-first-response (target: median &lt; 3 min, p95 &lt; 5 min)</li><li>Score distribution: % in each segment (Hot/Warm/Nurture/Future)</li><li>Sequence step-through rate per touch (Touch 1 → 2 → 3 → 4 → 5 conversion)</li></ul> <strong>Lagging (definitive — what actually happened)</strong> <ul><li>Leads → SQL (sales-qualified) %</li><li>SQL → Won % (and avg sales cycle)</li><li>Revenue/lead by source</li><li>Best-converting score range (validate the scoring model is right)</li><li>Worst-converting score range (the holes in your model)</li></ul> <strong>Weekly closed-loop iteration</strong> <ul><li>Every Monday: 30 minutes reviewing the dashboard</li><li>Did any segment over- or under-perform vs. expectation?</li><li>Tune scoring weights, edit copy, change routing thresholds — one change/week</li><li>After 12 weeks of weekly tuning, you have a system that out-converts anything off-the-shelf</li></ul> <hr></p>
+
+<h2>Part 7 · The Bonus — 8-Pattern Cold Outreach Library</h2>
+
+<p>Eight cold-outreach templates that have actually booked meetings for Aiprosol clients. Each comes with: <ul><li>Subject line (A + B variants)</li><li>Body copy</li><li>Personalisation token map</li><li>Reply-rate baseline + when to use this template vs. another</li></ul> Patterns covered (full templates in the included <code>cold-outreach-library.md</code>): <ol><li>The 30-second value claim</li><li>The competitor switch</li><li>The peer reference</li><li>The mutual connection</li><li>The "I noticed" trigger event</li><li>The contrarian opinion</li><li>The pure question</li><li>The PS-only</li></ol> Each with subject A/B variants, full body copy, personalisation token map, reply-rate baseline.</p>
+
+<hr>
+
+<h2>Ship Today</h2>
+
+<p>Build the master capture flow (workflow #1 above) for ONE entry source — your ROI Audit form. Set the score thresholds. Wire the acknowledgment email. Test with 3 real-shaped payloads.</p>
+
+<p>That's a 60-minute build. From tomorrow you're responding in under 3 minutes while your competitors are sleeping on it.</p>
+
+<hr>
+
+<p><em>Aiprosol designs, builds, and operates lead-gen automation for clients. If you'd rather have us build this for you, see aiprosol.com/services/ai-powered-lead-generation.</em></p>
+<div class="brand-footer">
+  Aiprosol · <a href="https://aiprosol.com">aiprosol.com</a> · Automate the boring. Scale the important.
+</div>
+</body>
+</html>

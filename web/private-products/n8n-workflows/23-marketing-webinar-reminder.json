@@ -1,0 +1,130 @@
+{
+  "name": "Marketing \u00b7 Webinar registration \u2192 reminder cadence",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "webinar-registered",
+        "responseMode": "lastNode"
+      },
+      "id": "1e49a332-1959-470c-9ec4-5a01ddcf40a9",
+      "name": "Webinar registration webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "sendTo": "={{ $json.body.email }}",
+        "subject": "You're registered for the webinar",
+        "message": "=Hi {{ $json.body.firstName }}, you're confirmed for {{ $json.body.webinarName }} on {{ $json.body.startTime }}. Add to calendar: {{ $json.body.calendarLink }}"
+      },
+      "id": "2d97fb4b-ead1-4e43-844c-c2db3d36e524",
+      "name": "Confirmation",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 1,
+      "position": [
+        460,
+        300
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_ME",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 0 * * *"
+            }
+          ]
+        }
+      },
+      "id": "c49ab344-0f39-4f1e-bc43-4905a2b39455",
+      "name": "Wait until 24h before",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "sendTo": "={{ $('Webinar registration webhook').item.json.body.email }}",
+        "subject": "Tomorrow: {{ $('Webinar registration webhook').item.json.body.webinarName }}",
+        "message": "=Quick reminder \u2014 your webinar is tomorrow. Join link: {{ $('Webinar registration webhook').item.json.body.joinUrl }}"
+      },
+      "id": "affcaa94-c3fb-477f-b87a-87a1aa5d3586",
+      "name": "24h reminder",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 1,
+      "position": [
+        900,
+        300
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_ME",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webinar registration webhook": {
+      "main": [
+        [
+          {
+            "node": "Confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Confirmation": {
+      "main": [
+        [
+          {
+            "node": "Wait until 24h before",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait until 24h before": {
+      "main": [
+        [
+          {
+            "node": "24h reminder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "879b4aa4-7d5b-48dc-9016-0ab8378e6b24",
+  "id": "c0615aeb-6d5f-4b41-952f-4113da225fc7",
+  "meta": {
+    "instanceId": "aiprosol-starter-library-v1"
+  },
+  "tags": [],
+  "pinData": {}
+}

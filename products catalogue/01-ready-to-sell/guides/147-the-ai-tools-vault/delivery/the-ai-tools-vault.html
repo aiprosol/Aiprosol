@@ -1,0 +1,320 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>The Aiprosol AI Tools Vault — Aiprosol</title><style>
+:root { color-scheme: light dark; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif; max-width: 760px; margin: 0 auto; padding: 56px 32px 96px; line-height: 1.75; color: #1F1B2E; background: #FAF8FF; }
+@media (prefers-color-scheme: dark) { body { color: #E5E7EB; background: #0A0613; } a { color: #C084FC; } blockquote { background: rgba(139,92,246,0.08); border-left-color: #8B5CF6; color: #C7CEDB; } code { background: rgba(139,92,246,0.12); color: #C084FC; } pre { background: rgba(0,0,0,0.45); border: 1px solid #2A1F3D; } hr { border-color: #2A1F3D; } table { border-color: #2A1F3D; } th { background: #1A1428; } td, th { border-color: #2A1F3D; } tr:nth-child(even) { background: rgba(139,92,246,0.04); } }
+h1, h2, h3, h4 { font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.2; letter-spacing: -0.01em; }
+h1 { font-size: 36px; margin: 0 0 28px; font-weight: 800; background: linear-gradient(135deg, #8B5CF6, #C084FC); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+h2 { font-size: 24px; margin-top: 48px; margin-bottom: 14px; font-weight: 700; padding-bottom: 8px; border-bottom: 1px solid rgba(139,92,246,0.3); }
+h3 { font-size: 18px; margin-top: 28px; margin-bottom: 10px; font-weight: 700; color: #8B5CF6; }
+@media (prefers-color-scheme: dark) { h3 { color: #C084FC; } }
+h4 { font-size: 15px; margin-top: 18px; margin-bottom: 6px; font-weight: 700; }
+p { margin: 12px 0; }
+a { color: #6D28D9; text-decoration: underline; text-underline-offset: 3px; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+blockquote { background: rgba(139,92,246,0.05); border-left: 3px solid #8B5CF6; padding: 14px 22px; margin: 22px 0; color: #4A4660; border-radius: 6px; }
+hr { border: 0; border-top: 1px solid rgba(139,92,246,0.18); margin: 40px 0; }
+ul, ol { padding-left: 26px; }
+li { margin: 6px 0; }
+code { background: rgba(139,92,246,0.08); padding: 2px 8px; border-radius: 5px; font-family: 'JetBrains Mono', SFMono-Regular, ui-monospace, monospace; font-size: 0.9em; color: #6D28D9; }
+pre { background: #F4F1FA; padding: 18px 22px; border-radius: 10px; overflow-x: auto; border: 1px solid rgba(139,92,246,0.15); margin: 18px 0; }
+pre code { background: none; padding: 0; color: inherit; font-size: 13px; line-height: 1.6; }
+table { border-collapse: collapse; width: 100%; margin: 22px 0; font-size: 14px; border: 1px solid rgba(139,92,246,0.2); border-radius: 8px; overflow: hidden; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid rgba(139,92,246,0.12); }
+th { background: rgba(139,92,246,0.08); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #6D28D9; }
+tr:nth-child(even) { background: rgba(139,92,246,0.025); }
+.brand-footer { margin-top: 80px; padding-top: 28px; border-top: 1px solid rgba(139,92,246,0.18); font-size: 12px; color: #6B7585; text-align: center; }
+.brand-footer a { color: #8B5CF6; text-decoration: none; }
+@media print { body { padding: 0; max-width: 100%; } h1 { page-break-after: avoid; } h2, h3 { page-break-after: avoid; page-break-inside: avoid; } pre, blockquote, table { page-break-inside: avoid; } }
+</style></head><body>
+<h1>The Aiprosol AI Tools Vault</h1>
+<p><strong>A working operator's vault: 120+ AI tools across 14 categories. Organised, searchable, with one-line "when to pick" calls. Companion to the Comparison Guide — that's the deep-dive reference; this is the breadth library.</strong></p>
+<p>Version 1.0 · 2026 · © Aiprosol Ltd</p>
+<hr />
+<h2>How this differs from the Comparison Guide</h2>
+<table>
+<thead>
+<tr>
+<th>Comparison Guide ($67)</th>
+<th>This Vault ($147)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>60+ tools, 5 fields each, deep</td>
+<td>120+ tools, 1-2 lines each, broad</td>
+</tr>
+<tr>
+<td>Opinionated picks per category</td>
+<td>Comprehensive picks INCLUDING niche</td>
+</tr>
+<tr>
+<td>"Aiprosol verdict" per tool</td>
+<td>"When to pick this over the default"</td>
+</tr>
+<tr>
+<td>9 categories</td>
+<td>14 categories</td>
+</tr>
+<tr>
+<td>For when you're ready to commit</td>
+<td>For when you're scoping the landscape</td>
+</tr>
+</tbody>
+</table>
+<p>If you don't already own the Comparison Guide, this Vault references its picks but stands alone.</p>
+<hr />
+<h2>Decision shortcut — pick by job</h2>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>Default pick</th>
+<th>When to break the default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Build a chatbot</td>
+<td>Intercom Fin (if on Intercom), Chatbase (if standalone)</td>
+<td>High-volume + own data → custom on Claude API + RAG</td>
+</tr>
+<tr>
+<td>Automate workflows</td>
+<td>Make.com</td>
+<td>Self-host → n8n; complex enterprise → Workato</td>
+</tr>
+<tr>
+<td>Generate text</td>
+<td>Claude Sonnet 4.5</td>
+<td>Need vision + voice → GPT-4o; need 2M context → Gemini</td>
+</tr>
+<tr>
+<td>Voice agent</td>
+<td>Vapi.ai</td>
+<td>&lt;100 calls/day → Bland; &gt;1k/day → DIY on Twilio</td>
+</tr>
+<tr>
+<td>Code AI</td>
+<td>Cursor</td>
+<td>Compliance-locked → GitHub Copilot Business</td>
+</tr>
+<tr>
+<td>Image generation</td>
+<td>Midjourney v7</td>
+<td>Need brand consistency → Adobe Firefly; prefer SDXL → Flux</td>
+</tr>
+<tr>
+<td>Document AI</td>
+<td>Reducto</td>
+<td>Forms-heavy → Hyperscience; receipts only → Veryfi</td>
+</tr>
+<tr>
+<td>Sales calls AI</td>
+<td>Fathom</td>
+<td>Already on Zoom → Otter native</td>
+</tr>
+<tr>
+<td>Customer research</td>
+<td>Tldv or Granola</td>
+<td>Hands-off summary only → Otter</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1>§1 · Foundation models (the brains) — 11 tools</h1>
+<p>Beyond the 7 in the Comparison Guide, these are the niche / special-purpose models worth knowing:</p>
+<ul>
+<li><strong>Anthropic Claude (Opus 4.6+, Sonnet 4.5, Haiku 4)</strong> — production default</li>
+<li><strong>OpenAI GPT-4o, GPT-4.5, o1</strong> — multimodal + reasoning</li>
+<li><strong>Google Gemini 1.5 Pro, 2.0</strong> — long context, Workspace integration</li>
+<li><strong>Meta Llama 3.3 70B / 405B</strong> — open weights</li>
+<li><strong>Mistral Large 2, Codestral</strong> — EU residency</li>
+<li><strong>DeepSeek V3</strong> — extreme value</li>
+<li><strong>Cohere Command R+</strong> — RAG specialist</li>
+<li><strong>xAI Grok-2, Grok-3</strong> — uncensored, Twitter integration</li>
+<li><strong>Alibaba Qwen 2.5</strong> — strong open-weights, Asian-language strong</li>
+<li><strong>Microsoft Phi-4</strong> — small, efficient, on-device-capable</li>
+<li><strong>Apple Intelligence (Foundation Models)</strong> — iOS / macOS native</li>
+</ul>
+<p><strong>When to pick which:</strong> see Comparison Guide §1. Niche additions:
+- <strong>Grok</strong> for X/Twitter monitoring (only one with first-party Twitter data)
+- <strong>Qwen</strong> if your business operates in CN/JP/KR markets
+- <strong>Phi-4</strong> for on-device deployment (regulatory or offline contexts)</p>
+<hr />
+<h1>§2 · Customer support AI — 14 tools</h1>
+<p><strong>Default:</strong> Intercom Fin (if on Intercom).</p>
+<p><strong>Alternatives by category:</strong></p>
+<ul>
+<li><strong>Standalone resolver bots:</strong> Chatbase, Voiceflow, Cohere Workspace, ChatBotKit</li>
+<li><strong>Helpdesk-native AI:</strong> Zendesk AI Agents, Freshdesk Freddy, Help Scout AI Assist, Intercom Fin, Front AI</li>
+<li><strong>Live-chat with AI:</strong> Tidio Lyro, Crisp, Olark</li>
+<li><strong>Voice + chat:</strong> Cresta, Sierra</li>
+<li><strong>Internal-team AI:</strong> Glean, Forethought (Fortune 500 internal helpdesk)</li>
+</ul>
+<p><strong>Niche picks:</strong></p>
+<ul>
+<li><strong>Sierra</strong> — high-end conversational agents for Fortune 500 (&gt;$10k/month)</li>
+<li><strong>Cresta</strong> — sales/support call AI coach (real-time)</li>
+<li><strong>Glean</strong> — internal employee Q&amp;A over your company knowledge base</li>
+<li><strong>Forethought</strong> — purpose-built for high-volume support orgs (&gt;100 agents)</li>
+</ul>
+<hr />
+<h1>§3 · Workflow automation — 12 tools</h1>
+<p><strong>Default:</strong> Make.com → Zapier → n8n.</p>
+<p><strong>Alternatives:</strong></p>
+<ul>
+<li><strong>Mainstream:</strong> Zapier, Make, n8n, Workato, Tray.ai, Pipedream</li>
+<li><strong>Open-source:</strong> n8n, Activepieces, Huginn (geek-tier)</li>
+<li><strong>Enterprise:</strong> Workato, Tray.ai, Boomi, MuleSoft (heavy)</li>
+<li><strong>Code-first:</strong> Inngest (queue + workflow), Trigger.dev, Temporal (programmer's pick)</li>
+<li><strong>AI-native:</strong> Relay.app, Bardeen (browser-side automation)</li>
+</ul>
+<p><strong>When to pick which:</strong></p>
+<ul>
+<li><strong>Zapier</strong>: smallest learning curve, biggest catalogue, weakest debugger</li>
+<li><strong>Make</strong>: best visual debugger, mid catalogue, mid learning curve</li>
+<li><strong>n8n</strong>: free if self-hosted, requires ops capacity</li>
+<li><strong>Workato / Tray</strong>: enterprise scale + audit + governance + price</li>
+<li><strong>Inngest / Trigger.dev / Temporal</strong>: when you have engineers and need code-as-config workflows</li>
+<li><strong>Relay.app</strong>: AI-decided actions (newer pattern, watch list)</li>
+</ul>
+<hr />
+<h1>§4 · Document AI — 11 tools</h1>
+<p><strong>Default:</strong> Claude with vision (general purpose) → Reducto (production-grade structured extraction).</p>
+<p><strong>Alternatives:</strong></p>
+<ul>
+<li><strong>General LLM with vision:</strong> Claude (vision), GPT-4o (vision), Gemini Pro Vision</li>
+<li><strong>Specialised structured-extraction:</strong> Reducto, Unstructured.io, Hyperscience, Rossum, Mathpix (math + scientific)</li>
+<li><strong>Receipts / expense:</strong> Veryfi, Dext, AutoEntry</li>
+<li><strong>Contract review:</strong> Spellbook, LawGeex, Lexion</li>
+<li><strong>Invoice OCR:</strong> ABBYY FlexiCapture, Klippa</li>
+<li><strong>Generic OCR:</strong> Google Document AI, Amazon Textract, Tesseract (open-source)</li>
+</ul>
+<p><strong>Buying advice:</strong> for any volume above 1,000 docs/month, the general-purpose LLMs (Claude/GPT-4o vision) become expensive and lossy. Move to a specialised structured-extraction tool. Below 1,000/mo, LLM vision is fine.</p>
+<hr />
+<h1>§5 · Image generation — 14 tools</h1>
+<p><strong>Default:</strong> Midjourney v7 (best aesthetic) → Flux Pro (best controllable) → DALL-E 3 (best ChatGPT integration).</p>
+<ul>
+<li><strong>General:</strong> Midjourney v7, DALL-E 3, Stable Diffusion 3, Flux (Pro/Schnell), Ideogram</li>
+<li><strong>Brand-consistent:</strong> Adobe Firefly, Recraft (vector + raster + brand kit)</li>
+<li><strong>Photo / portrait:</strong> PhotoAI, HeadshotPro, FaceApp Pro</li>
+<li><strong>Product photography:</strong> Pebblely, Photoroom AI</li>
+<li><strong>Logo / icon:</strong> LogoCreator AI, Stable Diffusion + ControlNet</li>
+<li><strong>Edit existing:</strong> Magnific (upscale + creative variation), Krea AI</li>
+</ul>
+<hr />
+<h1>§6 · Video generation — 8 tools</h1>
+<p><strong>Default:</strong> Runway Gen-3 (general) → Pika (motion) → Luma Dream Machine (camera moves).</p>
+<ul>
+<li>Runway Gen-3, Pika 2.0, Luma Dream Machine, Kling AI, Hailuo (Minimax), Sora (when GA), Synthesia (talking-head avatars), HeyGen (avatars + multi-lingual dub)</li>
+</ul>
+<p><strong>When to pick which:</strong></p>
+<ul>
+<li><strong>Runway</strong> — most polished commercial workflow</li>
+<li><strong>Pika</strong> — best motion + control</li>
+<li><strong>Luma Dream Machine</strong> — best for camera-style pans/zooms</li>
+<li><strong>Synthesia / HeyGen</strong> — only when you need a person speaking on camera (training videos, internal comms, lip-sync to script)</li>
+<li><strong>Sora</strong> — when GA, will likely be the new default for cinematic quality</li>
+</ul>
+<hr />
+<h1>§7 · Voice agents — 9 tools</h1>
+<p><strong>Default:</strong> Vapi.ai → DIY on Twilio + Deepgram + LLM if &gt;1k calls/day.</p>
+<ul>
+<li><strong>Hosted:</strong> Vapi.ai, Bland.ai, Retell AI, ElevenLabs Conversational AI</li>
+<li><strong>Build-your-own components:</strong> Twilio (telephony), Deepgram / AssemblyAI (STT), ElevenLabs / Cartesia (TTS), Pipecat (orchestration)</li>
+<li><strong>Industry-specific:</strong> Hippocratic AI (healthcare-grade)</li>
+</ul>
+<hr />
+<h1>§8 · Coding assistants — 12 tools</h1>
+<p><strong>Default:</strong> Cursor (production) → Claude Code (CLI) → Cline (free).</p>
+<ul>
+<li><strong>IDE-native:</strong> Cursor, GitHub Copilot, Windsurf, Cody (Sourcegraph)</li>
+<li><strong>CLI:</strong> Claude Code, Aider</li>
+<li><strong>VS Code extensions:</strong> Cline, Roo Code (free), Continue, Tabnine</li>
+<li><strong>Web-based:</strong> v0, Bolt.new, Replit Agent</li>
+<li><strong>Pair-coding chat:</strong> ChatGPT, Claude.ai (slower but conversational)</li>
+</ul>
+<p><strong>Reality:</strong> Cursor is winning the indie/startup market. Copilot Business owns the enterprise / compliance market. Everyone else is chasing.</p>
+<hr />
+<h1>§9 · Data + analytics AI — 10 tools</h1>
+<ul>
+<li><strong>Notebook + AI:</strong> Hex, Mode, Julius, Definite</li>
+<li><strong>In-chat-AI analysis:</strong> Code Interpreter (ChatGPT, Claude), Cursor + DuckDB</li>
+<li><strong>BI with AI:</strong> Tableau Pulse, Power BI Copilot, Sigma Computing</li>
+<li><strong>Customer-data + AI:</strong> PostHog (with AI insights), June</li>
+</ul>
+<hr />
+<h1>§10 · Sales / CRM AI — 11 tools</h1>
+<ul>
+<li><strong>CRM with AI:</strong> Attio, HubSpot AI, Salesforce Einstein, Pipedrive AI</li>
+<li><strong>Cold outreach:</strong> Smartlead (volume), Instantly, Lemlist (personalisation)</li>
+<li><strong>Call AI:</strong> Gong, Chorus (Zoom), Salesloft Conversations</li>
+<li><strong>Meeting AI:</strong> Fathom, tldv, Granola, Otter</li>
+<li><strong>Prospect research:</strong> Clay (data enrichment + LLM combinator)</li>
+</ul>
+<hr />
+<h1>§11 · Marketing AI — 9 tools</h1>
+<ul>
+<li><strong>Content creation:</strong> Jasper, Copy.ai, Notion AI</li>
+<li><strong>SEO:</strong> Surfer, Frase, Semrush AI</li>
+<li><strong>Social:</strong> Hootsuite AI, Buffer AI Assistant</li>
+<li><strong>Brand voice:</strong> WriterMore, Lex (writing-focused LLM client)</li>
+<li><strong>Editorial workflows:</strong> Letterdrop, Beam AI</li>
+</ul>
+<hr />
+<h1>§12 · HR + recruiting AI — 8 tools</h1>
+<ul>
+<li><strong>ATS with AI:</strong> Ashby, Greenhouse AI, Workable</li>
+<li><strong>AI screening:</strong> Paradox, HireVue, Eightfold AI</li>
+<li><strong>Reference checks:</strong> Crosschq, Checkster</li>
+<li><strong>Interview AI:</strong> BrightHire, Pillar</li>
+<li><strong>Onboarding:</strong> Donut (Slack)</li>
+</ul>
+<hr />
+<h1>§13 · Productivity / personal AI — 12 tools</h1>
+<ul>
+<li><strong>Note-taking:</strong> Mem, Reflect, Obsidian + Smart Connections, Notion AI</li>
+<li><strong>Email:</strong> Superhuman AI, Shortwave AI</li>
+<li><strong>Calendar:</strong> Reclaim, Motion, Sunsama</li>
+<li><strong>Task / project:</strong> Mem, Sunsama, Todoist AI</li>
+<li><strong>Meeting prep:</strong> Read.ai, Vowel, Krisp (noise + transcription)</li>
+</ul>
+<hr />
+<h1>§14 · Niche / vertical AI — 11 tools</h1>
+<ul>
+<li><strong>Legal:</strong> Spellbook, Harvey, Casetext (Thomson Reuters), LawGeex</li>
+<li><strong>Healthcare:</strong> Hippocratic AI, Suki, Abridge, Nuance DAX</li>
+<li><strong>Finance / accounting:</strong> Numeric, Trullion (audit), Pilot (bookkeeping)</li>
+<li><strong>Real estate:</strong> ChatGPT-trained agents on listings (Lofty, Realeflow)</li>
+<li><strong>E-commerce specific:</strong> Octopus AI (product listings), Recart (DM marketing)</li>
+</ul>
+<hr />
+<h1>How to navigate the Vault — three ways</h1>
+<h3>1. By job-to-be-done</h3>
+<p>Go to the Decision Shortcut at the top. Pick a job. Done.</p>
+<h3>2. By stack you're starting from</h3>
+<p>Already on HubSpot? You'll want HubSpot AI, Fin, and tools that integrate with HubSpot. Already on Salesforce? Salesforce Einstein, Gong, Salesloft — different ecosystem.</p>
+<h3>3. By budget</h3>
+<p>Under £200/mo total → solo / micro-business stack (see AI Tools Stack Starter Kit, §5)
+£200-£1,000 → SMB stack (see Stack Kit §1, §2, §7)
+£1,000+ → growth-stage stack (see Stack Kit §3, §4)</p>
+<hr />
+<h1>Quarterly refresh policy</h1>
+<p>Buyers get the next 4 quarterly refreshes free at:</p>
+<p><code>aiprosol.com/vault-update?email={your email}</code></p>
+<p>Q3 2026 refresh will include: 15+ new entrants we're tracking, retirements, updated pricing, and a new section on agentic browsers (Multi-on, OpenAI Operator, Anthropic Computer Use).</p>
+<hr />
+<h1>Conflicts of interest</h1>
+<p>We have <strong>no affiliate or revenue-share</strong> relationship with any tool listed in this vault. We pay for the tools we recommend.</p>
+<p>Where we use a tool ourselves at Aiprosol, it's labelled. Otherwise, picks are based on:
+- 15-minute capability test against a standard prompt/workflow
+- Pricing-reality check (vs. marketing-page lowball)
+- Public-feedback scan (G2, Reddit, HN, X over last 60 days)
+- Internal-network use (whether anyone we know runs it in production)</p>
+<hr />
+<h2>Licensing</h2>
+<p>Licensed for unlimited internal use within purchaser's organisation. Quarterly updates free for 4 quarters. Public republication of the comparison tables requires written permission. © 2026 Aiprosol Ltd.</p>
+<div class="brand-footer">© 2026 Aiprosol Ltd · <a href="https://aiprosol.com">aiprosol.com</a> · <a href="mailto:hello@aiprosol.com">hello@aiprosol.com</a><br>Licensed to the purchaser for unlimited internal use. Redistribution requires written permission.</div>
+</body></html>

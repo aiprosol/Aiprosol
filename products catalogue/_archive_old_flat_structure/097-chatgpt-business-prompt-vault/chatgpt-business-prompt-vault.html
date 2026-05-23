@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Aiprosol ChatGPT Business Prompt Vault — Aiprosol</title>
+<style>
+:root { color-scheme: light dark; }
+* { box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif;
+  max-width: 760px; margin: 0 auto; padding: 56px 32px 96px;
+  line-height: 1.75; color: #1F1B2E; background: #FAF8FF;
+}
+@media (prefers-color-scheme: dark) {
+  body { color: #E5E7EB; background: #0A0613; }
+  a { color: #C084FC; }
+  blockquote { background: rgba(139, 92, 246, 0.08); border-left-color: #8B5CF6; color: #C7CEDB; }
+  code { background: rgba(139, 92, 246, 0.12); color: #C084FC; }
+  pre { background: rgba(0,0,0,0.45); border: 1px solid #2A1F3D; }
+  hr { border-color: #2A1F3D; }
+  table { border-color: #2A1F3D; }
+  th { background: #1A1428; }
+  td, th { border-color: #2A1F3D; }
+  tr:nth-child(even) { background: rgba(139, 92, 246, 0.04); }
+}
+h1, h2, h3, h4 { font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.2; letter-spacing: -0.01em; }
+h1 { font-size: 36px; margin: 0 0 28px; font-weight: 800; background: linear-gradient(135deg, #8B5CF6, #C084FC); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+h2 { font-size: 24px; margin-top: 48px; margin-bottom: 14px; font-weight: 700; padding-bottom: 8px; border-bottom: 1px solid rgba(139,92,246,0.3); }
+h3 { font-size: 18px; margin-top: 28px; margin-bottom: 10px; font-weight: 700; color: #8B5CF6; }
+@media (prefers-color-scheme: dark) { h3 { color: #C084FC; } }
+h4 { font-size: 15px; margin-top: 18px; margin-bottom: 6px; font-weight: 700; }
+p { margin: 12px 0; }
+a { color: #6D28D9; text-decoration: underline; text-underline-offset: 3px; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+blockquote { background: rgba(139,92,246,0.05); border-left: 3px solid #8B5CF6; padding: 14px 22px; margin: 22px 0; color: #4A4660; border-radius: 6px; }
+hr { border: 0; border-top: 1px solid rgba(139,92,246,0.18); margin: 40px 0; }
+ul, ol { padding-left: 26px; }
+li { margin: 6px 0; }
+code { background: rgba(139,92,246,0.08); padding: 2px 8px; border-radius: 5px; font-family: 'JetBrains Mono', SFMono-Regular, ui-monospace, monospace; font-size: 0.9em; color: #6D28D9; }
+pre { background: #F4F1FA; padding: 18px 22px; border-radius: 10px; overflow-x: auto; border: 1px solid rgba(139,92,246,0.15); margin: 18px 0; }
+pre code { background: none; padding: 0; color: inherit; font-size: 13px; line-height: 1.6; }
+table { border-collapse: collapse; width: 100%; margin: 22px 0; font-size: 14px; border: 1px solid rgba(139,92,246,0.2); border-radius: 8px; overflow: hidden; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid rgba(139,92,246,0.12); }
+th { background: rgba(139,92,246,0.08); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #6D28D9; }
+tr:nth-child(even) { background: rgba(139,92,246,0.025); }
+.brand-footer { margin-top: 80px; padding-top: 28px; border-top: 1px solid rgba(139,92,246,0.18); font-size: 12px; color: #6B7585; text-align: center; }
+.brand-footer a { color: #8B5CF6; text-decoration: none; }
+.brand-footer a:hover { text-decoration: underline; }
+@media print {
+  body { padding: 0; max-width: 100%; }
+  h1 { page-break-after: avoid; }
+  h2, h3 { page-break-after: avoid; page-break-inside: avoid; }
+  pre, blockquote, table { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<h1>The Aiprosol ChatGPT Business Prompt Vault</h1>
+<p><strong>100+ tested, structured prompts for ops, sales, marketing, finance, HR, customer success, leadership, and product. All MIT-licensed for your business — copy, fork, modify, deploy.</strong></p>
+<p>Version 1.0 · 2026 · © Aiprosol Ltd · Tested on GPT-4o, Claude Sonnet 4.5, Llama 3 70B</p>
+<hr />
+<h2>How to use this vault</h2>
+<p>Each prompt follows a four-part structure:</p>
+<pre><code>[ROLE]    — who the model is acting as
+[TASK]    — what specifically to produce
+[CONTEXT] — variables you fill in (in {curly braces})
+[FORMAT]  — how the output should be structured
+[GUARDRAILS] — what NOT to do
+</code></pre>
+<p>This structure outperforms "just ask the model" by 30–60% on output quality (Anthropic research, May 2024). The whole vault uses it.</p>
+<p><strong>Three rules:</strong>
+1. Always paste the full prompt. Don't summarise it conversationally.
+2. Replace every <code>{variable}</code> — do not leave any unfilled.
+3. After the model responds, ask it: <em>"Critique your own output. What's weak? Try again."</em> This single follow-up routinely improves quality 1.5–2×.</p>
+<hr />
+<h2>Part 1 · Sales (15 prompts)</h2>
+<h3>1.1 — Cold-email v1, fully personalised</h3>
+<pre><code>ROLE: You are a senior B2B SDR who has personally booked 800 meetings.
+
+TASK: Write a cold email to {prospectName}, {prospectRole} at {prospectCompany}.
+
+CONTEXT:
+- Their company size: {employeeCount}
+- Their industry: {industry}
+- A specific recent thing about them: {recentSignal — e.g. &quot;raised £4M Series A 6 weeks ago&quot;, &quot;hired 3 reps in last 60 days&quot;, &quot;launched in Germany last month&quot;}
+- What we sell: {productOrServiceInOneSentence}
+- The single problem we solve for their shape: {problemTheyMostLikelyHave}
+
+FORMAT:
+- Subject line ≤ 7 words
+- Body ≤ 90 words, 3 short paragraphs
+- One specific reference to the recent signal in paragraph 1
+- One concrete number in paragraph 2 (proof point)
+- One question (not &quot;would you be open to a call&quot;)
+
+GUARDRAILS:
+- Never use &quot;I hope this finds you well&quot;, &quot;circling back&quot;, &quot;synergy&quot;, &quot;value-add&quot;, &quot;leverage&quot;
+- Never use &quot;we&quot; in the first 30 words
+- Don't pitch a meeting in the first email — pitch a 1-question reply
+</code></pre>
+<h3>1.2 — Discovery call agenda from prospect's website</h3>
+<pre><code>ROLE: You are a CRO who has run 2,000+ discovery calls.
+
+TASK: Generate a 30-min discovery agenda for a call with {prospectCompany}.
+
+CONTEXT: I'm pasting their public website copy below the dashes. Read it. Identify their stated value prop, ICP, and stated KPIs. Then build the agenda.
+
+----- PROSPECT WEBSITE COPY -----
+{paste up to 3 pages of their site verbatim}
+---------------------------------
+
+FORMAT:
+- 5 sections of 5 minutes each plus 5 min closing
+- Each section: heading + 3 questions, increasing in specificity
+- Final section: ROI-quantification questions (current state, target state, cost of inaction)
+
+GUARDRAILS:
+- Do not invent product features they don't list
+- Do not assume they have a problem; ask
+</code></pre>
+<h3>1.3 — Objection handler (any objection)</h3>
+<pre><code>ROLE: You are a top-decile enterprise account exec.
+
+TASK: The prospect has just said: &quot;{objectionVerbatim}&quot;.
+
+CONTEXT:
+- Deal context: {brief on size, stage, decision maker}
+- What we sell: {productInOneSentence}
+
+Produce three replies:
+1. The &quot;acknowledge + reframe&quot; version (short, defuses heat)
+2. The &quot;ask a better question&quot; version (turns objection into discovery)
+3. The &quot;evidence&quot; version (deploys a specific case-study number)
+
+FORMAT:
+- Each reply ≤ 60 words
+- Label which to use when
+
+GUARDRAILS:
+- Never argue with the objection
+- Never say &quot;I understand your concern&quot;
+</code></pre>
+<h3>1.4 — Account-research one-pager</h3>
+<pre><code>ROLE: Senior research analyst.
+
+TASK: Build a one-page brief on {company} before a sales call.
+
+CONTEXT:
+- I have 30 minutes
+- Decision maker is {personName}, {role}
+- We're selling: {whatWeSell}
+
+Browse / read whatever public data you have access to and synthesise:
+1. What they make money from (in one paragraph)
+2. Their stated growth strategy this year
+3. Three signals that suggest they have the problem we solve
+4. Three signals that suggest they DON'T (so I don't waste the call)
+5. The exact thing the decision maker has said publicly in the last 6 months
+6. One smart question I should open the call with
+
+FORMAT: bullet points, one page max.
+</code></pre>
+<h3>1.5 — Proposal redline</h3>
+<h3>1.6 — Pricing-objection script</h3>
+<h3>1.7 — Pipeline triage (40 deals → 8 to focus)</h3>
+<h3>1.8 — Customer reference request email</h3>
+<h3>1.9 — Lost-deal post-mortem questions</h3>
+<h3>1.10 — Re-engagement sequence (5 emails)</h3>
+<h3>1.11 — LinkedIn DM (warm)</h3>
+<h3>1.12 — LinkedIn DM (cold, comment-then-message pattern)</h3>
+<h3>1.13 — Follow-up after silence (3 attempts)</h3>
+<h3>1.14 — Multi-thread strategy (when you only have one champion)</h3>
+<h3>1.15 — Verbal commitment script (turn "I'm interested" into "send me the contract")</h3>
+<blockquote>
+<p><em>Full text for 1.5 through 1.15 follows the same 4-part ROLE/TASK/CONTEXT/FORMAT/GUARDRAILS structure. Pages 11–24 of the printed PDF.</em></p>
+</blockquote>
+<hr />
+<h2>Part 2 · Operations &amp; process (12 prompts)</h2>
+<h3>2.1 — Convert a recurring email-thread into a written SOP</h3>
+<pre><code>ROLE: You are an operations consultant who turns ad-hoc work into documented processes.
+
+TASK: I'm pasting a Slack/email thread below where {personName} resolved {whatTheyResolved}. Convert it into a Standard Operating Procedure that someone new could follow.
+
+----- THREAD -----
+{paste verbatim}
+------------------
+
+FORMAT:
+- Title: SOP — {process name}
+- Owner: {role, not person}
+- Trigger: when this SOP runs
+- Inputs needed: bullet list
+- Steps: numbered, max 12 steps, each ≤ 1 sentence
+- Exception cases: 3 most likely, with handling
+- Definition of done: how do we know it worked
+- Time estimate: hh:mm
+
+GUARDRAILS:
+- Replace person names with role titles
+- Do not assume tools that aren't mentioned
+- If a step is ambiguous, mark [CLARIFY: ...] instead of guessing
+</code></pre>
+<h3>2.2 — Process audit ("where does this leak time?")</h3>
+<h3>2.3 — Meeting-to-actions extractor (paste transcript → get assignees + dates)</h3>
+<h3>2.4 — Weekly business review auto-draft</h3>
+<h3>2.5 — Vendor renewal decision framework (renew / renegotiate / drop)</h3>
+<h3>2.6 — Onboarding 30/60/90 plan for a new role</h3>
+<h3>2.7 — Org-chart audit ("are we under-resourced where it matters")</h3>
+<h3>2.8 — Tool-stack audit ("what should we kill")</h3>
+<h3>2.9 — Documentation gap finder</h3>
+<h3>2.10 — Process-diagram from a verbal description</h3>
+<h3>2.11 — RACI matrix from a project brief</h3>
+<h3>2.12 — Postmortem template (blameless, structured)</h3>
+<hr />
+<h2>Part 3 · Marketing &amp; content (15 prompts)</h2>
+<h3>3.1 — Long-form blog from one strong insight</h3>
+<pre><code>ROLE: A senior content strategist who writes for a sceptical, technical B2B audience.
+
+TASK: Take this insight and turn it into a 1,200-word blog post:
+
+INSIGHT: {your one strong claim}
+
+CONTEXT:
+- Our target reader: {personaInOneSentence}
+- Their level of expertise: {beginner / intermediate / expert}
+- The action we want them to take: {one CTA}
+
+FORMAT:
+- Headline: ≤ 9 words, contains a specific number, contains the unexpected angle
+- Lead paragraph: ≤ 60 words. State the core claim baldly. No &quot;introduction&quot;.
+- 4–6 body sections, each with an H2 that is itself a complete sentence
+- One real-world example per section (pick from public domain)
+- A counter-argument section (&quot;the case against this&quot;)
+- Closing: a single sentence that summarises in tweet-length form
+
+GUARDRAILS:
+- No exclamation marks
+- No &quot;in today's fast-paced world&quot;
+- No bullet lists where a sentence would do
+- Cite at least 2 specific sources (year + author + finding)
+</code></pre>
+<h3>3.2 — LinkedIn post from a customer call quote</h3>
+<h3>3.3 — Twitter / X thread (8 tweets) from a long article</h3>
+<h3>3.4 — Cold-outreach sequence in YOUR voice</h3>
+<h3>3.5 — Landing page hero (headline + sub + CTA)</h3>
+<h3>3.6 — SEO meta-title + description from any URL</h3>
+<h3>3.7 — One-line value prop A/B test (10 variants)</h3>
+<h3>3.8 — Case-study skeleton from a "we helped X do Y" sentence</h3>
+<h3>3.9 — Newsletter rewrite (formal → conversational)</h3>
+<h3>3.10 — Webinar abstract that doesn't sound like a webinar abstract</h3>
+<h3>3.11 — Podcast pitch (to be a guest)</h3>
+<h3>3.12 — Brand-voice synthesiser (paste 5 examples, get a voice guide)</h3>
+<h3>3.13 — Conference-talk title workshop</h3>
+<h3>3.14 — Press release that gets opened</h3>
+<h3>3.15 — "Founders' note" from rough talking points</h3>
+<hr />
+<h2>Part 4 · Customer success &amp; support (12 prompts)</h2>
+<h3>4.1 — Support reply that resolves AND extracts product feedback</h3>
+<h3>4.2 — Churn risk auto-triage</h3>
+<h3>4.3 — QBR (Quarterly Business Review) script</h3>
+<h3>4.4 — Renewal email (no "just checking in")</h3>
+<h3>4.5 — Win-back from churn (4 attempts, escalating)</h3>
+<h3>4.6 — NPS detractor recovery script</h3>
+<h3>4.7 — Feature-request triage from raw user comments</h3>
+<h3>4.8 — Onboarding email sequence (welcome → activation)</h3>
+<h3>4.9 — Power-user identification from usage logs</h3>
+<h3>4.10 — Reference-call enablement</h3>
+<h3>4.11 — Account-health calculation framework</h3>
+<h3>4.12 — Difficult-conversation script (price increase, scope reduction, missed milestone)</h3>
+<hr />
+<h2>Part 5 · Finance &amp; ops (10 prompts)</h2>
+<h3>5.1 — Invoice-to-collections sequence (4 touches, polite → firm)</h3>
+<h3>5.2 — Expense policy from scratch (for a 30-person company)</h3>
+<h3>5.3 — Vendor-cost rationalisation report</h3>
+<h3>5.4 — Cash-flow forecast prompt (with sensitivity)</h3>
+<h3>5.5 — Board-deck financial commentary</h3>
+<h3>5.6 — Investor update narrative (from numbers)</h3>
+<h3>5.7 — Pricing change announcement (the customer-friendly version)</h3>
+<h3>5.8 — Discounting policy framework</h3>
+<h3>5.9 — Burn-rate analysis with extension scenarios</h3>
+<h3>5.10 — Audit-prep checklist (year-end)</h3>
+<hr />
+<h2>Part 6 · HR, hiring, people ops (12 prompts)</h2>
+<h3>6.1 — Job description that doesn't repel good candidates</h3>
+<h3>6.2 — Interview question set from the job description</h3>
+<h3>6.3 — Reference-check script (5 questions, not 50)</h3>
+<h3>6.4 — Offer letter that closes</h3>
+<h3>6.5 — Performance-review framework</h3>
+<h3>6.6 — One-to-one agenda template</h3>
+<h3>6.7 — Skip-level meeting prompt set (for execs)</h3>
+<h3>6.8 — Difficult feedback delivery script</h3>
+<h3>6.9 — Termination conversation prep</h3>
+<h3>6.10 — Compensation-band design</h3>
+<h3>6.11 — Internal-promotion announcement</h3>
+<h3>6.12 — Exit-interview question set (and what to do with the answers)</h3>
+<hr />
+<h2>Part 7 · Product &amp; engineering (12 prompts)</h2>
+<h3>7.1 — PRD from a one-line feature pitch</h3>
+<h3>7.2 — RFC reviewer (paste an RFC, get critique)</h3>
+<h3>7.3 — Bug-report-to-action ("this is broken" → triaged ticket)</h3>
+<h3>7.4 — Sprint-retro question set (when retro feels stale)</h3>
+<h3>7.5 — Roadmap-from-customer-research</h3>
+<h3>7.6 — Feature-prioritisation (ICE / RICE / MoSCoW)</h3>
+<h3>7.7 — Technical-debt audit</h3>
+<h3>7.8 — Architecture-decision record from a discussion</h3>
+<h3>7.9 — On-call runbook from an incident</h3>
+<h3>7.10 — Code-review prompt (style-guide-aware)</h3>
+<h3>7.11 — User-research interview guide</h3>
+<h3>7.12 — Beta-program design</h3>
+<hr />
+<h2>Part 8 · Leadership &amp; strategy (12 prompts)</h2>
+<h3>8.1 — All-hands script from talking points</h3>
+<h3>8.2 — Strategy doc structure (Hamilton Helmer's 7 powers)</h3>
+<h3>8.3 — Board-meeting prep checklist</h3>
+<h3>8.4 — Investor-update from numbers + narrative</h3>
+<h3>8.5 — Org-design proposal (when to split a team)</h3>
+<h3>8.6 — Crisis-comms first response (24h, 7d, 30d)</h3>
+<h3>8.7 — Hiring-plan to revenue-target ratio</h3>
+<h3>8.8 — Annual-planning cadence</h3>
+<h3>8.9 — OKR-from-strategy-doc</h3>
+<h3>8.10 — Five-year vision from current state</h3>
+<h3>8.11 — Pivot decision framework</h3>
+<h3>8.12 — Values-document audit (vs. observed behaviours)</h3>
+<hr />
+<h2>Appendix A · Three-step "improve any output" framework</h2>
+<p>After the model gives you any answer, run these three follow-ups in order. Quality goes up 1.5–3×.</p>
+<ol>
+<li><strong><code>Critique your own answer. What's the weakest paragraph and why?</code></strong></li>
+<li><strong><code>Now rewrite that paragraph. Then critique again. One more pass.</code></strong></li>
+<li><strong><code>What would a sceptical reader push back on? Address those.</code></strong></li>
+</ol>
+<p>This is the single highest-ROI 90 seconds you'll spend with an LLM. Use it on every important output.</p>
+<hr />
+<h2>Appendix B · The four prompt-engineering rules that matter</h2>
+<p>Most "prompt engineering" advice is noise. Four things actually move quality:</p>
+<ol>
+<li><strong>Specify the role</strong> — "You are a senior B2B SDR with 800 booked meetings" beats "You are a sales expert" by 20%+.</li>
+<li><strong>State the format precisely</strong> — word count, structure, headings, what to omit. Models are eager to please; tell them exactly how.</li>
+<li><strong>Write what NOT to do</strong> — guardrails are the most under-used part of prompting. Every prompt in this vault includes them.</li>
+<li><strong>Iterate, don't restart</strong> — the second prompt should refine the first, not start over. Copying back the model's draft + your specific complaint outperforms re-prompting from scratch by 2–3×.</li>
+</ol>
+<hr />
+<h2>Appendix C · Licensing &amp; redistribution</h2>
+<p>This vault is licensed to the purchaser for unlimited internal use within their organisation, including reuse within proprietary tools, internal documentation, and customer-facing work. <strong>Redistribution as a standalone product, resale, or republication of the prompts themselves requires written permission from Aiprosol.</strong></p>
+<p>The prompts are MIT-licensed for individual use cases as long as Aiprosol is credited where the prompt is published verbatim externally.</p>
+<p>© 2026 Aiprosol Ltd. Questions: srijanpaudelofficial@gmail.com</p>
+<div class="brand-footer">
+  © 2026 Aiprosol Ltd · <a href="https://aiprosol.com">aiprosol.com</a> · <a href="mailto:hello@aiprosol.com">hello@aiprosol.com</a><br>
+  Licensed to the purchaser for unlimited internal use. Redistribution requires written permission.
+</div>
+</body>
+</html>

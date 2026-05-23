@@ -1,0 +1,114 @@
+{
+  "name": "Aiprosol Stack — Discord message → OpenAI sentiment → Airtable log",
+  "nodes": [
+    {
+      "parameters": {
+        "channelId": "CHANNEL_ID"
+      },
+      "id": "32774668-37cb-42e7-b296-3ded6062dea6",
+      "name": "Discord message",
+      "type": "n8n-nodes-base.discordTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o-mini"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Return JSON {sentiment:positive|neutral|negative, topic:string, urgency:0-10}"
+            },
+            {
+              "role": "user",
+              "content": "={{ $json.content }}"
+            }
+          ]
+        }
+      },
+      "id": "8266ac58-2527-4053-a234-f4e0f4e2c18f",
+      "name": "Sentiment + topic",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "record",
+        "operation": "create",
+        "application": "COMMUNITY_APP_ID",
+        "table": "Mentions"
+      },
+      "id": "f8cdbc77-734c-4ea5-9361-b000f9700a9c",
+      "name": "Airtable log",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        640,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Discord message": {
+      "main": [
+        [
+          {
+            "node": "Sentiment + topic",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sentiment + topic": {
+      "main": [
+        [
+          {
+            "node": "Airtable log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "stack"
+    },
+    {
+      "name": "discord"
+    },
+    {
+      "name": "airtable"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "11501931-c82a-48a8-90fc-b372a2058eea",
+  "id": "5ea24191-6f1a-46de-b770-9a8e405f1116",
+  "_aiprosol": {
+    "description": "Community Discord channel messages → OpenAI extracts sentiment + topic → logs to Airtable for weekly review.",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

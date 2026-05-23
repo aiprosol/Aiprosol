@@ -1,0 +1,207 @@
+{
+  "name": "Aiprosol — Customer questions → weekly blog ideas",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 9 * * 1"
+            }
+          ]
+        }
+      },
+      "id": "871b5ee6-6ee6-4974-9d3d-e87799135355",
+      "name": "Mon 9am",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "getAll",
+        "filters": {
+          "q": "label:customer-support newer_than:7d"
+        }
+      },
+      "id": "3e2e3da9-60c6-462b-bd74-aab453af93e5",
+      "name": "Pull support emails",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        440,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://api.intercom.io/conversations?per_page=50"
+      },
+      "id": "0caf8d53-cb90-4b2e-ad7c-0b28b24f0180",
+      "name": "Pull chat logs",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        440,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition"
+      },
+      "id": "ac6bf14a-fdca-44e2-a2e5-121b2c497186",
+      "name": "Merge questions",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Cluster these questions into themes. For every theme with 3+ questions, write a blog post outline. Return: { topics: [{theme, frequency, outline:[h2,h2,h2], target_keyword, intent}] }"
+            },
+            {
+              "role": "user",
+              "content": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        },
+        "options": {
+          "responseFormat": "json_object"
+        }
+      },
+      "id": "bbeff825-f100-40d8-9b74-2a66b97a2d9b",
+      "name": "Cluster + outline",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        840,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "#content",
+        "text": "=📝 This week's blog ideas (sorted by frequency):\\n\\n{{ JSON.parse($json.message.content).topics.map(t => `• *${t.theme}* (${t.frequency}× asked) → keyword: ${t.target_keyword}\\n  ${t.outline.join(' → ')}`).join('\\n\\n') }}"
+      },
+      "id": "36edb454-e12d-4208-8f37-20e2e5d8468a",
+      "name": "Slack — content team",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        1040,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Mon 9am": {
+      "main": [
+        [
+          {
+            "node": "Pull support emails",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Pull chat logs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pull support emails": {
+      "main": [
+        [
+          {
+            "node": "Merge questions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pull chat logs": {
+      "main": [
+        [
+          {
+            "node": "Merge questions",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge questions": {
+      "main": [
+        [
+          {
+            "node": "Cluster + outline",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cluster + outline": {
+      "main": [
+        [
+          {
+            "node": "Slack — content team",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "marketing"
+    },
+    {
+      "name": "content"
+    },
+    {
+      "name": "pattern-4"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-playbook-v1"
+  },
+  "pinData": {},
+  "versionId": "d9d48889-d560-4a0c-b238-cb1c5c973381",
+  "id": "b7fda94a-efe6-4f30-a3f1-848c0bc938b1",
+  "_aiprosol": {
+    "description": "Mon 9am → questions from week → AI cluster + outline → Slack content team",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

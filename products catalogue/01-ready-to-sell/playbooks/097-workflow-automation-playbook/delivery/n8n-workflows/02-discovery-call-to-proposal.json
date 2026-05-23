@@ -1,0 +1,184 @@
+{
+  "name": "Aiprosol — Discovery call → action items + proposal draft",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "discovery-transcript"
+      },
+      "id": "2a290449-a952-4659-aefb-80198647addf",
+      "name": "Webhook · /transcript",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Read the discovery call transcript. Extract JSON: {\"pain_points\":[3 items], \"budget_signal\":\"under-50k|50-200k|over-200k|unknown\", \"decision_criteria\":[items], \"timeline\":\"q-this|q-next|exploring|unknown\", \"next_steps\":[items], \"deal_size_est\":number}"
+            },
+            {
+              "role": "user",
+              "content": "={{ $json.transcript }}"
+            }
+          ]
+        },
+        "options": {
+          "responseFormat": "json_object"
+        }
+      },
+      "id": "f19d284e-c96d-4388-84c4-821c95d30c27",
+      "name": "Extract structured signals",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Draft a 1-page proposal in markdown. Sections: Their goal, Our approach (3 phases), Investment range, Next step. Use their language from the transcript."
+            },
+            {
+              "role": "user",
+              "content": "=Transcript signals: {{ JSON.stringify($json.message.content) }}\\n\\nFull transcript:\\n{{ $('Webhook · /transcript').first().json.transcript }}"
+            }
+          ]
+        }
+      },
+      "id": "e1efd44c-ae06-4b1c-a96f-b3b547cd3ed8",
+      "name": "Draft proposal copy",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "title": "=Proposal — {{ $('Webhook · /transcript').first().json.company }} — {{ $now.format('yyyy-MM-dd') }}",
+        "folderId": "PROPOSALS_FOLDER_ID",
+        "content": "={{ $json.message.content }}"
+      },
+      "id": "efb81e34-9c1c-4962-9bc6-393e03802e43",
+      "name": "Google Docs — Create proposal",
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        840,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "={{ $('Webhook · /transcript').first().json.rep_slack || '#sales' }}",
+        "text": "=📄 Proposal drafted for {{ $('Webhook · /transcript').first().json.company }}\\nDeal size est: ${{ $('Extract structured signals').first().json.message.content }}\\n👉 {{ $json.webViewLink }}"
+      },
+      "id": "90a9534d-5028-48a0-87a0-5c10855e6a2e",
+      "name": "Slack — Notify rep",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        1040,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook · /transcript": {
+      "main": [
+        [
+          {
+            "node": "Extract structured signals",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract structured signals": {
+      "main": [
+        [
+          {
+            "node": "Draft proposal copy",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Draft proposal copy": {
+      "main": [
+        [
+          {
+            "node": "Google Docs — Create proposal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Docs — Create proposal": {
+      "main": [
+        [
+          {
+            "node": "Slack — Notify rep",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "sales"
+    },
+    {
+      "name": "ai-drafting"
+    },
+    {
+      "name": "pattern-1"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-playbook-v1"
+  },
+  "pinData": {},
+  "versionId": "3d12b59e-ae49-4c36-9c25-116145aaef50",
+  "id": "19cff427-732e-440e-a699-900013baa533",
+  "_aiprosol": {
+    "description": "Meeting transcript webhook → AI extracts intent → draft proposal in Google Docs",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

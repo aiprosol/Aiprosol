@@ -1,0 +1,173 @@
+{
+  "name": "Aiprosol — Meeting → action items + Linear tasks",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "meeting-transcript"
+      },
+      "id": "6a9d7b26-9ff4-447c-929f-057dddf63080",
+      "name": "Transcript webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "From this transcript extract JSON: {\"items\":[{\"action\":string, \"owner\":string, \"due\":\"this-week|next-week|no-date\", \"context\":string}]}. Only include clear, specific actions."
+            },
+            {
+              "role": "user",
+              "content": "={{ $json.transcript }}"
+            }
+          ]
+        },
+        "options": {
+          "responseFormat": "json_object"
+        }
+      },
+      "id": "5b68dc3b-730b-49dd-a436-0434db4fa4d7",
+      "name": "Extract action items",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "=={{ JSON.parse($json.message.content).items }}",
+        "include": "allOtherFields"
+      },
+      "id": "f8a919f5-04bf-493c-9cbc-484937079e2b",
+      "name": "Split items",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "issue",
+        "operation": "create",
+        "teamId": "TEAM_ID",
+        "title": "={{ $json.action }}",
+        "additionalFields": {
+          "description": "=From meeting: {{ $('Transcript webhook').first().json.meeting_title }}\\n\\nContext: {{ $json.context }}"
+        }
+      },
+      "id": "dd1f55c4-681c-4bb4-9ec5-0b450b2eab06",
+      "name": "Create Linear issue",
+      "type": "n8n-nodes-base.linear",
+      "typeVersion": 1,
+      "position": [
+        840,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "#actions",
+        "text": "=✅ {{ $('Split items').all().length }} action items from {{ $('Transcript webhook').first().json.meeting_title }} — Linear issues created"
+      },
+      "id": "5f1c1ad7-de8b-4146-8e1d-ddabd3043ea2",
+      "name": "Slack — daily action items",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        1040,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Transcript webhook": {
+      "main": [
+        [
+          {
+            "node": "Extract action items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract action items": {
+      "main": [
+        [
+          {
+            "node": "Split items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split items": {
+      "main": [
+        [
+          {
+            "node": "Create Linear issue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Linear issue": {
+      "main": [
+        [
+          {
+            "node": "Slack — daily action items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "operations"
+    },
+    {
+      "name": "meetings"
+    },
+    {
+      "name": "pattern-1"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-playbook-v1"
+  },
+  "pinData": {},
+  "versionId": "874df266-c13b-4ad6-bb7a-635a7b14940a",
+  "id": "4f8e6b8d-e17a-4d50-b2a9-7126b45cf5ad",
+  "_aiprosol": {
+    "description": "Meeting transcript webhook → AI action items with owners → Linear issues + Slack",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

@@ -1,0 +1,176 @@
+{
+  "name": "Ops \u00b7 New hire \u2192 Google + Slack + Notion provisioning",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "new-hire-provision",
+        "responseMode": "lastNode"
+      },
+      "id": "b9e2cc7f-357e-41b3-a14e-1c3a25350345",
+      "name": "HR new-hire webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "user",
+        "operation": "create",
+        "userFields": {
+          "givenName": "={{ $json.body.firstName }}",
+          "familyName": "={{ $json.body.lastName }}",
+          "primaryEmail": "={{ $json.body.email }}",
+          "password": "={{ $json.body.tempPassword }}"
+        }
+      },
+      "id": "419a0de1-a193-4186-bb18-a6fcf3f8fb17",
+      "name": "Create Google account",
+      "type": "n8n-nodes-base.googleWorkspaceAdmin",
+      "typeVersion": 1,
+      "position": [
+        460,
+        200
+      ],
+      "credentials": {
+        "googleApi": {
+          "id": "REPLACE_ME",
+          "name": "Google Workspace admin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "invite",
+        "user": "={{ $('HR new-hire webhook').item.json.body.email }}",
+        "channelId": "general"
+      },
+      "id": "9065c95d-aa5a-42ba-85c8-4f6c18426511",
+      "name": "Slack invite",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        460,
+        300
+      ],
+      "credentials": {
+        "slackApi": {
+          "id": "REPLACE_ME",
+          "name": "Slack"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "user",
+        "operation": "invite",
+        "email": "={{ $('HR new-hire webhook').item.json.body.email }}"
+      },
+      "id": "44efbb93-b556-49aa-ae63-656e2481bbd3",
+      "name": "Notion invite",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 1,
+      "position": [
+        460,
+        400
+      ],
+      "credentials": {
+        "notionApi": {
+          "id": "REPLACE_ME",
+          "name": "Notion"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "post",
+        "channel": "hr",
+        "text": "=:white_check_mark: Provisioned: {{ $('HR new-hire webhook').item.json.body.firstName }} {{ $('HR new-hire webhook').item.json.body.lastName }} ({{ $('HR new-hire webhook').item.json.body.email }})"
+      },
+      "id": "b8961214-438b-4a79-a6fb-182cf0ba731c",
+      "name": "Slack #hr provisioning done",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        680,
+        300
+      ],
+      "credentials": {
+        "slackApi": {
+          "id": "REPLACE_ME",
+          "name": "Slack workspace"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "HR new-hire webhook": {
+      "main": [
+        [
+          {
+            "node": "Create Google account",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Slack invite",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Notion invite",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Google account": {
+      "main": [
+        [
+          {
+            "node": "Slack #hr provisioning done",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slack invite": {
+      "main": [
+        [
+          {
+            "node": "Slack #hr provisioning done",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notion invite": {
+      "main": [
+        [
+          {
+            "node": "Slack #hr provisioning done",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "7728d50b-7c66-41c7-a651-938095854d16",
+  "id": "8f7e2431-447d-4ef8-ab59-7aba1daccbea",
+  "meta": {
+    "instanceId": "aiprosol-starter-library-v1"
+  },
+  "tags": [],
+  "pinData": {}
+}

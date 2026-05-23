@@ -1,0 +1,243 @@
+{
+  "name": "Aiprosol — Slack daily summariser",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 18 * * *"
+            }
+          ]
+        }
+      },
+      "id": "f8d0237f-7351-402a-888b-bdf53d887cd4",
+      "name": "Daily 18:00",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "getAll",
+        "channel": "#engineering",
+        "filters": {
+          "oldest": "={{ $now.minus(1, 'day').toSeconds() }}"
+        }
+      },
+      "id": "89aa6b1f-e938-453a-abe8-fa2021f0b318",
+      "name": "Read #engineering",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        440,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "getAll",
+        "channel": "#sales",
+        "filters": {
+          "oldest": "={{ $now.minus(1, 'day').toSeconds() }}"
+        }
+      },
+      "id": "710973d4-50e2-4a54-893a-34c85a4c1624",
+      "name": "Read #sales",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "getAll",
+        "channel": "#cs",
+        "filters": {
+          "oldest": "={{ $now.minus(1, 'day').toSeconds() }}"
+        }
+      },
+      "id": "73e9fd17-00ae-419d-9afb-db559d9ac006",
+      "name": "Read #cs",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        440,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition"
+      },
+      "id": "6a9e4d0d-7eb3-4278-813b-0a2e6c2a29fa",
+      "name": "Merge channels",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You are a Chief of Staff. Read all these Slack messages and summarise the day in exactly 5 bullets. No filler. Highlight: decisions made, things shipped, blockers, customer signals, weird stuff."
+            },
+            {
+              "role": "user",
+              "content": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        }
+      },
+      "id": "f77afa96-5d0f-4057-9018-f72822739545",
+      "name": "AI 5-bullet summary",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        840,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "#daily-digest",
+        "text": "=📋 *Daily digest — {{ $now.format('EEE dd MMM') }}*\\n\\n{{ $json.message.content }}"
+      },
+      "id": "4e5b4f9b-b2f1-409b-bef4-eea791503551",
+      "name": "Post to #daily-digest",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        1040,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Daily 18:00": {
+      "main": [
+        [
+          {
+            "node": "Read #engineering",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Read #sales",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Read #cs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read #engineering": {
+      "main": [
+        [
+          {
+            "node": "Merge channels",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read #sales": {
+      "main": [
+        [
+          {
+            "node": "Merge channels",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Read #cs": {
+      "main": [
+        [
+          {
+            "node": "Merge channels",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Merge channels": {
+      "main": [
+        [
+          {
+            "node": "AI 5-bullet summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI 5-bullet summary": {
+      "main": [
+        [
+          {
+            "node": "Post to #daily-digest",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "operations"
+    },
+    {
+      "name": "summarisation"
+    },
+    {
+      "name": "pattern-4"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-playbook-v1"
+  },
+  "pinData": {},
+  "versionId": "81fad490-c021-4a61-b0c7-fe63d1104d45",
+  "id": "e8fee3db-8234-4072-a358-c92fa50e2c15",
+  "_aiprosol": {
+    "description": "18:00 daily → fetch 24h messages from 3 channels → AI 5-bullet summary → post to #daily-digest",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

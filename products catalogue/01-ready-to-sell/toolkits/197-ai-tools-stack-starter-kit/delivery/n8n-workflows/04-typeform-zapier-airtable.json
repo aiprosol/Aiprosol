@@ -1,0 +1,114 @@
+{
+  "name": "Aiprosol Stack — Typeform → enrich → Airtable",
+  "nodes": [
+    {
+      "parameters": {
+        "formId": "FORM_ID"
+      },
+      "id": "cfdf4d1c-aee0-4898-9a3a-35e0478ab058",
+      "name": "Typeform trigger",
+      "type": "n8n-nodes-base.typeformTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o-mini"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Infer size + industry from email domain. Return JSON."
+            },
+            {
+              "role": "user",
+              "content": "={{ $json.form_response.answers[0].email }}"
+            }
+          ]
+        }
+      },
+      "id": "6f03c2b0-bf74-494b-b590-cfb85967afd0",
+      "name": "Enrich fields",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "record",
+        "operation": "create",
+        "application": "APP_ID",
+        "table": "Leads"
+      },
+      "id": "9777e116-8aed-4935-b1e9-092f79f705c1",
+      "name": "Airtable append",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        640,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Typeform trigger": {
+      "main": [
+        [
+          {
+            "node": "Enrich fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enrich fields": {
+      "main": [
+        [
+          {
+            "node": "Airtable append",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "stack"
+    },
+    {
+      "name": "typeform"
+    },
+    {
+      "name": "airtable"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "e72eb984-b49f-41f3-a468-6a381adc27d6",
+  "id": "da071d03-69f6-4c0f-bd8a-053d02254694",
+  "_aiprosol": {
+    "description": "New Typeform submission → AI infers missing fields (size, industry) → row written to Airtable with full context.",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

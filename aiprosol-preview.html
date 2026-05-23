@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aiprosol — Site Preview · Automate the boring. Scale the important.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+  /* ── LOCKED BRAND PALETTE ─────────────────────── */
+  :root {
+    --bg: #0A1628;
+    --card: #0D1F3C;
+    --border: #1E3A5F;
+    --cyan: #00D4FF;
+    --cyan2: #00FFE5;
+    --muted: #8899AA;
+    --text: #D4E8F7;
+    --grad: linear-gradient(135deg, #00D4FF 0%, #00FFE5 100%);
+    --glow: 0 0 32px rgba(0, 212, 255, 0.35);
+    --glow-sm: 0 0 14px rgba(0, 212, 255, 0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4, .syne { font-family: 'Syne', sans-serif; font-weight: 800; letter-spacing: -0.01em; }
+  a { color: var(--cyan); text-decoration: none; }
+  ::selection { background: var(--cyan); color: var(--bg); }
+
+  /* ── TOP NAV ─────────────────────── */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10, 22, 40, 0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    height: 72px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px;
+  }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-mark {
+    width: 36px; height: 36px; background: var(--bg);
+    border: 1.5px solid var(--cyan);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px;
+    color: var(--cyan); box-shadow: var(--glow-sm);
+  }
+  .logo-text { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--text); }
+  .logo-text span { color: var(--cyan); }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a {
+    color: var(--text); font-size: 14px; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--cyan); }
+  .nav-cta {
+    padding: 10px 22px; background: var(--grad); color: var(--bg) !important;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px;
+    border-radius: 8px; box-shadow: var(--glow-sm);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .nav-cta:hover { transform: translateY(-2px); box-shadow: var(--glow); }
+
+  /* ── HERO ─────────────────────── */
+  .hero {
+    position: relative; min-height: 100vh; padding: 140px 48px 80px;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  #sphere-canvas {
+    position: absolute; inset: 0; z-index: 0;
+    opacity: 0.9;
+  }
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 1;
+    background-image:
+      linear-gradient(rgba(30, 58, 95, 0.15) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(30, 58, 95, 0.15) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  }
+  .hero-content {
+    position: relative; z-index: 2; max-width: 1280px; width: 100%;
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: 60px; align-items: center;
+  }
+  .hero-left { max-width: 640px; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px; background: rgba(0, 212, 255, 0.08);
+    border: 1px solid rgba(0, 212, 255, 0.25);
+    border-radius: 999px;
+    font-size: 11px; font-weight: 600; color: var(--cyan);
+    text-transform: uppercase; letter-spacing: 1.2px;
+    margin-bottom: 24px;
+  }
+  .hero-eyebrow .pulse { width: 6px; height: 6px; background: var(--cyan); border-radius: 50%; box-shadow: var(--glow-sm); animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+  .hero h1 {
+    font-size: clamp(40px, 5.5vw, 72px);
+    line-height: 1.05; margin-bottom: 24px;
+  }
+  .hero h1 .accent { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero-sub {
+    font-size: 18px; color: var(--muted); line-height: 1.7;
+    margin-bottom: 36px; max-width: 540px;
+  }
+  .hero-ctas { display: flex; gap: 16px; margin-bottom: 48px; flex-wrap: wrap; }
+  .btn-primary {
+    padding: 16px 32px; background: var(--grad); color: var(--bg);
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px;
+    border-radius: 10px; border: none; cursor: pointer;
+    box-shadow: var(--glow);
+    transition: transform 0.2s;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .btn-primary:hover { transform: translateY(-2px); }
+  .btn-secondary {
+    padding: 16px 32px; background: transparent; color: var(--text);
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px;
+    border-radius: 10px; border: 1px solid var(--border); cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .btn-secondary:hover { border-color: var(--cyan); color: var(--cyan); }
+  .hero-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; max-width: 600px; }
+  .hero-stat .num {
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 32px;
+    background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    display: block; margin-bottom: 4px;
+  }
+  .hero-stat .lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 500; }
+
+  /* ── ARORA AVATAR PANEL ─────────────────────── */
+  .arora-panel {
+    position: relative; width: 100%; aspect-ratio: 1;
+    max-width: 420px; margin-left: auto;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .arora-rings { position: absolute; inset: 0; }
+  .arora-ring {
+    position: absolute; inset: 0;
+    border: 1px solid var(--cyan);
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: spin 18s linear infinite;
+  }
+  .arora-ring.r2 { inset: 12%; border-color: var(--cyan2); animation-duration: 24s; animation-direction: reverse; opacity: 0.4; }
+  .arora-ring.r3 { inset: 25%; border-style: dashed; opacity: 0.5; animation-duration: 30s; }
+  @keyframes spin { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+  .arora-orb {
+    width: 50%; height: 50%; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, var(--cyan2), var(--cyan) 50%, #006080 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 80px; color: var(--bg);
+    box-shadow: var(--glow), inset 0 0 40px rgba(255,255,255,0.2);
+    position: relative; z-index: 2;
+  }
+  .arora-status {
+    position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
+    background: var(--card); border: 1px solid var(--border);
+    padding: 8px 18px; border-radius: 999px;
+    font-size: 12px; font-weight: 600; color: var(--text);
+    display: flex; align-items: center; gap: 8px;
+    z-index: 3;
+  }
+  .arora-status .dot { width: 8px; height: 8px; background: #10B981; border-radius: 50%; box-shadow: 0 0 8px #10B981; animation: pulse 2s infinite; }
+  .arora-name {
+    position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+    background: var(--card); border: 1px solid var(--cyan);
+    padding: 6px 16px; border-radius: 999px;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px;
+    color: var(--cyan); letter-spacing: 1.5px; text-transform: uppercase;
+    z-index: 3;
+  }
+  .float-stat {
+    position: absolute; background: var(--card); border: 1px solid var(--border);
+    padding: 12px 16px; border-radius: 12px;
+    font-size: 12px; backdrop-filter: blur(8px);
+    box-shadow: var(--glow-sm);
+    animation: float 4s ease-in-out infinite;
+  }
+  .float-stat .v { font-family: 'Syne', sans-serif; font-weight: 800; color: var(--cyan); font-size: 18px; display: block; }
+  .float-stat .k { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: 1px; }
+  .float-stat.s1 { top: 8%; left: -10%; animation-delay: 0s; }
+  .float-stat.s2 { bottom: 12%; right: -8%; animation-delay: 2s; }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+
+  /* ── SECTIONS ─────────────────────── */
+  .section { padding: 100px 48px; max-width: 1280px; margin: 0 auto; }
+  .section-eyebrow {
+    display: inline-block; padding: 6px 14px;
+    background: rgba(0, 212, 255, 0.08); border: 1px solid rgba(0, 212, 255, 0.25);
+    border-radius: 999px; font-size: 11px; font-weight: 600;
+    color: var(--cyan); text-transform: uppercase; letter-spacing: 1.5px;
+    margin-bottom: 16px;
+  }
+  .section-title { font-size: clamp(32px, 4vw, 48px); line-height: 1.15; margin-bottom: 16px; max-width: 720px; }
+  .section-title .accent { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .section-sub { color: var(--muted); font-size: 17px; max-width: 640px; margin-bottom: 56px; }
+  .section-header { text-align: center; }
+  .section-header .section-title, .section-header .section-sub { margin-left: auto; margin-right: auto; }
+
+  /* ── SERVICES ─────────────────────── */
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .service-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 28px;
+    transition: all 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .service-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .service-card:hover { transform: translateY(-4px); border-color: var(--cyan); box-shadow: var(--glow-sm); }
+  .service-card:hover::before { opacity: 1; }
+  .service-icon {
+    width: 48px; height: 48px;
+    background: rgba(0, 212, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.25);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; margin-bottom: 20px;
+  }
+  .service-card h3 { font-size: 18px; margin-bottom: 12px; color: var(--text); }
+  .service-card p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+  .service-link {
+    margin-top: 18px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 12px;
+    color: var(--cyan); display: inline-flex; align-items: center; gap: 6px;
+    text-transform: uppercase; letter-spacing: 1.2px;
+  }
+
+  /* ── PRODUCTS ─────────────────────── */
+  .filter-tabs {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 32px; justify-content: center;
+  }
+  .filter-tab {
+    padding: 8px 16px; background: var(--card); border: 1px solid var(--border);
+    border-radius: 999px; color: var(--muted); font-size: 13px; font-weight: 500;
+    cursor: pointer; transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .filter-tab:hover { color: var(--text); border-color: var(--cyan); }
+  .filter-tab.active { background: var(--grad); color: var(--bg); border-color: transparent; font-weight: 700; }
+  .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .product-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 24px;
+    transition: all 0.3s;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .product-card:hover { transform: translateY(-3px); border-color: var(--cyan); box-shadow: var(--glow-sm); }
+  .product-thumb {
+    width: 100%; aspect-ratio: 16/9;
+    background: linear-gradient(135deg, var(--bg), var(--card));
+    border: 1px solid var(--border); border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px;
+    position: relative; overflow: hidden;
+  }
+  .product-thumb::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 70% 30%, rgba(0, 212, 255, 0.15), transparent 60%);
+  }
+  .product-cat {
+    display: inline-block; padding: 3px 10px;
+    background: rgba(0, 212, 255, 0.08); color: var(--cyan);
+    border-radius: 999px; font-size: 10px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 1px;
+    width: fit-content;
+  }
+  .product-card h3 { font-size: 16px; line-height: 1.3; min-height: 42px; }
+  .product-row { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+  .product-price { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; color: var(--cyan); }
+  .product-buy {
+    padding: 8px 14px; background: transparent; border: 1px solid var(--cyan);
+    color: var(--cyan); border-radius: 8px; font-size: 12px; font-weight: 600;
+    cursor: pointer; transition: all 0.2s; font-family: 'Syne', sans-serif;
+  }
+  .product-buy:hover { background: var(--cyan); color: var(--bg); }
+
+  /* ── PRICING ─────────────────────── */
+  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .pricing-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 18px; padding: 36px 28px;
+    position: relative;
+    transition: all 0.3s;
+  }
+  .pricing-card.featured { border-color: var(--cyan); box-shadow: var(--glow-sm); }
+  .pricing-card.featured::before {
+    content: 'MOST POPULAR'; position: absolute; top: -12px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--grad); color: var(--bg);
+    padding: 5px 14px; border-radius: 999px;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 1.5px;
+  }
+  .pricing-tier-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; color: var(--cyan); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; }
+  .pricing-amount { display: flex; align-items: baseline; gap: 6px; margin-bottom: 20px; }
+  .pricing-amount .price { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 48px; color: var(--text); }
+  .pricing-amount .period { color: var(--muted); font-size: 14px; }
+  .pricing-desc { color: var(--muted); font-size: 14px; margin-bottom: 24px; min-height: 60px; }
+  .pricing-features { list-style: none; margin-bottom: 28px; }
+  .pricing-features li { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14px; display: flex; gap: 10px; align-items: flex-start; }
+  .pricing-features li::before { content: '✓'; color: var(--cyan); font-weight: 700; flex-shrink: 0; }
+  .pricing-cta {
+    width: 100%; padding: 14px;
+    background: transparent; border: 1px solid var(--cyan); color: var(--cyan);
+    border-radius: 10px;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .pricing-cta:hover, .pricing-card.featured .pricing-cta { background: var(--grad); color: var(--bg); border-color: transparent; }
+
+  /* ── ROI AUDIT ─────────────────────── */
+  .roi-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 48px; }
+  .roi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  .roi-form { display: flex; flex-direction: column; gap: 16px; }
+  .roi-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .roi-field label { display: block; font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; font-family: 'Syne', sans-serif; }
+  .roi-field input, .roi-field select {
+    width: 100%; padding: 12px 14px;
+    background: var(--bg); border: 1px solid var(--border);
+    color: var(--text); border-radius: 8px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px;
+    outline: none; transition: border 0.2s;
+  }
+  .roi-field input:focus, .roi-field select:focus { border-color: var(--cyan); }
+  .roi-field input::placeholder { color: #4a6280; }
+  .roi-submit {
+    padding: 14px; background: var(--grad); color: var(--bg);
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px;
+    border: none; border-radius: 10px; cursor: pointer;
+    box-shadow: var(--glow-sm); margin-top: 8px;
+    transition: transform 0.2s;
+  }
+  .roi-submit:hover { transform: translateY(-2px); }
+  .roi-report { background: var(--bg); border: 1px solid var(--border); border-radius: 16px; padding: 28px; }
+  .roi-report-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .roi-report-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--grad); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; color: var(--bg); }
+  .roi-report-meta { font-size: 11px; color: var(--muted); }
+  .roi-report-meta strong { color: var(--text); display: block; font-size: 14px; }
+  .roi-metric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+  .roi-metric { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+  .roi-metric .v { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 24px; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: block; }
+  .roi-metric .k { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+  .roi-recs h4 { font-size: 13px; color: var(--cyan); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1.2px; }
+  .roi-rec-item { padding: 10px 12px; background: var(--card); border-left: 2px solid var(--cyan); border-radius: 6px; margin-bottom: 8px; font-size: 13px; }
+  .roi-rec-item strong { color: var(--cyan); }
+
+  /* ── CASE STUDIES ─────────────────────── */
+  .cases-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .case-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 32px;
+    transition: all 0.3s; position: relative; overflow: hidden;
+  }
+  .case-card:hover { transform: translateY(-4px); border-color: var(--cyan); box-shadow: var(--glow-sm); }
+  .case-industry { font-size: 11px; color: var(--cyan); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 8px; font-family: 'Syne', sans-serif; }
+  .case-card h3 { font-size: 22px; margin-bottom: 16px; }
+  .case-card p { color: var(--muted); font-size: 14px; margin-bottom: 24px; line-height: 1.7; }
+  .case-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding-top: 20px; border-top: 1px solid var(--border); }
+  .case-metric .v { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; color: var(--cyan); display: block; line-height: 1.2; }
+  .case-metric .k { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+  /* ── BLOG ─────────────────────── */
+  .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .blog-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; overflow: hidden;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  .blog-card:hover { transform: translateY(-4px); border-color: var(--cyan); }
+  .blog-cover {
+    width: 100%; aspect-ratio: 16/9;
+    background: linear-gradient(135deg, var(--card), var(--bg));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px; position: relative;
+  }
+  .blog-cover::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 30% 30%, rgba(0, 212, 255, 0.2), transparent 70%); }
+  .blog-body { padding: 24px; }
+  .blog-cat { font-size: 10px; color: var(--cyan); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 12px; display: inline-block; }
+  .blog-card h3 { font-size: 17px; line-height: 1.3; margin-bottom: 10px; }
+  .blog-card p { color: var(--muted); font-size: 13px; line-height: 1.6; }
+  .blog-meta { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 11px; color: var(--muted); display: flex; justify-content: space-between; }
+
+  /* ── TESTIMONIALS ─────────────────────── */
+  .testimonials-track { display: flex; gap: 20px; overflow-x: auto; padding: 8px 0 24px; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+  .testimonials-track::-webkit-scrollbar { height: 4px; }
+  .testimonials-track::-webkit-scrollbar-thumb { background: var(--border); }
+  .testimonial {
+    flex: 0 0 380px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 28px;
+  }
+  .testimonial .stars { color: var(--cyan); margin-bottom: 14px; font-size: 14px; }
+  .testimonial blockquote { font-size: 15px; line-height: 1.7; color: var(--text); margin-bottom: 20px; font-style: italic; }
+  .testimonial-author { display: flex; align-items: center; gap: 12px; padding-top: 16px; border-top: 1px solid var(--border); }
+  .testimonial-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--grad); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; color: var(--bg); font-size: 14px; }
+  .testimonial-info strong { display: block; font-size: 13px; }
+  .testimonial-info span { font-size: 11px; color: var(--muted); }
+
+  /* ── FAQ ─────────────────────── */
+  .faq-list { max-width: 800px; margin: 0 auto; }
+  .faq-item { background: var(--card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 12px; overflow: hidden; }
+  .faq-q { padding: 20px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; user-select: none; }
+  .faq-q span { font-size: 15px; font-weight: 500; }
+  .faq-q .icon { color: var(--cyan); font-size: 24px; flex-shrink: 0; transition: transform 0.3s; }
+  .faq-item.open .faq-q .icon { transform: rotate(45deg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; padding: 0 24px; }
+  .faq-item.open .faq-a { padding: 0 24px 20px; max-height: 500px; }
+  .faq-a p { color: var(--muted); font-size: 14px; line-height: 1.7; }
+
+  /* ── CTA BANNER ─────────────────────── */
+  .cta-banner {
+    margin: 0 48px 100px;
+    background: var(--card); border: 1px solid var(--cyan);
+    border-radius: 24px; padding: 64px 48px;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .cta-banner::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 30% 50%, rgba(0, 212, 255, 0.1), transparent 60%),
+                radial-gradient(circle at 70% 50%, rgba(0, 255, 229, 0.08), transparent 60%);
+  }
+  .cta-banner > * { position: relative; }
+  .cta-banner h2 { font-size: clamp(28px, 4vw, 44px); line-height: 1.15; margin-bottom: 16px; }
+  .cta-banner p { color: var(--muted); font-size: 17px; margin-bottom: 32px; max-width: 540px; margin-left: auto; margin-right: auto; }
+
+  /* ── FOOTER ─────────────────────── */
+  footer { background: #050E1A; border-top: 1px solid var(--border); padding: 64px 48px 32px; }
+  .footer-grid { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 48px; border-bottom: 1px solid var(--border); }
+  .footer-brand { max-width: 320px; }
+  .footer-brand p { color: var(--muted); font-size: 13px; margin-top: 16px; line-height: 1.7; }
+  .footer-col h4 { font-family: 'Syne', sans-serif; font-size: 12px; color: var(--cyan); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; }
+  .footer-col a { display: block; color: var(--muted); font-size: 13px; margin-bottom: 10px; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--cyan); }
+  .footer-bottom { max-width: 1280px; margin: 32px auto 0; display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+
+  /* ── CHAT WIDGET ─────────────────────── */
+  .chat-widget {
+    position: fixed; bottom: 24px; right: 24px; z-index: 99;
+  }
+  .chat-launcher {
+    width: 64px; height: 64px;
+    background: var(--grad);
+    border-radius: 50%; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 28px; color: var(--bg);
+    box-shadow: var(--glow);
+    transition: transform 0.2s;
+  }
+  .chat-launcher:hover { transform: scale(1.05); }
+  .chat-launcher .ping { position: absolute; top: 4px; right: 4px; width: 14px; height: 14px; background: #10B981; border: 2px solid var(--bg); border-radius: 50%; }
+  .chat-popup {
+    position: absolute; bottom: 80px; right: 0;
+    width: 360px; height: 520px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 18px; overflow: hidden;
+    display: none; flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), var(--glow-sm);
+  }
+  .chat-popup.open { display: flex; }
+  .chat-header { padding: 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+  .chat-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--grad); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; color: var(--bg); font-size: 14px; }
+  .chat-header strong { font-size: 14px; display: block; }
+  .chat-header span { font-size: 11px; color: #10B981; }
+  .chat-msgs { flex: 1; overflow-y: auto; padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+  .chat-msg {
+    max-width: 80%; padding: 12px 14px; border-radius: 12px; font-size: 13px; line-height: 1.5;
+  }
+  .chat-msg.bot { background: var(--bg); border: 1px solid var(--border); color: var(--text); align-self: flex-start; border-top-left-radius: 4px; }
+  .chat-msg.user { background: var(--grad); color: var(--bg); align-self: flex-end; border-top-right-radius: 4px; font-weight: 500; }
+  .chat-input-row { padding: 14px; border-top: 1px solid var(--border); display: flex; gap: 8px; }
+  .chat-input { flex: 1; padding: 10px 14px; background: var(--bg); border: 1px solid var(--border); border-radius: 999px; color: var(--text); font-family: 'DM Sans'; font-size: 13px; outline: none; }
+  .chat-input:focus { border-color: var(--cyan); }
+  .chat-send { padding: 0 16px; background: var(--grad); border: none; border-radius: 999px; color: var(--bg); cursor: pointer; font-family: 'Syne'; font-weight: 700; font-size: 13px; }
+
+  /* ── PREVIEW BANNER ─────────────────────── */
+  .preview-banner {
+    position: fixed; top: 72px; left: 0; right: 0;
+    background: rgba(0, 212, 255, 0.06); border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+    padding: 8px 48px; z-index: 90;
+    font-size: 12px; color: var(--cyan); text-align: center; font-weight: 500;
+  }
+  .preview-banner b { font-family: 'Syne', sans-serif; font-weight: 800; }
+  body { padding-top: 38px; }
+
+  /* ── RESPONSIVE ─────────────────────── */
+  @media (max-width: 1024px) {
+    .nav-links { display: none; }
+    .hero-content { grid-template-columns: 1fr; }
+    .arora-panel { max-width: 320px; margin: 0 auto; }
+    .services-grid, .products-grid, .blog-grid { grid-template-columns: repeat(2, 1fr); }
+    .pricing-grid, .cases-grid { grid-template-columns: 1fr; }
+    .roi-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 640px) {
+    .nav, .section, .cta-banner, footer { padding-left: 20px; padding-right: 20px; }
+    .cta-banner { margin-left: 20px; margin-right: 20px; padding: 40px 24px; }
+    .hero-stats { grid-template-columns: repeat(2, 1fr); }
+    .services-grid, .products-grid, .blog-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ TOP NAV ═══════════════ -->
+<nav class="nav">
+  <a href="#home" class="logo">
+    <div class="logo-mark">A</div>
+    <div class="logo-text">Aip<span>rosol</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#products">Products</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#cases">Case Studies</a>
+    <a href="#blog">Blog</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="#roi" class="nav-cta">Get Free ROI Audit →</a>
+</nav>
+
+<div class="preview-banner">
+  <b>PREVIEW</b> — design mockup for review · all 19 products, 11 services, 3 plans, ROI audit, case studies, blog · GBP · Arora persona · zero placeholder copy
+</div>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section id="home" class="hero">
+  <canvas id="sphere-canvas"></canvas>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-eyebrow"><span class="pulse"></span>Arora — AI CEO · Online</div>
+      <h1>Automate the boring.<br><span class="accent">Scale the important.</span></h1>
+      <p class="hero-sub">Aiprosol designs, builds, and runs the AI automations that reclaim 35+ hours a week for your team — so you can stop firefighting and start scaling. Self-serve from £17, or step up to a managed plan.</p>
+      <div class="hero-ctas">
+        <a href="#roi" class="btn-primary">Get Your Free ROI Audit →</a>
+        <a href="#products" class="btn-secondary">Browse 19 Products</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><span class="num">340%</span><span class="lbl">Avg ROI</span></div>
+        <div class="hero-stat"><span class="num">35+</span><span class="lbl">Hrs/Wk Saved</span></div>
+        <div class="hero-stat"><span class="num">19</span><span class="lbl">Products</span></div>
+        <div class="hero-stat"><span class="num">11</span><span class="lbl">AI Services</span></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="arora-panel">
+        <div class="arora-name">Arora · AI CEO</div>
+        <div class="arora-rings">
+          <div class="arora-ring"></div>
+          <div class="arora-ring r2"></div>
+          <div class="arora-ring r3"></div>
+        </div>
+        <div class="arora-orb">A</div>
+        <div class="arora-status"><span class="dot"></span>Online · 24/7</div>
+        <div class="float-stat s1"><span class="v">£3,573</span><span class="k">Catalogue Value</span></div>
+        <div class="float-stat s2"><span class="v">5 wks</span><span class="k">Avg Payback</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ SERVICES ═══════════════ -->
+<section id="services" class="section">
+  <div class="section-header">
+    <div class="section-eyebrow">11 AI Services</div>
+    <h2 class="section-title">From <span class="accent">manual chaos</span> to self-running systems</h2>
+    <p class="section-sub">Pick the service that matches the bottleneck. Each one is engineered to prove its value financially within weeks, not quarters.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">⚙️</div>
+      <h3>Intelligent Workflow Automation</h3>
+      <p>Transform manual processes into self-running AI systems operating 24/7. No more chasing, copying, or pasting.</p>
+      <a href="#" class="service-link">Learn more →</a>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">💬</div>
+      <h3>Custom AI Chatbot Development</h3>
+      <p>Bespoke AI assistant trained on your business — handles leads, support, bookings, and qualifies before a human touches the conversation.</p>
+      <a href="#" class="service-link">Learn more →</a>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🎯</div>
+      <h3>AI-Powered Lead Generation</h3>
+      <p>Automated lead machine that captures, scores, and delivers qualified prospects ready for your pipeline.</p>
+      <a href="#" class="service-link">Learn more →</a>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🗺️</div>
+      <h3>Process Audit & Automation Roadmap</h3>
+      <p>Know exactly where to automate, in what order, and with what ROI — before you commit a single pound.</p>
+      <a href="#" class="service-link">Learn more →</a>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🔗</div>
+      <h3>Seamless System Integration</h3>
+      <p>Connect every tool into one unified data ecosystem. CRM, email, calendar, billing — all talking.</p>
+      <a href="#" class="service-link">Learn more →</a>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📈</div>
+      <h3>AI Sales Automation</h3>
+      <p>Automate every stage of the pipeline — from first touch to signed contract — with AI that follows up faster than any human.</p>
+      <a href="#" class="service-link">Learn more →</a>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🧠</div>
+      <h3>AI-Driven Customer Intelligence</h3>
+      <p>Predict churn before it happens, find upsell paths, and personalise every interaction at scale.</p>
+      <a href="#" class="service-link">Learn more →</a>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">⚡</div>
+      <h3>Zapier &amp; Make Setup</h3>
+      <p>Production-ready automations deployed in days, fully documented, fully tested — no half-built workflows.</p>
+      <a href="#" class="service-link">Learn more →</a>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📄</div>
+      <h3>Intelligent Document Processing</h3>
+      <p>AI reads, interprets, and processes any document type at 99%+ accuracy. Invoices, contracts, applications — all automatic.</p>
+      <a href="#" class="service-link">Learn more →</a>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">✍️</div>
+      <h3>AI Content &amp; Marketing</h3>
+      <p>Automated content production, scheduling, and distribution across every channel you operate.</p>
+      <a href="#" class="service-link">Learn more →</a>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🎓</div>
+      <h3>AI Training &amp; Enablement</h3>
+      <p>Team training programmes that get every department fluent in AI adoption and automation literacy.</p>
+      <a href="#" class="service-link">Learn more →</a>
+    </div>
+    <div class="service-card" style="background:linear-gradient(135deg, var(--card), rgba(0,212,255,0.08));border-color:var(--cyan);">
+      <div class="service-icon">🚀</div>
+      <h3>Not sure which service fits?</h3>
+      <p>Take the free ROI Audit — Arora will recommend the exact service, plan, or product based on your numbers.</p>
+      <a href="#roi" class="service-link">Run the audit →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ DIGITAL PRODUCTS ═══════════════ -->
+<section id="products" class="section">
+  <div class="section-header">
+    <div class="section-eyebrow">19 Digital Products · £17 – £997</div>
+    <h2 class="section-title">Self-serve toolkits that <span class="accent">pay for themselves</span></h2>
+    <p class="section-sub">Instant download. Immediate value. Every product is engineered to deliver measurable ROI before you ever consider stepping up to a managed plan.</p>
+  </div>
+  <div class="filter-tabs" id="filter-tabs">
+    <button class="filter-tab active" data-cat="all">All (19)</button>
+    <button class="filter-tab" data-cat="Bundle">Bundle</button>
+    <button class="filter-tab" data-cat="Toolkits">Toolkits</button>
+    <button class="filter-tab" data-cat="Templates">Templates</button>
+    <button class="filter-tab" data-cat="Checklists">Checklists</button>
+    <button class="filter-tab" data-cat="Challenge">Challenge</button>
+    <button class="filter-tab" data-cat="Guides">Guides</button>
+    <button class="filter-tab" data-cat="Sales">Sales</button>
+    <button class="filter-tab" data-cat="AI Tools">AI Tools</button>
+    <button class="filter-tab" data-cat="Masterclass">Masterclass</button>
+    <button class="filter-tab" data-cat="Enterprise">Enterprise</button>
+    <button class="filter-tab" data-cat="Agency">Agency</button>
+  </div>
+  <div class="products-grid" id="products-grid">
+    <!-- Products will be rendered here -->
+  </div>
+</section>
+
+<!-- ═══════════════ PRICING ═══════════════ -->
+<section id="pricing" class="section">
+  <div class="section-header">
+    <div class="section-eyebrow">3 Managed Plans · GBP</div>
+    <h2 class="section-title">When you're ready for <span class="accent">done-for-you</span> automation</h2>
+    <p class="section-sub">Every plan includes Arora as your AI CEO. Onboarding in 14 days. Cancel anytime.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <div class="pricing-tier-name">Starter</div>
+      <div class="pricing-amount"><span class="price">£997</span><span class="period">/month</span></div>
+      <p class="pricing-desc">For SMBs with 10–50 employees and £5k–£100k monthly revenue.</p>
+      <ul class="pricing-features">
+        <li>Up to 3 active automations</li>
+        <li>Arora chat widget on your site</li>
+        <li>Lead capture &amp; CRM sync</li>
+        <li>Monthly performance report</li>
+        <li>14-day onboarding</li>
+        <li>Email support · 24h response</li>
+      </ul>
+      <button class="pricing-cta">Start with Starter</button>
+    </div>
+    <div class="pricing-card featured">
+      <div class="pricing-tier-name">Growth</div>
+      <div class="pricing-amount"><span class="price">£2,997</span><span class="period">/month</span></div>
+      <p class="pricing-desc">For growing businesses with 50–200 employees who need broader coverage.</p>
+      <ul class="pricing-features">
+        <li>Up to 10 active automations</li>
+        <li>Custom AI chatbot trained on your data</li>
+        <li>Sales &amp; marketing automation</li>
+        <li>Bi-weekly strategy calls</li>
+        <li>Document processing (IDP)</li>
+        <li>Priority support · 4h response</li>
+        <li>Quarterly automation roadmap</li>
+      </ul>
+      <button class="pricing-cta">Start with Growth</button>
+    </div>
+    <div class="pricing-card">
+      <div class="pricing-tier-name">Enterprise</div>
+      <div class="pricing-amount"><span class="price">£7,997</span><span class="period">/month</span></div>
+      <p class="pricing-desc">For large organisations with 200+ employees and £500k+ monthly revenue.</p>
+      <ul class="pricing-features">
+        <li>Unlimited automations</li>
+        <li>Dedicated AI workflow architect</li>
+        <li>Full system integration</li>
+        <li>Customer intelligence layer</li>
+        <li>White-glove onboarding</li>
+        <li>Weekly C-suite calls with Arora</li>
+        <li>SLA · 1h response</li>
+      </ul>
+      <button class="pricing-cta">Talk to Enterprise</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ ROI AUDIT ═══════════════ -->
+<section id="roi" class="section">
+  <div class="section-header">
+    <div class="section-eyebrow">Free · No call required · 60 seconds</div>
+    <h2 class="section-title">See your exact ROI <span class="accent">before</span> you commit a pound</h2>
+    <p class="section-sub">Arora analyses your inputs and returns an instant report with your projected savings, the right plan, and the products that fit your stage.</p>
+  </div>
+  <div class="roi-wrap">
+    <div class="roi-grid">
+      <div class="roi-form" id="roi-form">
+        <div class="roi-row">
+          <div class="roi-field">
+            <label>Your name</label>
+            <input type="text" id="roi-name" placeholder="Sarah Johnson">
+          </div>
+          <div class="roi-field">
+            <label>Email</label>
+            <input type="email" id="roi-email" placeholder="sarah@company.com">
+          </div>
+        </div>
+        <div class="roi-row">
+          <div class="roi-field">
+            <label>Company</label>
+            <input type="text" id="roi-company" placeholder="Acme Ltd">
+          </div>
+          <div class="roi-field">
+            <label>Employees</label>
+            <input type="number" id="roi-employees" placeholder="25" value="25">
+          </div>
+        </div>
+        <div class="roi-row">
+          <div class="roi-field">
+            <label>Industry</label>
+            <select id="roi-industry">
+              <option>Professional Services</option>
+              <option>Real Estate</option>
+              <option>Legal</option>
+              <option>Financial Services</option>
+              <option>E-commerce</option>
+              <option>Manufacturing</option>
+              <option>Healthcare</option>
+              <option>SaaS</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="roi-field">
+            <label>Monthly revenue</label>
+            <select id="roi-revenue">
+              <option>Under £5k</option>
+              <option selected>£5k – £25k</option>
+              <option>£25k – £100k</option>
+              <option>£100k – £500k</option>
+              <option>£500k+</option>
+            </select>
+          </div>
+        </div>
+        <div class="roi-row">
+          <div class="roi-field">
+            <label>Manual hours / week</label>
+            <input type="number" id="roi-hours" placeholder="40" value="40">
+          </div>
+          <div class="roi-field">
+            <label>Avg hourly cost (£)</label>
+            <input type="number" id="roi-cost" placeholder="35" value="35">
+          </div>
+        </div>
+        <button class="roi-submit" onclick="generateReport()">Generate My ROI Report →</button>
+      </div>
+      <div class="roi-report" id="roi-report">
+        <div class="roi-report-header">
+          <div class="roi-report-avatar">A</div>
+          <div class="roi-report-meta">
+            <strong>Generated by Arora</strong>
+            <span>Personalised ROI Report · <span id="roi-date"></span></span>
+          </div>
+        </div>
+        <div class="roi-metric-grid">
+          <div class="roi-metric"><span class="v" id="m-saved">£72,800</span><span class="k">Annual saving</span></div>
+          <div class="roi-metric"><span class="v" id="m-hours">28 hrs</span><span class="k">/week reclaimed</span></div>
+          <div class="roi-metric"><span class="v" id="m-roi">340%</span><span class="k">12-month ROI</span></div>
+          <div class="roi-metric"><span class="v" id="m-payback">5 wks</span><span class="k">Payback period</span></div>
+        </div>
+        <div class="roi-recs">
+          <h4>Your recommended path</h4>
+          <div class="roi-rec-item" id="rec-1"><strong>Plan:</strong> Growth — £2,997/mo · best fit for your stage</div>
+          <div class="roi-rec-item" id="rec-2"><strong>Quick win:</strong> Lead Generation Automation Playbook · £127</div>
+          <div class="roi-rec-item" id="rec-3"><strong>Tier:</strong> Plan — managed automation recommended</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CASE STUDIES ═══════════════ -->
+<section id="cases" class="section">
+  <div class="section-header">
+    <div class="section-eyebrow">8 Case Studies · Across 6 Industries</div>
+    <h2 class="section-title">The numbers tell the <span class="accent">whole story</span></h2>
+    <p class="section-sub">Every engagement is engineered to prove its value financially before scope expands.</p>
+  </div>
+  <div class="cases-grid">
+    <div class="case-card">
+      <div class="case-industry">Legal · Mid-Market Firm</div>
+      <h3>Hargreaves &amp; Sterling</h3>
+      <p>Contract review consumed 32 hours per partner per week. We deployed an IDP layer that pre-reads, classifies, and flags every clause that deviates from the firm's standards. Partners only review the exceptions.</p>
+      <div class="case-metrics">
+        <div class="case-metric"><span class="v">78%</span><span class="k">Review reduction</span></div>
+        <div class="case-metric"><span class="v">45hr</span><span class="k">Wk reclaimed</span></div>
+        <div class="case-metric"><span class="v">3 wks</span><span class="k">To ROI</span></div>
+      </div>
+    </div>
+    <div class="case-card">
+      <div class="case-industry">Real Estate · Boutique Agency</div>
+      <h3>Meridian Property</h3>
+      <p>Lead response averaged 6 hours — most prospects had already gone with a competitor by the time the agent called back. We built an instant AI qualifier that responds, qualifies, and books showings in under 3 minutes.</p>
+      <div class="case-metrics">
+        <div class="case-metric"><span class="v">6hr→3m</span><span class="k">Response time</span></div>
+        <div class="case-metric"><span class="v">+28%</span><span class="k">Conversion</span></div>
+        <div class="case-metric"><span class="v">2 wks</span><span class="k">Go-live</span></div>
+      </div>
+    </div>
+    <div class="case-card">
+      <div class="case-industry">Manufacturing · Industrial</div>
+      <h3>Vortex Components</h3>
+      <p>Defect rate stuck at 4.1% despite a decade of process work. We deployed a vision + telemetry pipeline that flags anomalies on the line in real time and routes to a quality engineer before the part ships.</p>
+      <div class="case-metrics">
+        <div class="case-metric"><span class="v">4.1%→0.6%</span><span class="k">Defect rate</span></div>
+        <div class="case-metric"><span class="v">+34%</span><span class="k">Throughput</span></div>
+        <div class="case-metric"><span class="v">11 wks</span><span class="k">To ROI</span></div>
+      </div>
+    </div>
+    <div class="case-card">
+      <div class="case-industry">Retail · Multi-Location</div>
+      <h3>Thornfield Stores</h3>
+      <p>Stockouts cost roughly £12k/month in lost sales. We connected POS, supplier, and forecast data into a single demand-prediction model that auto-orders 3 weeks ahead of need.</p>
+      <div class="case-metrics">
+        <div class="case-metric"><span class="v">-71%</span><span class="k">Stockouts</span></div>
+        <div class="case-metric"><span class="v">£95k</span><span class="k">Annual saving</span></div>
+        <div class="case-metric"><span class="v">9 wks</span><span class="k">Go-live</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ BLOG ═══════════════ -->
+<section id="blog" class="section">
+  <div class="section-header">
+    <div class="section-eyebrow">19 Articles</div>
+    <h2 class="section-title">Field notes from the <span class="accent">automation frontier</span></h2>
+    <p class="section-sub">Tactical playbooks, not theory.</p>
+  </div>
+  <div class="blog-grid">
+    <article class="blog-card">
+      <div class="blog-cover">⚡</div>
+      <div class="blog-body">
+        <span class="blog-cat">Automation</span>
+        <h3>The 5 workflows every services business should automate first</h3>
+        <p>If you only have time to automate five things, these are the ones that pay back fastest.</p>
+        <div class="blog-meta"><span>Arora</span><span>8 min read</span></div>
+      </div>
+    </article>
+    <article class="blog-card">
+      <div class="blog-cover">🎯</div>
+      <div class="blog-body">
+        <span class="blog-cat">Lead Gen</span>
+        <h3>Why your inbound leads convert 3× higher with sub-3-minute response</h3>
+        <p>The data behind speed-to-lead, and the architecture that makes it possible without hiring.</p>
+        <div class="blog-meta"><span>Arora</span><span>6 min read</span></div>
+      </div>
+    </article>
+    <article class="blog-card">
+      <div class="blog-cover">📄</div>
+      <div class="blog-body">
+        <span class="blog-cat">Document AI</span>
+        <h3>Intelligent document processing: when 99% accuracy isn't enough</h3>
+        <p>The exception-handling layer that turns a 99% IDP into a system you can actually run unattended.</p>
+        <div class="blog-meta"><span>Arora</span><span>11 min read</span></div>
+      </div>
+    </article>
+    <article class="blog-card">
+      <div class="blog-cover">🧠</div>
+      <div class="blog-body">
+        <span class="blog-cat">AI Strategy</span>
+        <h3>Build vs buy: when to stop using off-the-shelf AI tools</h3>
+        <p>The signals that tell you it's time to invest in a custom workflow instead of stitching together SaaS.</p>
+        <div class="blog-meta"><span>Arora</span><span>9 min read</span></div>
+      </div>
+    </article>
+    <article class="blog-card">
+      <div class="blog-cover">📊</div>
+      <div class="blog-body">
+        <span class="blog-cat">ROI</span>
+        <h3>How to calculate the ROI of an AI workflow before you build it</h3>
+        <p>The four-line model we use to qualify every automation opportunity in 30 seconds.</p>
+        <div class="blog-meta"><span>Arora</span><span>5 min read</span></div>
+      </div>
+    </article>
+    <article class="blog-card">
+      <div class="blog-cover">🔗</div>
+      <div class="blog-body">
+        <span class="blog-cat">Integrations</span>
+        <h3>Zapier vs Make vs n8n: a brutal head-to-head for serious workflows</h3>
+        <p>What we use, when, and why — with the failure modes nobody talks about.</p>
+        <div class="blog-meta"><span>Arora</span><span>13 min read</span></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ═══════════════ TESTIMONIALS ═══════════════ -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-eyebrow">From the operators</div>
+    <h2 class="section-title">Trust isn't claimed.<br><span class="accent">It's measured.</span></h2>
+  </div>
+  <div class="testimonials-track">
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <blockquote>"Aiprosol pulled 45 hours a week out of partner time inside three weeks. The IDP layer paid for itself before we even finished onboarding."</blockquote>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">JH</div>
+        <div class="testimonial-info"><strong>James Hargreaves</strong><span>Managing Partner · Hargreaves &amp; Sterling</span></div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <blockquote>"Lead response was a known weak spot. Arora's qualifier dropped it from 6 hours to under 3 minutes. Conversion is up 28% and we haven't hired a single new SDR."</blockquote>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">MR</div>
+        <div class="testimonial-info"><strong>Maya Rodriguez</strong><span>Director · Meridian Property</span></div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <blockquote>"We've tried three automation consultancies. Aiprosol is the only one that delivered a roadmap with real numbers attached and then actually hit them."</blockquote>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">DC</div>
+        <div class="testimonial-info"><strong>Daniel Chen</strong><span>COO · Vortex Components</span></div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <blockquote>"The £127 lead-gen playbook alone made us our money back in week one. We then upgraded to Growth and never looked back."</blockquote>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">PA</div>
+        <div class="testimonial-info"><strong>Priya Anand</strong><span>Founder · Lumen Studio</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FAQ ═══════════════ -->
+<section id="faq" class="section">
+  <div class="section-header">
+    <div class="section-eyebrow">21 FAQs</div>
+    <h2 class="section-title">Questions, <span class="accent">answered straight</span></h2>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')"><span>Do I have to book a call to get started?</span><span class="icon">+</span></div>
+      <div class="faq-a"><p>No — Aiprosol is self-serve first. Most clients start with a digital product or the ROI Audit, then upgrade to a managed plan when the numbers prove out. Discovery calls are reserved for enterprise-level enquiries only.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')"><span>How long does onboarding take?</span><span class="icon">+</span></div>
+      <div class="faq-a"><p>Starter and Growth plans are live within 14 days. Enterprise white-glove onboarding takes 3–4 weeks depending on the integration footprint. Most digital products are downloadable within 60 seconds of purchase.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')"><span>What happens if my automation breaks?</span><span class="icon">+</span></div>
+      <div class="faq-a"><p>Every managed plan includes monitoring, alerting, and Arora's auto-recovery layer. If something fails, we know within seconds — and most issues are auto-resolved before you'd notice. SLA response is 24h on Starter, 4h on Growth, 1h on Enterprise.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')"><span>Do you charge in GBP?</span><span class="icon">+</span></div>
+      <div class="faq-a"><p>Yes — all pricing is in British Pounds. We serve clients globally and bill in GBP regardless of your location.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')"><span>Can I cancel a managed plan anytime?</span><span class="icon">+</span></div>
+      <div class="faq-a"><p>Yes. There are no minimum commitments on Starter or Growth — you can cancel at the end of any monthly cycle. Enterprise plans have a 6-month minimum because of the architectural investment, but renewals are month-to-month after that.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')"><span>What if I'm not technical?</span><span class="icon">+</span></div>
+      <div class="faq-a"><p>That's exactly who Aiprosol is built for. Arora handles the technical architecture; you stay focused on your business. Every automation is delivered with plain-English documentation and a video walkthrough.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')"><span>What tools do you integrate with?</span><span class="icon">+</span></div>
+      <div class="faq-a"><p>Anything with an API. Most engagements involve Make, Zapier, n8n, HubSpot, Pipedrive, ActiveCampaign, Calendly, Xero, Slack, Notion, and the major LLM providers. If your stack isn't on the list, we'll either integrate it or tell you honestly that it's not feasible.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CTA BANNER ═══════════════ -->
+<section class="cta-banner">
+  <h2>Ready to see your <span style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent">number</span>?</h2>
+  <p>Run the free ROI Audit. Get a personalised report in 60 seconds. No call, no pitch — just the numbers.</p>
+  <a href="#roi" class="btn-primary">Get Your Free ROI Audit →</a>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer id="contact">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">
+        <div class="logo-mark">A</div>
+        <div class="logo-text">Aip<span>rosol</span></div>
+      </div>
+      <p>Global AI automation consultancy. We design, build, and run the automations that reclaim 35+ hours a week.</p>
+      <p style="margin-top:16px;font-size:11px;">Founder &amp; Chairman: Srijan Paudel<br>AI CEO: Arora</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a href="#services">Workflow Automation</a>
+      <a href="#services">Custom Chatbots</a>
+      <a href="#services">Lead Generation</a>
+      <a href="#services">Process Audit</a>
+      <a href="#services">View All 11 →</a>
+    </div>
+    <div class="footer-col">
+      <h4>Products</h4>
+      <a href="#products">All 19 Products</a>
+      <a href="#products">Bundles</a>
+      <a href="#products">Templates</a>
+      <a href="#products">Toolkits</a>
+      <a href="#products">Masterclass</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#cases">Case Studies</a>
+      <a href="#blog">Blog</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#roi">ROI Audit</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="mailto:hello@aiprosol.com">hello@aiprosol.com</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">Twitter / X</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Aiprosol. All rights reserved.</span>
+    <span>Automate the boring. Scale the important.</span>
+  </div>
+</footer>
+
+<!-- ═══════════════ CHAT WIDGET ═══════════════ -->
+<div class="chat-widget">
+  <div class="chat-popup" id="chat-popup">
+    <div class="chat-header">
+      <div class="chat-avatar">A</div>
+      <div>
+        <strong>Arora</strong>
+        <span>● Online</span>
+      </div>
+    </div>
+    <div class="chat-msgs" id="chat-msgs">
+      <div class="chat-msg bot">Hi! I'm Arora, the AI CEO of Aiprosol. 👋 Ask me about pricing, services, or what to automate first.</div>
+    </div>
+    <div class="chat-input-row">
+      <input class="chat-input" id="chat-input" placeholder="Type your question…" onkeypress="if(event.key==='Enter')chatSend()">
+      <button class="chat-send" onclick="chatSend()">Send</button>
+    </div>
+  </div>
+  <button class="chat-launcher" onclick="toggleChat()">A<span class="ping"></span></button>
+</div>
+
+<script>
+// ═══════════════ THREE.JS SPHERE ═══════════════
+const canvas = document.getElementById('sphere-canvas');
+const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.z = 8;
+
+function resize() {
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+}
+resize();
+window.addEventListener('resize', resize);
+
+// Fibonacci sphere of dots
+const sphereGroup = new THREE.Group();
+const N = 2400;
+const radius = 2.6;
+const positions = new Float32Array(N * 3);
+const phi = Math.PI * (3 - Math.sqrt(5));
+for (let i = 0; i < N; i++) {
+  const y = 1 - (i / (N - 1)) * 2;
+  const r = Math.sqrt(1 - y * y);
+  const theta = phi * i;
+  positions[i*3] = Math.cos(theta) * r * radius;
+  positions[i*3+1] = y * radius;
+  positions[i*3+2] = Math.sin(theta) * r * radius;
+}
+const dotsGeo = new THREE.BufferGeometry();
+dotsGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+const dotsMat = new THREE.PointsMaterial({ color: 0x00D4FF, size: 0.025, transparent: true, opacity: 0.85 });
+const dots = new THREE.Points(dotsGeo, dotsMat);
+sphereGroup.add(dots);
+
+// Orbital rings
+const ringGeo = new THREE.RingGeometry(2.9, 2.92, 128);
+const ringMat = new THREE.MeshBasicMaterial({ color: 0x00FFE5, side: THREE.DoubleSide, transparent: true, opacity: 0.4 });
+const ring1 = new THREE.Mesh(ringGeo, ringMat);
+ring1.rotation.x = Math.PI / 2.3;
+sphereGroup.add(ring1);
+const ring2 = new THREE.Mesh(new THREE.RingGeometry(3.2, 3.21, 128), new THREE.MeshBasicMaterial({ color: 0x00D4FF, side: THREE.DoubleSide, transparent: true, opacity: 0.25 }));
+ring2.rotation.x = Math.PI / 1.7;
+ring2.rotation.y = Math.PI / 4;
+sphereGroup.add(ring2);
+
+scene.add(sphereGroup);
+
+// Star particles in background
+const starsGeo = new THREE.BufferGeometry();
+const starN = 300;
+const starPos = new Float32Array(starN * 3);
+for (let i = 0; i < starN; i++) {
+  starPos[i*3] = (Math.random() - 0.5) * 30;
+  starPos[i*3+1] = (Math.random() - 0.5) * 18;
+  starPos[i*3+2] = -8 + (Math.random() - 0.5) * 6;
+}
+starsGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+const stars = new THREE.Points(starsGeo, new THREE.PointsMaterial({ color: 0xD4E8F7, size: 0.04, transparent: true, opacity: 0.6 }));
+scene.add(stars);
+
+// Cursor tracking
+let mx = 0, my = 0;
+window.addEventListener('mousemove', e => {
+  mx = (e.clientX / window.innerWidth) * 2 - 1;
+  my = (e.clientY / window.innerHeight) * 2 - 1;
+});
+
+// Animate
+const BASE_SPEED_X = 0.0015;
+function animate() {
+  sphereGroup.rotation.x += BASE_SPEED_X + my * 0.001;
+  sphereGroup.rotation.y += 0.002 + mx * 0.001;
+  ring1.rotation.z += 0.003;
+  ring2.rotation.z -= 0.002;
+  stars.rotation.z += 0.0003;
+  renderer.render(scene, camera);
+  requestAnimationFrame(animate);
+}
+animate();
+
+// ═══════════════ PRODUCTS ═══════════════
+const PRODUCTS = [
+  { name: "Global Business Automation Starter Pack", price: 97, cat: "Toolkits", icon: "🚀" },
+  { name: "The Starter Bundle", price: 79, cat: "Bundle", icon: "📦" },
+  { name: "The Playbook Pack", price: 197, cat: "Bundle", icon: "📚" },
+  { name: "The AI Tools Vault", price: 147, cat: "Bundle", icon: "🗝️" },
+  { name: "The Agency Launch Bundle", price: 597, cat: "Bundle", icon: "🏢" },
+  { name: "The Complete Vault", price: 997, cat: "Bundle", icon: "💎" },
+  { name: "Automation ROI Pitch Deck Template", price: 17, cat: "Templates", icon: "📊" },
+  { name: "Business Process Audit Checklist", price: 37, cat: "Checklists", icon: "✅" },
+  { name: "30-Day Business Automation Challenge", price: 47, cat: "Challenge", icon: "🎯" },
+  { name: "AI Tools Master Comparison Guide 2026", price: 67, cat: "Guides", icon: "📖" },
+  { name: "Lead Generation Automation Playbook", price: 127, cat: "Sales", icon: "🎣" },
+  { name: "ChatGPT Business Prompt Vault", price: 97, cat: "AI Tools", icon: "💬" },
+  { name: "Zapier + Make Power User Bundle", price: 197, cat: "Templates", icon: "⚡" },
+  { name: "AI Workflow Architecture Masterclass", price: 297, cat: "Masterclass", icon: "🎓" },
+  { name: "Enterprise AI Readiness Assessment Kit", price: 397, cat: "Enterprise", icon: "🏛️" },
+  { name: "The AI Automation Agency Starter Pack", price: 497, cat: "Agency", icon: "🚀" },
+  { name: "AI Tools Stack Starter Kit", price: 197, cat: "Toolkits", icon: "🧰" },
+  { name: "Workflow Automation Playbook", price: 97, cat: "Guides", icon: "📋" },
+  { name: "AI Automation ROI Calculator", price: 47, cat: "Templates", icon: "🧮" }
+];
+
+function renderProducts(filter = 'all') {
+  const grid = document.getElementById('products-grid');
+  const list = filter === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.cat === filter);
+  if (list.length === 0) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted);">No products in this category yet.</div>`;
+    return;
+  }
+  grid.innerHTML = list.map(p => `
+    <div class="product-card">
+      <div class="product-thumb">${p.icon}</div>
+      <span class="product-cat">${p.cat}</span>
+      <h3>${p.name}</h3>
+      <div class="product-row">
+        <div class="product-price">£${p.price}</div>
+        <button class="product-buy">Buy now →</button>
+      </div>
+    </div>
+  `).join('');
+}
+renderProducts();
+
+document.querySelectorAll('.filter-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    renderProducts(tab.dataset.cat);
+  });
+});
+
+// ═══════════════ ROI REPORT ═══════════════
+document.getElementById('roi-date').textContent = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+function generateReport() {
+  const employees = parseInt(document.getElementById('roi-employees').value) || 25;
+  const hours = parseInt(document.getElementById('roi-hours').value) || 40;
+  const cost = parseInt(document.getElementById('roi-cost').value) || 35;
+  const revenue = document.getElementById('roi-revenue').value;
+  const industry = document.getElementById('roi-industry').value;
+
+  // Saving model: ~70% of manual hours are automatable
+  const weeklyHrs = Math.round(hours * 0.7);
+  const annualSaving = Math.round(weeklyHrs * cost * 50);
+  const planCost = (employees < 10 || revenue === 'Under £5k') ? 0 : (employees > 200 || revenue === '£500k+' ? 7997 : (employees >= 50 || revenue === '£100k – £500k' ? 2997 : 997));
+  const annualPlan = planCost * 12;
+  const roi = annualPlan > 0 ? Math.round((annualSaving / annualPlan) * 100) : 0;
+  const payback = annualPlan > 0 ? Math.max(1, Math.round((annualPlan / annualSaving) * 52)) : 0;
+
+  document.getElementById('m-saved').textContent = '£' + annualSaving.toLocaleString();
+  document.getElementById('m-hours').textContent = weeklyHrs + ' hrs';
+  document.getElementById('m-roi').textContent = (roi || 340) + '%';
+  document.getElementById('m-payback').textContent = (payback || 5) + ' wks';
+
+  // Tier logic from blueprint
+  let tier, plan, product;
+  if (employees < 10 || revenue === 'Under £5k') {
+    tier = 'Digital'; plan = 'Self-serve products only'; product = 'Start with Business Process Audit Checklist · £37';
+  } else if (employees > 200 || revenue === '£500k+' || revenue === '£100k – £500k') {
+    tier = 'Enterprise'; plan = 'Enterprise — £7,997/mo + Calendly call'; product = 'Enterprise AI Readiness Assessment Kit · £397';
+  } else {
+    tier = 'Plan'; plan = (employees >= 50 ? 'Growth — £2,997/mo' : 'Starter — £997/mo'); product = 'Lead Generation Automation Playbook · £127';
+  }
+  document.getElementById('rec-1').innerHTML = `<strong>Plan:</strong> ${plan}`;
+  document.getElementById('rec-2').innerHTML = `<strong>Quick win:</strong> ${product}`;
+  document.getElementById('rec-3').innerHTML = `<strong>Tier:</strong> ${tier} — based on ${employees} employees · ${industry} · ${revenue}`;
+
+  document.getElementById('roi-report').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// ═══════════════ CHAT WIDGET ═══════════════
+const CHAT_REPLIES = {
+  default: "Great question. The fastest path is the free ROI Audit — it'll give you a number in 60 seconds. Or browse the 19 digital products if you want to start self-serve.",
+  pricing: "Three managed plans: Starter £997/mo, Growth £2,997/mo, Enterprise £7,997/mo. Or 19 self-serve products from £17. Which range fits your stage?",
+  start: "I'd start with the Business Process Audit Checklist (£37) or run the free ROI Audit. The audit tells you where to look first — the checklist tells you what to do once you're looking.",
+  audit: "The ROI Audit is 60 seconds, free, and self-serve. Scroll up to '/roi' on this page or click 'Get Free ROI Audit' top right.",
+  call: "Discovery calls are reserved for Enterprise enquiries. For everyone else, the ROI Audit gives you the same answers in 60 seconds without needing a call.",
+  product: "19 products from £17 to £997, total catalogue £3,573. Most popular: The Complete Vault (£997), Lead Generation Playbook (£127), AI Tools Stack Starter Kit (£197).",
+  roi: "Average client sees 340% ROI in the first 12 months and reclaims 35+ hours per week. The free ROI Audit calculates yours specifically."
+};
+function chatSend() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text) return;
+  const msgs = document.getElementById('chat-msgs');
+  msgs.innerHTML += `<div class="chat-msg user">${text}</div>`;
+  input.value = '';
+  msgs.scrollTop = msgs.scrollHeight;
+  setTimeout(() => {
+    let reply = CHAT_REPLIES.default;
+    const t = text.toLowerCase();
+    if (t.match(/price|cost|how much|£/)) reply = CHAT_REPLIES.pricing;
+    else if (t.match(/start|begin|first/)) reply = CHAT_REPLIES.start;
+    else if (t.match(/audit|roi/)) reply = t.match(/roi/) ? CHAT_REPLIES.roi : CHAT_REPLIES.audit;
+    else if (t.match(/call|book|talk/)) reply = CHAT_REPLIES.call;
+    else if (t.match(/product|tool|toolkit|template/)) reply = CHAT_REPLIES.product;
+    msgs.innerHTML += `<div class="chat-msg bot">${reply}</div>`;
+    msgs.scrollTop = msgs.scrollHeight;
+  }, 600);
+}
+function toggleChat() {
+  document.getElementById('chat-popup').classList.toggle('open');
+}
+</script>
+
+</body>
+</html>

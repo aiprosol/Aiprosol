@@ -1,0 +1,187 @@
+{
+  "name": "Aiprosol — Lead-gen daily dashboard",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * *"
+            }
+          ]
+        }
+      },
+      "id": "7072e310-3cba-4b46-84a3-09320fc83ab3",
+      "name": "Daily 8am",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "contact",
+        "operation": "getAll",
+        "filters": {
+          "propertiesCollection": {
+            "properties": [
+              "email",
+              "lead_score",
+              "lead_tier",
+              "utm_source",
+              "captured_at",
+              "first_contact_at"
+            ]
+          }
+        }
+      },
+      "id": "390e3504-de77-499a-b34e-6c2e7c862672",
+      "name": "Yesterday's leads",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const leads = $input.all().map(i => i.json); const total = leads.length; const hot = leads.filter(l => l.lead_tier==='hot').length; const bySource = {}; leads.forEach(l => { const s = l.utm_source||'organic'; bySource[s] = (bySource[s]||0)+1; }); const ttfc = leads.filter(l => l.first_contact_at).map(l => new Date(l.first_contact_at)-new Date(l.captured_at)); const avg_ttfc = ttfc.length ? ttfc.reduce((s,t)=>s+t,0)/ttfc.length/60000 : null; return [{json:{total, hot, hot_pct: (hot/total*100).toFixed(1), by_source: bySource, avg_ttfc_min: avg_ttfc ? avg_ttfc.toFixed(0) : 'n/a'}}];"
+      },
+      "id": "d072fe1c-fac8-4829-a0ea-b92d1380710d",
+      "name": "Aggregate metrics",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "create",
+        "databaseId": "DASHBOARD_DB_ID",
+        "title": "=Lead metrics — {{ $now.format('yyyy-MM-dd') }}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Total|number",
+              "numberValue": "={{ $json.total }}"
+            },
+            {
+              "key": "Hot|number",
+              "numberValue": "={{ $json.hot }}"
+            },
+            {
+              "key": "Avg TTFC (min)|number",
+              "numberValue": "={{ $json.avg_ttfc_min }}"
+            }
+          ]
+        }
+      },
+      "id": "6b909e54-760a-4132-b1da-3e3e25d2ac2d",
+      "name": "Notion — update dashboard",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        840,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "#leads",
+        "text": "=📈 Yesterday: {{ $('Aggregate metrics').first().json.total }} leads · {{ $('Aggregate metrics').first().json.hot }} hot ({{ $('Aggregate metrics').first().json.hot_pct }}%)\\nTop source: {{ Object.entries($('Aggregate metrics').first().json.by_source).sort((a,b)=>b[1]-a[1])[0][0] }}\\nAvg time-to-first-contact: {{ $('Aggregate metrics').first().json.avg_ttfc_min }} min"
+      },
+      "id": "ec70e5b0-b142-4040-908f-a916e592615a",
+      "name": "Slack 4-line summary",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        1040,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Daily 8am": {
+      "main": [
+        [
+          {
+            "node": "Yesterday's leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Yesterday's leads": {
+      "main": [
+        [
+          {
+            "node": "Aggregate metrics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate metrics": {
+      "main": [
+        [
+          {
+            "node": "Notion — update dashboard",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notion — update dashboard": {
+      "main": [
+        [
+          {
+            "node": "Slack 4-line summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "lead-gen"
+    },
+    {
+      "name": "dashboard"
+    },
+    {
+      "name": "pattern-4"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "777f2f7f-4111-4b05-90fc-f2c0a4390eb6",
+  "id": "618daa2b-ae91-4fc0-9736-ef49df308985",
+  "_aiprosol": {
+    "description": "Daily 8am → metrics aggregation → dashboard refresh + Slack summary",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

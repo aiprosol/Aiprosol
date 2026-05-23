@@ -1,0 +1,235 @@
+{
+  "name": "Aiprosol — Tax document auto-collator (Dec 15)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 9 15 12 *"
+            }
+          ]
+        }
+      },
+      "id": "d3a76a53-4c8d-4d8f-9de5-35c6db57e73b",
+      "name": "Dec 15 yearly",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "operation": "search",
+        "queryString": "='INVOICES_ARCHIVE_FOLDER_ID' in parents and modifiedTime > '{{ $now.startOf('year').toISO() }}'"
+      },
+      "id": "195a2e0f-09af-4728-8ea4-5254b9e34833",
+      "name": "Pull year invoices",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        440,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "operation": "search",
+        "queryString": "='RECEIPTS_FOLDER_ID' in parents and modifiedTime > '{{ $now.startOf('year').toISO() }}'"
+      },
+      "id": "118b7a55-1476-4428-a239-bf25a539d0a8",
+      "name": "Pull year receipts",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        440,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "operation": "search",
+        "queryString": "='BANK_FOLDER_ID' in parents and modifiedTime > '{{ $now.startOf('year').toISO() }}'"
+      },
+      "id": "a703bb2a-cbf7-4045-8b43-819c549413db",
+      "name": "Pull bank statements",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        440,
+        600
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition"
+      },
+      "id": "00cb1d26-b973-4bb6-8506-48cfca809b0f",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        640,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You are a tax prep assistant. Categorise these documents (income, expenses, payroll, capital). Identify gaps: any month with no documents, any vendor with single missing invoice, any unusually-large transaction without backing. Return structured markdown."
+            },
+            {
+              "role": "user",
+              "content": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        }
+      },
+      "id": "401f535b-5b62-426e-a1d8-46b42fd5782e",
+      "name": "AI categorise + gap check",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        840,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "send",
+        "to": "accountant@firm.com",
+        "subject": "=Tax prep package — {{ $now.format('yyyy') }}",
+        "message": "=Hi, attached is the auto-categorised year-end package. Gaps and questions flagged inline.\\n\\n{{ $json.message.content }}"
+      },
+      "id": "7dd56bac-1b43-48d8-bbc6-452ac700607d",
+      "name": "Email accountant",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1040,
+        400
+      ]
+    }
+  ],
+  "connections": {
+    "Dec 15 yearly": {
+      "main": [
+        [
+          {
+            "node": "Pull year invoices",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Pull year receipts",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Pull bank statements",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pull year invoices": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pull year receipts": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Pull bank statements": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "AI categorise + gap check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI categorise + gap check": {
+      "main": [
+        [
+          {
+            "node": "Email accountant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "finance"
+    },
+    {
+      "name": "tax"
+    },
+    {
+      "name": "pattern-4"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-playbook-v1"
+  },
+  "pinData": {},
+  "versionId": "5b3bb1e6-d6fe-46e5-8add-fc49e90d8a8d",
+  "id": "dc1a5168-7383-4356-95d0-dc4f55071f04",
+  "_aiprosol": {
+    "description": "Annual Dec 15 → pull year of finance docs → AI categorise + flag gaps → email accountant",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

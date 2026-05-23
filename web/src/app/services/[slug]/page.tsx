@@ -1,0 +1,247 @@
+'use client';
+
+import { useMemo, useState } from 'react';
+import { useParams } from 'next/navigation';
+import Link from 'next/link';
+import { getServiceBySlug, getCaseStudyBySlug, getPricingPlan } from '@/lib/content';
+
+// ─────────────────────────────────────────────────────────────────────────
+// AIPROSOL · SERVICE DETAIL · /services/[slug]
+// Pulls service from static catalogue. Hero · benefits · process · plan
+// match card · related case studies · plan-tier-aware FAQ.
+// ─────────────────────────────────────────────────────────────────────────
+
+export default function ServiceDetailPage() {
+  const params = useParams<{ slug: string }>();
+  const slug = params?.slug;
+  const service = slug ? getServiceBySlug(slug) : undefined;
+  const [openFAQ, setOpenFAQ] = useState<number | null>(0);
+
+  const cases = useMemo(() => {
+    if (!service?.caseStudyKeys) return [];
+    return service.caseStudyKeys
+      .map(key => getCaseStudyBySlug(key))
+      .filter((c): c is NonNullable<typeof c> => Boolean(c));
+  }, [service]);
+
+  const plan = useMemo(() => {
+    if (!service) return null;
+    return getPricingPlan(service.planMatch);
+  }, [service]);
+
+  const faqs = useMemo(() => {
+    if (!service) return [];
+    return [
+      { q: `How long until ${service.title} is running in our business?`, a: service.planMatch === 'enterprise' ? 'Enterprise rollouts take 3–4 weeks for the architectural design + build. Most clients see first wins in week 2.' : 'Starter and Growth tiers go live within 14 days. Most clients see first wins in week 1.' },
+      { q: 'Do we need to change our existing tools?', a: 'No. Aiprosol works with your existing CRM, billing, support, and email stack. We integrate, not replace. If a tool is genuinely holding you back, we\'ll tell you — and recommend an alternative — but that\'s rare.' },
+      { q: 'Who owns the system after it\'s built?', a: 'You do. All workflows, prompts, and integrations live in your accounts. We never lock you in. The managed plan covers ongoing operation, monitoring, and iteration.' },
+      { q: 'What if our requirements change?', a: 'Iteration is built into every plan. Starter gets a quarterly roadmap review, Growth gets bi-weekly, Enterprise gets weekly. Adjustments come out of plan capacity unless they require new architecture.' },
+      { q: 'Is our data secure?', a: 'All data stays in your tools. Aiprosol\'s middleware uses encrypted tokens, rotates keys, and ships with full audit logging. Enterprise tier includes SOC 2 commitments and a custom DPA.' },
+    ];
+  }, [service]);
+
+  if (!service) {
+    return (
+      <div className="sd-page">
+        <div className="sd-empty">
+          <h2>That service isn&apos;t on the menu.</h2>
+          <p>You&apos;ll find all 11 in the catalogue.</p>
+          <Link href="/services" className="sd-btn">View all services →</Link>
+        </div>
+        <Styles />
+      </div>
+    );
+  }
+
+  // Service Schema.org JSON-LD lives in services/[slug]/layout.tsx
+  // (with Service + Offer + BusinessAudience + PriceSpecification + areaServed
+  // + BreadcrumbList). Do not duplicate it here — Rich Results Test flags
+  // duplicate entities as invalid.
+
+  return (
+    <div className="sd-page">
+      <div className="sd-crumb"><Link href="/services">← All services</Link></div>
+
+      <header className="sd-hero">
+        <div className="sd-hero-icon">{service.icon}</div>
+        <div className="sd-eyebrow">AI Service · {service.planMatch.charAt(0).toUpperCase() + service.planMatch.slice(1)} tier</div>
+        <h1 className="sd-h1">{service.title}</h1>
+        <p className="sd-sub">{service.longDescription || service.shortDescription}</p>
+        <div className="sd-cta-row">
+          <Link href="/roi-audit" className="sd-btn-primary">See ROI for your business →</Link>
+          <Link href="/pricing" className="sd-btn-secondary">View pricing</Link>
+        </div>
+      </header>
+
+      <div className="sd-cover">
+        <img src={`/api/og/service/${service.slug}`} alt={service.title} loading="eager" />
+      </div>
+
+      {service.benefits.length > 0 && (
+        <section className="sd-section">
+          <div className="sd-section-eyebrow">What you get</div>
+          <h2 className="sd-section-title">Outcomes, not deliverables</h2>
+          <div className="sd-benefits">
+            {service.benefits.map((b, i) => (
+              <div key={i} className="sd-benefit">
+                <span className="sd-benefit-check">✓</span>
+                <p>{b}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {service.process.length > 0 && (
+        <section className="sd-section">
+          <div className="sd-section-eyebrow">How it works</div>
+          <h2 className="sd-section-title">{service.process.length} steps · transparent end-to-end</h2>
+          <ol className="sd-process">
+            {service.process.map((step, i) => (
+              <li key={i}>
+                <div className="sd-step-num">{String(i + 1).padStart(2, '0')}</div>
+                <p>{step}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
+
+      {plan && (
+        <section className="sd-plan">
+          <div className="sd-plan-side">
+            <div className="sd-section-eyebrow">Plan match</div>
+            <h2 className="sd-section-title">{plan.name} — ${plan.price.toLocaleString()}/mo</h2>
+            <p className="sd-plan-tag">{plan.target}. This service is included.</p>
+            <Link href="/pricing" className="sd-btn-primary">See full plan details →</Link>
+          </div>
+          <div className="sd-plan-card">
+            <div className="sd-plan-name">{plan.name}</div>
+            <div className="sd-plan-price">${plan.price.toLocaleString()}<span>/month</span></div>
+            <ul>
+              <li>✓ {service.title} included</li>
+              <li>✓ Onboarding within 14 days</li>
+              <li>✓ Cancel anytime{plan.id === 'enterprise' ? ' after 6-month minimum' : ''}</li>
+              <li>✓ Arora as your AI CEO</li>
+            </ul>
+          </div>
+        </section>
+      )}
+
+      {cases.length > 0 && (
+        <section className="sd-section">
+          <div className="sd-section-eyebrow">Proof</div>
+          <h2 className="sd-section-title">Where this service has shipped</h2>
+          <div className="sd-cases">
+            {cases.map(c => (
+              <Link key={c.slug} href={`/case-studies/${c.slug}`} className="sd-case">
+                <div className="sd-case-industry">{c.industry}</div>
+                <h3>{c.companyName}</h3>
+                <p>{c.headline}</p>
+                <span className="sd-case-link">Read case →</span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <section className="sd-section">
+        <div className="sd-section-eyebrow">FAQ</div>
+        <h2 className="sd-section-title">Quick questions</h2>
+        <div className="sd-faq-list">
+          {faqs.map((f, i) => (
+            <div key={i} className={`sd-faq-item ${openFAQ === i ? 'is-open' : ''}`}>
+              <button className="sd-faq-q" onClick={() => setOpenFAQ(openFAQ === i ? null : i)}>
+                <span>{f.q}</span><span className="sd-faq-icon">+</span>
+              </button>
+              <div className="sd-faq-a"><p>{f.a}</p></div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="sd-cta-final">
+        <h2>Want this in your business?</h2>
+        <p>Run the free 60-second ROI Audit — Arora confirms whether {service.title} is the right place to start.</p>
+        <Link href="/roi-audit" className="sd-cta-btn">Get Your Free ROI Audit →</Link>
+      </section>
+
+      <Styles />
+    </div>
+  );
+}
+
+function Styles() {
+  return (
+    <style>{`
+      .sd-page { background: #0A0613; color: #E5E7EB; min-height: 100vh; padding: 140px 24px 80px; font-family: 'Inter', system-ui, sans-serif; }
+      @media (max-width: 640px) { .sd-page { padding: 120px 16px 60px; } }
+      .sd-empty { max-width: 600px; margin: 80px auto; text-align: center; padding: 48px; background: #13101F; border: 1px solid #2A1F3D; border-radius: 18px; }
+      .sd-empty h2 { font-family: 'Space Grotesk', sans-serif; font-size: 24px; margin-bottom: 12px; }
+      .sd-crumb { max-width: 1080px; margin: 0 auto 24px; font-size: 13px; color: #9CA3B5; }
+      .sd-crumb a { color: #8B5CF6; }
+
+      .sd-hero { max-width: 760px; margin: 0 auto 64px; text-align: center; }
+      .sd-hero-icon { display: inline-flex; align-items: center; justify-content: center; width: 80px; height: 80px; background: rgba(139, 92, 246,0.08); border: 1px solid rgba(139, 92, 246,0.25); border-radius: 22px; font-size: 40px; margin-bottom: 24px; box-shadow: 0 0 32px rgba(139, 92, 246,0.2); }
+      .sd-eyebrow { display: inline-block; padding: 4px 12px; background: rgba(139, 92, 246,0.08); border: 1px solid rgba(139, 92, 246,0.25); border-radius: 999px; color: #8B5CF6; font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px; }
+      .sd-h1 { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: clamp(32px, 4.5vw, 52px); line-height: 1.05; margin-bottom: 20px; }
+      .sd-sub { color: #9CA3B5; font-size: 18px; line-height: 1.7; margin-bottom: 28px; }
+      .sd-cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+      .sd-btn-primary { padding: 14px 28px; background: linear-gradient(135deg, #8B5CF6, #C084FC); color: #0A0613; border-radius: 10px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 13px; text-decoration: none; box-shadow: 0 0 24px rgba(139, 92, 246,0.3); transition: transform 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+      .sd-btn-primary:hover { transform: translateY(-2px); }
+      .sd-btn-secondary { padding: 14px 28px; background: transparent; color: #E5E7EB; border: 1px solid #2A1F3D; border-radius: 10px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 13px; text-decoration: none; transition: all 0.2s; }
+      .sd-btn-secondary:hover { border-color: #8B5CF6; color: #8B5CF6; }
+      .sd-btn { padding: 12px 24px; background: linear-gradient(135deg, #8B5CF6, #C084FC); color: #0A0613; border-radius: 10px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 13px; text-decoration: none; }
+      .sd-cover { max-width: 1080px; margin: 0 auto 64px; aspect-ratio: 21/9; background: #0A0613; border: 1px solid #2A1F3D; border-radius: 20px; overflow: hidden; }
+      .sd-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+      .sd-section { max-width: 1080px; margin: 0 auto 72px; }
+      .sd-section-eyebrow { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; color: #8B5CF6; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; }
+      .sd-section-title { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: clamp(24px, 3vw, 36px); line-height: 1.2; margin-bottom: 28px; }
+
+      .sd-benefits { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+      @media (max-width: 640px) { .sd-benefits { grid-template-columns: 1fr; } }
+      .sd-benefit { display: flex; align-items: flex-start; gap: 14px; padding: 18px 20px; background: #13101F; border: 1px solid #2A1F3D; border-radius: 12px; }
+      .sd-benefit-check { width: 28px; height: 28px; flex-shrink: 0; background: linear-gradient(135deg, #8B5CF6, #C084FC); color: #0A0613; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; box-shadow: 0 0 12px rgba(139, 92, 246,0.3); }
+      .sd-benefit p { font-size: 14px; line-height: 1.6; }
+
+      .sd-process { list-style: none; padding: 0; margin: 0; }
+      .sd-process li { display: flex; gap: 20px; padding: 20px; background: #13101F; border: 1px solid #2A1F3D; border-radius: 12px; margin-bottom: 12px; align-items: center; }
+      .sd-step-num { width: 48px; height: 48px; flex-shrink: 0; background: linear-gradient(135deg, #8B5CF6, #C084FC); color: #0A0613; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 16px; box-shadow: 0 0 14px rgba(139, 92, 246,0.25); }
+      .sd-process p { font-size: 14px; line-height: 1.6; }
+
+      .sd-plan { max-width: 1080px; margin: 0 auto 72px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: center; padding: 40px; background: rgba(139, 92, 246,0.03); border: 1px solid rgba(139, 92, 246,0.18); border-radius: 20px; }
+      @media (max-width: 1024px) { .sd-plan { grid-template-columns: 1fr; padding: 28px; } }
+      .sd-plan-tag { color: #9CA3B5; font-size: 14px; margin-bottom: 18px; }
+      .sd-plan-card { padding: 28px; background: #0A0613; border: 1px solid #8B5CF6; border-radius: 16px; box-shadow: 0 0 24px rgba(139, 92, 246,0.15); }
+      .sd-plan-name { font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700; color: #8B5CF6; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+      .sd-plan-price { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 38px; color: #E5E7EB; line-height: 1; margin-bottom: 18px; }
+      .sd-plan-price span { font-size: 14px; color: #9CA3B5; font-weight: 400; }
+      .sd-plan-card ul { list-style: none; padding: 0; margin: 0; }
+      .sd-plan-card li { padding: 8px 0; font-size: 13px; color: #E5E7EB; }
+
+      .sd-cases { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+      @media (max-width: 640px) { .sd-cases { grid-template-columns: 1fr; } }
+      .sd-case { display: block; padding: 24px; background: #13101F; border: 1px solid #2A1F3D; border-radius: 14px; text-decoration: none; color: #E5E7EB; transition: all 0.3s; }
+      .sd-case:hover { transform: translateY(-3px); border-color: #8B5CF6; box-shadow: 0 0 24px rgba(139, 92, 246,0.18); }
+      .sd-case-industry { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; color: #8B5CF6; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+      .sd-case h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 18px; margin-bottom: 12px; }
+      .sd-case p { color: #9CA3B5; font-size: 14px; line-height: 1.5; margin-bottom: 14px; }
+      .sd-case-link { font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; color: #8B5CF6; }
+
+      .sd-faq-list { display: flex; flex-direction: column; gap: 8px; }
+      .sd-faq-item { background: #13101F; border: 1px solid #2A1F3D; border-radius: 12px; overflow: hidden; }
+      .sd-faq-q { width: 100%; padding: 18px 22px; background: transparent; border: none; color: #E5E7EB; font-size: 15px; font-weight: 500; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; font-family: 'Inter', system-ui, sans-serif; }
+      .sd-faq-icon { color: #8B5CF6; font-size: 20px; transition: transform 0.3s; flex-shrink: 0; }
+      .sd-faq-item.is-open .sd-faq-icon { transform: rotate(45deg); }
+      .sd-faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; padding: 0 22px; }
+      .sd-faq-item.is-open .sd-faq-a { max-height: 400px; padding: 0 22px 18px; }
+      .sd-faq-a p { color: #9CA3B5; font-size: 14px; line-height: 1.7; }
+
+      .sd-cta-final { max-width: 720px; margin: 0 auto; text-align: center; padding: 48px 32px; background: rgba(139, 92, 246,0.04); border: 1px solid rgba(139, 92, 246,0.25); border-radius: 24px; }
+      .sd-cta-final h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 28px; margin-bottom: 8px; }
+      .sd-cta-final p { color: #9CA3B5; font-size: 14px; margin-bottom: 24px; }
+      .sd-cta-btn { display: inline-block; padding: 14px 32px; background: linear-gradient(135deg, #8B5CF6, #C084FC); color: #0A0613 !important; border-radius: 10px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 14px; text-decoration: none; box-shadow: 0 0 24px rgba(139, 92, 246,0.35); }
+    `}</style>
+  );
+}

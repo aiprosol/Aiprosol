@@ -1,0 +1,214 @@
+{
+  "version": "1.0",
+  "set": "AI Tools Stack Starter Kit",
+  "count": 18,
+  "workflows": [
+    {
+      "file": "01-slack-openai-notion.json",
+      "title": "Slack message \u2192 OpenAI \u2192 Notion page",
+      "description": "When a message with a \ud83d\udcdd reaction is added in Slack, the message text is sent to OpenAI for summarisation and a new Notion page is created with the result.",
+      "nodes": 4,
+      "tags": [
+        "stack",
+        "slack",
+        "openai",
+        "notion"
+      ]
+    },
+    {
+      "file": "02-gmail-claude-calendar.json",
+      "title": "Gmail meeting request \u2192 Claude \u2192 Calendar suggestion",
+      "description": "Email with 'meeting' or 'call' in the body triggers Claude to detect intent, propose 3 calendar slots from your availability, and reply with a Calendly link.",
+      "nodes": 4,
+      "tags": [
+        "stack",
+        "gmail",
+        "claude",
+        "calendar"
+      ]
+    },
+    {
+      "file": "03-stripe-llm-cs.json",
+      "title": "Stripe new customer \u2192 LLM kickoff brief \u2192 CS workspace",
+      "description": "Every new Stripe customer triggers an LLM-generated welcome brief (with their industry context) and creates a Notion CS workspace page with the brief embedded.",
+      "nodes": 4,
+      "tags": [
+        "stack",
+        "stripe",
+        "openai",
+        "notion"
+      ]
+    },
+    {
+      "file": "04-typeform-zapier-airtable.json",
+      "title": "Typeform \u2192 enrich \u2192 Airtable",
+      "description": "New Typeform submission \u2192 AI infers missing fields (size, industry) \u2192 row written to Airtable with full context.",
+      "nodes": 3,
+      "tags": [
+        "stack",
+        "typeform",
+        "airtable"
+      ]
+    },
+    {
+      "file": "05-shopify-openai-klaviyo.json",
+      "title": "Shopify order \u2192 OpenAI \u2192 Klaviyo segment",
+      "description": "New Shopify order \u2192 AI categorises customer behaviour \u2192 adds to right Klaviyo segment for post-purchase email.",
+      "nodes": 3,
+      "tags": [
+        "stack",
+        "shopify",
+        "klaviyo"
+      ]
+    },
+    {
+      "file": "06-calendly-claude-hubspot.json",
+      "title": "Calendly booking \u2192 Claude \u2192 HubSpot deal",
+      "description": "New Calendly booking \u2192 Claude extracts meeting context \u2192 creates HubSpot deal with stage='discovery'.",
+      "nodes": 3,
+      "tags": [
+        "stack",
+        "calendly",
+        "hubspot",
+        "claude"
+      ]
+    },
+    {
+      "file": "07-typeform-openai-mailchimp.json",
+      "title": "Typeform survey \u2192 OpenAI synthesis \u2192 Mailchimp",
+      "description": "Survey responses \u2192 AI synthesises themes \u2192 personalised follow-up email sequence in Mailchimp.",
+      "nodes": 3,
+      "tags": [
+        "stack",
+        "typeform",
+        "mailchimp"
+      ]
+    },
+    {
+      "file": "08-stripe-anthropic-slack.json",
+      "title": "Stripe failed payment \u2192 Claude \u2192 Slack escalation",
+      "description": "Stripe payment.failed \u2192 Claude drafts customer-friendly recovery email + risk assessment \u2192 Slack ping the CS lead.",
+      "nodes": 3,
+      "tags": [
+        "stack",
+        "stripe",
+        "claude",
+        "slack"
+      ]
+    },
+    {
+      "file": "09-airtable-openai-mailchimp.json",
+      "title": "Airtable record \u2192 OpenAI \u2192 Mailchimp campaign",
+      "description": "Airtable record update \u2192 OpenAI generates campaign copy \u2192 creates draft Mailchimp campaign for review.",
+      "nodes": 3,
+      "tags": [
+        "stack",
+        "airtable",
+        "mailchimp"
+      ]
+    },
+    {
+      "file": "10-clickup-openai-slack.json",
+      "title": "ClickUp task overdue \u2192 OpenAI \u2192 Slack nudge",
+      "description": "Daily check: ClickUp tasks past due \u2192 OpenAI drafts a kind reminder per task \u2192 DM to the assignee.",
+      "nodes": 4,
+      "tags": [
+        "stack",
+        "clickup",
+        "slack"
+      ]
+    },
+    {
+      "file": "11-googleforms-claude-zendesk.json",
+      "title": "Google Form intake \u2192 Claude triage \u2192 Zendesk ticket",
+      "description": "New Google Forms intake \u2192 Claude classifies (bug/feature/billing/other) \u2192 creates Zendesk ticket with right priority.",
+      "nodes": 3,
+      "tags": [
+        "stack",
+        "google-forms",
+        "zendesk",
+        "claude"
+      ]
+    },
+    {
+      "file": "12-discord-openai-airtable.json",
+      "title": "Discord message \u2192 OpenAI sentiment \u2192 Airtable log",
+      "description": "Community Discord channel messages \u2192 OpenAI extracts sentiment + topic \u2192 logs to Airtable for weekly review.",
+      "nodes": 3,
+      "tags": [
+        "stack",
+        "discord",
+        "airtable"
+      ]
+    },
+    {
+      "file": "13-googleSheets-openai-mailgun.json",
+      "title": "Google Sheets row \u2192 OpenAI \u2192 Mailgun send",
+      "description": "New row in 'send-list' Google Sheet \u2192 OpenAI personalises body using row data \u2192 Mailgun sends.",
+      "nodes": 3,
+      "tags": [
+        "stack",
+        "sheets",
+        "mailgun"
+      ]
+    },
+    {
+      "file": "14-twilio-claude-hubspot.json",
+      "title": "Twilio SMS reply \u2192 Claude \u2192 HubSpot note",
+      "description": "Customer SMS reply \u2192 Claude extracts intent + drafts response \u2192 response sent + activity logged on HubSpot contact.",
+      "nodes": 3,
+      "tags": [
+        "stack",
+        "twilio",
+        "hubspot",
+        "claude"
+      ]
+    },
+    {
+      "file": "15-googleDocs-openai-googleSlides.json",
+      "title": "Google Doc \u2192 OpenAI \u2192 Google Slides deck",
+      "description": "Long-form Google Doc \u2192 OpenAI structures into slide-by-slide outline \u2192 creates a new Google Slides deck.",
+      "nodes": 4,
+      "tags": [
+        "stack",
+        "drive",
+        "openai",
+        "slides"
+      ]
+    },
+    {
+      "file": "16-pipedrive-openai-gmail.json",
+      "title": "Pipedrive deal won \u2192 OpenAI \u2192 Gmail kickoff email",
+      "description": "Deal moves to 'won' in Pipedrive \u2192 OpenAI drafts an onboarding kickoff email \u2192 Gmail draft created.",
+      "nodes": 3,
+      "tags": [
+        "stack",
+        "pipedrive",
+        "gmail"
+      ]
+    },
+    {
+      "file": "17-monday-openai-slack.json",
+      "title": "Monday.com status change \u2192 OpenAI summary \u2192 Slack",
+      "description": "Status column changes in Monday.com \u2192 OpenAI generates a 1-paragraph context summary \u2192 posts to relevant Slack channel.",
+      "nodes": 3,
+      "tags": [
+        "stack",
+        "monday",
+        "slack"
+      ]
+    },
+    {
+      "file": "18-googleAnalytics-claude-notion.json",
+      "title": "GA4 anomaly \u2192 Claude analysis \u2192 Notion entry",
+      "description": "Daily GA4 check for traffic anomalies \u2192 Claude analyses cause hypothesis \u2192 creates Notion 'incidents' database entry for the marketing team.",
+      "nodes": 4,
+      "tags": [
+        "stack",
+        "ga4",
+        "claude",
+        "notion"
+      ]
+    }
+  ]
+}

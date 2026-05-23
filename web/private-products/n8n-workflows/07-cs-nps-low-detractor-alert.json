@@ -1,0 +1,125 @@
+{
+  "name": "CS \u00b7 NPS < 7 \u2192 CSM Slack alert",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "nps-response",
+        "responseMode": "lastNode"
+      },
+      "id": "7616139f-348e-4bcb-af11-573c204e9462",
+      "name": "NPS response webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "1",
+              "leftValue": "={{ $json.body.score }}",
+              "rightValue": 7,
+              "operator": {
+                "type": "number",
+                "operation": "lt"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "84808f0b-d2ff-4e03-b55e-0103713bfdde",
+      "name": "Score < 7?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "post",
+        "channel": "csm-alerts",
+        "text": "=:warning: Detractor NPS \u00b7 {{ $json.body.customer_email }} scored {{ $json.body.score }} \u00b7 comment: \\\"{{ $json.body.comment }}\\\"\\n*Action*: book a 30-min recovery call within 48 hours."
+      },
+      "id": "c40f2a74-3676-4a0f-95e1-059c4096961b",
+      "name": "Slack: detractor flagged",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        680,
+        200
+      ],
+      "credentials": {
+        "slackApi": {
+          "id": "REPLACE_ME",
+          "name": "Slack workspace"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "0c08a22d-4f1e-4f4a-a845-82d8cee98fa1",
+      "name": "Promoter / passive \u2014 log only",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        680,
+        400
+      ]
+    }
+  ],
+  "connections": {
+    "NPS response webhook": {
+      "main": [
+        [
+          {
+            "node": "Score < 7?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Score < 7?": {
+      "main": [
+        [
+          {
+            "node": "Slack: detractor flagged",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Promoter / passive \u2014 log only",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "38c5c7fb-63a8-4340-9c2e-bf688a7a7231",
+  "id": "6903e4f2-df8d-42fd-b183-e6cb23b6f6a7",
+  "meta": {
+    "instanceId": "aiprosol-starter-library-v1"
+  },
+  "tags": [],
+  "pinData": {}
+}

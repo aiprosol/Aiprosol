@@ -1,0 +1,207 @@
+{
+  "name": "Aiprosol — Pipeline review prep auto-doc",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 7 * * 1"
+            }
+          ]
+        }
+      },
+      "id": "70243edd-462a-4a47-a3da-51cce6a29d5d",
+      "name": "Weekly Mon 7am",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "deal",
+        "operation": "getAll",
+        "returnAll": true
+      },
+      "id": "11e2fbfe-4bb1-4bc4-a85d-2b988e0f207b",
+      "name": "HubSpot — open deals",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const all = $input.all(); const byStage = {}; for (const i of all) { const s = i.json.dealstage; if (!byStage[s]) byStage[s] = { count: 0, total: 0, deals: [] }; byStage[s].count += 1; byStage[s].total += Number(i.json.amount || 0); byStage[s].deals.push({ name: i.json.dealname, amount: i.json.amount }); } return [{ json: byStage }];"
+      },
+      "id": "10311f5f-d75b-4878-bd2d-f00017f4def7",
+      "name": "Aggregate by stage",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You are a sales analyst. Write a 1-page Markdown briefing for the Monday pipeline review. Sections: Headline numbers, At-risk deals, This week's priorities, Questions for the meeting. Be specific, no fluff."
+            },
+            {
+              "role": "user",
+              "content": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        }
+      },
+      "id": "f5933dc9-0158-4ac6-83c4-e68eecdd4992",
+      "name": "AI brief",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        840,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "create",
+        "databaseId": "PIPELINE_DB_ID",
+        "title": "=Pipeline Review — {{ $now.format('yyyy-MM-dd') }}",
+        "blockUi": {
+          "blockValues": [
+            {
+              "type": "paragraph",
+              "textContent": "={{ $json.message.content }}"
+            }
+          ]
+        }
+      },
+      "id": "74ef210a-fe01-44ec-b603-2af6db46a992",
+      "name": "Notion — create page",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        1040,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "#sales",
+        "text": "=📋 Pipeline review brief ready: {{ $json.url }}"
+      },
+      "id": "c454e069-f9a8-4fe6-95bc-1b6262236cab",
+      "name": "Slack — notify team",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        1240,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Weekly Mon 7am": {
+      "main": [
+        [
+          {
+            "node": "HubSpot — open deals",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HubSpot — open deals": {
+      "main": [
+        [
+          {
+            "node": "Aggregate by stage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate by stage": {
+      "main": [
+        [
+          {
+            "node": "AI brief",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI brief": {
+      "main": [
+        [
+          {
+            "node": "Notion — create page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notion — create page": {
+      "main": [
+        [
+          {
+            "node": "Slack — notify team",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "sales"
+    },
+    {
+      "name": "reporting"
+    },
+    {
+      "name": "pattern-4"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-playbook-v1"
+  },
+  "pinData": {},
+  "versionId": "d2321434-4ba0-46a9-a91f-73faafa88f0e",
+  "id": "b786e799-8b30-4b88-af41-75bddf2aebe6",
+  "_aiprosol": {
+    "description": "Monday 7am → pipeline data → AI summary → Notion page → Slack ping",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

@@ -1,0 +1,382 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>The Aiprosol Lead Generation Automation Playbook — Aiprosol</title><style>
+:root { color-scheme: light dark; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif; max-width: 760px; margin: 0 auto; padding: 56px 32px 96px; line-height: 1.75; color: #1F1B2E; background: #FAF8FF; }
+@media (prefers-color-scheme: dark) { body { color: #E5E7EB; background: #0A0613; } a { color: #C084FC; } blockquote { background: rgba(139,92,246,0.08); border-left-color: #8B5CF6; color: #C7CEDB; } code { background: rgba(139,92,246,0.12); color: #C084FC; } pre { background: rgba(0,0,0,0.45); border: 1px solid #2A1F3D; } hr { border-color: #2A1F3D; } table { border-color: #2A1F3D; } th { background: #1A1428; } td, th { border-color: #2A1F3D; } tr:nth-child(even) { background: rgba(139,92,246,0.04); } }
+h1, h2, h3, h4 { font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.2; letter-spacing: -0.01em; }
+h1 { font-size: 36px; margin: 0 0 28px; font-weight: 800; background: linear-gradient(135deg, #8B5CF6, #C084FC); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+h2 { font-size: 24px; margin-top: 48px; margin-bottom: 14px; font-weight: 700; padding-bottom: 8px; border-bottom: 1px solid rgba(139,92,246,0.3); }
+h3 { font-size: 18px; margin-top: 28px; margin-bottom: 10px; font-weight: 700; color: #8B5CF6; }
+@media (prefers-color-scheme: dark) { h3 { color: #C084FC; } }
+h4 { font-size: 15px; margin-top: 18px; margin-bottom: 6px; font-weight: 700; }
+p { margin: 12px 0; }
+a { color: #6D28D9; text-decoration: underline; text-underline-offset: 3px; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+blockquote { background: rgba(139,92,246,0.05); border-left: 3px solid #8B5CF6; padding: 14px 22px; margin: 22px 0; color: #4A4660; border-radius: 6px; }
+hr { border: 0; border-top: 1px solid rgba(139,92,246,0.18); margin: 40px 0; }
+ul, ol { padding-left: 26px; }
+li { margin: 6px 0; }
+code { background: rgba(139,92,246,0.08); padding: 2px 8px; border-radius: 5px; font-family: 'JetBrains Mono', SFMono-Regular, ui-monospace, monospace; font-size: 0.9em; color: #6D28D9; }
+pre { background: #F4F1FA; padding: 18px 22px; border-radius: 10px; overflow-x: auto; border: 1px solid rgba(139,92,246,0.15); margin: 18px 0; }
+pre code { background: none; padding: 0; color: inherit; font-size: 13px; line-height: 1.6; }
+table { border-collapse: collapse; width: 100%; margin: 22px 0; font-size: 14px; border: 1px solid rgba(139,92,246,0.2); border-radius: 8px; overflow: hidden; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid rgba(139,92,246,0.12); }
+th { background: rgba(139,92,246,0.08); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #6D28D9; }
+tr:nth-child(even) { background: rgba(139,92,246,0.025); }
+.brand-footer { margin-top: 80px; padding-top: 28px; border-top: 1px solid rgba(139,92,246,0.18); font-size: 12px; color: #6B7585; text-align: center; }
+.brand-footer a { color: #8B5CF6; text-decoration: none; }
+@media print { body { padding: 0; max-width: 100%; } h1 { page-break-after: avoid; } h2, h3 { page-break-after: avoid; page-break-inside: avoid; } pre, blockquote, table { page-break-inside: avoid; } }
+</style></head><body>
+<h1>The Aiprosol Lead Generation Automation Playbook</h1>
+<p><strong>The complete automated lead-generation system: capture, score, route, nurture, convert. Email templates, scoring formulas, sequence specs, dashboard designs.</strong></p>
+<p>Version 1.0 · 2026 · © Aiprosol Ltd</p>
+<hr />
+<h2>What you'll have at the end</h2>
+<p>If you implement this playbook end-to-end (~3 weekends of work), you'll have:</p>
+<ol>
+<li>A <strong>lead-capture surface</strong> that converts visitors into structured leads (form, chatbot, AI qualifier)</li>
+<li>An <strong>automated scoring system</strong> that ranks every new lead 1-100 within seconds</li>
+<li>A <strong>smart routing layer</strong> that sends hot leads to humans, warm to nurture, cold to suppression</li>
+<li>A <strong>5-touch nurture sequence</strong> for warm leads — fully automated, personalised</li>
+<li>A <strong>conversion-optimised handoff</strong> to the human selling team for hot leads</li>
+<li>A <strong>dashboard</strong> showing source attribution, score distribution, conversion rates</li>
+<li>An <strong>iteration loop</strong> that reads what's converting and updates the scoring weekly</li>
+</ol>
+<p>The whole stack runs on $50-$100/month at SMB scale.</p>
+<hr />
+<h2>Part 1 · The model — what "good" lead gen looks like</h2>
+<h3>The funnel</h3>
+<pre><code>Awareness     → Visitor lands on your site / sees your post
+Capture       → They give you contact info (form, chat, demo request)
+Qualification → You learn enough to score them 1-100
+Routing       → You decide: human-now, nurture, or suppress
+Engagement    → Email/LinkedIn/call sequence based on score
+Conversion    → Booked call → demo → contract
+Iteration     → Closed-won data feeds back into scoring
+</code></pre>
+<h3>The decisions you must make BEFORE building</h3>
+<p>These are the strategic decisions that determine everything else. Make them now, write them down, share with the team.</p>
+<ol>
+<li><strong>What's a qualified lead for us?</strong> — write a 1-paragraph definition with industry, size, role, intent signals. Hot, warm, cold definitions.</li>
+<li><strong>What's our response SLA for hot leads?</strong> — answer in seconds: 5 min, 15 min, 1 hour, 24 hours. This determines the architecture.</li>
+<li><strong>What's our stance on automation in the conversation?</strong> — fully automated until close? Human-touch from first reply? Hybrid based on score? No right answer; pick one.</li>
+<li><strong>What's our cold-email policy?</strong> — total opt-in only, or do we send cold? Affects every downstream choice and your CAN-SPAM/GDPR posture.</li>
+</ol>
+<p>If you can't answer these in writing, stop reading. Go answer them. Then come back.</p>
+<hr />
+<h2>Part 2 · Capture — the inbound surface</h2>
+<h3>The 4 capture mechanisms (use 2-3, never 1)</h3>
+<h4>1. Lead-magnet form</h4>
+<p>Visitor lands on a landing page → fills a form to get a free thing → enters your funnel.</p>
+<p><strong>The free thing matters.</strong> It should be:
+- <strong>Specific</strong> to your ideal customer's problem (not "ultimate guide to [broad topic]")
+- <strong>Time-bound</strong> — implementable in 60 minutes max
+- <strong>Substantive</strong> — they should feel they got more than they paid (which is just an email)</p>
+<p><strong>Form length:</strong> 3-7 fields. Below 3 = you don't know enough to score. Above 7 = you'll lose 40-60% of submissions.</p>
+<p><strong>Required fields:</strong> name, business email, company, employee count, industry, primary problem.</p>
+<p><strong>Honest pricing field:</strong> <em>"What's your monthly revenue range?"</em> — buyers self-select if you ask politely.</p>
+<h4>2. AI chat qualifier</h4>
+<p>Bottom-right widget. Visitor asks anything. After 3 messages exchanged, the bot offers: <em>"Want me to email you a personalised plan?"</em> — captures email + key context.</p>
+<p>Aiprosol's own Arora chat is exactly this pattern. We use it as Lead Capture #2 alongside the static form.</p>
+<p><strong>Why it works:</strong> lower commitment than a form. Visitor talks first, gives info second.</p>
+<h4>3. Demo / discovery booking</h4>
+<p>Calendar embed → visitor picks a slot → fills 3-field form on booking → lead in your CRM.</p>
+<p><strong>Best for:</strong> higher-intent traffic (above-fold "Book a demo" CTA, retargeting traffic, paid search).</p>
+<p><strong>Worst for:</strong> cold traffic that doesn't know your brand yet — too high a commitment.</p>
+<h4>4. Newsletter signup with intent capture</h4>
+<p>Below-the-fold "Get our weekly automation tips" signup. ASK what they want help with on the second screen — that's your lead context.</p>
+<h3>Capture page design rules</h3>
+<ul>
+<li><strong>Headline = the outcome they want, not the feature you have.</strong> "Reclaim 35 hrs/wk" &gt; "AI Automation Toolkit"</li>
+<li><strong>Subhead = who it's for.</strong> "For ops leaders at 10-200-person businesses"</li>
+<li><strong>CTA visible above fold</strong> on every viewport size</li>
+<li><strong>One CTA per page.</strong> If you have 4 buttons, you have 4 pages.</li>
+<li><strong>Social proof within 1 scroll</strong> — even one strong customer quote</li>
+<li><strong>Form labels above fields, not as placeholders.</strong> Placeholders disappear, labels persist.</li>
+</ul>
+<hr />
+<h2>Part 3 · Scoring — turning raw leads into 1-100</h2>
+<h3>The scoring formula</h3>
+<p>Every lead gets a score 0-100, computed at capture time and recomputed every 24 hrs as new signals arrive.</p>
+<p><strong>Composite formula:</strong></p>
+<pre><code>score = 0.40 × FIT      (do they match our ICP?)
+      + 0.30 × INTENT   (signals of buying intent)
+      + 0.20 × ENGAGEMENT (interactions with our content)
+      + 0.10 × URGENCY   (time-bounded signals)
+</code></pre>
+<h4>FIT (40 points possible)</h4>
+<ul>
+<li><strong>Industry match</strong> (0-15): exact match = 15, adjacent = 10, off = 0</li>
+<li><strong>Size match</strong> (0-15): in our sweet spot = 15, too small or too large = 5, way off = 0</li>
+<li><strong>Role of contact</strong> (0-10): decision-maker = 10, influencer = 6, end-user = 3</li>
+</ul>
+<h4>INTENT (30 points)</h4>
+<ul>
+<li><strong>What they downloaded / which page</strong> (0-10): pricing page = 10, blog = 4, case study = 8</li>
+<li><strong>Specificity of stated problem</strong> (0-10): "we waste 12 hrs/wk on X" = 10, "we want efficiency" = 3</li>
+<li><strong>Budget signal</strong> (0-10): they checked "$1k+/month" = 10, "&lt;$100" = 2</li>
+</ul>
+<h4>ENGAGEMENT (20 points)</h4>
+<ul>
+<li><strong>Pages visited in first session</strong> (0-5): &gt;5 = 5, 1 = 1</li>
+<li><strong>Time on site</strong> (0-5): &gt;5 min = 5, &lt;30 sec = 0</li>
+<li><strong>Email opens</strong> (0-5): opened all 5 nurture emails = 5</li>
+<li><strong>Email clicks</strong> (0-5): clicked through to pricing or case study = 5</li>
+</ul>
+<h4>URGENCY (10 points)</h4>
+<ul>
+<li><strong>Stated timeline</strong> (0-7): "this quarter" = 7, "this year" = 4, "exploring" = 0</li>
+<li><strong>Recent trigger event</strong> (0-3): just hired, just funded, just lost a customer mentioned = 3</li>
+</ul>
+<h3>Score → action</h3>
+<table>
+<thead>
+<tr>
+<th>Score</th>
+<th>Label</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>80-100</td>
+<td>🔥 Hot</td>
+<td>Slack ping the rep within 60 sec; SLA: contact within 5 min</td>
+</tr>
+<tr>
+<td>60-79</td>
+<td>🌡 Warm</td>
+<td>Auto-enrol in 5-touch nurture; rep follows up after touch 3</td>
+</tr>
+<tr>
+<td>40-59</td>
+<td>🌱 Watch</td>
+<td>Newsletter only; re-score quarterly</td>
+</tr>
+<tr>
+<td>0-39</td>
+<td>❌ Out-of-fit</td>
+<td>Suppress from outbound; static email auto-replied with a "wrong fit" template + referral to better-fit alternative</td>
+</tr>
+</tbody>
+</table>
+<h3>Implementation</h3>
+<p>Build the scoring as a single Make / Zapier scenario triggered on lead creation. Each scoring sub-component is an OpenAI prompt that returns a number. Aggregate and write back to the CRM record.</p>
+<p>Example AI prompt for FIT scoring:</p>
+<pre><code>ROLE: B2B sales operations analyst.
+TASK: Score the FIT of this lead from 0-40 against our ICP.
+ICP: 10-200 employee professional services / SaaS firms in UK / EU / US.
+LEAD: {company_name} {employee_count} {industry} {role}
+SCORING:
+  Industry exact match: 15 points (professional services or SaaS)
+  Industry adjacent: 10 points (consulting, agency, software)
+  Industry off: 0 points
+  Size in sweet spot (10-200): 15 points
+  Size 5-9 or 200-500: 5 points
+  Size other: 0 points
+  Decision-maker role: 10 points
+  Influencer role: 6 points
+  Other role: 3 points
+RETURN: a single integer between 0 and 40.
+</code></pre>
+<hr />
+<h2>Part 4 · Routing — the smart layer between capture and action</h2>
+<h3>The routing decision tree</h3>
+<p>On every new scored lead, the workflow:</p>
+<ol>
+<li><strong>Suppression check</strong> — is the email on our suppression list (manual unsub, prior NEVER reply, blacklist domain)? If yes, halt.</li>
+<li><strong>Geographic check</strong> — outside our service area? Auto-reply with "wrong region" + referrer link.</li>
+<li><strong>Size check</strong> — way too big or way too small? Auto-route to a different sequence (enterprise track or self-serve track).</li>
+<li><strong>Score gate</strong> — apply the score table above.</li>
+<li><strong>Round-robin assignment</strong> — for hot leads, assign to a rep based on territory + workload.</li>
+</ol>
+<h3>The routing infrastructure</h3>
+<p>This is where most lead-gen automations break. You need:</p>
+<ul>
+<li>A <strong>suppression list</strong> (Google Sheet or DB) with at least: email · domain · added_date · reason</li>
+<li>A <strong>rep assignment table</strong> with: rep · territory · max_active_leads · current_count</li>
+<li>A <strong>routing log</strong> for debugging — every routing decision recorded with reason</li>
+</ul>
+<hr />
+<h2>Part 5 · The 5-touch nurture sequence (warm leads)</h2>
+<p>For warm leads (score 60-79), this is the canonical sequence. Each email is short, useful, and ends with one specific question.</p>
+<h3>Email 1 — Day 0 (immediately after capture)</h3>
+<p><strong>Subject:</strong> What you asked for · {LeadMagnetTitle}</p>
+<p><strong>Body:</strong>
+- Deliver the lead magnet in the first paragraph (link)
+- One short paragraph: "Here's the question I'd ask first if I were in your shoes…"
+- One specific tactical tip relevant to their stated problem
+- Sign-off + expectation: <em>"Tomorrow I'll send a 4-min read on [specific problem they mentioned]."</em></p>
+<h3>Email 2 — Day 2</h3>
+<p><strong>Subject:</strong> {The specific problem they mentioned}</p>
+<ul>
+<li>Open with a one-line acknowledgement of their context (use AI to personalise based on their submitted role + industry)</li>
+<li>One concrete framework or insight (300-500 words)</li>
+<li>One real example with numbers</li>
+<li>CTA: <em>"What's your version of this look like? Reply with one sentence."</em></li>
+</ul>
+<h3>Email 3 — Day 5</h3>
+<p><strong>Subject:</strong> The one thing most people miss about {topic}</p>
+<ul>
+<li>Counter-intuitive angle on their problem</li>
+<li>Cite one specific case study (with permission, by name)</li>
+<li>90-second video link if you have one</li>
+<li>CTA: book a 15-min call (link)</li>
+</ul>
+<h3>Email 4 — Day 10</h3>
+<p><strong>Subject:</strong> Three options if you want help</p>
+<ul>
+<li>Acknowledge they may not be ready</li>
+<li>List three paths: self-serve product, managed plan, "stay subscribed for now"</li>
+<li>Make the no-action option easy and not awkward</li>
+<li>CTA: pick one</li>
+</ul>
+<h3>Email 5 — Day 21</h3>
+<p><strong>Subject:</strong> Closing your file?</p>
+<ul>
+<li>Honest, direct: "I'm going to stop reaching out unless you say otherwise"</li>
+<li>One last CTA: book a call or unsubscribe</li>
+<li>Tone: warm, not guilt-trippy</li>
+</ul>
+<h3>After the sequence</h3>
+<p>Lead either responded (route to sales) or didn't. If didn't, move to "newsletter only" status. Re-score quarterly — they may become hot later when their context changes.</p>
+<hr />
+<h2>Part 6 · Conversion — handing hot leads to humans</h2>
+<h3>The 5-min SLA architecture</h3>
+<p>Hot lead lands → Slack ping fires within 30 seconds. The ping includes:</p>
+<ul>
+<li>🔥 SCORE/100</li>
+<li>Lead summary (name, company, role, stated problem)</li>
+<li>Estimated deal size (computed from size × revenue band × industry multiplier)</li>
+<li>1-line "open with this" — AI-generated talking point</li>
+<li>Calendar link (if they didn't book at capture)</li>
+<li>Phone number (if they provided it)</li>
+</ul>
+<p>The rep gets paged in their notification settings. SLA: contact within 5 min.</p>
+<p><strong>Why 5 min:</strong> Harvard Business Review 2011 and every replication since shows lead-to-contact under 5 minutes is 7× more likely to convert than 1-hour delay. This is the single highest-ROI architecture decision in lead gen.</p>
+<h3>The 24-hour safety net</h3>
+<p>If a hot lead has no logged activity 24 hours after the Slack ping, the workflow:</p>
+<ol>
+<li>Pings the rep again (escalation)</li>
+<li>Cc's the sales lead</li>
+<li>Auto-drafts a "we got your enquiry" email from the rep's inbox so the lead doesn't think they were ignored</li>
+</ol>
+<hr />
+<h2>Part 7 · Iteration — making your scoring smarter weekly</h2>
+<h3>The closed-loop</h3>
+<p>Every week, the workflow:</p>
+<ol>
+<li>Pulls all closed deals (won + lost) from the past 90 days</li>
+<li>For each, looks up the lead's original score</li>
+<li>Computes: average score for closed-won, average for closed-lost</li>
+<li>Identifies which scoring components were predictive vs. noise</li>
+<li>Suggests adjustments to the scoring weights</li>
+</ol>
+<p>Output: a Slack message every Monday morning saying <em>"Closed-won avg score: 78. Closed-lost avg score: 64. INTENT-component is the strongest predictor (+12 score for closed-won). Consider re-weighting from 0.30 → 0.35."</em></p>
+<h3>When to actually adjust</h3>
+<p>Don't change weights on a single week's data. Trends only. Adjust quarterly with at least 50 closed deals as the basis.</p>
+<hr />
+<h2>Part 8 · The dashboard</h2>
+<p>A single Notion page (or BI tool) showing:</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+<th>Target</th>
+<th>Δ vs last week</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>New leads</td>
+<td>X</td>
+<td>Y</td>
+<td>+Z%</td>
+</tr>
+<tr>
+<td>Hot leads</td>
+<td>X</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Hot lead 5-min SLA hit rate</td>
+<td>92%</td>
+<td>95%</td>
+<td>-2%</td>
+</tr>
+<tr>
+<td>Lead → meeting booked</td>
+<td>18%</td>
+<td>20%</td>
+<td>+1%</td>
+</tr>
+<tr>
+<td>Meeting → opportunity</td>
+<td>65%</td>
+<td>60%</td>
+<td>+5%</td>
+</tr>
+<tr>
+<td>Opportunity → close</td>
+<td>28%</td>
+<td>30%</td>
+<td>-2%</td>
+</tr>
+<tr>
+<td>Average days lead-to-close</td>
+<td>24</td>
+<td>21</td>
+<td>+1</td>
+</tr>
+</tbody>
+</table>
+<p>Plus three stack-ranked tables:</p>
+<ul>
+<li>Top 10 lead sources by volume (and by conversion)</li>
+<li>Top 10 industries by deal size</li>
+<li>Top 5 recent closed-won deals (so the team sees wins)</li>
+</ul>
+<p>The whole dashboard auto-updates from Make pulling data from CRM + Stripe + analytics.</p>
+<hr />
+<h2>Part 9 · Cold-email side (if you do outbound)</h2>
+<p>Inbound is what this playbook focuses on, but most lead-gen practices include some outbound. Quick rules:</p>
+<ol>
+<li><strong>Total opt-in for marketing emails. Cold = sales prospecting.</strong> Don't conflate.</li>
+<li><strong>Personalise the opening line.</strong> Not "Dear [first name]" — actual research about their company.</li>
+<li><strong>One ask per email.</strong> Not "would you like to chat OR check this out OR reply OR…"</li>
+<li><strong>3-touch maximum cold sequences.</strong> Never more.</li>
+<li><strong>Every cold email has a 1-click unsubscribe</strong> even when not legally required (UK: required for B2C, optional for B2B sole-trader / partnership outreach but recommended).</li>
+<li><strong>Never buy lists.</strong> Build your own from public data + intent signals.</li>
+<li><strong>Track reply rate, not open rate.</strong> Open rate is dominated by Apple Mail Privacy noise. Replies tell you the truth.</li>
+</ol>
+<p>For the full cold-email tactics, see the <strong>ChatGPT Business Prompt Vault</strong> (separate product).</p>
+<hr />
+<h2>Part 10 · Pitfalls we see operators hit</h2>
+<ol>
+<li><strong>Building before defining.</strong> Building scoring without defining the ICP. Result: scoring that scores nothing.</li>
+<li><strong>Over-segmenting too early.</strong> 14 different nurture sequences for 14 different sub-personas before you have product-market fit. One sequence per major segment.</li>
+<li><strong>Tracking everything, acting on nothing.</strong> Dashboards that nobody uses. Pick 3 metrics, watch them weekly, ignore the rest.</li>
+<li><strong>Cold-email burning your domain.</strong> Sending volume from your primary domain. Always use a dedicated cold-outreach domain (e.g., <code>outreach.aiprosol.com</code>).</li>
+<li><strong>Not retiring stale leads.</strong> Watching 50,000 leads who haven't engaged in 18 months. Routinely retire below threshold; healthier list = better sender reputation = better deliverability.</li>
+</ol>
+<hr />
+<h2>Implementation roadmap (recommended)</h2>
+<p><strong>Week 1:</strong> Define ICP, hot/warm/cold definitions, response SLA. Document and share.</p>
+<p><strong>Week 2:</strong> Build the lead-capture form + AI chat qualifier. Connect both to a CRM.</p>
+<p><strong>Week 3:</strong> Build the scoring workflow. Test on 50 historical leads to validate accuracy.</p>
+<p><strong>Week 4:</strong> Build the routing workflow + 5-touch nurture sequence.</p>
+<p><strong>Week 5:</strong> Build the dashboard. Connect to live data.</p>
+<p><strong>Week 6:</strong> Run live for 30 days, measure, iterate.</p>
+<p>By month 3 you have a self-improving lead-gen system. By month 6 the data refines weights automatically.</p>
+<hr />
+<h2>Implementation help</h2>
+<p>If implementing this in-house feels overwhelming, the Aiprosol Growth plan ($2,997/mo) builds and runs the entire stack as a service. ROI is measured before scope expands. 90-day reclaim guarantee.</p>
+<p>For self-implementers, post questions to <code>hello@aiprosol.com</code> — 7-day post-purchase free troubleshooting included.</p>
+<hr />
+<h2>Licensing</h2>
+<p>Licensed for unlimited internal use. Sequences, scoring formulas, and dashboards may be implemented within the purchaser's organisation. Resale or republication requires written permission. © 2026 Aiprosol Ltd.</p>
+<div class="brand-footer">© 2026 Aiprosol Ltd · <a href="https://aiprosol.com">aiprosol.com</a> · <a href="mailto:hello@aiprosol.com">hello@aiprosol.com</a><br>Licensed to the purchaser for unlimited internal use. Redistribution requires written permission.</div>
+</body></html>

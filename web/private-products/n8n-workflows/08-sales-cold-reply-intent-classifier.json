@@ -1,0 +1,218 @@
+{
+  "name": "Sales \u00b7 Cold email reply \u2192 AI intent classifier \u2192 branch",
+  "nodes": [
+    {
+      "parameters": {
+        "labelIds": [
+          "REPLY-COLD"
+        ],
+        "options": {}
+      },
+      "id": "a69a0b1d-506d-4692-8ec9-1f38e9f1ecc3",
+      "name": "Gmail label REPLY-COLD",
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_ME",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "claude-3-5-haiku-20241022",
+        "options": {
+          "temperature": 0.1,
+          "maxTokensToSample": 100
+        },
+        "text": "=You classify cold-email replies. Return ONLY one of: INTERESTED, NOT_INTERESTED, UNSUBSCRIBE, OUT_OF_OFFICE, OTHER. Reply body: \"\"\"{{ $json.snippet }}\"\"\""
+      },
+      "id": "1b39c389-5c3e-4d8f-8f85-393ea9d57217",
+      "name": "Claude \u2014 intent classifier",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1,
+      "position": [
+        460,
+        300
+      ],
+      "credentials": {
+        "anthropicApi": {
+          "id": "REPLACE_ME",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "expression",
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "loose"
+                },
+                "conditions": [
+                  {
+                    "id": "1",
+                    "leftValue": "={{ $json.text }}",
+                    "rightValue": "INTERESTED",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "outputKey": "interested"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "loose"
+                },
+                "conditions": [
+                  {
+                    "id": "2",
+                    "leftValue": "={{ $json.text }}",
+                    "rightValue": "UNSUBSCRIBE",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "outputKey": "unsubscribe"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "id": "a7876c8d-4ab5-4559-99e9-7f508af25bcb",
+      "name": "Route on intent",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "post",
+        "channel": "sales-replies",
+        "text": "=:rocket: Cold reply: INTERESTED from {{ $('Gmail label REPLY-COLD').item.json.from }} \u2014 first 200 chars: {{ $('Gmail label REPLY-COLD').item.json.snippet | slice(0, 200) }}"
+      },
+      "id": "5a8ad9d8-5e9e-4580-9742-ef1380c3592f",
+      "name": "Slack: interested \u2192 AE",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        900,
+        200
+      ],
+      "credentials": {
+        "slackApi": {
+          "id": "REPLACE_ME",
+          "name": "Slack workspace"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "8ea8e10d-3f72-43ad-b057-23e0870d8918",
+      "name": "Suppress sender",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        900,
+        300
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "3ddc134e-ebb3-46ae-8355-ce9ed6618a74",
+      "name": "Log + drop",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        900,
+        400
+      ]
+    }
+  ],
+  "connections": {
+    "Gmail label REPLY-COLD": {
+      "main": [
+        [
+          {
+            "node": "Claude \u2014 intent classifier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude \u2014 intent classifier": {
+      "main": [
+        [
+          {
+            "node": "Route on intent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route on intent": {
+      "main": [
+        [
+          {
+            "node": "Slack: interested \u2192 AE",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Suppress sender",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Log + drop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4fa97b0c-6f42-481c-9886-01f326dc2859",
+  "id": "86eeea2a-b1d3-4504-8d31-a83f366bf291",
+  "meta": {
+    "instanceId": "aiprosol-starter-library-v1"
+  },
+  "tags": [],
+  "pinData": {}
+}

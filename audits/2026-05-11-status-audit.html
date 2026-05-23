@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Aiprosol — Status Audit — 11 May 2026</title>
+<style>
+  @page {
+    size: A4;
+    margin: 18mm 16mm 18mm 16mm;
+    @bottom-right {
+      content: "Page " counter(page) " of " counter(pages);
+      font-family: Inter, sans-serif;
+      font-size: 9pt;
+      color: #6b7280;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #0f172a;
+    line-height: 1.55;
+    font-size: 10.5pt;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+  }
+  h1 { font-size: 28pt; letter-spacing: -0.02em; }
+  h2 { font-size: 16pt; margin-top: 28px; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid #8B5CF6; }
+  h3 { font-size: 12pt; margin-top: 18px; margin-bottom: 6px; color: #1e293b; }
+  h4 { font-size: 10.5pt; margin-top: 12px; margin-bottom: 4px; color: #334155; }
+  p { margin: 6px 0 10px 0; }
+  code {
+    font-family: 'JetBrains Mono', 'Menlo', monospace;
+    font-size: 9.2pt;
+    background: #f1f5f9;
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: #0f172a;
+  }
+  pre {
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: 12px 14px;
+    border-radius: 6px;
+    font-size: 9pt;
+    overflow: hidden;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  pre code { background: transparent; color: inherit; padding: 0; }
+  .eyebrow {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 9pt;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #8B5CF6;
+  }
+  .meta {
+    color: #64748b;
+    font-size: 9pt;
+    margin-top: 8px;
+  }
+  .cover {
+    padding: 60px 0 30px 0;
+    border-bottom: 1px solid #e2e8f0;
+    margin-bottom: 20px;
+  }
+  .header-grid {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 6px;
+  }
+  .logo-mark {
+    width: 28px; height: 28px;
+    background: linear-gradient(135deg, #8B5CF6, #C084FC);
+    border-radius: 6px;
+    display: inline-block;
+  }
+  .logo-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 800;
+    font-size: 16pt;
+    letter-spacing: -0.01em;
+  }
+  .pill {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 99px;
+    font-size: 8pt;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-right: 4px;
+  }
+  .pill-green { background: #d1fae5; color: #065f46; }
+  .pill-amber { background: #fef3c7; color: #92400e; }
+  .pill-red { background: #fee2e2; color: #991b1b; }
+  .pill-violet { background: #ede9fe; color: #5b21b6; }
+  .pill-gray { background: #f1f5f9; color: #475569; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 14px 0;
+    font-size: 9.5pt;
+  }
+  th, td {
+    text-align: left;
+    padding: 7px 9px;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: top;
+  }
+  th {
+    background: #f8fafc;
+    font-weight: 700;
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #475569;
+  }
+  td.status { white-space: nowrap; width: 90px; }
+  td.label { width: 280px; }
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 14px 0;
+  }
+  .summary-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px 14px;
+    background: #fafbfc;
+  }
+  .summary-card .num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 800;
+    font-size: 22pt;
+    line-height: 1;
+    color: #0f172a;
+  }
+  .summary-card .num-green { color: #059669; }
+  .summary-card .num-amber { color: #d97706; }
+  .summary-card .num-red { color: #dc2626; }
+  .summary-card .num-violet { color: #8B5CF6; }
+  .summary-card .lbl {
+    font-size: 8.5pt;
+    color: #64748b;
+    margin-top: 4px;
+    letter-spacing: 0.02em;
+  }
+  .finding {
+    margin: 14px 0;
+    padding: 12px 14px 12px 14px;
+    border-left: 3px solid #cbd5e1;
+    background: #f8fafc;
+    border-radius: 0 6px 6px 0;
+  }
+  .finding-critical { border-left-color: #dc2626; background: #fef2f2; }
+  .finding-should { border-left-color: #d97706; background: #fffbeb; }
+  .finding-nice { border-left-color: #2563eb; background: #eff6ff; }
+  .finding-done { border-left-color: #059669; background: #ecfdf5; }
+  .finding h4 { margin: 0 0 4px 0; }
+  .finding .fix {
+    font-size: 9pt;
+    color: #475569;
+    margin-top: 6px;
+  }
+  .fix-label {
+    display: inline-block;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 8pt;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #8B5CF6;
+    margin-right: 6px;
+  }
+  ul { margin: 4px 0 8px 0; padding-left: 22px; }
+  li { margin: 2px 0; }
+  .footer-note {
+    margin-top: 26px;
+    padding-top: 14px;
+    border-top: 1px solid #e2e8f0;
+    color: #64748b;
+    font-size: 9pt;
+  }
+  .keep-together { page-break-inside: avoid; }
+  .page-break { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<!-- ─────────── COVER / EXECUTIVE SUMMARY ─────────── -->
+<div class="cover">
+  <div class="header-grid">
+    <span class="logo-mark"></span>
+    <span class="logo-text">Aiprosol</span>
+  </div>
+  <p class="eyebrow">Status Audit · Production Snapshot</p>
+  <h1>What's shipped, what's missing,<br>what to fix next.</h1>
+  <p class="meta">
+    Generated 11 May 2026 · aiprosol.com · Next.js 15 / Vercel<br>
+    Scope: Arora Inbox launch readiness + full-site post-deploy retest
+  </p>
+</div>
+
+<h2>1 · Executive summary</h2>
+
+<div class="summary-grid">
+  <div class="summary-card">
+    <div class="num num-green">25 / 25</div>
+    <div class="lbl">Production URLs returning 200</div>
+  </div>
+  <div class="summary-card">
+    <div class="num num-green">15 / 19</div>
+    <div class="lbl">Products wired to Gumroad</div>
+  </div>
+  <div class="summary-card">
+    <div class="num num-amber">3</div>
+    <div class="lbl">Critical gaps to fix today</div>
+  </div>
+  <div class="summary-card">
+    <div class="num num-violet">9</div>
+    <div class="lbl">Vercel prod env vars set</div>
+  </div>
+</div>
+
+<p><strong>The site is healthy.</strong> Every route probed returned 200 in a single hop. The Arora Inbox OAuth setup — the focus of today's session — is end-to-end verified up to the Google consent screen. <code>/api/agent/google/start</code> issues a clean 307 to Google with the correct client_id, scopes, and signed state JWT. <code>/api/agent/gmail/list</code> correctly returns 401 without a cookie.</p>
+
+<p><strong>Three items would visibly hurt customers if left unfixed:</strong> /inbox is currently a beta page reachable only by typing the URL (no nav, no footer, not in sitemap); replies to <code>hello@aiprosol.com</code> bounce silently (no MX records on the apex domain); and the $997 Complete Vault Gumroad listing is still pending from yesterday's rate limit. Everything else is either intentionally deferred (Week 2 Arora Inbox work, Stripe keys not wired yet) or a polish item.</p>
+
+<h2>2 · What shipped this session</h2>
+
+<table>
+  <thead>
+    <tr><th>Component</th><th>Status</th><th>Detail</th></tr>
+  </thead>
+  <tbody>
+    <tr><td class="label">Google Cloud project</td><td class="status"><span class="pill pill-green">Done</span></td><td>Aiprosol project owned by srijanpaudel219@gmail.com · 2FA enforced · 3 test users approved</td></tr>
+    <tr><td class="label">OAuth platform</td><td class="status"><span class="pill pill-green">Done</span></td><td>App name "Arora Inbox" · External audience · Testing status</td></tr>
+    <tr><td class="label">Gmail API + scopes</td><td class="status"><span class="pill pill-green">Done</span></td><td>gmail.readonly + gmail.compose + userinfo.email · saved &amp; persisted</td></tr>
+    <tr><td class="label">OAuth client ID</td><td class="status"><span class="pill pill-green">Done</span></td><td>Web client · 2 JS origins · 2 redirect URIs (prod + localhost)</td></tr>
+    <tr><td class="label">Vercel env vars</td><td class="status"><span class="pill pill-green">Done</span></td><td>3 GOOGLE_OAUTH_* secrets encrypted in production environment</td></tr>
+    <tr><td class="label">Arora Inbox scaffold</td><td class="status"><span class="pill pill-green">Done</span></td><td>lib/google-gmail.ts · 4 API routes · /inbox page · 6 new files</td></tr>
+    <tr><td class="label">Typecheck + build</td><td class="status"><span class="pill pill-green">Done</span></td><td>tsc clean · next build green · deploy succeeded</td></tr>
+    <tr><td class="label">End-to-end smoke</td><td class="status"><span class="pill pill-green">Done</span></td><td>/inbox renders · Connect-Gmail → Google account chooser confirmed</td></tr>
+  </tbody>
+</table>
+
+<h2>3 · Production retest results</h2>
+
+<p>HTTP-level probe of 25 live URLs at <code>aiprosol.com</code>. All returned the expected status code. No surprise redirects. No 404s. No 500s.</p>
+
+<table>
+  <thead>
+    <tr><th class="label">Surface</th><th>URLs probed</th><th class="status">Health</th><th>Notes</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Marketing pages</td><td>/, /services, /pricing, /digital-products, /about, /contact, /blog, /faqs</td><td><span class="pill pill-green">Pass</span></td><td>All 200 single-hop · sizes 53–174 KB</td></tr>
+    <tr><td>Case studies</td><td>/case-studies + 4 slugs (hargreaves-sterling, meridian, vortex, thornfield)</td><td><span class="pill pill-green">Pass</span></td><td>All 4 ProofStrip slugs render · earlier slug-mismatch is fixed</td></tr>
+    <tr><td>Conversion funnels</td><td>/roi-audit, /roi-simulator, /login, /signup</td><td><span class="pill pill-green">Pass</span></td><td>ROI Audit posts unauth'd to /api/capture-lead and returns 201 with score</td></tr>
+    <tr><td>Product detail</td><td>2 spot-checks (/products/automation-roi-pitch-deck-template, /products/ai-tools-master-comparison-guide-2026)</td><td><span class="pill pill-green">Pass</span></td><td>200, fully-rendered SSR</td></tr>
+    <tr><td>Arora Inbox</td><td>/inbox · /api/agent/google/start · /api/agent/gmail/list</td><td><span class="pill pill-green">Pass</span></td><td>Page 200 · start 307 to Google · list 401 unauth (correct)</td></tr>
+    <tr><td>Gumroad live</td><td>3 spot-checks (roi-pitch-deck, audit-checklist, tools-vault)</td><td><span class="pill pill-green">Pass</span></td><td>All product pages 200 · purchase flow intact</td></tr>
+    <tr><td>SEO surface</td><td>/sitemap.xml · /robots.txt</td><td><span class="pill pill-amber">Pass*</span></td><td>10.4 KB sitemap · 264 B robots · <em>does not yet include /inbox</em></td></tr>
+  </tbody>
+</table>
+
+<div class="page-break"></div>
+
+<h2>4 · Critical gaps · fix today</h2>
+
+<div class="finding finding-critical keep-together">
+  <h4>4.1 · /inbox is unreachable from anywhere on the site</h4>
+  <p>Grepped <code>src/</code> for href references to <code>/inbox</code> — the only matches are inside <code>/inbox/page.tsx</code> itself (self-links to its own Connect/Disconnect buttons). The page is not linked from the main nav, the footer, the BentoGrid, or any product page. Visitors can only reach it by typing the URL.</p>
+  <p class="fix"><span class="fix-label">Fix</span>Add a nav entry under "Products" → "Beta · Arora Inbox" pointing at <code>/inbox</code>, plus a card in <code>src/components/BentoGrid.tsx</code>. 5 min change.</p>
+</div>
+
+<div class="finding finding-critical keep-together">
+  <h4>4.2 · /inbox missing from sitemap.xml</h4>
+  <p><code>src/app/sitemap.ts</code> uses a hardcoded <code>staticRoutes</code> array. /inbox is not in it. Google won't crawl the beta page, and the sitemap is otherwise comprehensive (30 entries).</p>
+  <p class="fix"><span class="fix-label">Fix</span>Append <code>'/inbox'</code> to the <code>staticRoutes</code> array in <code>src/app/sitemap.ts</code> with <code>priority: 0.5</code> (low — beta).</p>
+</div>
+
+<div class="finding finding-critical keep-together">
+  <h4>4.3 · Replies to hello@aiprosol.com will bounce</h4>
+  <p>Verified via <code>dig +short MX aiprosol.com</code> — no MX records on the apex domain. The ROI report email sends via Resend (verified), but if a customer hits "Reply" they bounce. SPF and DKIM TXT records are also empty on the apex (Resend likely set them on a sending subdomain like <code>send.aiprosol.com</code>).</p>
+  <p class="fix"><span class="fix-label">Fix</span>Add free <a href="https://improvmx.com">ImprovMX</a> forwarding: hello@aiprosol.com → srijanpaudel219@gmail.com. Two MX records, ~3 minutes in the Vercel DNS panel.</p>
+</div>
+
+<h2>5 · Should fix this week</h2>
+
+<div class="finding finding-should keep-together">
+  <h4>5.1 · 4 of 19 products have no buyUrl</h4>
+  <ul>
+    <li><strong>the-complete-vault</strong> — Gumroad rate-limited yesterday (10 products/day cap hit). Retry today.</li>
+    <li><strong>the-agency-launch-bundle</strong>, <strong>ai-workflow-architecture-masterclass</strong>, <strong>the-ai-automation-agency-starter-pack</strong> — Intentionally blocked; flagged as <code>02-needs-external-help</code>. Need recorded video (masterclass) and lived agency-operator stories (agency-starter). Not a code problem.</li>
+  </ul>
+  <p class="fix"><span class="fix-label">Fix</span>Today: create the Complete Vault listing (1 of the 4 will unblock). The other 3 stay deferred until content is recorded/interviewed.</p>
+</div>
+
+<div class="finding finding-should keep-together">
+  <h4>5.2 · SESSION_SECRET unset in production</h4>
+  <p>Vercel env list shows no <code>SESSION_SECRET</code>. <code>src/lib/auth.ts</code> falls back to a hardcoded dev secret and logs <code>'[auth] SESSION_SECRET unset in production — using fallback. ROTATE IMMEDIATELY.'</code> This affects: magic-link sign-in, the OAuth state JWT, and the Arora Inbox Gmail cookie. Anyone with the public source code can forge cookies.</p>
+  <p class="fix"><span class="fix-label">Fix</span><code>printf "$(openssl rand -hex 32)" | npx vercel env add SESSION_SECRET production</code> · then redeploy. 30 sec.</p>
+</div>
+
+<div class="finding finding-should keep-together">
+  <h4>5.3 · Stripe keys unset · /api/checkout returns 503</h4>
+  <p>STRIPE_SECRET_KEY, STRIPE_PUBLISHABLE_KEY, STRIPE_WEBHOOK_SECRET all empty locally and on Vercel. Plan subscriptions on /pricing route through /api/checkout which returns 503 and redirects to /contact. This was an explicit early decision — Gumroad handles all products under $1K; Stripe is only needed for the $497/$1497 monthly plans. Noting it here so it's not forgotten.</p>
+  <p class="fix"><span class="fix-label">Fix</span>Defer until first plan subscriber asks. Or wire test mode now if you want to demo the flow.</p>
+</div>
+
+<div class="finding finding-should keep-together">
+  <h4>5.4 · GROQ_API_KEY unset · Arora chat falls back to canned replies</h4>
+  <p>Confirmed graceful degradation in <code>src/app/api/arora-chat/route.ts:54–61</code> — when key is missing, returns <code>fallbackReply()</code> with <code>mode: 'fallback'</code>. Customers still get answers, just templated ones. Detection: <code>detectIntent()</code> handles the routing.</p>
+  <p class="fix"><span class="fix-label">Fix</span>Sign up at console.groq.com (free 100K tokens/day for llama3-8b) and push the key. 5 min. Worth doing before any visitor asks anything off-script.</p>
+</div>
+
+<div class="finding finding-should keep-together">
+  <h4>5.5 · No lead persistence (KV not configured)</h4>
+  <p>KV_REST_API_URL and KV_REST_API_TOKEN are both unset. /api/capture-lead writes leads to <code>console.log</code> only — visible in <code>vercel logs</code> for 24h, then gone. Zapier webhook also unwired. A production audit-bot lead just landed in logs and will be lost.</p>
+  <p class="fix"><span class="fix-label">Fix</span>Either (a) set up Vercel KV (1-click in dashboard, $0 free tier covers 30K commands/mo), or (b) wire ZAPIER_LEAD_WEBHOOK to push into a Google Sheet. Take the path that matches how you plan to follow up.</p>
+</div>
+
+<div class="page-break"></div>
+
+<h2>6 · Arora Inbox · what was built vs what's next</h2>
+
+<h3>Week 1 (this session — complete)</h3>
+
+<table>
+  <thead><tr><th>File</th><th>Purpose</th><th>Lines</th></tr></thead>
+  <tbody>
+    <tr><td><code>src/lib/google-gmail.ts</code></td><td>OAuth helpers · token pack/unpack · HMAC-signed cookie · access-token refresh</td><td>~190</td></tr>
+    <tr><td><code>src/app/api/agent/google/start/route.ts</code></td><td>GET → redirects to Google consent screen with signed state</td><td>~25</td></tr>
+    <tr><td><code>src/app/api/agent/google/callback/route.ts</code></td><td>GET → exchanges code, persists tokens to httpOnly cookie</td><td>~65</td></tr>
+    <tr><td><code>src/app/api/agent/google/disconnect/route.ts</code></td><td>POST → clears cookie</td><td>~15</td></tr>
+    <tr><td><code>src/app/api/agent/gmail/list/route.ts</code></td><td>GET → returns 10 most-recent INBOX messages with From/Subject/snippet</td><td>~75</td></tr>
+    <tr><td><code>src/app/inbox/page.tsx</code></td><td>Server component · 3 states (not configured / not connected / connected)</td><td>~135</td></tr>
+  </tbody>
+</table>
+
+<h3>Week 2 (next session — designed, not built)</h3>
+
+<ul>
+  <li><strong>Classification</strong> — every morning, label each thread <code>{urgent, sales, vendor, social, internal, spam}</code> via Anthropic Claude API. Requires <code>ANTHROPIC_API_KEY</code> on Vercel.</li>
+  <li><strong>Draft generation</strong> — for urgent + sales, generate a draft reply in the founder's voice. Requires ~20 of Srijan's past replies for tone-cloning (single-shot training prompt — no fine-tune).</li>
+  <li><strong>Vercel Cron</strong> — daily 7am UTC trigger per connected user via <code>vercel.json</code> + <code>/api/agent/cron/morning</code>.</li>
+  <li><strong>Migrate token storage to Supabase</strong> — current cookies have a 90-day TTL ceiling and don't survive cookie clearing. Supabase row-level encrypted at rest scales to 10 beta founders.</li>
+  <li><strong>Beta seat gating</strong> — only <code>aiprosol_session</code> users on the allowlist can connect. Today, anyone with a test-user Google account can theoretically connect (low risk — the OAuth client is still in Testing audience, capped to 100 users).</li>
+</ul>
+
+<h3>External dependencies for Week 2</h3>
+
+<table>
+  <tbody>
+    <tr><td class="label">Supabase project</td><td><span class="pill pill-amber">Pending</span></td><td>User task · free tier is fine for &lt;10 founders</td></tr>
+    <tr><td class="label">Anthropic API key</td><td><span class="pill pill-amber">Pending</span></td><td>User task · sonnet 3.5 for classification, opus 4 for drafting</td></tr>
+    <tr><td class="label">10 beta founders</td><td><span class="pill pill-amber">Pending</span></td><td>User task · LinkedIn outreach to seed-stage founder network</td></tr>
+    <tr><td class="label">20 past-reply samples</td><td><span class="pill pill-amber">Pending</span></td><td>User task · export from Sent folder · tone-clone prompt</td></tr>
+  </tbody>
+</table>
+
+<h2>7 · Nice to have · polish layer</h2>
+
+<div class="finding finding-nice keep-together">
+  <h4>7.1 · Homepage SSR payload (174 KB)</h4>
+  <p>Notably larger than the next-biggest route (/about at 78 KB). Likely from inlined hero animations / 3D scene. Not a problem at current traffic; flag for after PostHog shows perceivable LCP degradation.</p>
+</div>
+
+<div class="finding finding-nice keep-together">
+  <h4>7.2 · Test lead in production logs</h4>
+  <p>During this audit I POSTed a probe lead (<code>audit-bot@example.com</code>) which returned a 201. Since KV isn't configured it lives only in Vercel logs, but if/when you turn on KV, remember it's there.</p>
+</div>
+
+<div class="finding finding-nice keep-together">
+  <h4>7.3 · Edge runtime mismatch</h4>
+  <p><code>/api/arora-chat</code> uses <code>edge</code> runtime; new <code>/api/agent/*</code> routes use <code>nodejs</code>. Both correct (edge needed Web Crypto + fast streaming; node needed for Resend + node-style fetch headers). Just worth knowing for future routes.</p>
+</div>
+
+<div class="finding finding-nice keep-together">
+  <h4>7.4 · No TODO / FIXME comments in src/</h4>
+  <p>Grep returned zero. Either we're disciplined or we forgot to leave breadcrumbs. Healthy signal either way.</p>
+</div>
+
+<h2>8 · What I did NOT touch</h2>
+
+<ul>
+  <li><strong>Did not click "Allow" on the Google consent screen.</strong> That's the moment you actively grant Gmail access — your tap, not mine. The screen is still open in your Chrome at tab "Sign in - Google Accounts".</li>
+  <li><strong>Did not auto-apply any of the critical fixes</strong> (sitemap entry, footer link, MX records). They are listed here for your call.</li>
+  <li><strong>Did not retry the Complete Vault Gumroad listing.</strong> Rate-limit reset is rolling 24h; safe to retry at any time today.</li>
+  <li><strong>Did not commit any changes.</strong> The new Arora Inbox files are deployed (via <code>vercel --prod</code>) but not yet in a git commit. <code>git status</code> on /Users/user/Airprosol/web will show them as untracked / modified.</li>
+</ul>
+
+<h2>9 · Recommended next 60 minutes</h2>
+
+<ol>
+  <li><strong>Click "Allow" on the Google consent screen</strong> (currently open). Confirms the round-trip works and gives you the first connected-as state on aiprosol.com/inbox.</li>
+  <li><strong>Push SESSION_SECRET to Vercel.</strong> One-liner. Real security delta.</li>
+  <li><strong>Add /inbox to sitemap + footer link.</strong> 5 min total. Makes the beta discoverable.</li>
+  <li><strong>ImprovMX for hello@aiprosol.com.</strong> 3 min. Stops silent reply bounces.</li>
+  <li><strong>Commit today's work.</strong> 6 new files, ~500 LOC, plus env var changes — wants a coherent <code>feat(arora-inbox): scaffold week 1 oauth + read</code> commit.</li>
+  <li><strong>Retry Complete Vault Gumroad creation</strong> (rate-limit should be clear).</li>
+</ol>
+
+<div class="footer-note">
+  © 2026 Aiprosol Ltd · This report covers production state at 11 May 2026, 21:00 GMT+5 · Generated alongside Arora's Week 1 Inbox scaffold session · No customer data was read or transmitted during the audit.
+</div>
+
+</body>
+</html>

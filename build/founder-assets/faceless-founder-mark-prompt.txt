@@ -1,0 +1,15 @@
+FACELESS FOUNDER PROFILE PHOTO · 1080 × 1080 pixels · square
+
+This is the canonical visual identity for Srijan across every external surface — LinkedIn, X, GitHub, YouTube, Substack, podcast guest cards. Brand-coherent with the Reel #1/#2/#3 visual language (faceless, violet, dark obsidian).
+
+Render in Higgsfield / Midjourney / DALL·E. If Midjourney, append `--ar 1:1 --style raw`. Re-roll until you get one with NO recognisable facial features (the goal is silhouette only).
+
+----------
+
+A symbolic profile portrait, 1080×1080 square. The silhouette of a human figure (no facial features visible, no specific identifiable face — purely the back-of-shoulders and back-of-head outline) sitting at one head of a long dark obsidian boardroom table. The figure faces into the deep distance of the table, where ten violet (#8B5CF6) glowing orbs float in the ten empty C-suite seats. The human silhouette is rim-lit from behind with a warm orange-violet gradient suggesting first light through a window off-frame. The atmosphere is cinematic, premium, contemplative. Background color #0A0613. Subtle particle haze. No text, no logos. Photoreal compositing.
+
+----------
+
+WHY FACELESS · The Aiprosol brand bet is "the AI runs it." Using a stylised silhouette over a literal headshot reinforces that narrative every time someone Googles "Srijan Paudel." Consistent visual identity across all surfaces accelerates Knowledge Graph identity-merging on Google (typically 60–90 days once linked from the /founder page's `sameAs` array).
+
+FALLBACK · If you absolutely want a real headshot, see `../FOUNDER-BRAND-CHAIRMAN.md` §6 for the shoot direction (magic-hour light, violet-toned wardrobe, neutral background, three angles for cross-platform variation).

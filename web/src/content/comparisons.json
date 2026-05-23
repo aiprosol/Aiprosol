@@ -1,0 +1,597 @@
+[
+  {
+    "slug": "aiprosol-vs-zapier-consultant",
+    "title": "Aiprosol vs a Zapier consultant",
+    "metaDescription": "Aiprosol vs Zapier consultant: pricing, scope, deliverables, ongoing operations, and when each makes sense. Honest comparison from the team running 10 AI agents.",
+    "h1": "Aiprosol vs a Zapier consultant — which is right for your business?",
+    "summary": "A Zapier consultant builds workflows and hands them over. Aiprosol designs, builds, AND runs the automation system on an ongoing basis — with 10 AI agents operating the layer above your workflows. Different model, different price, different outcomes. This page breaks down when each makes sense.",
+    "table": {
+      "headers": [
+        "Dimension",
+        "Zapier Consultant",
+        "Aiprosol"
+      ],
+      "rows": [
+        [
+          "Pricing model",
+          "Hourly ($75-200/hr) or fixed-fee per workflow",
+          "Self-serve from $17 OR managed plans from $997/mo"
+        ],
+        [
+          "Typical engagement",
+          "Build 3-5 workflows, hand over, invoice",
+          "Audit → build → operate → optimise on ongoing retainer"
+        ],
+        [
+          "Ongoing operations",
+          "Customer maintains workflows themselves",
+          "Aiprosol operates the system; monthly health check + quarterly optimisation"
+        ],
+        [
+          "Tooling lock-in",
+          "Zapier only (their billable surface)",
+          "Best tool per workflow (Zapier, Make, n8n, custom — we don't take a cut)"
+        ],
+        [
+          "AI / LLM-in-loop",
+          "Bolted on where convenient",
+          "Designed in from day 1 — 10 AI agents run our own ops"
+        ],
+        [
+          "Outcomes guarantee",
+          "Usually project completion only",
+          "90-day reclaim guarantee on managed plans (35+ hrs/week or we work for free)"
+        ],
+        [
+          "Self-serve option",
+          "None (you pay the hourly bill)",
+          "19 self-serve products from $17"
+        ],
+        [
+          "Time-to-value",
+          "2-6 weeks per workflow",
+          "Same-day for self-serve products; 30-day Phase 0 for managed plans"
+        ],
+        [
+          "Where they're better",
+          "Quick one-off Zapier fixes; you already have an in-house operator",
+          "Multi-tool architecture, ongoing operations, AI-enabled workflows"
+        ]
+      ]
+    },
+    "verdict": "Choose a Zapier consultant when you have a specific Zapier workflow to build, you're staying inside Zapier's ecosystem, and you have someone in-house to maintain it. Choose Aiprosol when you want a multi-tool automation system (Zapier + Make + n8n + AI) that someone else designs, builds, and operates with measurable hours-reclaimed outcomes.",
+    "faqs": [
+      {
+        "q": "Is Aiprosol more expensive than a Zapier consultant?",
+        "a": "Depends on scope. A one-off 2-workflow project costs less with a consultant. A 6-12 month ongoing automation program costs less with Aiprosol because the managed plan includes operations, not just build. Self-serve products start at $17 — cheaper than any consultancy hour."
+      },
+      {
+        "q": "Can I use Aiprosol if I'm already on Zapier?",
+        "a": "Yes — Aiprosol layers alongside existing Zapier workflows. We don't rip and replace. The Stack Starter Kit and Workflow Playbook explicitly cover Zapier integration."
+      },
+      {
+        "q": "Does Aiprosol build only Zapier workflows?",
+        "a": "No. Tool selection is workflow-shape-dependent. Linear workflows under 100 runs/day go on Zapier; branching/iterating workflows go on Make; high-volume or stateful workflows go on n8n. The Workflow Automation Playbook documents the decision matrix."
+      },
+      {
+        "q": "Do you have testimonials from existing customers?",
+        "a": "We're in the charter customer phase (first 10 customers get 30% off in exchange for testimonials). Aiprosol's public proof is /agents — our 10-agent C-suite is live and you can see exactly what each agent did on their last run."
+      },
+      {
+        "q": "What if I just want one workflow built?",
+        "a": "Use a Zapier consultant or our $97 Workflow Automation Playbook (one-time purchase with 25 importable n8n workflows + the decision framework). Managed plans are overkill for single-workflow builds."
+      }
+    ]
+  },
+  {
+    "slug": "aiprosol-vs-in-house-build",
+    "title": "Aiprosol vs building automation in-house",
+    "metaDescription": "Aiprosol vs in-house automation build: cost, speed, risk, opportunity cost, and the math behind the build-vs-buy-vs-service decision.",
+    "h1": "Aiprosol vs building automation in-house — the real math",
+    "summary": "You CAN build everything Aiprosol sells using our $17-$997 self-serve catalogue. The question isn't 'can we?' — it's 'should we?'. Building in-house costs 4-8x what most teams budget when you factor in opportunity cost. This page does the math.",
+    "table": {
+      "headers": [
+        "Dimension",
+        "In-house build",
+        "Aiprosol managed"
+      ],
+      "rows": [
+        [
+          "Direct labour cost",
+          "1 ops/eng FTE = $80-150K/year fully loaded",
+          "Starter $11.9K/yr · Growth $35.9K/yr · Enterprise $95.9K/yr"
+        ],
+        [
+          "Time to first workflow live",
+          "8-16 weeks (ramp + build + iterate)",
+          "Day 14 (Phase 0 → Phase 1)"
+        ],
+        [
+          "Time to 10 workflows live",
+          "9-15 months",
+          "Day 60-90 on Growth plan"
+        ],
+        [
+          "Opportunity cost",
+          "1 FTE not building product / serving customers",
+          "Your team stays focused on revenue-producing work"
+        ],
+        [
+          "Tooling cost",
+          "Same regardless ($200-2000/mo)",
+          "Same"
+        ],
+        [
+          "Failure mode if owner leaves",
+          "Workflows die (single-owner risk)",
+          "Aiprosol continues operating them"
+        ],
+        [
+          "Knowledge transfer",
+          "Documentation rarely happens",
+          "SOPs + monthly health checks documented"
+        ],
+        [
+          "Tool selection expertise",
+          "Trial and error",
+          "We've shipped this stack for clients across 9 industries"
+        ],
+        [
+          "Optimisation rigor",
+          "Once-and-done",
+          "Weekly metric review + monthly tune"
+        ]
+      ]
+    },
+    "verdict": "Build in-house when (a) you have a dedicated ops/automation hire who actively wants this role, (b) you have 9+ months to ramp, and (c) you accept the single-owner risk. Use Aiprosol managed when you want measurable outcomes in <90 days without dedicating an FTE.",
+    "faqs": [
+      {
+        "q": "Can't I just buy your $197 Playbook Pack and build it myself?",
+        "a": "Yes — and we recommend it for teams with engineering capacity who like building. The Playbook Pack is the framework + 25 importable n8n workflows. Managed plans add: we do the building, we operate it, we tune it. Some teams want the framework; others want the outcomes."
+      },
+      {
+        "q": "What's the breakeven for hiring vs. buying?",
+        "a": "Roughly: if your fully-loaded ops/automation hire would cost <$3,500/mo AND they'd start delivering in week 2 AND they'd stay 18+ months — hire. If any of those three is uncertain, the Growth plan ($2,997/mo) is cheaper risk-adjusted."
+      },
+      {
+        "q": "We have an engineer who could do this. Why use Aiprosol?",
+        "a": "Two reasons. (1) Opportunity cost — that engineer's time on automation isn't time on product/customers. (2) Specialisation — we ship this same stack across 9 industries and bring the pattern library. Your engineer would learn over months what we already know."
+      },
+      {
+        "q": "What happens if I cancel?",
+        "a": "Everything we built is yours. We hand over n8n exports, all credentials remain with you, full documentation transfers. No lock-in."
+      },
+      {
+        "q": "Do you guarantee outcomes?",
+        "a": "Yes — managed plans include a 90-day reclaim guarantee: if 35+ hours/week aren't freed up by Day 90, we work for free until they are."
+      }
+    ]
+  },
+  {
+    "slug": "aiprosol-vs-big-4-ai-consulting",
+    "title": "Aiprosol vs Big 4 AI consulting",
+    "metaDescription": "Aiprosol vs Big 4 (Deloitte / EY / KPMG / PwC) for AI automation: pricing, speed, deliverables, accountability. Honest comparison.",
+    "h1": "Aiprosol vs Big 4 AI consulting — why SMBs choose us",
+    "summary": "Big 4 AI consultancies typically engage at $15-50K/month minimums, 6-9 weeks to first deliverable, and produce 80-page slide decks. Aiprosol's Enterprise plan is $7,997/month, ships first workflow at Day 14, and produces working systems. Different price, different delivery mode, different audience.",
+    "table": {
+      "headers": [
+        "Dimension",
+        "Big 4 (Deloitte / EY / KPMG / PwC)",
+        "Aiprosol"
+      ],
+      "rows": [
+        [
+          "Entry price",
+          "$15-50K/month minimum",
+          "$7,997/mo (Enterprise) — 50-80% cheaper"
+        ],
+        [
+          "Engagement minimum",
+          "Typically 6 months",
+          "Monthly rolling on Enterprise"
+        ],
+        [
+          "Time to first deliverable",
+          "6-9 weeks (assessment + readiness report)",
+          "Day 14 (Phase 0 complete, pilot users live)"
+        ],
+        [
+          "What you receive",
+          "Strategy report, roadmap, recommendations",
+          "Working automation systems running in your stack"
+        ],
+        [
+          "Implementation included",
+          "Usually separate engagement (extra $$)",
+          "Included — we build AND operate"
+        ],
+        [
+          "Industry focus",
+          "Multi-industry generalists",
+          "AI automation specialist (one thing, done well)"
+        ],
+        [
+          "Team size",
+          "10-30 person engagement teams",
+          "Founder-led + AI C-suite (less overhead)"
+        ],
+        [
+          "Procurement complexity",
+          "RFP, MSA, SOW, security review (8-12 weeks)",
+          "Discovery call → SOW → start (1-2 weeks)"
+        ],
+        [
+          "Accountability for outcomes",
+          "Best efforts, no guarantee",
+          "90-day reclaim guarantee (35+ hrs/wk or we work for free)"
+        ]
+      ]
+    },
+    "verdict": "Big 4 makes sense when you need full-org transformation strategy, multi-discipline expertise (legal, tax, audit), and your procurement requires a Big 4 SoR. Aiprosol makes sense when you want working automation systems quickly, at a fraction of the price, with measurable hours-reclaimed outcomes.",
+    "faqs": [
+      {
+        "q": "Is Aiprosol a 'real' alternative to Deloitte / EY / KPMG / PwC?",
+        "a": "For AI automation specifically — yes. We focus on one discipline; Big 4 covers many. If your problem is 'help us automate ops, customer success, and finance with AI', Aiprosol delivers faster + cheaper. If your problem is 'reorganise the entire company', Big 4 is the right tool."
+      },
+      {
+        "q": "Can Aiprosol handle enterprise security requirements?",
+        "a": "Yes for SOC 2-equivalent controls. We work with org-owned credentials (we never hold your AWS/Stripe/CRM keys), all infra is in-customer cloud where appropriate, and we sign standard enterprise DPAs. Full security questionnaire on request."
+      },
+      {
+        "q": "Do you offer the same procurement experience?",
+        "a": "Lighter. No 12-week RFP. Discovery call → mutual NDA → 30-day pilot SOW → results check → full Enterprise contract. Most customers complete the cycle in 2-3 weeks."
+      },
+      {
+        "q": "What if we already have a Big 4 relationship?",
+        "a": "Common scenario. Big 4 owns the strategy + transformation; Aiprosol owns the AI automation execution layer. We've structured this as a sub-contractor relationship and as a direct-to-customer engagement — both work."
+      },
+      {
+        "q": "What's the catch at this price?",
+        "a": "We're early — 0 paying customers as of May 2026 (charter phase: first 10 get 30% off). You're not getting a 30-year brand; you're getting a focused team with measurable outcomes guarantee. If brand-of-firm matters more than outcomes, choose Big 4."
+      }
+    ]
+  },
+  {
+    "slug": "aiprosol-vs-self-serve-ai-tools",
+    "title": "Aiprosol vs buying individual AI tools",
+    "metaDescription": "Aiprosol vs assembling a stack of AI tools yourself (AI + workflow + collaboration tools). When DIY makes sense, when managed makes sense.",
+    "h1": "Aiprosol vs assembling your own AI tool stack",
+    "summary": "You can buy a stack of LLM + chatbot + workflow + collaboration tools and stitch them together yourself. Many SMB owners try this and stall. This page covers when DIY works, when it doesn't, and the math behind switching.",
+    "table": {
+      "headers": [
+        "Dimension",
+        "DIY AI tool stack",
+        "Aiprosol"
+      ],
+      "rows": [
+        [
+          "Tool subscriptions",
+          "$200-2,000/month direct vendors",
+          "Same (you keep your vendor relationships)"
+        ],
+        [
+          "Setup time per workflow",
+          "4-12 hours each (learning curve)",
+          "Hours, not days — we've shipped the patterns before"
+        ],
+        [
+          "Tool selection accuracy",
+          "Trial-and-error (typically 1-3 wrong picks)",
+          "Decision matrix in our Workflow Playbook + curated catalogue"
+        ],
+        [
+          "Workflow design rigor",
+          "Often skipped (just-make-it-work)",
+          "Patterns from 7 documented archetypes"
+        ],
+        [
+          "Maintenance & monitoring",
+          "Manual; usually decays after 90 days",
+          "Built in (failed-run alerts, weekly health, monthly tune)"
+        ],
+        [
+          "Cost-per-run optimisation",
+          "Rare",
+          "Continuous (we shift workflows to cheaper tools as they scale)"
+        ],
+        [
+          "Knowledge transfer",
+          "Lives in one person's head",
+          "Documented + in-Notion + in handover SOPs"
+        ],
+        [
+          "Self-serve option",
+          "DIY everything",
+          "Self-serve products from $17 OR managed plans"
+        ]
+      ]
+    },
+    "verdict": "DIY when you have someone with the time + appetite to learn (an engineer or ops person who likes building). Use Aiprosol's self-serve products ($17-$397) to compress the learning curve. Use managed plans when you don't have that person and want the outcomes anyway.",
+    "faqs": [
+      {
+        "q": "Why not just use a chatbot + workflow tool and call it a day?",
+        "a": "If your needs are 1-3 simple workflows, that combo works. The breakdown happens around workflow 7-10 when (a) different tools handle different shapes better, (b) hands-on maintenance becomes a part-time job, and (c) cost-per-run optimisation matters."
+      },
+      {
+        "q": "What does Aiprosol know about AI tools I don't?",
+        "a": "The verdicts. Our AI Tools Vault ($67) ranks 105 tools across 23 categories with PICK/GOOD/WATCH/AVOID verdicts based on real use. The vendor's website tells you the best case; we tell you when each one fails."
+      },
+      {
+        "q": "Can I keep my existing tools?",
+        "a": "Yes — Aiprosol works alongside, not instead of. If you're on HubSpot, keep HubSpot. If you're on Zapier, keep Zapier. We layer on top of your existing investments."
+      },
+      {
+        "q": "What if I want to learn this myself?",
+        "a": "Our self-serve catalogue is built for exactly this. The $197 Playbook Pack gives you the framework + 25 importable n8n workflows. Most operators build their first 5 automations within 30 days using just the playbooks."
+      },
+      {
+        "q": "When should I switch from DIY to managed?",
+        "a": "When you've shipped 3-5 workflows DIY and the maintenance is starting to eat 5+ hours/week, OR when you're spending more on tool subscriptions than the $997/mo Starter plan would cost. That's the breakeven."
+      }
+    ]
+  },
+  {
+    "slug": "aiprosol-vs-make-agency",
+    "title": "Aiprosol vs a Make.com agency",
+    "metaDescription": "Aiprosol vs a Make.com agency: AI-native architecture, ongoing operations, multi-tool flexibility. Where each model wins.",
+    "h1": "Aiprosol vs a Make.com agency — when each wins",
+    "summary": "Make.com agencies build scenarios end-to-end inside Make. Aiprosol designs multi-tool architectures with AI at the centre, then operates them ongoing. This page compares the two on price, scope, lock-in, and AI capability.",
+    "table": {
+      "headers": [
+        "Dimension",
+        "Make.com agency",
+        "Aiprosol"
+      ],
+      "rows": [
+        [
+          "Pricing model",
+          "Per-scenario fixed-fee ($500-3,000 each) or retainer ($1,500-5,000/mo)",
+          "Self-serve from $17 OR managed plans from $997/mo"
+        ],
+        [
+          "Tool selection",
+          "Make-first (it's their billable surface)",
+          "Best tool per workflow (Make, Zapier, n8n, custom)"
+        ],
+        [
+          "AI integration",
+          "Bolted on where Make's AI modules support it",
+          "AI-native — 10 AI agents run our own ops; we design with AI in mind"
+        ],
+        [
+          "Ongoing operations",
+          "Hand-over model; customer maintains",
+          "We operate it for you, weekly metric review + monthly tune"
+        ],
+        [
+          "Outcomes guarantee",
+          "Project completion",
+          "90-day reclaim guarantee (35+ hrs/wk or we work for free)"
+        ],
+        [
+          "Time-to-value",
+          "2-4 weeks per scenario",
+          "Day 14 (Phase 0); Day 60 (10 workflows live on Growth plan)"
+        ],
+        [
+          "Where they're better",
+          "Single-tool Make stack, simple iteration/aggregation needs",
+          "Multi-tool architectures, AI-augmented workflows, ongoing operations"
+        ]
+      ]
+    },
+    "verdict": "Choose a Make.com agency when you're already deep in Make and want more scenarios built fast inside that ecosystem. Choose Aiprosol when you want a multi-tool architecture (Make + n8n + Zapier + AI), ongoing operations, and a measurable hours-reclaimed outcome guarantee.",
+    "faqs": [
+      {
+        "q": "Is Make better than n8n or Zapier?",
+        "a": "It depends on workflow shape. Make wins on branching, iterators, aggregators, and visual debugging. Zapier wins on app integrations (5,000+) and ease for non-technical users. n8n wins on self-hosted unmetered runs. Aiprosol's Workflow Automation Playbook documents the decision matrix."
+      },
+      {
+        "q": "Can Aiprosol work alongside our existing Make scenarios?",
+        "a": "Yes — we layer alongside. Existing Make scenarios stay; we add AI-augmented workflows or migrate scenarios that are getting expensive to n8n."
+      },
+      {
+        "q": "Do we have to migrate off Make if we engage Aiprosol?",
+        "a": "No — we don't rip and replace. Migration happens only when a specific workflow's cost-per-run on Make justifies moving it to n8n self-hosted. Most customers stay multi-tool."
+      }
+    ]
+  },
+  {
+    "slug": "aiprosol-vs-hubspot-operations-hub",
+    "title": "Aiprosol vs HubSpot Operations Hub",
+    "metaDescription": "Aiprosol vs HubSpot Operations Hub: when in-product automation is enough vs. when you need cross-tool AI orchestration.",
+    "h1": "Aiprosol vs HubSpot Operations Hub",
+    "summary": "HubSpot Operations Hub is HubSpot-native automation — workflows, data sync, custom code blocks inside the HubSpot ecosystem. Aiprosol is multi-tool AI orchestration that LAYERS on top of HubSpot (or any CRM). Different scopes, often complementary, sometimes overlapping.",
+    "table": {
+      "headers": [
+        "Dimension",
+        "HubSpot Operations Hub",
+        "Aiprosol"
+      ],
+      "rows": [
+        [
+          "Pricing",
+          "$50-2,000/mo bundled with HubSpot tier",
+          "Self-serve from $17 OR $997-$7,997/mo managed plans"
+        ],
+        [
+          "Scope",
+          "Workflows inside HubSpot + data sync to/from HubSpot",
+          "Cross-tool orchestration: HubSpot + Stripe + Slack + Notion + AI"
+        ],
+        [
+          "AI capability",
+          "AI Email + AI Content + 'breeze' suggestions",
+          "Full LLM-in-the-loop with frontier LLMs with custom prompts"
+        ],
+        [
+          "Custom logic",
+          "Custom code blocks (JS, Python — limited)",
+          "Full n8n / Make / Zapier / Lambda runtime"
+        ],
+        [
+          "Lock-in",
+          "Tied to HubSpot subscription",
+          "Tool-agnostic; we work with what you have"
+        ],
+        [
+          "Ongoing operations",
+          "Self-serve; you maintain",
+          "Managed plans include operate + tune"
+        ],
+        [
+          "When it's enough",
+          "Single-tool stack, workflows stay inside HubSpot ecosystem",
+          "Multi-tool architecture, AI-augmented workflows, cross-vendor sync"
+        ]
+      ]
+    },
+    "verdict": "HubSpot Operations Hub is the right tool when your business runs primarily inside HubSpot and your automation needs stay inside that boundary. Aiprosol fits when you need cross-tool AI orchestration — connecting HubSpot to Stripe, Slack, Notion, your data warehouse, etc. — and want it operated for you ongoing.",
+    "faqs": [
+      {
+        "q": "Do I need both HubSpot Ops Hub AND Aiprosol?",
+        "a": "Not always. If 80% of your workflows stay inside HubSpot, Ops Hub may be enough. Once you need cross-tool AI workflows (e.g. Stripe charge → enrich → Slack ping → Notion log), Aiprosol's value layer is much wider."
+      },
+      {
+        "q": "Can Aiprosol replace Operations Hub?",
+        "a": "Functionally for most workflows yes. But if you're already on a HubSpot tier that includes Ops Hub, keep using it for in-HubSpot work. Aiprosol adds the layer outside HubSpot."
+      },
+      {
+        "q": "How does pricing compare?",
+        "a": "Ops Hub Pro is $720/mo. Aiprosol Starter is $997/mo but includes ongoing operations + 90-day reclaim guarantee. For just-tooling cost, Ops Hub is cheaper; for design + build + operate, Aiprosol is cheaper than DIY on Ops Hub when you factor opportunity cost."
+      }
+    ]
+  },
+  {
+    "slug": "aiprosol-vs-salesforce-einstein",
+    "title": "Aiprosol vs Salesforce Einstein / Agentforce",
+    "metaDescription": "Aiprosol vs Salesforce Einstein (Agentforce): when enterprise-platform AI makes sense vs when nimble multi-tool AI consulting wins.",
+    "h1": "Aiprosol vs Salesforce Einstein / Agentforce",
+    "summary": "Salesforce Einstein (now Agentforce) is Salesforce's in-platform AI agent layer. Aiprosol is multi-tool AI orchestration that works with — or alongside — Salesforce. Different price points, different commitment models, different scopes.",
+    "table": {
+      "headers": [
+        "Dimension",
+        "Salesforce Einstein / Agentforce",
+        "Aiprosol"
+      ],
+      "rows": [
+        [
+          "Entry price",
+          "$2/conversation or $50-500/user/mo (varies)",
+          "$997-$7,997/mo managed plans"
+        ],
+        [
+          "Platform requirement",
+          "Salesforce CRM + Einstein license + Data Cloud",
+          "Tool-agnostic — works with HubSpot, Pipedrive, Attio, or Salesforce"
+        ],
+        [
+          "Customisation depth",
+          "Apex code + Flow + Einstein Studio prompt builder",
+          "Full n8n / Make / Zapier / custom code, any LLM"
+        ],
+        [
+          "Time-to-deploy",
+          "8-16 weeks (typical Salesforce consulting timeline)",
+          "Day 14 (Phase 0); Day 60 (10 workflows live)"
+        ],
+        [
+          "Outcomes guarantee",
+          "None standard",
+          "90-day reclaim guarantee on managed plans"
+        ],
+        [
+          "Procurement complexity",
+          "Salesforce MSA + Einstein addendum + security review",
+          "30-day pilot SOW → full Enterprise contract (2-3 week cycle)"
+        ],
+        [
+          "When it's right",
+          "Salesforce-anchored enterprise with $1M+ SFDC spend already",
+          "Mid-market or non-Salesforce teams; multi-tool AI orchestration needs"
+        ]
+      ]
+    },
+    "verdict": "Use Salesforce Einstein when your business runs on Salesforce, you already have the platform investment, and you want AI inside that envelope. Use Aiprosol when you're not anchored to Salesforce OR you need AI workflows that span Salesforce + other tools (Slack, Notion, billing, data warehouse).",
+    "faqs": [
+      {
+        "q": "Can Aiprosol work on top of Salesforce?",
+        "a": "Yes. We integrate via Salesforce APIs + the Apex / Bulk API. Salesforce stays as your system of record; Aiprosol adds the cross-tool AI orchestration layer on top."
+      },
+      {
+        "q": "Is Einstein better than a frontier LLM inside automation?",
+        "a": "Einstein is Salesforce-tuned for in-platform use cases. For general workflows (drafting, classification, extraction) outside Salesforce, frontier LLMs are stronger and far cheaper per token."
+      },
+      {
+        "q": "What does Aiprosol cost vs. an Einstein implementation?",
+        "a": "Einstein implementation projects typically run $50-200K in services + ongoing license. Aiprosol Enterprise is $7,997/mo — ~$96K/year all-in, with ongoing operations included."
+      }
+    ]
+  },
+  {
+    "slug": "aiprosol-vs-microsoft-copilot-studio",
+    "title": "Aiprosol vs Microsoft Copilot Studio",
+    "metaDescription": "Aiprosol vs Microsoft Copilot Studio: when M365-anchored AI agents fit vs when you need multi-tool AI orchestration.",
+    "h1": "Aiprosol vs Microsoft Copilot Studio",
+    "summary": "Microsoft Copilot Studio lets enterprises build AI agents inside the M365 ecosystem (Teams, SharePoint, Outlook, Power Platform). Aiprosol is multi-tool AI orchestration not anchored to any single platform. Where each fits.",
+    "table": {
+      "headers": [
+        "Dimension",
+        "Microsoft Copilot Studio",
+        "Aiprosol"
+      ],
+      "rows": [
+        [
+          "Platform requirement",
+          "Microsoft 365 + Power Platform + Copilot Studio license",
+          "Tool-agnostic — Google Workspace, M365, or any stack"
+        ],
+        [
+          "Pricing",
+          "$200/month per tenant + per-message overage",
+          "$997-$7,997/mo managed plans, flat fee"
+        ],
+        [
+          "Build interface",
+          "Low-code Power Platform / Copilot Studio canvas",
+          "Code (n8n / TS / Python) + the right tool for each workflow"
+        ],
+        [
+          "LLM choice",
+          "a frontier LLM (Azure-hosted LLM only)",
+          "frontier LLMs + GPT  + an open-source LLM via fast inference — pick per task"
+        ],
+        [
+          "AI agent scope",
+          "M365-data-aware agents (Outlook, SharePoint, Teams)",
+          "Cross-system agents (CRM + billing + comms + data warehouse)"
+        ],
+        [
+          "Compliance",
+          "Microsoft enterprise compliance (in-tenant data)",
+          "SOC 2 architecture + customer-controlled cloud option"
+        ],
+        [
+          "When it's right",
+          "M365-heavy enterprise; in-tenant data sensitivity; Microsoft procurement standard",
+          "Mid-market / non-Microsoft-anchored teams; multi-tool AI needs"
+        ]
+      ]
+    },
+    "verdict": "Use Microsoft Copilot Studio when your enterprise runs on M365, your data is in SharePoint / OneDrive / Teams, and Microsoft is the procurement standard. Use Aiprosol when you're not M365-anchored OR you need workflows that span M365 + non-Microsoft tools.",
+    "faqs": [
+      {
+        "q": "Can Aiprosol integrate with M365?",
+        "a": "Yes — Microsoft Graph API gives access to Outlook, SharePoint, Teams, OneDrive. We integrate alongside Copilot Studio, not as a replacement, when customers want both."
+      },
+      {
+        "q": "Why use a frontier LLM outside Azure-hosted LLM?",
+        "a": "Cost + flexibility. Frontier LLMs are materially better on long-context reasoning. a budget LLM is 10x cheaper for bulk classification work. Locking to Azure-hosted LLM means paying premium for both — Aiprosol uses the right model for each workflow."
+      },
+      {
+        "q": "What's the typical cost for a 100-person org?",
+        "a": "Copilot Studio: $200/mo × ~100 users = $20K/mo + overages. Aiprosol Enterprise: $7,997/mo flat, includes operations + 90-day reclaim guarantee."
+      }
+    ]
+  }
+]

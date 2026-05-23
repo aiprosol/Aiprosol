@@ -1,0 +1,93 @@
+{
+  "name": "People \u00b7 PTO request \u2192 manager Slack + calendar block",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "pto-request",
+        "responseMode": "lastNode"
+      },
+      "id": "62c09deb-b016-41f1-b52e-b6e1561edac3",
+      "name": "PTO request webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "post",
+        "channel": "={{ $json.body.managerSlackId }}",
+        "text": "=:palm_tree: PTO request from {{ $json.body.employeeName }}: {{ $json.body.startDate }} to {{ $json.body.endDate }} ({{ $json.body.days }} days). Reason: {{ $json.body.reason }}. Approve? :white_check_mark: or :x:"
+      },
+      "id": "303961ee-f4b0-4c8e-b440-7750c85be05d",
+      "name": "Slack manager approval",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        460,
+        200
+      ],
+      "credentials": {
+        "slackApi": {
+          "id": "REPLACE_ME",
+          "name": "Slack workspace"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "calendar": "={{ $json.body.employeeEmail }}",
+        "start": "={{ $json.body.startDate }}",
+        "end": "={{ $json.body.endDate }}",
+        "summary": "=PTO \u2014 {{ $json.body.employeeName }}"
+      },
+      "id": "644c5767-3a23-4ff6-a0c6-30ffb89f7b80",
+      "name": "Create calendar block",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1,
+      "position": [
+        460,
+        400
+      ],
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "REPLACE_ME",
+          "name": "Calendar"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "PTO request webhook": {
+      "main": [
+        [
+          {
+            "node": "Slack manager approval",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Create calendar block",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "52f8b025-1c70-47db-b8a6-4f36418b82fc",
+  "id": "c471727b-67b8-42a2-ba15-33621d3abafc",
+  "meta": {
+    "instanceId": "aiprosol-starter-library-v1"
+  },
+  "tags": [],
+  "pinData": {}
+}

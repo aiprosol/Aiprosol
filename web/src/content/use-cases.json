@@ -1,0 +1,115 @@
+[
+  {
+    "slug": "lead-generation-automation",
+    "name": "Lead Generation Automation",
+    "pageTitle": "Lead Generation Automation · Aiprosol",
+    "metaDescription": "Sub-3-minute response architecture, 4-component lead scoring, 5-touch nurture sequence. Pay back in week 1. Done-for-you or self-serve playbook.",
+    "h1": "Lead Generation Automation",
+    "tagline": "Respond to every inbound lead in under 3 minutes — automatically. Convert 21x more than competitors who take 30+ minutes.",
+    "intro": "Most B2B companies lose 60-80% of inbound leads to slow response time. The data: 3-minute response = 21x more likely to qualify. 30-minute response = baseline. 24h+ = competitor wins. Aiprosol architects the sub-3-minute response system, then operates it for you.",
+    "outcomes": [
+      "Lead arrives → personalised acknowledgment in 60-90 seconds",
+      "AI scores fit / intent / engagement / urgency → routes to right queue",
+      "Hot leads (≥85 score): Slack-pinged to AE with 5-min SLA",
+      "Warm leads: SDR queue with 4-hour SLA",
+      "Nurture (40-64): auto-enter 5-touch email sequence",
+      "Future leads: archived with quarterly re-scoring"
+    ],
+    "outputs": "12-week build: scoring model calibrated to your ICP + n8n workflow library + email sequences + routing tree + dashboard with leading/lagging KPIs.",
+    "metrics": [
+      { "value": "Sub-3 min", "label": "Median time-to-first-response" },
+      { "value": "21x", "label": "Qualification lift vs. 30-min response" },
+      { "value": "Week 1", "label": "Typical payback period" }
+    ],
+    "faqs": [
+      { "q": "Will this work with our existing CRM?", "a": "Yes — HubSpot, Pipedrive, Salesforce, Attio, Close, Copper all integrate via API. The CRM stays as system of record." },
+      { "q": "What if our lead volume is low?", "a": "Sub-3-min response matters more at low volume, not less. Each lead is worth more, so the cost of slow response is higher." },
+      { "q": "Self-serve or done-for-you?", "a": "Both. The Lead Generation Automation Playbook ($127) gives you the full system blueprint + 4 n8n workflow starters. Managed plans include build + operate." }
+    ],
+    "relatedProductSlug": "lead-generation-automation-playbook"
+  },
+  {
+    "slug": "customer-support-automation",
+    "name": "Customer Support Automation",
+    "pageTitle": "Customer Support Automation · Aiprosol",
+    "metaDescription": "AI deflects 60% of support tickets. Human handles the rest with context pre-loaded. Cuts per-ticket cost 30%. Brand voice preserved.",
+    "h1": "Customer Support Automation",
+    "tagline": "Resolve 60% of tickets without a human. Route the rest to the right person with context pre-loaded. Brand voice preserved.",
+    "intro": "Modern AI support isn't a chatbot that frustrates customers. It's a triage + resolution layer that handles routine tickets (refunds, tracking, sizing, account questions) and routes the rest to humans with full context. Done well, customer satisfaction goes up while cost per ticket goes down.",
+    "outcomes": [
+      "Incoming ticket (Plain / Intercom / Help Scout / Zendesk) → AI categorise",
+      "60%+ resolve automatically (status-of-X, refund, FAQ-shaped queries)",
+      "40% route to the right human pod with suggested-reply pre-drafted",
+      "Customer Slack mentions auto-summarised + logged",
+      "NPS < 7 → automatic CSM Slack alert with retention play"
+    ],
+    "outputs": "Triage model trained on your historical tickets + brand-voice-calibrated reply templates + dashboard tracking deflection rate / CSAT / time-to-resolution.",
+    "metrics": [
+      { "value": "60% deflection", "label": "Tickets resolved without human touch" },
+      { "value": "30% lower", "label": "Cost per ticket (industry baseline reduction)" },
+      { "value": "CSAT +5pt", "label": "Customer satisfaction lift (faster, more accurate)" }
+    ],
+    "faqs": [
+      { "q": "Will customers know they're talking to AI?", "a": "Our pattern: AI handles the routine query, brands the response as 'AI-assisted' transparently, escalates anything edge-case to a human. Customers prefer instant AI to slow human." },
+      { "q": "How does it handle our brand voice?", "a": "Initial training on 50-100 of your historical replies calibrates voice. Ongoing supervised learning refines as you go. The first 4 weeks include heavy human review to lock voice." },
+      { "q": "What about edge cases / angry customers?", "a": "Sentiment analysis triggers human escalation automatically. AI never closes a ticket where the customer expresses frustration." }
+    ],
+    "relatedProductSlug": null
+  },
+  {
+    "slug": "document-processing",
+    "name": "Document Processing Automation",
+    "pageTitle": "AI Document Processing · Aiprosol",
+    "metaDescription": "99%+ accuracy on document extraction: invoices, receipts, contracts, tax docs, statements. Full audit trail. Replaces manual data entry.",
+    "h1": "AI-Powered Document Processing",
+    "tagline": "99%+ accurate extraction from invoices, contracts, statements, tax docs. Full audit trail. Replaces manual data entry without the OCR pain.",
+    "intro": "Document processing was 'AI-powered' for a decade — but the old OCR-based stack required hours of cleanup per batch. Modern LLM-based extraction handles unstructured + semi-structured docs at 99%+ accuracy with confidence scoring. Aiprosol designs the pipeline + operates it.",
+    "outcomes": [
+      "PDF / image / scan ingested → AI extract structured data → confidence-scored output",
+      "High-confidence (>95%) extractions auto-post to your system of record",
+      "Edge cases queue for human review with the AI's reasoning shown",
+      "Audit log: input doc hash, prompt, output, reviewer, decision, timestamp",
+      "Re-training loop: every human correction improves the next batch"
+    ],
+    "outputs": "Trained extraction model + n8n / Make workflow + reviewer interface + audit log infrastructure + integration into your ERP / accounting / CRM.",
+    "metrics": [
+      { "value": "99%+ accuracy", "label": "On structured + semi-structured documents" },
+      { "value": "100x speed", "label": "Vs. manual data entry" },
+      { "value": "Full audit", "label": "Every extraction reviewable + reproducible" }
+    ],
+    "faqs": [
+      { "q": "How is this different from regular OCR?", "a": "Old OCR reads pixels → text. Modern LLM extraction reads the document as a human would, understanding context, recovering from scan quality issues, and outputting structured JSON ready for your DB." },
+      { "q": "Can it handle our custom document types?", "a": "Yes — most custom formats train in 50-100 examples. Initial week sets baseline accuracy; ongoing supervised learning closes accuracy gaps as you go." },
+      { "q": "What's the audit trail look like?", "a": "Every extraction logs: input hash, prompt, output JSON, confidence score, reviewer ID (if reviewed), decision, timestamp. Exportable as CSV / JSONL for any audit." }
+    ],
+    "relatedProductSlug": null
+  },
+  {
+    "slug": "sales-pipeline-automation",
+    "name": "Sales Pipeline Automation",
+    "pageTitle": "Sales Pipeline Automation · Aiprosol",
+    "metaDescription": "Automate every step from lead → deal closed: AI prep briefs, no-show prevention, follow-up sequences, deal stage progression, renewal alerts.",
+    "h1": "Sales Pipeline Automation",
+    "tagline": "Automate the 70% of sales work that isn't selling — prep briefs, follow-ups, stage progression, renewals. Reps focus on the conversation.",
+    "intro": "Sales reps spend 70% of their time on non-selling work: CRM updates, prep research, follow-up emails, stage progression notes. Most is automatable in 2026 without losing the human relationship layer. Aiprosol designs the system + runs it.",
+    "outcomes": [
+      "Calendly booking → AI prep brief in email + Slack 10 min before call",
+      "Post-call: AI summary + action items + auto-CRM update",
+      "Deal stage change → relevant follow-up template suggested + sent on rep approval",
+      "Calendly no-show → auto-rebook email with apology + new link",
+      "Renewal 60d out → CSM Slack alert with account health summary"
+    ],
+    "outputs": "Pre-call brief generator + post-call summary system + CRM auto-update workflows + renewal alert system + deal-stuck diagnostic + win/loss tracker.",
+    "metrics": [
+      { "value": "+25% rep capacity", "label": "More selling time as admin work automates" },
+      { "value": "30% lower no-show rate", "label": "With reminder + rebook automation" },
+      { "value": "Same-day follow-up", "label": "On every call (vs. avg 3-day delay)" }
+    ],
+    "faqs": [
+      { "q": "Will this replace our SDRs / AEs?", "a": "No — it removes the admin burden so they spend more time selling. Most teams expand sales hiring after automating, because unit economics improve." },
+      { "q": "Compatible with HubSpot / Salesforce / Pipedrive / Close?", "a": "Yes — all integrate via API. We layer alongside, never replace." },
+      { "q": "How do you handle GDPR for prospect data?", "a": "Standard DPA. Prospect data stays in your CRM; Aiprosol workflows access via API, never bulk-export, never share with third parties beyond the LLM provider (Zero-Data-Retention tier with the underlying LLM API)." }
+    ],
+    "relatedProductSlug": "lead-generation-automation-playbook"
+  }
+]

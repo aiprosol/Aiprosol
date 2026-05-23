@@ -1,0 +1,120 @@
+{
+  "name": "Ops \u00b7 Weekly Friday \u2192 overdue task DM to each owner",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 15 * * 5"
+            }
+          ]
+        }
+      },
+      "id": "9c5046e1-a073-4230-a48a-a06c72af14cc",
+      "name": "Cron \u00b7 Friday 3pm",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://YOUR_API/tasks?status=open&age_gt=14d",
+        "method": "GET"
+      },
+      "id": "791090aa-7a4b-4c69-b26a-c5fba5435441",
+      "name": "Pull tasks > 14d open",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const tasks = items[0].json.tasks || [];\nconst byOwner = {};\nfor (const t of tasks) {\n  if (!byOwner[t.owner]) byOwner[t.owner] = [];\n  byOwner[t.owner].push(t);\n}\nreturn Object.entries(byOwner).map(([owner, tasks]) => ({ json: { owner, count: tasks.length, tasks } }));"
+      },
+      "id": "ad0044f6-c2a6-4195-aa02-84bd870721ed",
+      "name": "Group by owner",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "post",
+        "channel": "={{ $json.owner }}",
+        "text": "=:warning: You have {{ $json.count }} tasks open >14 days. Top 3:\\n{{ $json.tasks.slice(0,3).map(t => '\u2022 ' + t.title).join('\\\\n') }}\\n\\nReply with status or escalate."
+      },
+      "id": "b3e695fc-4540-4a96-80fe-25f29953f7cf",
+      "name": "Slack manager DM",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        900,
+        300
+      ],
+      "credentials": {
+        "slackApi": {
+          "id": "REPLACE_ME",
+          "name": "Slack workspace"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Cron \u00b7 Friday 3pm": {
+      "main": [
+        [
+          {
+            "node": "Pull tasks > 14d open",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pull tasks > 14d open": {
+      "main": [
+        [
+          {
+            "node": "Group by owner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Group by owner": {
+      "main": [
+        [
+          {
+            "node": "Slack manager DM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "9d908820-79df-4251-a955-4cc788b8bd1b",
+  "id": "56888882-19d4-42e7-8def-e61fbc89babc",
+  "meta": {
+    "instanceId": "aiprosol-starter-library-v1"
+  },
+  "tags": [],
+  "pinData": {}
+}

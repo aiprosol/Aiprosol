@@ -1,0 +1,160 @@
+{
+  "name": "Aiprosol Starter — Gmail inbox → AI auto-label",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "filters": {}
+      },
+      "id": "1310a360-387f-45e7-8832-82e687e202a2",
+      "name": "Gmail trigger",
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false
+          },
+          "conditions": [
+            {
+              "id": "1",
+              "leftValue": "={{ $json.from }}",
+              "rightValue": "@yourdomain.com",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            }
+          ]
+        }
+      },
+      "id": "e1535d10-8490-44fb-8e04-27d921a82ff2",
+      "name": "Skip self",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o-mini"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Classify into: SALES_LEAD, CUSTOMER_SUPPORT, BILLING, VENDOR, PERSONAL, NEWSLETTER, OTHER. Return only label."
+            },
+            {
+              "role": "user",
+              "content": "=Subject: {{ $json.subject }}\\nFrom: {{ $json.from }}\\nBody: {{ $json.snippet }}"
+            }
+          ]
+        }
+      },
+      "id": "ed04ffa6-15cf-4f0d-a847-fe139c0972db",
+      "name": "AI classify",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "label",
+        "operation": "add",
+        "messageId": "={{ $('Gmail trigger').first().json.id }}",
+        "labelIds": "={{ $json.message.content.trim() }}"
+      },
+      "id": "df8c07ef-3f53-4bc6-96a7-f0956cf570d6",
+      "name": "Apply label",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        840,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Gmail trigger": {
+      "main": [
+        [
+          {
+            "node": "Skip self",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Skip self": {
+      "main": [
+        [
+          {
+            "node": "AI classify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI classify": {
+      "main": [
+        [
+          {
+            "node": "Apply label",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "starter"
+    },
+    {
+      "name": "inbox"
+    },
+    {
+      "name": "pattern-2"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "d46f3d53-92d6-4eaa-a6ab-5844ea44770e",
+  "id": "f84b20c6-3f8c-4d8c-8053-89834fc3693e",
+  "_aiprosol": {
+    "description": "Every new email gets AI-classified into 7 categories and the matching Gmail label is applied. Saves 30 min/day of inbox triage.",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

@@ -1,0 +1,317 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>The Global Business Automation Starter Pack — Aiprosol</title><style>
+:root { color-scheme: light dark; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif; max-width: 760px; margin: 0 auto; padding: 56px 32px 96px; line-height: 1.75; color: #1F1B2E; background: #FAF8FF; }
+@media (prefers-color-scheme: dark) { body { color: #E5E7EB; background: #0A0613; } a { color: #C084FC; } blockquote { background: rgba(139,92,246,0.08); border-left-color: #8B5CF6; color: #C7CEDB; } code { background: rgba(139,92,246,0.12); color: #C084FC; } pre { background: rgba(0,0,0,0.45); border: 1px solid #2A1F3D; } hr { border-color: #2A1F3D; } table { border-color: #2A1F3D; } th { background: #1A1428; } td, th { border-color: #2A1F3D; } tr:nth-child(even) { background: rgba(139,92,246,0.04); } }
+h1, h2, h3, h4 { font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.2; letter-spacing: -0.01em; }
+h1 { font-size: 36px; margin: 0 0 28px; font-weight: 800; background: linear-gradient(135deg, #8B5CF6, #C084FC); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+h2 { font-size: 24px; margin-top: 48px; margin-bottom: 14px; font-weight: 700; padding-bottom: 8px; border-bottom: 1px solid rgba(139,92,246,0.3); }
+h3 { font-size: 18px; margin-top: 28px; margin-bottom: 10px; font-weight: 700; color: #8B5CF6; }
+@media (prefers-color-scheme: dark) { h3 { color: #C084FC; } }
+h4 { font-size: 15px; margin-top: 18px; margin-bottom: 6px; font-weight: 700; }
+p { margin: 12px 0; }
+a { color: #6D28D9; text-decoration: underline; text-underline-offset: 3px; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+blockquote { background: rgba(139,92,246,0.05); border-left: 3px solid #8B5CF6; padding: 14px 22px; margin: 22px 0; color: #4A4660; border-radius: 6px; }
+hr { border: 0; border-top: 1px solid rgba(139,92,246,0.18); margin: 40px 0; }
+ul, ol { padding-left: 26px; }
+li { margin: 6px 0; }
+code { background: rgba(139,92,246,0.08); padding: 2px 8px; border-radius: 5px; font-family: 'JetBrains Mono', SFMono-Regular, ui-monospace, monospace; font-size: 0.9em; color: #6D28D9; }
+pre { background: #F4F1FA; padding: 18px 22px; border-radius: 10px; overflow-x: auto; border: 1px solid rgba(139,92,246,0.15); margin: 18px 0; }
+pre code { background: none; padding: 0; color: inherit; font-size: 13px; line-height: 1.6; }
+table { border-collapse: collapse; width: 100%; margin: 22px 0; font-size: 14px; border: 1px solid rgba(139,92,246,0.2); border-radius: 8px; overflow: hidden; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid rgba(139,92,246,0.12); }
+th { background: rgba(139,92,246,0.08); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #6D28D9; }
+tr:nth-child(even) { background: rgba(139,92,246,0.025); }
+.brand-footer { margin-top: 80px; padding-top: 28px; border-top: 1px solid rgba(139,92,246,0.18); font-size: 12px; color: #6B7585; text-align: center; }
+.brand-footer a { color: #8B5CF6; text-decoration: none; }
+@media print { body { padding: 0; max-width: 100%; } h1 { page-break-after: avoid; } h2, h3 { page-break-after: avoid; page-break-inside: avoid; } pre, blockquote, table { page-break-inside: avoid; } }
+</style></head><body>
+<h1>The Global Business Automation Starter Pack</h1>
+<p><strong>30+ ready-to-deploy automation recipes covering lead intake, sales, customer success, ops, documents, reporting, and HR. Each recipe: trigger, AI logic, outputs, tools, time saved.</strong></p>
+<p>Version 1.0 · 2026 · © Aiprosol Ltd</p>
+<hr />
+<h2>What this is</h2>
+<p>This is the recipe library Aiprosol uses with paying clients on Day 1 of every engagement. We turned the same 30+ patterns into self-serve recipes you can implement yourself, in a weekend, on free / cheap tools.</p>
+<p><strong>Each recipe follows the same eight-field structure:</strong></p>
+<ul>
+<li><strong>Name</strong> — the canonical name for the automation</li>
+<li><strong>Problem</strong> — what manual work it replaces</li>
+<li><strong>Trigger</strong> — the event that fires it</li>
+<li><strong>AI logic</strong> — what the LLM step does (where applicable)</li>
+<li><strong>Outputs</strong> — what the automation produces</li>
+<li><strong>Tools</strong> — the stack (defaults to Make + free tiers)</li>
+<li><strong>Time to build</strong> — realistic estimate for a non-engineer</li>
+<li><strong>Time saved</strong> — per week, for a typical SMB</li>
+</ul>
+<p><strong>Stack assumed throughout:</strong> Make.com (free or $9/mo), OpenAI API (~$0.001-$0.005/run), Google Workspace, Slack (free tier OK).</p>
+<hr />
+<h1>§1 · Lead intake &amp; qualification (5 recipes)</h1>
+<h2>1.1 — Inbound form → CRM record + Slack ping + ROI score</h2>
+<ul>
+<li><strong>Problem:</strong> Web-form submissions sit in your inbox unread for hours. Manual CRM entry takes 12 min/lead.</li>
+<li><strong>Trigger:</strong> Form submission (Typeform, Tally, Webflow form, contact-page POST).</li>
+<li><strong>AI logic:</strong> OpenAI scores the lead 1-100 based on submitted fields + your scoring rubric (paste it in the prompt). Higher than 70 = "hot".</li>
+<li><strong>Outputs:</strong> CRM record created, Slack ping with score badge (<code>🔥 HOT 87/100</code>), assigned to the right rep based on territory.</li>
+<li><strong>Tools:</strong> Form provider · Make · OpenAI · HubSpot/Notion CRM · Slack.</li>
+<li><strong>Time to build:</strong> 45 min.</li>
+<li><strong>Time saved:</strong> 3.5 hrs/wk per 50 leads.</li>
+</ul>
+<h2>1.2 — Lead-magnet download → 5-email nurture sequence</h2>
+<ul>
+<li><strong>Problem:</strong> Someone downloads your free guide, then you forget about them for 3 weeks.</li>
+<li><strong>Trigger:</strong> Form submission with <code>lead_magnet_id</code>.</li>
+<li><strong>AI logic:</strong> None for trigger — but emails 2-5 use AI to personalise opening line based on submitted role/industry.</li>
+<li><strong>Outputs:</strong> Auto-enrolled in a 5-email sequence (immediately, day 2, day 5, day 10, day 21). Email 5 is a clear "ready to talk?" CTA.</li>
+<li><strong>Tools:</strong> Resend or Mailchimp · Make.</li>
+<li><strong>Time to build:</strong> 90 min (mostly writing the 5 emails once).</li>
+<li><strong>Time saved:</strong> 4 hrs/wk + 2-3× higher conversion vs. manual nurture.</li>
+</ul>
+<h2>1.3 — LinkedIn lead → enriched profile + outreach draft</h2>
+<ul>
+<li><strong>Problem:</strong> You connect with someone on LinkedIn → losing their context within 48 hrs.</li>
+<li><strong>Trigger:</strong> New LinkedIn connection (via Phantombuster or LinkedIn Sales Navigator export).</li>
+<li><strong>AI logic:</strong> OpenAI reads their LinkedIn <code>about</code> + recent posts + role → drafts a personal opening message referencing something specific.</li>
+<li><strong>Outputs:</strong> Notion record + queued draft message in your LinkedIn inbox (manual send by you).</li>
+<li><strong>Tools:</strong> Phantombuster · Make · OpenAI · Notion.</li>
+<li><strong>Time to build:</strong> 2 hrs.</li>
+<li><strong>Time saved:</strong> 6 hrs/wk for active LinkedIn outbound.</li>
+</ul>
+<h2>1.4 — Calendar booking → confirmation email + research brief + Slack channel</h2>
+<ul>
+<li><strong>Problem:</strong> Someone books a call → you scramble to research them 5 min before.</li>
+<li><strong>Trigger:</strong> Cal.com / Calendly / SavvyCal booking event.</li>
+<li><strong>AI logic:</strong> OpenAI compiles a 1-page brief from public data on the prospect (LinkedIn + company website + recent news).</li>
+<li><strong>Outputs:</strong> Email confirmation to prospect, brief PDF in your prep folder, Slack channel created if it's a multi-stakeholder deal.</li>
+<li><strong>Tools:</strong> Cal.com · Make · OpenAI · Google Drive · Slack.</li>
+<li><strong>Time to build:</strong> 90 min.</li>
+<li><strong>Time saved:</strong> 1.5 hrs/wk + measurably better calls.</li>
+</ul>
+<h2>1.5 — Cold-email reply → AI-classified + auto-routed</h2>
+<ul>
+<li><strong>Problem:</strong> Replies to cold-email campaigns mix interested, not-now, unsubscribe, out-of-office. Each needs different handling.</li>
+<li><strong>Trigger:</strong> Reply received in cold-email inbox.</li>
+<li><strong>AI logic:</strong> Classify into <code>INTERESTED · NOT_NOW · NEVER · OOO · OTHER</code>. For <code>INTERESTED</code>, draft a personalised follow-up. For <code>NEVER</code>, auto-add to suppression list.</li>
+<li><strong>Outputs:</strong> Routed to the right downstream automation.</li>
+<li><strong>Tools:</strong> Smartlead/Instantly · Make · OpenAI.</li>
+<li><strong>Time to build:</strong> 1 hr.</li>
+<li><strong>Time saved:</strong> 5 hrs/wk for active outbound.</li>
+</ul>
+<hr />
+<h1>§2 · Sales pipeline &amp; deal flow (5 recipes)</h1>
+<h2>2.1 — Deal stage change → drafts the next-step email</h2>
+<ul>
+<li><strong>Problem:</strong> Each pipeline stage has standard "what do I send next" needs (proposal sent → contract; signed → onboarding; etc.). Reps forget or under-write.</li>
+<li><strong>Trigger:</strong> Deal stage changes in CRM.</li>
+<li><strong>AI logic:</strong> Reads the deal context (industry, deal size, last note) + the new stage → drafts the appropriate next email (proposal, contract send, kickoff scheduling, etc.).</li>
+<li><strong>Outputs:</strong> Draft queued in rep's inbox for one-click send.</li>
+<li><strong>Tools:</strong> HubSpot/Pipedrive · Make · OpenAI · Gmail.</li>
+<li><strong>Time to build:</strong> 2 hrs.</li>
+<li><strong>Time saved:</strong> 3 hrs/wk per rep.</li>
+</ul>
+<h2>2.2 — Stale-deal radar (no activity &gt; N days)</h2>
+<ul>
+<li><strong>Problem:</strong> Deals quietly die in the pipeline because no-one followed up.</li>
+<li><strong>Trigger:</strong> Daily 9 am scan of all open deals.</li>
+<li><strong>AI logic:</strong> Filter: deals with no logged activity in 14 days. AI drafts a "checking in, no pressure" email tailored to the deal's last context.</li>
+<li><strong>Outputs:</strong> Slack list to the rep, drafts queued.</li>
+<li><strong>Tools:</strong> CRM · Make · OpenAI.</li>
+<li><strong>Time to build:</strong> 1.5 hrs.</li>
+<li><strong>Time saved:</strong> Indirect — typically recovers 8-15% of stale-deal pipeline.</li>
+</ul>
+<h2>2.3 — Proposal generated from a sales-call transcript</h2>
+<ul>
+<li><strong>Problem:</strong> Hour-long discovery call → reps spend 90 min writing a proposal.</li>
+<li><strong>Trigger:</strong> Call recording uploaded to Fathom/Otter/Granola.</li>
+<li><strong>AI logic:</strong> OpenAI reads the transcript → extracts customer pain points, stated KPIs, budget range, decision criteria → fills a proposal template.</li>
+<li><strong>Outputs:</strong> Filled proposal in Google Docs, ready for review.</li>
+<li><strong>Tools:</strong> Fathom · Make · OpenAI · Google Docs.</li>
+<li><strong>Time to build:</strong> 3 hrs.</li>
+<li><strong>Time saved:</strong> 6-8 hrs/wk per rep.</li>
+</ul>
+<h2>2.4 — Contract signed → handover everything in 60 sec</h2>
+<ul>
+<li><strong>Problem:</strong> Signed contract → 4 manual steps (welcome email, project workspace, kickoff scheduling, internal team announcement). Routinely takes 24-48 hrs.</li>
+<li><strong>Trigger:</strong> DocuSign / PandaDoc / Stripe Tax signature event.</li>
+<li><strong>AI logic:</strong> Lightweight — pulls customer name + plan + start date + assigned PM.</li>
+<li><strong>Outputs:</strong> Welcome email sent, Notion/Asana project created, kickoff slot proposed, Slack #customers channel announces.</li>
+<li><strong>Tools:</strong> DocuSign · Make · multiple destinations.</li>
+<li><strong>Time to build:</strong> 2 hrs.</li>
+<li><strong>Time saved:</strong> 2 hrs per signed deal.</li>
+</ul>
+<h2>2.5 — Lost deal post-mortem auto-prompt</h2>
+<ul>
+<li><strong>Problem:</strong> Closed-lost deals don't get analysed → same patterns of loss repeat.</li>
+<li><strong>Trigger:</strong> Deal moved to <code>Closed Lost</code> stage.</li>
+<li><strong>AI logic:</strong> Drafts 5 questions for the rep based on deal context (industry, deal size, who they lost to). Forwards to email or Notion form.</li>
+<li><strong>Outputs:</strong> Rep gets a 5-question reflection prompt within 24 hrs of loss. Responses aggregate to a quarterly loss-pattern dashboard.</li>
+<li><strong>Tools:</strong> CRM · Make · OpenAI · Notion form.</li>
+<li><strong>Time to build:</strong> 1 hr.</li>
+<li><strong>Time saved:</strong> Indirect — pattern detection across 6+ months.</li>
+</ul>
+<hr />
+<h1>§3 · Customer success &amp; onboarding (4 recipes)</h1>
+<h2>3.1 — Welcome packet auto-send (within 60 sec of signup)</h2>
+<h2>3.2 — Onboarding milestone tracker (auto-flag stuck customers)</h2>
+<h2>3.3 — Quarterly business review auto-draft from usage data</h2>
+<h2>3.4 — At-risk customer early-warning (engagement drop &gt; 50%)</h2>
+<blockquote>
+<p><em>Each follows the eight-field recipe structure — pages 18-32.</em></p>
+</blockquote>
+<hr />
+<h1>§4 · Internal ops (5 recipes)</h1>
+<h2>4.1 — Slack channel daily summariser</h2>
+<ul>
+<li><strong>Trigger:</strong> Daily 6 pm.</li>
+<li><strong>AI:</strong> Summarise last 24 hrs of #general / #engineering / #sales into 5-bullet digest.</li>
+<li><strong>Output:</strong> Posted to #daily-digest channel.</li>
+<li><strong>Time saved:</strong> 4 hrs/wk for senior staff.</li>
+</ul>
+<h2>4.2 — Meeting transcript → action items + owners + due dates</h2>
+<h2>4.3 — Standup auto-aggregator (3 questions, async)</h2>
+<h2>4.4 — Vendor-renewal 60-day radar with cost data</h2>
+<h2>4.5 — Time-off request auto-routing + coverage check</h2>
+<hr />
+<h1>§5 · Document automation (4 recipes)</h1>
+<h2>5.1 — Invoice OCR → accounting tool</h2>
+<ul>
+<li><strong>Trigger:</strong> PDF lands in <code>accounts@yourdomain</code> or Drive folder.</li>
+<li><strong>AI:</strong> Extract <code>vendor · date · amount · category · invoice_id</code> via OpenAI vision.</li>
+<li><strong>Output:</strong> New entry in Xero/QuickBooks + filed in Drive folder by month.</li>
+<li><strong>Time saved:</strong> 3-6 hrs/wk depending on volume.</li>
+</ul>
+<h2>5.2 — Contract redline assistant</h2>
+<h2>5.3 — Receipts photo → categorised expense</h2>
+<h2>5.4 — Compliance document auto-flagger (find clauses requiring review)</h2>
+<hr />
+<h1>§6 · Reporting &amp; dashboards (3 recipes)</h1>
+<h2>6.1 — Weekly board update auto-draft</h2>
+<ul>
+<li><strong>Trigger:</strong> Friday 4 pm scheduled.</li>
+<li><strong>AI:</strong> Pulls Stripe revenue, CRM pipeline, support volume, NPS → drafts a 3-paragraph board update in your voice.</li>
+<li><strong>Output:</strong> Drafted email queued for your review + send.</li>
+<li><strong>Time saved:</strong> 90 min/wk.</li>
+</ul>
+<h2>6.2 — Customer-success monthly health report</h2>
+<h2>6.3 — Marketing channel attribution dashboard</h2>
+<hr />
+<h1>§7 · Recruiting &amp; HR (4 recipes)</h1>
+<h2>7.1 — Inbound application AI-screen (against role criteria)</h2>
+<h2>7.2 — Interview scheduling cross-panel</h2>
+<h2>7.3 — Reference check auto-distribute (5-question form to 3 references)</h2>
+<h2>7.4 — Onboarding 30/60/90 plan generator from role description</h2>
+<hr />
+<h1>Implementation order — recommended sequence</h1>
+<p>If you build all 30, do them in this order. The dependencies and compounding effects are real.</p>
+<table>
+<thead>
+<tr>
+<th>Week</th>
+<th>Recipes</th>
+<th>Cumulative time saved (typical SMB)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>§1.1, §1.4, §2.1, §6.1, §3.1</td>
+<td>14 hrs/wk</td>
+</tr>
+<tr>
+<td>2</td>
+<td>§1.2, §1.5, §2.2, §2.4, §4.1</td>
+<td>22 hrs/wk</td>
+</tr>
+<tr>
+<td>3</td>
+<td>§1.3, §2.3, §2.5, §3.2, §4.2</td>
+<td>30 hrs/wk</td>
+</tr>
+<tr>
+<td>4</td>
+<td>§3.3, §3.4, §4.3, §4.4, §4.5</td>
+<td>36 hrs/wk</td>
+</tr>
+<tr>
+<td>5</td>
+<td>§5.1, §5.2, §5.3, §5.4, §6.2</td>
+<td>42 hrs/wk</td>
+</tr>
+<tr>
+<td>6</td>
+<td>§6.3, §7.1, §7.2, §7.3, §7.4</td>
+<td>47 hrs/wk</td>
+</tr>
+</tbody>
+</table>
+<p>A 6-week build, ~6 hrs/week of your time, leaves you with 47 hrs/wk reclaimed forever.</p>
+<hr />
+<h1>Tooling summary</h1>
+<p>For all 30 recipes, this is the maximum stack you'd need:</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Tool</th>
+<th>Cost</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Workflow runner</td>
+<td>Make.com</td>
+<td>$9/mo (Core)</td>
+<td>Best visual debugger for SMBs</td>
+</tr>
+<tr>
+<td>LLM</td>
+<td>OpenAI API</td>
+<td>~$15/mo</td>
+<td>Default for AI steps; swap for Claude API for higher-quality outputs</td>
+</tr>
+<tr>
+<td>Email</td>
+<td>Gmail or Resend</td>
+<td>$0 / $20</td>
+<td>Resend if you have transactional volume</td>
+</tr>
+<tr>
+<td>CRM</td>
+<td>HubSpot Free</td>
+<td>$0</td>
+<td>Hits limits at 1k contacts, then $20/mo</td>
+</tr>
+<tr>
+<td>Sheets / docs</td>
+<td>Google Workspace</td>
+<td>Existing</td>
+<td>Where data lands</td>
+</tr>
+<tr>
+<td>Slack</td>
+<td>Slack Free</td>
+<td>$0</td>
+<td>Channels for digests / pings</td>
+</tr>
+<tr>
+<td>Calendar</td>
+<td>Cal.com or Calendly</td>
+<td>$0-$15</td>
+<td>Booking flows</td>
+</tr>
+<tr>
+<td>Forms</td>
+<td>Tally or Typeform</td>
+<td>$0-$25</td>
+<td>Inbound capture</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Total: ~$50-$75/month for a fully-automated 30-recipe stack.</strong> ROI: ~50× at any reasonable hourly rate.</p>
+<hr />
+<h2>Licensing</h2>
+<p>Licensed for unlimited internal use. Redistribution of recipes verbatim or sale of the recipe library to your own customers requires written permission. © 2026 Aiprosol Ltd. Questions: hello@aiprosol.com</p>
+<div class="brand-footer">© 2026 Aiprosol Ltd · <a href="https://aiprosol.com">aiprosol.com</a> · <a href="mailto:hello@aiprosol.com">hello@aiprosol.com</a><br>Licensed to the purchaser for unlimited internal use. Redistribution requires written permission.</div>
+</body></html>

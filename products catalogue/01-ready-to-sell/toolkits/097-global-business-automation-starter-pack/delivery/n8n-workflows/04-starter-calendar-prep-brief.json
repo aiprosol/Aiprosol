@@ -1,0 +1,177 @@
+{
+  "name": "Aiprosol Starter — Calendar event → prep brief 2hrs before",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 30
+            }
+          ]
+        }
+      },
+      "id": "d9a583b0-e7dc-4281-b95d-553625afc576",
+      "name": "Schedule check",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "event",
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "primary"
+        },
+        "additionalFields": {
+          "timeMin": "={{ $now.plus(1.5, 'hours').toISO() }}",
+          "timeMax": "={{ $now.plus(2.5, 'hours').toISO() }}"
+        }
+      },
+      "id": "883a6ac9-5ac2-45de-9def-6ddcfc51cd6f",
+      "name": "Get upcoming events",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const att = $input.first().json.attendees?.find(a => !a.email.endsWith('@yourdomain.com')); return [{json: {domain: att?.email?.split('@')[1], event_title: $input.first().json.summary}}];"
+      },
+      "id": "b82c5719-e167-4e95-8702-3e7a419c9130",
+      "name": "Extract domain",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o-mini"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "In <80 words, what does this company do and what's one good opening question?"
+            },
+            {
+              "role": "user",
+              "content": "={{ $json.domain }}"
+            }
+          ]
+        }
+      },
+      "id": "3a6c36d4-ad52-4f63-8928-553e7978faf7",
+      "name": "AI brief",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        840,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "select": "user",
+        "user": "USER_ID",
+        "text": "=📋 In 2 hours: {{ $('Extract domain').first().json.event_title }}\\n\\n{{ $json.message.content }}"
+      },
+      "id": "45ccdb60-a873-4fa2-845b-49b1b9939673",
+      "name": "Slack brief",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        1040,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Schedule check": {
+      "main": [
+        [
+          {
+            "node": "Get upcoming events",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get upcoming events": {
+      "main": [
+        [
+          {
+            "node": "Extract domain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract domain": {
+      "main": [
+        [
+          {
+            "node": "AI brief",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI brief": {
+      "main": [
+        [
+          {
+            "node": "Slack brief",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "starter"
+    },
+    {
+      "name": "calendar"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "02b29fe6-536d-41e3-8b35-238a24835fcc",
+  "id": "e9ef73d7-24d1-43e4-86bf-d92d1127402e",
+  "_aiprosol": {
+    "description": "Two hours before any calendar event with an external attendee, AI scrapes their domain and posts a one-line summary to Slack.",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

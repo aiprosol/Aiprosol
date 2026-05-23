@@ -1,0 +1,182 @@
+{
+  "name": "Finance \u00b7 Failed payment \u2192 3-touch dunning (Day 1, 4, 8)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "stripe-payment-failed",
+        "responseMode": "lastNode"
+      },
+      "id": "4332ba1b-5ba7-47ee-b36f-dc1f148d609c",
+      "name": "Stripe payment.failed webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "sendTo": "={{ $json.body.data.object.customer_email }}",
+        "subject": "Quick heads-up about your subscription",
+        "message": "=Hi, looks like your latest payment didn't go through. Sometimes cards expire; if you can update yours here it'll process automatically: https://billing.example.com/update"
+      },
+      "id": "7293c609-b4e2-4121-a101-594b1ccee04f",
+      "name": "Day 1 \u00b7 Soft reminder",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 1,
+      "position": [
+        460,
+        300
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_ME",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 3,
+        "unit": "days"
+      },
+      "id": "0f0deb14-fd95-427f-a89d-69038d49792d",
+      "name": "Wait 3 days",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "sendTo": "={{ $('Stripe payment.failed webhook').item.json.body.data.object.customer_email }}",
+        "subject": "Action required \u2014 your subscription",
+        "message": "=Hi, your payment is still pending. Please update your billing details to avoid service interruption: https://billing.example.com/update"
+      },
+      "id": "d2357104-5c78-497f-9a0e-36e2d8b92eb1",
+      "name": "Day 4 \u00b7 Firm reminder",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 1,
+      "position": [
+        900,
+        300
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_ME",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 4,
+        "unit": "days"
+      },
+      "id": "23a84dd0-e5ab-4f9f-bd2e-782582478dce",
+      "name": "Wait 4 more days",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "sendTo": "={{ $('Stripe payment.failed webhook').item.json.body.data.object.customer_email }}",
+        "subject": "Final notice \u2014 service pause in 48 hours",
+        "message": "=Hi, payment hasn't been resolved. Service will pause in 48 hours unless billing updated: https://billing.example.com/update. Email srijanpaudelofficial@gmail.com if you need help."
+      },
+      "id": "5f122a4f-9bb1-4c2c-b391-c7c172c4749b",
+      "name": "Day 8 \u00b7 Final notice",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        300
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_ME",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Stripe payment.failed webhook": {
+      "main": [
+        [
+          {
+            "node": "Day 1 \u00b7 Soft reminder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Day 1 \u00b7 Soft reminder": {
+      "main": [
+        [
+          {
+            "node": "Wait 3 days",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 3 days": {
+      "main": [
+        [
+          {
+            "node": "Day 4 \u00b7 Firm reminder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Day 4 \u00b7 Firm reminder": {
+      "main": [
+        [
+          {
+            "node": "Wait 4 more days",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 4 more days": {
+      "main": [
+        [
+          {
+            "node": "Day 8 \u00b7 Final notice",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "5fb8815e-c7e1-41bd-974b-23f2bad8d1c5",
+  "id": "8b9aeab5-d0b0-45ba-9827-9dd4ede3a2da",
+  "meta": {
+    "instanceId": "aiprosol-starter-library-v1"
+  },
+  "tags": [],
+  "pinData": {}
+}

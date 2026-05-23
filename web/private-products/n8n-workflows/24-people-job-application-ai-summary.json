@@ -1,0 +1,100 @@
+{
+  "name": "People \u00b7 Job application \u2192 AI summary \u2192 recruiting Slack",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "job-application-received",
+        "responseMode": "lastNode"
+      },
+      "id": "71ee5b9a-1491-4ced-90e2-865d8756cb81",
+      "name": "Job application webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "model": "claude-3-5-sonnet-20241022",
+        "options": {
+          "temperature": 0.3,
+          "maxTokensToSample": 350
+        },
+        "text": "=Summarise this job application in 4 bullets: 1. likely-fit score 1-10 (with reasoning), 2. top 3 skills demonstrated, 3. top 1 concern, 4. one specific question to ask in screen. Application: {{ JSON.stringify($json.body) }}"
+      },
+      "id": "71d243fb-6712-4d97-8115-423d86e93f5a",
+      "name": "Claude \u00b7 application summary",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1,
+      "position": [
+        460,
+        300
+      ],
+      "credentials": {
+        "anthropicApi": {
+          "id": "REPLACE_ME",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "post",
+        "channel": "recruiting",
+        "text": "=:briefcase: New applicant \u00b7 {{ $('Job application webhook').item.json.body.role }} \u00b7 {{ $('Job application webhook').item.json.body.name }}\\n\\n{{ $json.text }}"
+      },
+      "id": "f0472411-4796-4a52-9ab9-f4ff53469426",
+      "name": "Slack #recruiting",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        680,
+        300
+      ],
+      "credentials": {
+        "slackApi": {
+          "id": "REPLACE_ME",
+          "name": "Slack workspace"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Job application webhook": {
+      "main": [
+        [
+          {
+            "node": "Claude \u00b7 application summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude \u00b7 application summary": {
+      "main": [
+        [
+          {
+            "node": "Slack #recruiting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c6fec4cd-8abc-4f1d-b632-604526513325",
+  "id": "f5382d3a-dc33-4a50-a28e-1a93c533a1a1",
+  "meta": {
+    "instanceId": "aiprosol-starter-library-v1"
+  },
+  "tags": [],
+  "pinData": {}
+}

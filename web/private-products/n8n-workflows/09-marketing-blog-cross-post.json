@@ -1,0 +1,156 @@
+{
+  "name": "Marketing \u00b7 Blog publish \u2192 AI cross-post drafts (LinkedIn + Twitter)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "blog-published",
+        "responseMode": "lastNode"
+      },
+      "id": "7861739e-cedc-47cd-af15-6b685a83cd2f",
+      "name": "Blog publish webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "model": "claude-3-5-sonnet-20241022",
+        "options": {
+          "temperature": 0.7,
+          "maxTokensToSample": 300
+        },
+        "text": "=Generate a LinkedIn post hook for this blog. Title: {{ $json.body.title }}. URL: {{ $json.body.url }}. Style: punchy first line, 3 short paragraphs, link at end. No hashtags. Under 200 words."
+      },
+      "id": "939baa57-7cb1-4f50-aa85-061572316361",
+      "name": "Claude \u2014 generate LinkedIn hook",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1,
+      "position": [
+        460,
+        200
+      ],
+      "credentials": {
+        "anthropicApi": {
+          "id": "REPLACE_ME",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "claude-3-5-sonnet-20241022",
+        "options": {
+          "temperature": 0.7,
+          "maxTokensToSample": 200
+        },
+        "text": "=Generate a Twitter post for this blog. Title: {{ $json.body.title }}. URL: {{ $json.body.url }}. Style: one strong hook + link. Under 240 chars."
+      },
+      "id": "0a126847-9398-4c34-9c6f-a58f4be04e05",
+      "name": "Claude \u2014 generate Twitter hook",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1,
+      "position": [
+        460,
+        400
+      ],
+      "credentials": {
+        "anthropicApi": {
+          "id": "REPLACE_ME",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "resource": "databasePage",
+        "databaseId": "YOUR_DRAFTS_DB_ID",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Title",
+              "title": "=Cross-posts for {{ $('Blog publish webhook').item.json.body.title }}"
+            },
+            {
+              "key": "LinkedIn",
+              "richText": "={{ $node['Claude \u2014 generate LinkedIn hook'].json.text }}"
+            },
+            {
+              "key": "Twitter",
+              "richText": "={{ $node['Claude \u2014 generate Twitter hook'].json.text }}"
+            }
+          ]
+        }
+      },
+      "id": "7ac3b48a-d246-4918-981f-4384cc2d81a5",
+      "name": "Save drafts to Notion (review queue)",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 1,
+      "position": [
+        720,
+        300
+      ],
+      "credentials": {
+        "notionApi": {
+          "id": "REPLACE_ME",
+          "name": "Notion workspace"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Blog publish webhook": {
+      "main": [
+        [
+          {
+            "node": "Claude \u2014 generate LinkedIn hook",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Claude \u2014 generate Twitter hook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude \u2014 generate LinkedIn hook": {
+      "main": [
+        [
+          {
+            "node": "Save drafts to Notion (review queue)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude \u2014 generate Twitter hook": {
+      "main": [
+        [
+          {
+            "node": "Save drafts to Notion (review queue)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f09393e6-68fd-469a-8138-98d110982d2c",
+  "id": "48d9d445-077c-4fa8-b664-08f89fa705ce",
+  "meta": {
+    "instanceId": "aiprosol-starter-library-v1"
+  },
+  "tags": [],
+  "pinData": {}
+}

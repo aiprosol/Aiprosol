@@ -1,0 +1,21 @@
+Name,Category,Subcategory,Why it's a gem
+Plain,Customer support,Dev-friendly,Better UX than Zendesk for technical teams.
+Resend,Email,Transactional,Cleaner DX than SendGrid.
+Linear,Project management,Eng-focused,Faster than Jira.
+Activepieces,No-code automation,Open source,Cleaner alt to n8n for simple workflows.
+Folk,CRM/Sales,Lightweight,Best for solo founders.
+Inngest,AI agents,Durable workflows,Best for long-running AI.
+Vectara,Knowledge base,API,RAG-as-a-service hidden among build-it-yourself teams.
+Krea,Image gen,Real-time,Real-time generation is genuinely different.
+Cartesia Sonic,Voice/audio,Fast TTS,Sub-150ms latency for production voice.
+Hetzner,Hosting/Deploy,VPS,Cheapest reliable European VPS.
+Tana,Productivity,Notes,Modern bi-directional + database hybrid.
+Granola,Voice/audio,Meeting notes,No bot appears in calls.
+BetterStack,Observability,Uptime+logs,Modern observability all-in-one.
+Ashby,HR,ATS,Modern ATS without enterprise pricing.
+Cal.com,Sales tools,Scheduler,Open-source Calendly alternative.
+DuckDB,Data,Embedded analytics,Game-changing for local analytics.
+Hex,Data,Notebook+BI,Modern notebook hybrid.
+Beehiiv,Email,Newsletter,Modern Substack alt with full ownership.
+Tailscale,Security,Mesh VPN,Networking that just works.
+Atomic.io,Knowledge base,Personal,Lightweight personal memory.

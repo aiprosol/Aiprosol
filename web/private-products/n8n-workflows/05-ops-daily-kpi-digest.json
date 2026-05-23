@@ -1,0 +1,112 @@
+{
+  "name": "Ops \u00b7 Daily 7am KPI digest to Slack",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 7 * * *"
+            }
+          ]
+        }
+      },
+      "id": "c67857ac-7d7c-4332-9ca2-da98b1cc0a7b",
+      "name": "Cron \u00b7 7am daily",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://YOUR_PROJECT.supabase.co/rest/v1/rpc/daily_kpis",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "method": "POST",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "day",
+              "value": "={{ $today.minus({days: 1}).toISODate() }}"
+            }
+          ]
+        }
+      },
+      "id": "1043501c-a300-4549-8d78-4969c9af513f",
+      "name": "Pull yesterday's metrics (Supabase)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        460,
+        300
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_ME",
+          "name": "Supabase service role"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "post",
+        "channel": "leadership",
+        "text": "=:bar_chart: *Daily KPIs \u00b7 {{ $today.minus({days: 1}).toFormat('yyyy-MM-dd') }}*\\n\u2022 Leads: {{ $json.leads_new_24h }}\\n\u2022 Outreach sent: {{ $json.outreach_sent_total }}\\n\u2022 Active drafts: {{ $json.outreach_drafts_open }}\\n\u2022 Agent runs OK: {{ $json.agent_runs_24h_ok }}"
+      },
+      "id": "6683fe1c-39d3-41b4-baeb-12f1f5908571",
+      "name": "Slack digest",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        680,
+        300
+      ],
+      "credentials": {
+        "slackApi": {
+          "id": "REPLACE_ME",
+          "name": "Slack workspace"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Cron \u00b7 7am daily": {
+      "main": [
+        [
+          {
+            "node": "Pull yesterday's metrics (Supabase)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pull yesterday's metrics (Supabase)": {
+      "main": [
+        [
+          {
+            "node": "Slack digest",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "8a32497d-2646-4ed2-86d3-e4c90440adcc",
+  "id": "12cf7942-c03d-49ee-bf4c-7c8d1f58d34f",
+  "meta": {
+    "instanceId": "aiprosol-starter-library-v1"
+  },
+  "tags": [],
+  "pinData": {}
+}

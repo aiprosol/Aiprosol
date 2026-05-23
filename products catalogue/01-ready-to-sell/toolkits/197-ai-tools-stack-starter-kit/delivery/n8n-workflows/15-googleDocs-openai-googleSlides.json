@@ -1,0 +1,147 @@
+{
+  "name": "Aiprosol Stack — Google Doc → OpenAI → Google Slides deck",
+  "nodes": [
+    {
+      "parameters": {
+        "event": "fileUpdated",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "DOC_FOLDER_ID"
+        }
+      },
+      "id": "b49c93c4-01ba-4e5e-a08a-14712160315c",
+      "name": "Doc updated",
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "={{ $json.webViewLink }}"
+      },
+      "id": "783d960b-86ec-49c7-98bb-742bfec775b0",
+      "name": "Read doc text",
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Convert this doc into a 10-slide deck. Return JSON {slides: [{title, bullets}]}"
+            },
+            {
+              "role": "user",
+              "content": "={{ $json.text }}"
+            }
+          ]
+        },
+        "options": {
+          "responseFormat": "json_object"
+        }
+      },
+      "id": "9e68aed5-1458-4b70-8159-a2db2f977618",
+      "name": "Structure slides",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "createPresentation",
+        "title": "=Deck — {{ $('Doc updated').first().json.name }}"
+      },
+      "id": "fb979efc-8bc1-4d94-a1e4-ba695f91c34e",
+      "name": "Create Slides",
+      "type": "n8n-nodes-base.googleSlides",
+      "typeVersion": 1,
+      "position": [
+        840,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Doc updated": {
+      "main": [
+        [
+          {
+            "node": "Read doc text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read doc text": {
+      "main": [
+        [
+          {
+            "node": "Structure slides",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structure slides": {
+      "main": [
+        [
+          {
+            "node": "Create Slides",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "stack"
+    },
+    {
+      "name": "drive"
+    },
+    {
+      "name": "openai"
+    },
+    {
+      "name": "slides"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "7344d15b-9d43-4998-b123-d0c45d128758",
+  "id": "6b6d8252-ebcf-4884-9b2b-bf1dca3045fa",
+  "_aiprosol": {
+    "description": "Long-form Google Doc → OpenAI structures into slide-by-slide outline → creates a new Google Slides deck.",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

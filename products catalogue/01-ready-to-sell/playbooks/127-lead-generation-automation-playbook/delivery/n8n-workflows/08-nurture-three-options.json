@@ -1,0 +1,219 @@
+{
+  "name": "Aiprosol — Nurture Email 4 (Day 10) — three options",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 9 * * *"
+            }
+          ]
+        }
+      },
+      "id": "e0dae71d-700d-42d2-bbf6-7735b2ea45f9",
+      "name": "Wait until day 10",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "contact",
+        "operation": "getAll",
+        "filters": {
+          "propertiesCollection": {
+            "properties": [
+              "email",
+              "captured_at",
+              "role",
+              "industry",
+              "primary_problem"
+            ]
+          }
+        }
+      },
+      "id": "cf0c1420-fc17-4101-9e9d-9ec3ccf50d5d",
+      "name": "Find leads at day 10",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const cutoff = Date.now() - 10*24*60*60*1000; return $input.all().filter(i => Math.abs(new Date(i.json.captured_at).getTime() - cutoff) < 24*60*60*1000 && i.json.lead_tier === 'warm');"
+      },
+      "id": "e62982c8-3b14-4e0d-952a-921dea30e67b",
+      "name": "Filter to today's send batch",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Write Email 4 of a 5-touch nurture sequence. Brief: Acknowledge they may not be ready. Three paths: self-serve product, managed plan, 'stay subscribed'. Make no-action easy. CTA: pick one.. Tone: warm, specific, no marketing fluff. 150-250 words."
+            },
+            {
+              "role": "user",
+              "content": "=Lead: role={{ $json.role }}, industry={{ $json.industry }}, stated problem={{ $json.primary_problem }}"
+            }
+          ]
+        }
+      },
+      "id": "76248fc8-36a8-4d77-80d8-0d88c661d393",
+      "name": "AI-personalise body",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        840,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "send",
+        "to": "={ $('Find leads at day ' + str(10) + ').first().json.email }",
+        "subject": "=Three options if you want help",
+        "message": "={{ $json.message.content }}"
+      },
+      "id": "56b23248-f1fe-4804-84cd-59f3ff3e5665",
+      "name": "Gmail send",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1040,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "contact",
+        "operation": "update",
+        "contactId": "={ $('Find leads at day ' + str(10) + ').first().json.id }",
+        "additionalFields": {
+          "properties": {
+            "property": [
+              {
+                "property": "nurture_email_4_sent",
+                "value": "={{ $now.toISO() }}"
+              }
+            ]
+          }
+        }
+      },
+      "id": "60ffe58f-d9ca-47ea-8126-33d27d0b0662",
+      "name": "Log send",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2,
+      "position": [
+        1240,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Wait until day 10": {
+      "main": [
+        [
+          {
+            "node": "Find leads at day 10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find leads at day 10": {
+      "main": [
+        [
+          {
+            "node": "Filter to today's send batch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter to today's send batch": {
+      "main": [
+        [
+          {
+            "node": "AI-personalise body",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI-personalise body": {
+      "main": [
+        [
+          {
+            "node": "Gmail send",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail send": {
+      "main": [
+        [
+          {
+            "node": "Log send",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "lead-gen"
+    },
+    {
+      "name": "nurture"
+    },
+    {
+      "name": "day-10"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "97a23814-66d9-4fe1-9eab-397143b326e1",
+  "id": "f16ca501-dc6a-4936-ac3b-beb3993090eb",
+  "_aiprosol": {
+    "description": "Day 10 trigger → AI-personalised body → Gmail send → log",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

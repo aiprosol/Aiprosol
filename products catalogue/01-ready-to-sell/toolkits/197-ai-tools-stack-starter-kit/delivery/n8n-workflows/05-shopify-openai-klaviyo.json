@@ -1,0 +1,114 @@
+{
+  "name": "Aiprosol Stack — Shopify order → OpenAI → Klaviyo segment",
+  "nodes": [
+    {
+      "parameters": {
+        "events": [
+          "orders/create"
+        ]
+      },
+      "id": "48a7b427-97cf-456f-8adb-4a3417e47c85",
+      "name": "Shopify order",
+      "type": "n8n-nodes-base.shopifyTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o-mini"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Categorise: first-time | repeat | high-value | bargain. Return label."
+            },
+            {
+              "role": "user",
+              "content": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        }
+      },
+      "id": "050a5563-2ee7-446e-8d0b-0bb2dea26a08",
+      "name": "Categorise customer",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://a.klaviyo.com/api/v2/list/LIST_ID/members"
+      },
+      "id": "6ddffbd9-2b9c-4ab4-81db-37c5bda871ca",
+      "name": "Klaviyo add to segment",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        640,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Shopify order": {
+      "main": [
+        [
+          {
+            "node": "Categorise customer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Categorise customer": {
+      "main": [
+        [
+          {
+            "node": "Klaviyo add to segment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "stack"
+    },
+    {
+      "name": "shopify"
+    },
+    {
+      "name": "klaviyo"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "85c1e1f0-a2ff-4a64-9123-933ec80044a6",
+  "id": "d9b519ed-d2a1-4489-99fa-44683ff23b80",
+  "_aiprosol": {
+    "description": "New Shopify order → AI categorises customer behaviour → adds to right Klaviyo segment for post-purchase email.",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

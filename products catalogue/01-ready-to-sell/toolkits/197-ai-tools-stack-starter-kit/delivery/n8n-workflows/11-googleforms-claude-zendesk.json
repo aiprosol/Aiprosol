@@ -1,0 +1,108 @@
+{
+  "name": "Aiprosol Stack — Google Form intake → Claude triage → Zendesk ticket",
+  "nodes": [
+    {
+      "parameters": {
+        "formId": "FORM_ID"
+      },
+      "id": "20338675-94ed-4b0e-867b-a90effc7cf98",
+      "name": "Form submit",
+      "type": "n8n-nodes-base.googleFormsTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "model": "claude-3-5-haiku-20241022",
+        "messages": {
+          "values": [
+            {
+              "role": "user",
+              "content": "=Return JSON {category: 'bug|feature|billing|other', priority: 'urgent|high|normal|low'}. Form: {{ JSON.stringify($json) }}"
+            }
+          ]
+        }
+      },
+      "id": "0e295152-0c49-4168-8f23-b07f389b0c66",
+      "name": "Claude classify",
+      "type": "@n8n/n8n-nodes-langchain.anthropic",
+      "typeVersion": 1,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "ticket",
+        "operation": "create"
+      },
+      "id": "18ec26b7-76ae-4f2d-b752-3f5131e47e65",
+      "name": "Zendesk ticket",
+      "type": "n8n-nodes-base.zendesk",
+      "typeVersion": 1,
+      "position": [
+        640,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Form submit": {
+      "main": [
+        [
+          {
+            "node": "Claude classify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude classify": {
+      "main": [
+        [
+          {
+            "node": "Zendesk ticket",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "stack"
+    },
+    {
+      "name": "google-forms"
+    },
+    {
+      "name": "zendesk"
+    },
+    {
+      "name": "claude"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "4a68d808-2b3c-48ae-a565-8b86a9433497",
+  "id": "e959961b-c8a1-436b-8e21-8d6ab713c7d4",
+  "_aiprosol": {
+    "description": "New Google Forms intake → Claude classifies (bug/feature/billing/other) → creates Zendesk ticket with right priority.",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

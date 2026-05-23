@@ -1,0 +1,214 @@
+{
+  "name": "Aiprosol — Onboarding milestones (Day 1 / 7 / 30)",
+  "nodes": [
+    {
+      "parameters": {
+        "events": [
+          "customer.created"
+        ]
+      },
+      "id": "3a76207f-d4c2-4192-b972-1f94a18363ca",
+      "name": "Stripe — new customer",
+      "type": "n8n-nodes-base.stripeTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resume": "timeInterval",
+        "amount": 1,
+        "unit": "days"
+      },
+      "id": "a3e7baa3-45f3-4a76-9084-33d2b408cd84",
+      "name": "Wait 1 day",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "event",
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "primary"
+        },
+        "additionalFields": {
+          "q": "={{ $('Stripe — new customer').first().json.email }}"
+        }
+      },
+      "id": "fe4dfc0c-128a-442a-b16a-b062cdab7119",
+      "name": "Check Day 1 — kickoff completed?",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resume": "timeInterval",
+        "amount": 6,
+        "unit": "days"
+      },
+      "id": "9e883274-68b1-4a9c-bf35-d7db42eed4e5",
+      "name": "Wait 6 days",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        840,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "getAll",
+        "channel": "={{ '#customer-' + $('Stripe — new customer').first().json.id }}"
+      },
+      "id": "b0e6c2d5-8b73-4471-b4f0-34c207a67eec",
+      "name": "Check Day 7 — Slack engagement",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        1040,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resume": "timeInterval",
+        "amount": 23,
+        "unit": "days"
+      },
+      "id": "9d2c6230-93f6-4c4f-b1c6-97eabe751228",
+      "name": "Wait 23 days",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "send",
+        "to": "={{ $('Stripe — new customer').first().json.email }}",
+        "subject": "Quick 1-question check-in — are you getting value?",
+        "message": "=Hi {{ $('Stripe — new customer').first().json.name || 'there' }},\\n\\n30 days in. On a scale of 0-10, how likely are you to recommend Aiprosol to a peer?\\n\\nReply with just the number — I read every one personally.\\n\\n— Srijan"
+      },
+      "id": "51421bdd-0acb-4a37-bdab-d3e200706ed7",
+      "name": "Day 30 NPS request",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1440,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Stripe — new customer": {
+      "main": [
+        [
+          {
+            "node": "Wait 1 day",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 1 day": {
+      "main": [
+        [
+          {
+            "node": "Check Day 1 — kickoff completed?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Day 1 — kickoff completed?": {
+      "main": [
+        [
+          {
+            "node": "Wait 6 days",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 6 days": {
+      "main": [
+        [
+          {
+            "node": "Check Day 7 — Slack engagement",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Day 7 — Slack engagement": {
+      "main": [
+        [
+          {
+            "node": "Wait 23 days",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 23 days": {
+      "main": [
+        [
+          {
+            "node": "Day 30 NPS request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "customer-success"
+    },
+    {
+      "name": "long-running"
+    },
+    {
+      "name": "pattern-7"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-playbook-v1"
+  },
+  "pinData": {},
+  "versionId": "c6784685-7547-40db-b0b5-8040d8cb8524",
+  "id": "d4b3d72c-3bb1-49b8-a726-e702d2063afc",
+  "_aiprosol": {
+    "description": "Customer.created → wait 1d → check kickoff → wait 6d → check delivery → wait 23d → check usage",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

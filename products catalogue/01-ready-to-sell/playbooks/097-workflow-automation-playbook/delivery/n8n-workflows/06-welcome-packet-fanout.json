@@ -1,0 +1,187 @@
+{
+  "name": "Aiprosol — Welcome packet fan-out",
+  "nodes": [
+    {
+      "parameters": {
+        "events": [
+          "customer.created"
+        ]
+      },
+      "id": "3970338a-3b0e-4a4d-8ab0-94e97b199264",
+      "name": "Stripe — new customer",
+      "type": "n8n-nodes-base.stripeTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "send",
+        "to": "={{ $json.email }}",
+        "subject": "Welcome to Aiprosol — your kickoff link inside",
+        "message": "=Hi {{ $json.name || 'there' }},\\n\\nWelcome aboard. Your kickoff is booked — calendar invite sent separately.\\n\\nNext 60 minutes: read the onboarding doc → fill the intake form → join your Slack channel.\\n\\n— Srijan"
+      },
+      "id": "6ec03afd-57fd-4dac-be80-bce33d22feff",
+      "name": "Gmail — welcome email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        440,
+        150
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "#customers",
+        "text": "=🎉 New customer: *{{ $json.name || $json.email }}* (${{ $json.balance / -100 }} contracted)"
+      },
+      "id": "701c11a4-fcbc-452c-a0bf-6d0575e65ec5",
+      "name": "Slack — #customers ping",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "create",
+        "databaseId": "CUSTOMERS_DB_ID",
+        "title": "={{ $json.name || $json.email }}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Status|select",
+              "selectValue": "Onboarding"
+            },
+            {
+              "key": "Email|email",
+              "emailValue": "={{ $json.email }}"
+            }
+          ]
+        }
+      },
+      "id": "25dc125d-dc96-453f-b439-660c67610203",
+      "name": "Notion — project page",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        440,
+        450
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "event",
+        "operation": "create",
+        "calendar": {
+          "__rl": true,
+          "value": "primary"
+        },
+        "start": "={{ $now.plus(2, 'day').set({hour: 10, minute: 0}).toISO() }}",
+        "end": "={{ $now.plus(2, 'day').set({hour: 10, minute: 45}).toISO() }}",
+        "summary": "=Kickoff — {{ $json.name || $json.email }}",
+        "additionalFields": {
+          "attendees": [
+            "={{ $json.email }}"
+          ]
+        }
+      },
+      "id": "8d472bee-bb40-475a-9bd9-d9b6a663ee54",
+      "name": "Calendar — kickoff slot",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        440,
+        600
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "card",
+        "operation": "create",
+        "listId": "ONBOARDING_LIST_ID",
+        "name": "={{ $json.name || $json.email }} — onboarding",
+        "additionalFields": {
+          "description": "=Stripe customer {{ $json.id }}"
+        }
+      },
+      "id": "c91fd17c-5cef-4572-98e5-379a1c5bd852",
+      "name": "Trello — onboarding board",
+      "type": "n8n-nodes-base.trello",
+      "typeVersion": 1,
+      "position": [
+        440,
+        750
+      ]
+    }
+  ],
+  "connections": {
+    "Stripe — new customer": {
+      "main": [
+        [
+          {
+            "node": "Gmail — welcome email",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Slack — #customers ping",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Notion — project page",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Calendar — kickoff slot",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Trello — onboarding board",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "customer-success"
+    },
+    {
+      "name": "onboarding"
+    },
+    {
+      "name": "pattern-3"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-playbook-v1"
+  },
+  "pinData": {},
+  "versionId": "fb87e43c-1bfd-4da8-afa3-a18912390524",
+  "id": "c5063775-a8b9-4365-b75a-3ae6cbf02226",
+  "_aiprosol": {
+    "description": "Stripe new customer → parallel: email + Slack + Notion + calendar + Trello",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

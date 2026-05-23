@@ -1,0 +1,847 @@
+{
+  "version": "1.0",
+  "updated": "2026-05-15",
+  "total": 105,
+  "tools": [
+    {
+      "tool": "Claude",
+      "category": "Conversational AI",
+      "summary": "Anthropic frontier LLM. Best for accuracy + long context.",
+      "pricing": "$3-15/1M tokens",
+      "verdict": "PICK",
+      "notes": "Use for customer-facing + judgement-sensitive."
+    },
+    {
+      "tool": "GPT-4o",
+      "category": "Conversational AI",
+      "summary": "OpenAI's flagship multimodal model.",
+      "pricing": "$2.50-10/1M tokens",
+      "verdict": "PICK",
+      "notes": "Best ecosystem + integrations."
+    },
+    {
+      "tool": "GPT-4o-mini",
+      "category": "Conversational AI",
+      "summary": "Cheap workhorse for bulk classification.",
+      "pricing": "$0.15-0.60/1M tokens",
+      "verdict": "PICK",
+      "notes": "Use for high-volume backend grunt work."
+    },
+    {
+      "tool": "Gemini 1.5 Pro",
+      "category": "Conversational AI",
+      "summary": "Google's frontier model. Free tier via AI Studio.",
+      "pricing": "Free tier + $1.25/1M",
+      "verdict": "GOOD",
+      "notes": "Best if you live in Google Workspace."
+    },
+    {
+      "tool": "Claude Haiku",
+      "category": "Conversational AI",
+      "summary": "Anthropic's small + fast model.",
+      "pricing": "$0.80/1M tokens",
+      "verdict": "PICK",
+      "notes": "Cheaper Claude for routine tasks."
+    },
+    {
+      "tool": "Llama 3.3 70B",
+      "category": "Open-source LLM",
+      "summary": "Meta's flagship open model.",
+      "pricing": "Free + hosting",
+      "verdict": "PICK",
+      "notes": "Self-host or via Groq/Together for cheap inference."
+    },
+    {
+      "tool": "Mistral Large 2",
+      "category": "Open-source LLM",
+      "summary": "Strong European open model.",
+      "pricing": "Pay-per-use",
+      "verdict": "GOOD",
+      "notes": "Better for European data residency."
+    },
+    {
+      "tool": "DeepSeek V3",
+      "category": "Open-source LLM",
+      "summary": "Strong reasoning + math, open weights.",
+      "pricing": "Free + hosting",
+      "verdict": "GOOD",
+      "notes": "Surprisingly capable for math/code."
+    },
+    {
+      "tool": "Qwen 2.5 72B",
+      "category": "Open-source LLM",
+      "summary": "Alibaba's open model, multilingual.",
+      "pricing": "Free + hosting",
+      "verdict": "GOOD",
+      "notes": "Best for non-English at scale."
+    },
+    {
+      "tool": "Claude Code",
+      "category": "Code generation",
+      "summary": "Anthropic's CLI agent for code.",
+      "pricing": "Bundled with Claude API",
+      "verdict": "PICK",
+      "notes": "Best agentic coding tool."
+    },
+    {
+      "tool": "Cursor",
+      "category": "Code generation",
+      "summary": "AI-first IDE.",
+      "pricing": "$20/mo",
+      "verdict": "PICK",
+      "notes": "Best balance of speed + control."
+    },
+    {
+      "tool": "Windsurf",
+      "category": "Code generation",
+      "summary": "Codeium's agentic IDE.",
+      "pricing": "$15/mo",
+      "verdict": "GOOD",
+      "notes": "Alternative to Cursor."
+    },
+    {
+      "tool": "GitHub Copilot",
+      "category": "Code generation",
+      "summary": "Embedded in VS Code / JetBrains.",
+      "pricing": "$10/mo",
+      "verdict": "GOOD",
+      "notes": "Adequate. Falling behind frontier."
+    },
+    {
+      "tool": "Aider",
+      "category": "Code generation",
+      "summary": "Terminal-native pair programming.",
+      "pricing": "Free (BYO API)",
+      "verdict": "GOOD",
+      "notes": "For terminal-first devs."
+    },
+    {
+      "tool": "Midjourney",
+      "category": "Image generation",
+      "summary": "Quality leader for stylised images.",
+      "pricing": "$10-60/mo",
+      "verdict": "PICK",
+      "notes": "Use for marketing creative."
+    },
+    {
+      "tool": "DALL-E 3",
+      "category": "Image generation",
+      "summary": "Best prompt-following.",
+      "pricing": "Pay-per-use",
+      "verdict": "GOOD",
+      "notes": "Embedded in ChatGPT Plus."
+    },
+    {
+      "tool": "Stable Diffusion 3.5",
+      "category": "Image generation",
+      "summary": "Open weights, full control.",
+      "pricing": "Free + GPU",
+      "verdict": "GOOD",
+      "notes": "When you need control or volume."
+    },
+    {
+      "tool": "Ideogram",
+      "category": "Image generation",
+      "summary": "Best for text-in-image.",
+      "pricing": "Free tier + $8/mo",
+      "verdict": "GOOD",
+      "notes": "Posters, logos with text."
+    },
+    {
+      "tool": "Runway Gen-3",
+      "category": "Video generation",
+      "summary": "Best for editing-style video work.",
+      "pricing": "$15-95/mo",
+      "verdict": "PICK",
+      "notes": "Production-ready clips."
+    },
+    {
+      "tool": "Veo (Google)",
+      "category": "Video generation",
+      "summary": "Best realism.",
+      "pricing": "Limited access",
+      "verdict": "WATCH",
+      "notes": "Wait for general release."
+    },
+    {
+      "tool": "Pika",
+      "category": "Video generation",
+      "summary": "Animation + stylised video.",
+      "pricing": "$10-95/mo",
+      "verdict": "GOOD",
+      "notes": "Faster than Runway for sketches."
+    },
+    {
+      "tool": "ElevenLabs",
+      "category": "Voice cloning",
+      "summary": "Quality + voice library.",
+      "pricing": "$5-330/mo",
+      "verdict": "PICK",
+      "notes": "Best quality on the market."
+    },
+    {
+      "tool": "Play.ht",
+      "category": "Voice cloning",
+      "summary": "Most stable for long-form.",
+      "pricing": "$39-99/mo",
+      "verdict": "GOOD",
+      "notes": "Reliable for podcasts."
+    },
+    {
+      "tool": "Cartesia",
+      "category": "Voice cloning",
+      "summary": "Latency leader (real-time).",
+      "pricing": "$10-99/mo",
+      "verdict": "PICK",
+      "notes": "For live voice agents."
+    },
+    {
+      "tool": "Deepgram",
+      "category": "Voice transcription",
+      "summary": "Best for live transcription.",
+      "pricing": "Pay-per-use",
+      "verdict": "PICK",
+      "notes": "Real-time use cases."
+    },
+    {
+      "tool": "Whisper",
+      "category": "Voice transcription",
+      "summary": "OpenAI open-source transcription.",
+      "pricing": "Free + GPU",
+      "verdict": "PICK",
+      "notes": "Batch transcription, self-host."
+    },
+    {
+      "tool": "Otter",
+      "category": "Voice transcription",
+      "summary": "Meeting-focused.",
+      "pricing": "$10-30/mo",
+      "verdict": "GOOD",
+      "notes": "For meeting notes specifically."
+    },
+    {
+      "tool": "LangChain",
+      "category": "RAG orchestration",
+      "summary": "Python framework for LLM apps.",
+      "pricing": "Free",
+      "verdict": "GOOD",
+      "notes": "Flexible but heavy. Pick selectively."
+    },
+    {
+      "tool": "LlamaIndex",
+      "category": "RAG orchestration",
+      "summary": "RAG-focused framework.",
+      "pricing": "Free",
+      "verdict": "PICK",
+      "notes": "Best RAG-specific tool."
+    },
+    {
+      "tool": "Vellum",
+      "category": "LLM ops",
+      "summary": "Production prompt management.",
+      "pricing": "$50-300/mo",
+      "verdict": "GOOD",
+      "notes": "For teams with >5 prod prompts."
+    },
+    {
+      "tool": "LangSmith",
+      "category": "LLM ops",
+      "summary": "LangChain's observability platform.",
+      "pricing": "Free + paid",
+      "verdict": "GOOD",
+      "notes": "If you use LangChain."
+    },
+    {
+      "tool": "pgvector (Supabase)",
+      "category": "Vector DB",
+      "summary": "Postgres + vectors.",
+      "pricing": "$25/mo Pro",
+      "verdict": "PICK",
+      "notes": "Best for SMB. One DB, fewer integrations."
+    },
+    {
+      "tool": "Pinecone",
+      "category": "Vector DB",
+      "summary": "Specialist managed vector DB.",
+      "pricing": "$70+/mo",
+      "verdict": "GOOD",
+      "notes": "Only when 100M+ vectors."
+    },
+    {
+      "tool": "Weaviate",
+      "category": "Vector DB",
+      "summary": "Hybrid search-friendly.",
+      "pricing": "Free + paid",
+      "verdict": "GOOD",
+      "notes": "Self-host for control."
+    },
+    {
+      "tool": "Groq",
+      "category": "LLM inference",
+      "summary": "Fastest inference (LPU hardware).",
+      "pricing": "Pay-per-use",
+      "verdict": "PICK",
+      "notes": "When latency matters most."
+    },
+    {
+      "tool": "Together AI",
+      "category": "LLM inference",
+      "summary": "Wide model selection.",
+      "pricing": "Pay-per-use",
+      "verdict": "PICK",
+      "notes": "Cheap alternative to OpenAI."
+    },
+    {
+      "tool": "Fireworks AI",
+      "category": "LLM inference",
+      "summary": "Fast + serverless.",
+      "pricing": "Pay-per-use",
+      "verdict": "GOOD",
+      "notes": "Good for fine-tuned models."
+    },
+    {
+      "tool": "Replicate",
+      "category": "LLM inference",
+      "summary": "Image + video model hosting.",
+      "pricing": "Pay-per-use",
+      "verdict": "GOOD",
+      "notes": "For media model variety."
+    },
+    {
+      "tool": "n8n",
+      "category": "Workflow automation",
+      "summary": "Open-source visual workflow tool.",
+      "pricing": "$5/mo VPS or $20+ cloud",
+      "verdict": "PICK",
+      "notes": "Best for engineers + ops teams."
+    },
+    {
+      "tool": "Make.com",
+      "category": "Workflow automation",
+      "summary": "Visual workflow at SMB scale.",
+      "pricing": "$9-29/mo",
+      "verdict": "PICK",
+      "notes": "Best for non-developer ops teams."
+    },
+    {
+      "tool": "Zapier",
+      "category": "Workflow automation",
+      "summary": "Most integrations (5000+).",
+      "pricing": "$20-69+/mo",
+      "verdict": "GOOD",
+      "notes": "Use for niche tool integrations."
+    },
+    {
+      "tool": "Pipedream",
+      "category": "Workflow automation",
+      "summary": "Code-first serverless workflows.",
+      "pricing": "Free + paid",
+      "verdict": "GOOD",
+      "notes": "If you prefer code over visual."
+    },
+    {
+      "tool": "v0 (Vercel)",
+      "category": "No-code/landing",
+      "summary": "AI landing pages + components.",
+      "pricing": "$20-50/mo",
+      "verdict": "PICK",
+      "notes": "For landing pages + UI."
+    },
+    {
+      "tool": "Lovable",
+      "category": "No-code/app",
+      "summary": "AI full-stack app builder.",
+      "pricing": "$20-99/mo",
+      "verdict": "GOOD",
+      "notes": "Whole-app prototypes."
+    },
+    {
+      "tool": "Replit",
+      "category": "No-code/app",
+      "summary": "AI-assisted full-stack.",
+      "pricing": "$15-25/mo",
+      "verdict": "GOOD",
+      "notes": "Quick prototypes + agent workflows."
+    },
+    {
+      "tool": "Bolt.new",
+      "category": "No-code/app",
+      "summary": "AI app builder.",
+      "pricing": "$20-100/mo",
+      "verdict": "WATCH",
+      "notes": "Newer entrant, evolving."
+    },
+    {
+      "tool": "Tally",
+      "category": "Forms",
+      "summary": "Free, polished forms.",
+      "pricing": "Free + $24/mo",
+      "verdict": "PICK",
+      "notes": "Best free tier."
+    },
+    {
+      "tool": "Typeform",
+      "category": "Forms",
+      "summary": "Beautiful forms.",
+      "pricing": "$25-83/mo",
+      "verdict": "GOOD",
+      "notes": "For brand-sensitive surveys."
+    },
+    {
+      "tool": "Fillout",
+      "category": "Forms",
+      "summary": "Logic-heavy forms.",
+      "pricing": "$20-50/mo",
+      "verdict": "GOOD",
+      "notes": "When you need branching."
+    },
+    {
+      "tool": "Resend",
+      "category": "Email API",
+      "summary": "Modern email API.",
+      "pricing": "$20+ + usage",
+      "verdict": "PICK",
+      "notes": "API-first email sending."
+    },
+    {
+      "tool": "Lemlist",
+      "category": "Cold outreach",
+      "summary": "Cold email + personalisation.",
+      "pricing": "$59-99/mo",
+      "verdict": "GOOD",
+      "notes": "If you do cold outreach at scale."
+    },
+    {
+      "tool": "Customer.io",
+      "category": "Email automation",
+      "summary": "Behavioural email + sequences.",
+      "pricing": "$100+/mo",
+      "verdict": "PICK",
+      "notes": "For lifecycle email."
+    },
+    {
+      "tool": "Loops",
+      "category": "Email automation",
+      "summary": "Startup-friendly transactional + lifecycle.",
+      "pricing": "$49+/mo",
+      "verdict": "GOOD",
+      "notes": "Easy onboarding."
+    },
+    {
+      "tool": "HubSpot",
+      "category": "CRM",
+      "summary": "Free CRM with strong marketing.",
+      "pricing": "Free + $20-3600/mo",
+      "verdict": "PICK",
+      "notes": "Free tier is the default SMB choice."
+    },
+    {
+      "tool": "Pipedrive",
+      "category": "CRM",
+      "summary": "Sales-pipeline-first CRM.",
+      "pricing": "$19-99/mo",
+      "verdict": "PICK",
+      "notes": "Best for sales-led orgs."
+    },
+    {
+      "tool": "Attio",
+      "category": "CRM",
+      "summary": "Modern CRM.",
+      "pricing": "$29-99/mo",
+      "verdict": "GOOD",
+      "notes": "Like Pipedrive but built in 2024."
+    },
+    {
+      "tool": "Folk",
+      "category": "CRM",
+      "summary": "Network-style CRM.",
+      "pricing": "$20+/mo",
+      "verdict": "GOOD",
+      "notes": "For consultancy / agency use."
+    },
+    {
+      "tool": "Plain",
+      "category": "Customer support",
+      "summary": "Engineer-friendly B2B support.",
+      "pricing": "$79+/mo per seat",
+      "verdict": "PICK",
+      "notes": "For SaaS / technical product."
+    },
+    {
+      "tool": "Intercom",
+      "category": "Customer support",
+      "summary": "Multi-channel + AI agent.",
+      "pricing": "$39-139+/mo",
+      "verdict": "GOOD",
+      "notes": "For B2C SaaS / mass market."
+    },
+    {
+      "tool": "Help Scout",
+      "category": "Customer support",
+      "summary": "Inbox-style support.",
+      "pricing": "$25-65/mo",
+      "verdict": "GOOD",
+      "notes": "Email-centric teams."
+    },
+    {
+      "tool": "PostHog",
+      "category": "Product analytics",
+      "summary": "Analytics + recordings + flags.",
+      "pricing": "Free + paid",
+      "verdict": "PICK",
+      "notes": "Best SMB choice. One tool, multiple jobs."
+    },
+    {
+      "tool": "Amplitude",
+      "category": "Product analytics",
+      "summary": "Cohort-focused analytics.",
+      "pricing": "Free + $50k+/yr",
+      "verdict": "GOOD",
+      "notes": "Enterprise cohorts."
+    },
+    {
+      "tool": "Mixpanel",
+      "category": "Product analytics",
+      "summary": "Event-based analytics.",
+      "pricing": "Free + paid",
+      "verdict": "GOOD",
+      "notes": "Alternative to Amplitude."
+    },
+    {
+      "tool": "Sentry",
+      "category": "Error tracking",
+      "summary": "Best error monitoring.",
+      "pricing": "Free + paid",
+      "verdict": "PICK",
+      "notes": "Industry standard for error tracking."
+    },
+    {
+      "tool": "Axiom",
+      "category": "Logs",
+      "summary": "Modern log management.",
+      "pricing": "Free + usage",
+      "verdict": "PICK",
+      "notes": "Cheaper than Datadog."
+    },
+    {
+      "tool": "Highlight.io",
+      "category": "Session replay",
+      "summary": "Full-session recording.",
+      "pricing": "Free + paid",
+      "verdict": "GOOD",
+      "notes": "If you need session replays."
+    },
+    {
+      "tool": "Unstructured",
+      "category": "Document parsing",
+      "summary": "Best PDF/document parser.",
+      "pricing": "Pay-per-use",
+      "verdict": "PICK",
+      "notes": "For RAG document prep."
+    },
+    {
+      "tool": "Mathpix",
+      "category": "Math OCR",
+      "summary": "Math-aware OCR.",
+      "pricing": "Free + paid",
+      "verdict": "GOOD",
+      "notes": "Niche but excellent at math."
+    },
+    {
+      "tool": "Reducto",
+      "category": "Tables OCR",
+      "summary": "Best PDF table extraction.",
+      "pricing": "Pay-per-use",
+      "verdict": "PICK",
+      "notes": "Better than Claude on tables."
+    },
+    {
+      "tool": "Notion",
+      "category": "Wiki / docs",
+      "summary": "Wiki + databases + project tracking.",
+      "pricing": "$10/seat/mo",
+      "verdict": "PICK",
+      "notes": "SMB default."
+    },
+    {
+      "tool": "Linear",
+      "category": "Issue tracking",
+      "summary": "Engineering-first issue tracker.",
+      "pricing": "$8-14/seat/mo",
+      "verdict": "PICK",
+      "notes": "Best for product/eng teams."
+    },
+    {
+      "tool": "Granola",
+      "category": "Meeting notes",
+      "summary": "AI meeting notes.",
+      "pricing": "$14-25/mo",
+      "verdict": "PICK",
+      "notes": "Best meeting notes app."
+    },
+    {
+      "tool": "Cap",
+      "category": "Loom replacement",
+      "summary": "Open-source screen recording.",
+      "pricing": "Free + paid",
+      "verdict": "GOOD",
+      "notes": "Privacy-respecting alt to Loom."
+    },
+    {
+      "tool": "Ahrefs",
+      "category": "SEO",
+      "summary": "Best SEO research tool.",
+      "pricing": "$108-449/mo",
+      "verdict": "PICK",
+      "notes": "Industry standard for SEO."
+    },
+    {
+      "tool": "Frase",
+      "category": "Content / SEO",
+      "summary": "Content briefs from SERP.",
+      "pricing": "$15-115/mo",
+      "verdict": "GOOD",
+      "notes": "For content teams."
+    },
+    {
+      "tool": "Beehiiv",
+      "category": "Newsletters",
+      "summary": "Newsletter platform.",
+      "pricing": "Free + paid",
+      "verdict": "GOOD",
+      "notes": "Best newsletter tool right now."
+    },
+    {
+      "tool": "ConvertKit (Kit)",
+      "category": "Newsletters",
+      "summary": "Creator-focused email.",
+      "pricing": "Free + $25+/mo",
+      "verdict": "GOOD",
+      "notes": "Creator alternative."
+    },
+    {
+      "tool": "Stripe",
+      "category": "Payments + billing",
+      "summary": "Standard SMB billing platform.",
+      "pricing": "2.9% + 30c",
+      "verdict": "PICK",
+      "notes": "Default for online billing."
+    },
+    {
+      "tool": "Mercury",
+      "category": "Banking",
+      "summary": "Startup-friendly US banking.",
+      "pricing": "Free",
+      "verdict": "PICK",
+      "notes": "For US-incorporated startups."
+    },
+    {
+      "tool": "Wise Business",
+      "category": "Banking",
+      "summary": "International banking.",
+      "pricing": "Free",
+      "verdict": "PICK",
+      "notes": "For multi-currency businesses."
+    },
+    {
+      "tool": "Pulley",
+      "category": "Cap table",
+      "summary": "Cap table mgmt.",
+      "pricing": "Free + paid",
+      "verdict": "GOOD",
+      "notes": "For equity tracking."
+    },
+    {
+      "tool": "1Password",
+      "category": "Password mgr",
+      "summary": "Team password manager.",
+      "pricing": "$8-12/seat/mo",
+      "verdict": "PICK",
+      "notes": "Standard for SMB security."
+    },
+    {
+      "tool": "Vanta",
+      "category": "SOC2 / compliance",
+      "summary": "SOC 2 automation.",
+      "pricing": "$10k+/yr",
+      "verdict": "PICK",
+      "notes": "For SOC 2 audits."
+    },
+    {
+      "tool": "Drata",
+      "category": "SOC2 / compliance",
+      "summary": "Alt to Vanta.",
+      "pricing": "$10k+/yr",
+      "verdict": "GOOD",
+      "notes": "Competitive with Vanta."
+    },
+    {
+      "tool": "Cal.com",
+      "category": "Booking",
+      "summary": "Open-source Calendly.",
+      "pricing": "Free self-host + paid",
+      "verdict": "PICK",
+      "notes": "For technical teams."
+    },
+    {
+      "tool": "Calendly",
+      "category": "Booking",
+      "summary": "Industry standard.",
+      "pricing": "Free + $10-16/mo",
+      "verdict": "PICK",
+      "notes": "For non-technical teams."
+    },
+    {
+      "tool": "LangGraph",
+      "category": "Agent framework",
+      "summary": "LangChain's agent orchestration.",
+      "pricing": "Free",
+      "verdict": "GOOD",
+      "notes": "If using LangChain."
+    },
+    {
+      "tool": "CrewAI",
+      "category": "Agent framework",
+      "summary": "Multi-agent orchestration.",
+      "pricing": "Free",
+      "verdict": "WATCH",
+      "notes": "Earlier-stage, evolving."
+    },
+    {
+      "tool": "E2B",
+      "category": "Agent sandbox",
+      "summary": "Code interpreter sandboxes.",
+      "pricing": "Pay-per-use",
+      "verdict": "PICK",
+      "notes": "For code-executing agents."
+    },
+    {
+      "tool": "Browserbase",
+      "category": "Browser agent",
+      "summary": "Headless browser for AI.",
+      "pricing": "Pay-per-use",
+      "verdict": "PICK",
+      "notes": "For browser-using agents."
+    },
+    {
+      "tool": "Modal",
+      "category": "Serverless GPU",
+      "summary": "Serverless GPU for AI.",
+      "pricing": "Pay-per-use",
+      "verdict": "PICK",
+      "notes": "For custom AI workloads."
+    },
+    {
+      "tool": "Apify",
+      "category": "Web scraping",
+      "summary": "Web scraping platform.",
+      "pricing": "Free + paid",
+      "verdict": "GOOD",
+      "notes": "For scraping at scale."
+    },
+    {
+      "tool": "Firecrawl",
+      "category": "Web crawling",
+      "summary": "AI-friendly crawler.",
+      "pricing": "$19+/mo",
+      "verdict": "PICK",
+      "notes": "For RAG document collection."
+    },
+    {
+      "tool": "Datalab",
+      "category": "OCR / parsing",
+      "summary": "Marker open-source PDF.",
+      "pricing": "Pay-per-use",
+      "verdict": "GOOD",
+      "notes": "Self-host alternative to Unstructured."
+    },
+    {
+      "tool": "Generic AI sales agent X",
+      "category": "Sales automation",
+      "summary": "Often hallucinates outreach details.",
+      "pricing": "$199+/mo",
+      "verdict": "AVOID",
+      "notes": "Use as agent-assisted, not agent-driven."
+    },
+    {
+      "tool": "Heavy enterprise BI tool",
+      "category": "Analytics",
+      "summary": "Costly + slow for SMB scale.",
+      "pricing": "$50k+/yr",
+      "verdict": "AVOID",
+      "notes": "PostHog covers 90% of SMB needs."
+    },
+    {
+      "tool": "Single-vendor AI suite",
+      "category": "Various",
+      "summary": "Lock-in risk + variable quality.",
+      "pricing": "$200+/mo",
+      "verdict": "AVOID",
+      "notes": "Build with best-of-breed instead."
+    },
+    {
+      "tool": "AI customer-support agent",
+      "category": "Support",
+      "summary": "Hallucination + brand-tone drift.",
+      "pricing": "$300+/mo",
+      "verdict": "AVOID",
+      "notes": "Use AI for triage; humans close."
+    },
+    {
+      "tool": "Turs\u043e (libSQL)",
+      "category": "Database",
+      "summary": "Edge SQLite.",
+      "pricing": "Free + paid",
+      "verdict": "GEM",
+      "notes": "Replicated SQLite at the edge."
+    },
+    {
+      "tool": "Trigger.dev",
+      "category": "Background jobs",
+      "summary": "Modern background jobs.",
+      "pricing": "Free + paid",
+      "verdict": "GEM",
+      "notes": "Better DX than serverless functions."
+    },
+    {
+      "tool": "Inngest",
+      "category": "Event-driven backend",
+      "summary": "Event-first backend.",
+      "pricing": "Free + paid",
+      "verdict": "GEM",
+      "notes": "For event-driven workflows."
+    },
+    {
+      "tool": "Defer",
+      "category": "Background jobs",
+      "summary": "Background jobs + workflows.",
+      "pricing": "Free + paid",
+      "verdict": "GEM",
+      "notes": "Worth watching."
+    },
+    {
+      "tool": "Webstudio",
+      "category": "Visual web builder",
+      "summary": "Open-source visual web.",
+      "pricing": "Free + paid",
+      "verdict": "GEM",
+      "notes": "Webflow alternative."
+    },
+    {
+      "tool": "Raycast",
+      "category": "Mac productivity",
+      "summary": "Spotlight + AI + scripts.",
+      "pricing": "Free + $8/mo Pro",
+      "verdict": "GEM",
+      "notes": "Most underrated Mac tool."
+    },
+    {
+      "tool": "Arc / Dia",
+      "category": "Browser",
+      "summary": "Browser built around AI.",
+      "pricing": "Free",
+      "verdict": "GEM",
+      "notes": "Worth trying as primary."
+    }
+  ]
+}

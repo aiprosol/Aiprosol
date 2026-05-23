@@ -1,0 +1,133 @@
+{
+  "name": "Aiprosol Starter — Weekly Stripe revenue summary",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 17 * * 5"
+            }
+          ]
+        }
+      },
+      "id": "1c9f95a1-3d8f-4f5d-a92d-c56f58c6235b",
+      "name": "Friday 17:00",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.stripe.com/v1/payment_intents?created[gte]={{ $now.minus(7,'days').toSeconds() }}&limit=100"
+      },
+      "id": "ea562348-3430-4667-84e7-9cc0f2812e23",
+      "name": "Stripe — week's payments",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const ps = $input.first().json.data.filter(p=>p.status==='succeeded'); const total = ps.reduce((s,p)=>s+p.amount,0)/100; const biggest = ps.sort((a,b)=>b.amount-a.amount)[0]; return [{json:{count: ps.length, total, biggest_amount: biggest?.amount/100, biggest_customer: biggest?.receipt_email}}];"
+      },
+      "id": "7c469188-3a10-491b-bc64-e2b50c427f3e",
+      "name": "Aggregate",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "send",
+        "to": "founder@yourdomain.com",
+        "subject": "=Week: ${{ $json.total }} · {{ $json.count }} sales",
+        "message": "=Total: ${{ $json.total }}\\nSales: {{ $json.count }}\\nBiggest: ${{ $json.biggest_amount }} from {{ $json.biggest_customer }}"
+      },
+      "id": "9e044c53-eae1-4bb3-8566-465708860d8e",
+      "name": "Email founder",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        840,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Friday 17:00": {
+      "main": [
+        [
+          {
+            "node": "Stripe — week's payments",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stripe — week's payments": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Email founder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "starter"
+    },
+    {
+      "name": "reporting"
+    },
+    {
+      "name": "pattern-4"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "008547a1-8a81-4761-a990-67f4d61a93b1",
+  "id": "6b7442be-ef8b-4b45-bca9-6a3263201abe",
+  "_aiprosol": {
+    "description": "Every Friday 17:00: aggregates this week's Stripe revenue + customer count + biggest sale → emails the founder a 4-line summary.",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

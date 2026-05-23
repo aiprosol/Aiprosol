@@ -1,0 +1,121 @@
+{
+  "name": "Aiprosol — Contract redline assistant",
+  "nodes": [
+    {
+      "parameters": {
+        "event": "fileCreated",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "CONTRACTS_INBOX_FOLDER_ID"
+        }
+      },
+      "id": "1f50df5f-8320-4278-8c05-1403fde71650",
+      "name": "Drive — Contracts/Inbox",
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You are a contracts paralegal. Compare this contract against our standard playbook (cap on liability 1× fees, mutual NDA, IP retained by client, 30-day termination for convenience). Return JSON {\"risk_level\":\"low|medium|high\",\"issues\":[{\"clause\":string, \"problem\":string, \"suggested_redline\":string}], \"green_flags\":[]}"
+            },
+            {
+              "role": "user",
+              "content": "=Contract: {{ $('Drive — Contracts/Inbox').first().json.name }}"
+            }
+          ]
+        },
+        "options": {
+          "responseFormat": "json_object"
+        }
+      },
+      "id": "9963e2bd-3247-4244-aa98-35b8c599018b",
+      "name": "AI redline",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "#legal",
+        "text": "=⚖️ New contract: {{ $('Drive — Contracts/Inbox').first().json.name }}\\nRisk: {{ JSON.parse($json.message.content).risk_level }}\\n\\nIssues:\\n{{ JSON.parse($json.message.content).issues.map(i => `• ${i.clause}: ${i.problem}\\n  → Suggested: ${i.suggested_redline}`).join('\\n\\n') }}\\n\\n*Reply 'approve' / 'reject' / 'edit'*"
+      },
+      "id": "9e9eb2ff-5579-4222-85b0-eb99aceba584",
+      "name": "Slack — approval thread",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        640,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Drive — Contracts/Inbox": {
+      "main": [
+        [
+          {
+            "node": "AI redline",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI redline": {
+      "main": [
+        [
+          {
+            "node": "Slack — approval thread",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "finance"
+    },
+    {
+      "name": "legal"
+    },
+    {
+      "name": "pattern-6"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-playbook-v1"
+  },
+  "pinData": {},
+  "versionId": "f27daba2-eede-4b85-9455-17b45d180227",
+  "id": "7c6fdeb1-835c-4d26-a0b4-f486b74d0aa1",
+  "_aiprosol": {
+    "description": "Contract upload → AI redline against playbook → Slack approval gate → finalise on approval",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

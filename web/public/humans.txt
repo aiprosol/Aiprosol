@@ -1,0 +1,52 @@
+# https://aiprosol.com/humans.txt
+# Aiprosol — built by AI, run by AI, audited by humans.
+
+/* TEAM */
+
+Founder & Chairman: Srijan Paudel
+Contact: srijanpaudelofficial@gmail.com
+Site: https://aiprosol.com
+
+AI CEO: Arora
+Domain: aiprosol.com
+
+/* CO-AUTHORED-BY */
+
+Eleven C-suite roles — ten of them AI agents, coordinated by Arora.
+One human chairman for the strategic calls.
+
+/* SITE */
+
+Last updated: 2026-05-13
+Standards: HTML5, ES2020+, WCAG 2.1 AA target
+Components: Next.js 15, React 19, Tailwind v4, Framer Motion, Three.js
+Hosting: Vercel
+Email: Resend, DKIM + SPF + DMARC verified
+Analytics: PostHog (EU region, session masking on)
+AI: frontier LLM with open-source fallback model
+
+/* AI C-SUITE (10 AI AGENTS + 1 HUMAN) */
+
+- Arora · CEO · aiprosol.com/agents/arora
+- COO · Operations · aiprosol.com/agents/coo
+- CMO · Marketing · aiprosol.com/agents/cmo
+- CCO · Customer Success · aiprosol.com/agents/cco
+- CTO · Technology · aiprosol.com/agents/cto
+- CRO · Revenue Ops · aiprosol.com/agents/cro
+- CLO · Legal · aiprosol.com/agents/clo
+- CPO · Partnerships · aiprosol.com/agents/cpo
+- CPM · Product · aiprosol.com/agents/cpm
+- DA · Data + Analytics · aiprosol.com/agents/da
+
+/* LLMS WELCOME */
+
+19 major AI answer-engine and search crawlers are explicitly invited via
+robots.txt — covering every consumer-facing AI assistant and AI-search
+engine in production as of May 2026. See /llms.txt for a curated guide
+for LLM consumers.
+
+/* THANKS */
+
+To every operator who's let us automate their workflow — your numbers
+prove what's possible. The 75 cold emails we send each week start with
+your story.

@@ -1,0 +1,182 @@
+[
+  {
+    "slug": "legal",
+    "name": "Legal",
+    "pageTitle": "AI Automation for Legal Firms · Aiprosol",
+    "metaDescription": "AI automation for law firms: contract review, intake triage, discovery support, client onboarding. 32-45 partner hours/week reclaimed. SOC 2 + DPA ready.",
+    "hero": {
+      "h1": "AI Automation for Legal Firms",
+      "tagline": "Reclaim 32-45 partner hours/week. Without the AI-hallucination risk that gets you disbarred.",
+      "intro": "Most legal AI tools fail because they treat documents like prose. Aiprosol designs workflows around the actual legal stack: matter intake, contract review, discovery support, client comms — with audit trails the bar will accept."
+    },
+    "metrics": [
+      { "value": "32–45 hrs/week", "label": "Partner time reclaimed (average across firms ≥ 10 attorneys)" },
+      { "value": "99%+ accuracy", "label": "Document classification with human-in-the-loop sign-off" },
+      { "value": "Full audit trail", "label": "Every AI output logged + reviewable for compliance" }
+    ],
+    "useCases": [
+      { "title": "Intake triage", "description": "New matter request → AI categorise (litigation, transactional, IP, family) → route to right partner → confirmation email + Calendly link in <5 min." },
+      { "title": "Contract review acceleration", "description": "Upload PDF → AI extract material terms (governing law, indemnities, termination, IP, payment) → redline against your playbook → flag for partner sign-off." },
+      { "title": "Discovery document processing", "description": "Bulk PDF ingest → privilege screening (AI) → responsiveness coding (AI + paralegal review) → privilege log generation." },
+      { "title": "Client onboarding", "description": "Engagement letter signed → matter created → Drive folder provisioned → kick-off email sent → 30-day check-in scheduled. Zero manual handoffs." },
+      { "title": "Email triage", "description": "Each inbound email → AI categorise (client / opposing counsel / vendor / court / spam) → label + route. Partners stop drowning in inbox." }
+    ],
+    "compliance": "Aiprosol can deploy on customer-controlled cloud (AWS / GCP / Azure). Standard NDA + DPA in template. All AI processing happens in-jurisdiction (US-East / EU-West). Audit logs include every prompt + response + reviewer + timestamp. Compatible with the ABA's Model Rules of Professional Conduct (current guidance on AI assistance).",
+    "faqs": [
+      { "q": "Won't AI hallucinate citations and get me sanctioned?", "a": "Aiprosol workflows are designed so AI never produces a final filing or citation without human review. AI extracts + drafts + flags; a partner approves before anything reaches a court, client, or opposing counsel." },
+      { "q": "How do you handle privileged communications?", "a": "Privileged content runs through customer-controlled infrastructure with no LLM-vendor data retention. We integrate with an LLM-vendor Zero-Data-Retention enterprise tier. Standard MSA includes explicit DPA terms for legal industry." },
+      { "q": "Can this work alongside our existing matter management system?", "a": "Yes — we layer on top of Clio, NetDocuments, iManage, MyCase, PracticePanther via their APIs. We don't replace the system of record; we automate the workflows that live on top of it." },
+      { "q": "What's the typical engagement?", "a": "Discovery call → 30-day pilot on 1 high-value workflow (usually intake or contract review) → full Enterprise plan if pilot delivers reclaim guarantee (35+ hrs/week)." },
+      { "q": "Pricing?", "a": "Most firms with 10-50 attorneys land on the Growth plan ($2,997/mo). Firms with 50+ attorneys typically need Enterprise ($7,997/mo) for the volume + compliance scope." }
+    ]
+  },
+  {
+    "slug": "real-estate",
+    "name": "Real Estate",
+    "pageTitle": "AI Automation for Real Estate · Aiprosol",
+    "metaDescription": "AI automation for real estate brokerages + agencies: sub-3-minute lead response, listing distribution, transaction coordination. Aiprosol manages it for you.",
+    "hero": {
+      "h1": "AI Automation for Real Estate",
+      "tagline": "Respond to inbound leads in under 3 minutes — automatically. Turn 'lost-to-faster-competitor' into 'won by default'.",
+      "intro": "In real estate, response time is everything. Lead arrives → 3-minute response = 21x more likely to convert. 30-minute response = baseline. 24-hour response = competitor wins. Aiprosol architects the sub-3-minute response system, then operates it for you."
+    },
+    "metrics": [
+      { "value": "Sub-3 min", "label": "Time-to-first-response on inbound leads" },
+      { "value": "21x lift", "label": "Qualification rate vs. 30-min response (industry data)" },
+      { "value": "$240+ per lead", "label": "Average value reclaimed from leads previously lost to slow response" }
+    ],
+    "useCases": [
+      { "title": "Sub-3-minute lead response", "description": "Lead from Zillow / Redfin / your website → AI personalised email + SMS in <3 min → Calendly link → agent notified via Slack with hot-lead alert." },
+      { "title": "Listing distribution", "description": "New listing entered → auto-publish to MLS + Zillow + Redfin + brokerage site + Instagram + email blast — with appropriate copy per channel, no manual copy-paste." },
+      { "title": "Transaction coordination", "description": "Under-contract checklist runs itself: inspector booked, attorney notified, lender pinged, milestones tracked, weekly status email auto-generated for buyers + sellers." },
+      { "title": "After-hours lead capture", "description": "Lead arrives at 11pm → AI qualifies + responds + books showing for tomorrow → agent wakes up to a confirmed appointment." },
+      { "title": "Past-client re-engagement", "description": "Quarterly auto-pulse on past clients with personalised market-snapshot email. Referral generation without manual nurturing." }
+    ],
+    "compliance": "TCPA-compliant SMS infrastructure (Twilio with proper consent flows). Fair Housing Act compliant copy review (the AI never writes anything that mentions protected classes). NAR Code of Ethics aware.",
+    "faqs": [
+      { "q": "Will this work with our existing CRM (Follow Up Boss, kvCORE, Boomtown, Sierra)?", "a": "Yes — we layer alongside via API. The CRM stays as system of record; Aiprosol automates the workflows on top." },
+      { "q": "How do you handle TCPA compliance for SMS?", "a": "Every contact captures explicit SMS consent at lead form. Unsubscribe links work first-time. All sends logged with timestamp + consent record. Twilio handles carrier-side compliance." },
+      { "q": "What about Fair Housing — won't AI accidentally write something problematic?", "a": "We never let AI write final customer-facing copy without a guardrail. AI drafts + human-reviewed templates approve. Final sends go through a Fair-Housing keyword filter as a second check." },
+      { "q": "Pricing for a 10-agent brokerage?", "a": "Starter plan ($997/mo) covers the sub-3-min response infrastructure + listing distribution. Brokerages above 25 agents typically need Growth ($2,997/mo)." }
+    ]
+  },
+  {
+    "slug": "financial-services",
+    "name": "Financial Services",
+    "pageTitle": "AI Automation for Financial Services · Aiprosol",
+    "metaDescription": "AI automation for accounting firms, wealth managers, and financial advisors: document processing, client communications, regulatory compliance workflows.",
+    "hero": {
+      "h1": "AI Automation for Financial Services",
+      "tagline": "Document processing at 99%+ accuracy with full audit trail. The compliance team will love it.",
+      "intro": "Financial services run on documents — tax returns, statements, agreements, KYC packets, fund prospectuses. Manual processing is slow, error-prone, and a hiring drag. AI handles 99%+ of the extraction + classification; humans review the edge cases. Audit trail end-to-end."
+    },
+    "metrics": [
+      { "value": "99%+ accuracy", "label": "Document extraction with structured output" },
+      { "value": "40% cycle-time reduction", "label": "Median client onboarding (KYC + documentation)" },
+      { "value": "Full audit trail", "label": "Every input + extraction + decision + reviewer logged" }
+    ],
+    "useCases": [
+      { "title": "Document extraction (tax returns, statements, contracts)", "description": "Upload PDF → AI extract structured data → push to your ledger/CRM/database → flag anomalies for human review. 100x faster than manual entry." },
+      { "title": "KYC + onboarding", "description": "New client → ID verification + KYC questionnaire + risk scoring + initial portfolio recommendation drafted → advisor reviews + sends. Cycle time 40% lower." },
+      { "title": "Client quarterly communications", "description": "Quarter close → AI generates personalised performance summary per client → advisor reviews + sends. 2-week process becomes 2-day." },
+      { "title": "Regulatory documentation", "description": "Audit + compliance request → AI compile relevant docs + draft response → compliance officer reviews. Cuts response time on regulator requests by 60-70%." },
+      { "title": "Invoice + AP automation", "description": "Vendor invoice → AI extract + categorise + match to PO → push to accounting system + flag exceptions. Eliminates manual AP entry." }
+    ],
+    "compliance": "SOC 2 Type II controls architecture. SEC + FINRA aware. Data residency: US-East or EU-West, customer choice. Standard MSA + DPA. Compatible with major custodians (Schwab, Fidelity, Pershing) via Schwab Performance / Black Diamond / Orion APIs.",
+    "faqs": [
+      { "q": "How do you handle data residency requirements?", "a": "Customer-controlled cloud (AWS / GCP / Azure) or our managed deployment in your chosen region. LLM processing happens via an LLM-vendor Zero-Data-Retention tier for sensitive data." },
+      { "q": "Can the AI handle our custom document types?", "a": "Yes — most custom forms train in 50-100 examples. Initial training week sets accuracy; ongoing supervised learning closes accuracy gaps as you go." },
+      { "q": "What about the audit trail?", "a": "Every AI extraction logs: input doc hash, prompt sent, output received, reviewer ID, decision (approve / edit / reject), timestamp. Exportable for any audit." },
+      { "q": "Pricing for a 25-person advisory firm?", "a": "Growth plan ($2,997/mo) is the typical fit — covers document processing + client comms + KYC workflows. Larger firms (50+) move to Enterprise." }
+    ]
+  },
+  {
+    "slug": "saas",
+    "name": "SaaS",
+    "pageTitle": "AI Automation for SaaS Companies · Aiprosol",
+    "metaDescription": "AI automation for SaaS: lead scoring, sub-3-minute response, customer success automation, churn prediction. Run by 10 AI agents.",
+    "hero": {
+      "h1": "AI Automation for SaaS",
+      "tagline": "We run the same stack we recommend. 10 AI agents operate Aiprosol itself.",
+      "intro": "SaaS companies don't need PowerPoint frameworks — they need working systems. Aiprosol layers AI into the workflows that move SaaS metrics: lead scoring, MRR expansion, churn prevention, support resolution. Same architecture that runs Aiprosol's own 10-agent C-suite."
+    },
+    "metrics": [
+      { "value": "Sub-3 min", "label": "Time-to-first-response on PQLs (product-qualified leads)" },
+      { "value": "30%+ uplift", "label": "Expansion MRR from AI-scored upgrade signals" },
+      { "value": "<5%/mo churn", "label": "Customer health-score-driven retention plays" }
+    ],
+    "useCases": [
+      { "title": "Product-qualified lead scoring + routing", "description": "Trial signups → enrich + score (4-component model: fit, intent, engagement, urgency) → route hot ones to AE in <3 min via Slack." },
+      { "title": "Expansion MRR signals", "description": "Usage data → AI detects expansion triggers (hit user limit, accessed Pro feature, multi-team usage) → CSM auto-pinged with conversation starter." },
+      { "title": "Churn early-warning", "description": "Combine usage trend + sentiment + payment timing → composite churn score → high-risk accounts trigger retention play 60 days before renewal." },
+      { "title": "Support ticket triage", "description": "Inbound ticket → AI categorise (bug / feature request / billing / general) → assign to right pod → suggested-reply draft for the engineer/CS rep." },
+      { "title": "Customer feedback synthesis", "description": "Aggregate support tickets + CSAT + churn-reason data weekly → AI summary of top themes + roadmap recommendations → product team Slack digest." }
+    ],
+    "compliance": "GDPR + CCPA standard. SOC 2 Type II architecture. Customer DPA terms. We work with org-owned credentials — Aiprosol never holds your Stripe / Salesforce / HubSpot / AWS keys.",
+    "faqs": [
+      { "q": "We run on HubSpot — do you displace it?", "a": "No. We layer on top via API. HubSpot stays as your system of record; Aiprosol automates the AI-augmented workflows around it." },
+      { "q": "What's the difference between Aiprosol and a tool like Endgame / Pocus / MadKudu?", "a": "Those are point-solutions for one workflow (PQL scoring). Aiprosol is the design + build + operate layer that integrates scoring with response, routing, sequencing, and reporting. We've used / integrated with all the major PQL tools — we can extend whichever you've chosen." },
+      { "q": "How quickly can you deliver value for a 20-person SaaS?", "a": "Phase 0 (Days 0-14): SSO + pilot users + first workflow live (usually PQL scoring). Phase 1 (Days 15-45): 3-5 workflows in production with measurable hours-reclaimed metric." },
+      { "q": "Pricing?", "a": "Growth plan ($2,997/mo) for SaaS in $1M-$10M ARR range. Enterprise ($7,997/mo) for $10M+ ARR with multi-product complexity." }
+    ]
+  },
+  {
+    "slug": "professional-services",
+    "name": "Professional Services",
+    "pageTitle": "AI Automation for Professional Services · Aiprosol",
+    "metaDescription": "AI automation for consultancies, agencies, accountancies: client comms, project tracking, time capture, proposal generation. Reclaim billable hours.",
+    "hero": {
+      "h1": "AI Automation for Professional Services",
+      "tagline": "Stop billing for admin. Aiprosol automates the workflows that eat 25-35 hrs/week — giving you back capacity to actually deliver client work.",
+      "intro": "Professional services firms drown in non-billable work: timesheets, status reports, proposal generation, project comms. Most of it is automatable in 2026. Aiprosol designs + runs the automation system that gives your team back the billable hours."
+    },
+    "metrics": [
+      { "value": "25-35 hrs/week", "label": "Non-billable admin time reclaimed across project teams" },
+      { "value": "60% faster", "label": "Proposal turnaround (from RFP arrival to signed SOW)" },
+      { "value": "100% capture", "label": "Time entry coverage via AI auto-categorisation" }
+    ],
+    "useCases": [
+      { "title": "Time tracking auto-capture", "description": "Calendar events + Slack activity + git commits → AI infer billable hours per project → suggested timesheet → human approves. No more Friday timesheet panic." },
+      { "title": "Proposal + SOW generation", "description": "Discovery call recorded → AI extract scope + price + timeline → drafted SOW + proposal deck → partner reviews + sends." },
+      { "title": "Project status reports", "description": "Weekly → AI aggregate task tracker + client emails + risk register → status report drafted → PM reviews + sends. 2hr weekly task → 15min." },
+      { "title": "Client onboarding", "description": "Contract signed → engagement letter sent → Drive folder + Notion workspace + Slack channel created → kickoff scheduled → team intros emailed. Zero manual steps." },
+      { "title": "Knowledge management", "description": "Internal Slack + Notion + transcripts → AI index + RAG → internal Q&A: 'how did we solve X last time?' returns cited answer." }
+    ],
+    "compliance": "Standard NDA + MSA. Customer-controlled cloud option. Data isolation between client engagements enforced by tag-based access control.",
+    "faqs": [
+      { "q": "Will the AI replace our junior consultants?", "a": "No — it removes the admin work that burns them out. Juniors spend less time on slides + status updates, more on actual analysis. Most firms hire MORE juniors after automation because the unit economics shift." },
+      { "q": "Can it work with our existing PM stack (Asana / Linear / Monday / ClickUp)?", "a": "Yes — we integrate via API. The PM tool stays your system of record; Aiprosol automates flows around it." },
+      { "q": "Pricing for a 15-person consultancy?", "a": "Starter plan ($997/mo) for firms under 10 people; Growth ($2,997/mo) for 10-50; Enterprise ($7,997/mo) above that." }
+    ]
+  },
+  {
+    "slug": "e-commerce",
+    "name": "E-commerce",
+    "pageTitle": "AI Automation for E-commerce · Aiprosol",
+    "metaDescription": "AI automation for e-commerce + DTC brands: customer support, abandoned cart, supplier ops, returns workflow. 18-25% revenue lift typical.",
+    "hero": {
+      "h1": "AI Automation for E-commerce + DTC",
+      "tagline": "Customer support that resolves 60% of tickets without a human. Cart abandonment sequences that actually convert. Supplier ops that don't eat your weekends.",
+      "intro": "E-commerce ops eat founder time in three places: customer support, supplier coordination, returns. Aiprosol automates all three with AI that respects your brand voice + your operational reality."
+    },
+    "metrics": [
+      { "value": "60% deflection", "label": "Support tickets resolved without human touch (refunds, tracking, sizing)" },
+      { "value": "18-25% lift", "label": "Revenue from AI-personalised cart-abandonment + post-purchase flows" },
+      { "value": "30% lower cost", "label": "Per-ticket cost on customer support after AI triage" }
+    ],
+    "useCases": [
+      { "title": "Customer support automation", "description": "Incoming Shopify / Gorgias / Klaviyo message → AI categorise + draft response → 60% resolve immediately (refund status, tracking, sizing); 40% route to human with context pre-loaded." },
+      { "title": "Cart abandonment recovery", "description": "Abandoned cart → personalised email/SMS sequence based on the actual items + customer history → conversion rate 2-3x vs. generic 'you forgot something' templates." },
+      { "title": "Supplier order automation", "description": "Inventory low-stock alert → AI generate PO + send to supplier + track confirmation → reorder cadence learned from sales velocity per SKU." },
+      { "title": "Returns workflow", "description": "Customer initiates return → AI eligibility check + RMA generation + label issued + refund queued → end-to-end with zero manual intervention for compliant returns." },
+      { "title": "Post-purchase content", "description": "Order ships → AI personalised 'here's how to use it' email per product → review request 14 days post-delivery → re-engagement 60 days later." }
+    ],
+    "compliance": "PCI DSS compliant patterns (we never touch payment cards directly). GDPR + CCPA for customer data. Shopify, BigCommerce, WooCommerce, Magento all supported.",
+    "faqs": [
+      { "q": "Will customers know they're talking to AI?", "a": "Our pattern: AI handles the routine query, brands the response as 'AI-assisted', escalates anything edge-case to a human. Most customers prefer instant AI to slow human." },
+      { "q": "Can it handle our brand voice?", "a": "Yes — initial training on 50-100 of your historical messages calibrates voice. Ongoing supervised learning refines as you go." },
+      { "q": "What about returns fraud?", "a": "Returns workflow has explicit fraud-pattern detection. High-value or pattern-matched-fraud returns escalate to human review. Most legitimate returns process automatically." },
+      { "q": "Pricing for a $5M-$20M revenue DTC brand?", "a": "Growth plan ($2,997/mo) for that range. Above $20M revenue → Enterprise ($7,997/mo) for multi-channel scope." }
+    ]
+  }
+]

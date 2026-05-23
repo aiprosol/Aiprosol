@@ -1,0 +1,120 @@
+{
+  "name": "CS \u00b7 Churn signal early warning (usage + sentiment + payment)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 7 * * *"
+            }
+          ]
+        }
+      },
+      "id": "6edbff89-60c7-4dff-876c-02b14d6f9809",
+      "name": "Cron \u00b7 daily 7am",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://YOUR_API/customers/signals",
+        "method": "GET"
+      },
+      "id": "27caa894-eea4-4ab4-bbeb-f6f3d452481a",
+      "name": "Pull customer signals",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "// Combine 3 signals: usage trend, sentiment, payment timing\nconst customers = items[0].json.customers || [];\nconst risky = customers.filter(c => {\n  let score = 0;\n  if (c.usage_trend === 'down_30pct') score += 4;\n  else if (c.usage_trend === 'down') score += 2;\n  if (c.last_sentiment === 'negative') score += 3;\n  if (c.payment_status === 'failed') score += 5;\n  if (c.payment_status === 'late') score += 2;\n  return score >= 5;\n}).map(c => ({json: c}));\nreturn risky;"
+      },
+      "id": "213dfa95-9882-4f3d-9fb6-3a82684ee44c",
+      "name": "Compute churn score",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "post",
+        "channel": "exec",
+        "text": "=:chart_with_downwards_trend: Churn risk \u00b7 {{ $json.company }} \u00b7 MRR ${{ $json.mrr }} \u00b7 signals: usage {{ $json.usage_trend }}, sentiment {{ $json.last_sentiment }}, payment {{ $json.payment_status }}"
+      },
+      "id": "04f92f60-d97d-4ada-921f-ec02a82940f9",
+      "name": "Slack exec alert",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        900,
+        300
+      ],
+      "credentials": {
+        "slackApi": {
+          "id": "REPLACE_ME",
+          "name": "Slack workspace"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Cron \u00b7 daily 7am": {
+      "main": [
+        [
+          {
+            "node": "Pull customer signals",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pull customer signals": {
+      "main": [
+        [
+          {
+            "node": "Compute churn score",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compute churn score": {
+      "main": [
+        [
+          {
+            "node": "Slack exec alert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "a8296f9f-4d59-4664-ac91-440ba5285b9b",
+  "id": "a8578aa6-3598-418c-a510-0cce5360f767",
+  "meta": {
+    "instanceId": "aiprosol-starter-library-v1"
+  },
+  "tags": [],
+  "pinData": {}
+}

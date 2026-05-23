@@ -1,0 +1,546 @@
+Name,Category,Subcategory,Pricing floor (USD/mo),Pricing model,Integrations,Free tier,Aiprosol verdict,Gotchas
+ChatGPT,Conversational AI,Consumer chat,0,freemium-$20/mo,80,Yes,Default for general assistance. Best quality below $30/mo.,Memory features still inconsistent.
+Claude,Conversational AI,Consumer chat,0,freemium-$20/mo,50,Yes,"Best for long-context reading, careful analysis, writing.",Free tier rate-limits frustrate power users.
+Gemini,Conversational AI,Consumer chat,0,freemium-$20/mo,60,Yes,Strong for Google ecosystem integration; weaker for code.,Hallucinates more than peers in benchmarks.
+Perplexity,Conversational AI,Search-aware chat,0,freemium-$20/mo,20,Yes,Best for research questions needing citations.,Less good for pure reasoning vs ChatGPT/Claude.
+Poe,Conversational AI,Multi-model,0,freemium-$20/mo,0,Yes,Switch between 20+ models in one UI.,No automation/API tier.
+Cohere Coral,Conversational AI,Enterprise chat,0,$0.50/M tokens,30,No,Stronger guardrails for regulated industries.,Smaller community + tooling.
+Anthropic API,Conversational AI,API access,0,$0.25-15/M tokens,0,No,Best for production apps needing high quality + safety.,Cost can blow up on long contexts.
+OpenAI API,Conversational AI,API access,0,$0.15-15/M tokens,0,No,Industry default API; best tooling ecosystem.,Rate limits trip at scale.
+Replicate,Conversational AI,Model hosting,0,pay-per-second,0,No,Run any open-source model on demand.,Cold starts; not for latency-sensitive.
+Together AI,Conversational AI,Model hosting,0,$0.20-3/M tokens,0,No,Cheaper inference for open-source LLMs.,Less mature than OpenAI API tooling.
+Claude Code,Code generation,Agentic CLI,0,API-based,0,No,"Aiprosol's pick for production. Reads codebases, writes commits.",Requires Anthropic API key. CLI-only.
+Cursor,Code generation,IDE,0,$20/mo,0,Yes,VS Code fork with deep AI integration. Best multi-line edits.,Subscription locks Claude/GPT model selection.
+Windsurf,Code generation,IDE,0,$15/mo,0,Yes,Cleaner UI than Cursor. Codeium underneath.,Smaller plugin ecosystem.
+GitHub Copilot,Code generation,IDE plugin,10,$10-19/mo,0,No,Best for autocomplete within existing IDE workflows.,Weaker on multi-file edits vs Cursor.
+Codeium,Code generation,IDE plugin,0,free / $12/mo enterprise,0,Yes,Free tier for individuals. Good enough autocomplete.,Quality slightly below Copilot.
+Tabnine,Code generation,IDE plugin,0,free / $12/mo pro,0,Yes,On-prem option for security-sensitive teams.,Quality lower than newer entrants.
+Replit Agent,Code generation,Web IDE,0,freemium-$25/mo,0,Yes,Best for prototype-from-scratch in browser.,Doesn't fit existing-repo workflows.
+v0 (Vercel),Code generation,UI generation,0,$20/mo,0,Yes,Generate React + Tailwind UI from a prompt. Aiprosol uses it.,Output needs cleanup before prod.
+Midjourney,Image gen,General,10,$10-120/mo,0,No,Best aesthetic quality. Strong community.,Discord interface; no API until v6.1.
+DALL-E 3,Image gen,General,0,via ChatGPT Plus or API,50,Yes,Best prompt-following for descriptive prompts.,Limited style control vs Midjourney.
+Stable Diffusion 3,Image gen,Open source,0,self-host / API,0,Yes,Run locally; full control; open weights.,Setup overhead for non-engineers.
+Flux,Image gen,Open source,0,API or self-host,0,Yes,New leader in photoreal output (2025).,Less ecosystem than SD3.
+Ideogram,Image gen,Text rendering,0,$8-20/mo,0,Yes,"Best at rendering text inside images (logos, posters).",Weaker at photoreal humans.
+Recraft,Image gen,Design assets,0,$10-30/mo,0,Yes,Strong for vector/SVG output.,Newer; smaller community.
+Adobe Firefly,Image gen,Commercial-safe,0,via Creative Cloud,0,Yes,Commercially safe training data. Strong for brand work.,Inside Adobe; pricier overall.
+Krea,Image gen,Real-time,0,$10-60/mo,0,Yes,Real-time generation for iteration.,Pricing tiers gate quality.
+Runway Gen-3,Video gen,General,12,$12-95/mo,0,Yes,Most mature video gen platform.,Generations are short (10s) and expensive.
+Pika,Video gen,General,0,$10-58/mo,0,Yes,Strong for stylised motion.,Less photoreal than Runway.
+Luma Dream Machine,Video gen,General,0,$10-50/mo,0,Yes,Best for character consistency.,Slower generation queue.
+Synthesia,Video gen,Avatar/talking head,22,$22-95/mo,5,No,Best for talking-head training videos.,Avatars look uncanny in close-up.
+HeyGen,Video gen,Avatar/talking head,24,$24-89/mo,5,Yes,Faster + cheaper than Synthesia. Real-time avatar streams.,Voice cloning has audible artifacts.
+ElevenLabs,Voice/audio,Voice cloning,0,$5-330/mo,5,Yes,Best voice quality + multilingual.,Voice cloning requires opt-in.
+Whisper API,Voice/audio,Transcription,0,$0.006/min,0,No,Default for transcription. Aiprosol uses it.,Slower than purpose-built services for live.
+AssemblyAI,Voice/audio,Transcription + analytics,0,$0.37/hr,5,No,"Adds speaker diarization, summary, sentiment.",Pricier than Whisper if you don't need extras.
+Deepgram,Voice/audio,Real-time transcription,0,$0.0036/min,5,No,Lowest latency for live streams.,Quality slightly below Whisper for non-English.
+Resemble,Voice/audio,Voice cloning,0,$30/mo,0,Yes,Enterprise voice cloning with detection.,More setup than ElevenLabs.
+Suno,Voice/audio,Music gen,0,$8-30/mo,0,Yes,Generate full songs from prompts.,Commercial use unclear; check ToS.
+Notion AI,Knowledge base,RAG,8,$8-15/mo,50,No,Best if you already use Notion. Cross-page Q&A.,Less control than dedicated RAG.
+Glean,Knowledge base,Enterprise RAG,0,$25-30/user/mo,100,No,Enterprise knowledge search across all SaaS.,Long enterprise sales cycle.
+Vectara,Knowledge base,API,0,$0-1k+/mo,0,Yes,RAG-as-a-service with grounded generation.,Quality lags purpose-built solutions.
+Pinecone,Knowledge base,Vector DB,0,$70+/mo,0,Yes,Production vector DB. Industry default.,Costs scale with embeddings stored.
+Chroma,Knowledge base,Vector DB,0,self-host,0,Yes,Open-source vector DB. Run anywhere.,Smaller community vs Pinecone.
+Weaviate,Knowledge base,Vector DB,0,self-host / cloud,0,Yes,Hybrid keyword + vector search.,More complex setup than Pinecone.
+Mem,Knowledge base,Personal,0,$8-20/mo,0,Yes,AI-organised personal memory.,Less mature than Notion.
+Reflect,Knowledge base,Personal,0,$8/mo,0,Yes,Backlink-based note-taking with AI.,Less feature-rich vs Obsidian.
+n8n,No-code automation,Open source,0,self-host free / $20+/mo cloud,400,Yes,Aiprosol's primary. Self-host; no per-task limits.,Steeper learning curve than Zapier.
+Zapier,No-code automation,Cloud,20,$20-799/mo,6000,Yes,Most integrations. Fastest to value.,Cost balloons; per-task pricing.
+Make.com,No-code automation,Cloud,9,$9-29+/mo,2000,Yes,Best visual editor; more powerful than Zapier.,Smaller integration count.
+Pipedream,No-code automation,Code+nocode hybrid,0,$19+/mo,2500,Yes,Best when you need code escape hatch.,Less polished UX than Zapier.
+Bardeen,No-code automation,Browser-based,0,$15-99/mo,100,Yes,Run automations in your browser. Good for scraping.,Browser-limited; can't run unattended.
+Activepieces,No-code automation,Open source,0,self-host,200,Yes,Newer open-source alt to Zapier.,Fewer integrations than n8n.
+HubSpot,CRM/Sales,Full suite,0,free / $20-1200/mo,1000,Yes,Best free CRM tier. Aiprosol uses it.,Marketing/sales hubs get expensive fast.
+Salesforce,CRM/Sales,Enterprise,25,$25-330/user/mo,5000,No,Industry standard for >50-rep teams.,Implementation cost > license cost.
+Pipedrive,CRM/Sales,SMB,14,$14-99/user/mo,400,No,Cleaner UX than HubSpot for small sales teams.,Reporting weaker.
+Close,CRM/Sales,Inside sales,49,$49-139/user/mo,100,No,Best for high-velocity inside sales (built-in dialer).,Pricier per seat.
+Attio,CRM/Sales,Notion-style,29,$29-119/user/mo,50,Yes,Modern CRM with relations + custom objects.,Newer; smaller integration list.
+Folk,CRM/Sales,Lightweight,0,$8-79/user/mo,100,Yes,Best for solo founders + early sales teams.,Less powerful for larger teams.
+Resend,Email,Transactional,0,free / $20+/mo,0,Yes,Aiprosol's pick. Developer-first.,No advanced marketing automation.
+SendGrid,Email,Transactional,0,free / $19.95+/mo,100,Yes,Industry default for transactional.,Deliverability inconsistent at scale.
+Postmark,Email,Transactional,15,$15+/mo,0,No,Best transactional deliverability.,More expensive than alternatives.
+Customer.io,Email,Marketing automation,100,$100+/mo,50,No,Best behavioural email + segmentation.,Pricier than Mailchimp.
+Mailchimp,Email,Marketing,0,free-$350/mo,300,Yes,Best for non-technical marketers.,Pricing scales poorly with list size.
+Loops,Email,Modern marketing,0,$49+/mo,20,Yes,Modern alternative to Mailchimp.,Newer; smaller template library.
+PostHog,Analytics,Product analytics,0,free / $0.00005+/event,30,Yes,Aiprosol's pick. Self-host option.,Pricing scales with event volume.
+Mixpanel,Analytics,Product analytics,0,free / $20-833/mo,50,Yes,Industry standard for product analytics.,Costs balloon with high event volume.
+Amplitude,Analytics,Product analytics,0,free / $61+/mo,100,Yes,Best for analyst-driven cohort/funnel work.,More complex than Mixpanel.
+Plausible,Analytics,Web analytics,9,$9-69/mo,0,No,Privacy-friendly Google Analytics alternative.,Less detail than GA4.
+Fathom,Analytics,Web analytics,15,$15-90/mo,0,No,"Simple, privacy-friendly web analytics.",Pricier than Plausible per visit.
+Mode,Analytics,SQL/BI,0,$0-12k+/mo,50,Yes,Best for analyst-led SQL exploration.,Steeper learning curve than dashboards.
+Linear,Project management,Eng-focused,0,free / $10+/user/mo,50,Yes,Aiprosol's pick. Fastest issue tracker.,Less suitable for non-eng teams.
+Notion,Project management,Wiki + projects,0,free / $10+/user/mo,100,Yes,Aiprosol's pick. Best blank-page flexibility.,Slower than dedicated tools at scale.
+Asana,Project management,Cross-team,0,free / $13.49+/user/mo,200,Yes,Best for marketing/ops teams.,Slower UX than Linear.
+ClickUp,Project management,Everything,0,free / $7+/user/mo,1000,Yes,Highest feature density. Most flexibility.,Overwhelming for small teams.
+Monday.com,Project management,Cross-team,0,$9-19/user/mo,200,Yes,Best visual workflows for non-tech teams.,Reporting weaker than Asana.
+Height,Project management,AI-native,0,$0-12.50+/user/mo,30,Yes,AI-first task management.,Newer; smaller team.
+Google Workspace,Documents,Suite,6,$6-18/user/mo,1000,No,Industry default for cloud docs.,Limited AI features vs Microsoft.
+Microsoft 365,Documents,Suite,6,$6-22/user/mo,1000,No,Best AI integration (Copilot).,Pricier add-ons.
+Coda,Documents,Doc-as-database,0,free / $10+/user/mo,100,Yes,Best for ops teams needing doc + DB combo.,Different mental model; learning curve.
+Quip,Documents,Salesforce-integrated,10,$10-25/user/mo,50,No,Best if deep in Salesforce.,"Outside Salesforce, weak vs Google/Notion."
+Stack Overflow Teams,Documents,Knowledge,0,free / $7.50+/user/mo,30,Yes,Best for eng-team Q&A retention.,Less general than Notion.
+Intercom,Customer support,Chat + helpdesk,39,$39+/seat/mo,100,No,Best AI-augmented chat experience.,Pricing escalates with AI usage.
+Zendesk,Customer support,Enterprise,19,$19+/agent/mo,1000,No,Industry standard. Best for >20-agent teams.,Slower innovation; pricier.
+Front,Customer support,Shared inbox,19,$19-99/seat/mo,50,Yes,Best shared inbox model.,Less suited for high-volume helpdesk.
+Plain,Customer support,Dev-friendly,0,free / $35+/seat/mo,20,Yes,Best UX for technical support teams.,Newer; less mature.
+Pylon,Customer support,B2B Slack-based,0,from $59/seat/mo,30,No,Best for managing customer Slack channels.,Smaller scope vs Intercom.
+Crisp,Customer support,SMB,0,free / $25-95/mo,100,Yes,Best free tier for very small teams.,Less powerful than peers at scale.
+Vercel,Hosting/Deploy,Frontend,0,free / $20+/mo,100,Yes,Aiprosol's pick. Best for Next.js.,Pricier than VPS at scale.
+Cloudflare,Hosting/Deploy,Edge,0,free / $20+/mo,50,Yes,Best CDN + edge compute.,Workers learning curve.
+Railway,Hosting/Deploy,Backend,0,$5-20+/mo,30,Yes,Best for fast backend deploys.,Less mature than Heroku competitors.
+Sentry,Observability,Errors,0,free / $26+/mo,100,Yes,Industry standard for error tracking.,Pricing scales with events.
+Datadog,Observability,Full-stack,0,from $15+/host/mo,600,Yes,Best enterprise observability.,Bills surprise at scale.
+LangChain,AI agents,Framework,0,open source,0,Yes,Most popular agent framework.,API churn frustrates teams.
+LlamaIndex,AI agents,Framework,0,open source,0,Yes,Best for RAG-heavy workloads.,Smaller community than LangChain.
+CrewAI,AI agents,Multi-agent,0,open source / cloud,0,Yes,Best for multi-agent orchestration.,Newer; production cases still emerging.
+AutoGen,AI agents,Multi-agent,0,open source,0,Yes,Microsoft's multi-agent framework.,Documentation patchy.
+Inngest,AI agents,Durable workflows,0,free / $50+/mo,20,Yes,Best for long-running AI workflows.,Steeper learning curve than n8n.
+Mistral Large,Conversational AI,API access,0,€0.40-12/M tokens,0,No,European LLM with strong reasoning.,Smaller ecosystem vs OpenAI/Anthropic.
+Llama 3.3 70B,Conversational AI,Open source,0,self-host,0,Yes,Meta's open weights. Run anywhere.,Self-hosting infra cost is real.
+Qwen 2.5,Conversational AI,Open source,0,self-host / API,0,Yes,Alibaba's strong open model.,Less English benchmark data.
+Gemini Pro API,Conversational AI,API access,0,$0.075-7/M tokens,0,No,Best at multimodal video.,Less reliable function-calling vs OpenAI.
+Groq,Conversational AI,Fast inference,0,$0.10-1.50/M tokens,0,Yes,Aiprosol uses for chat widget. Sub-100ms.,Smaller model selection.
+DeepSeek V3,Conversational AI,Open source,0,API + self-host,0,Yes,Chinese-origin frontier model.,Geo-political considerations.
+Yi-34B,Conversational AI,Open source,0,self-host,0,Yes,Strong bilingual (Chinese-English).,Less Western benchmark coverage.
+Phi-4,Conversational AI,Edge models,0,self-host,0,Yes,Small enough to run on laptops.,Quality below frontier models.
+Reka Core,Conversational AI,API access,0,$0.40-15/M tokens,0,No,Multimodal native (text+image+audio+video).,Smaller community.
+Cohere Command R,Conversational AI,RAG-tuned API,0,$0.15-15/M tokens,0,No,Best for production RAG workloads.,Smaller ecosystem.
+Inflection Pi,Conversational AI,Consumer chat,0,freemium,0,Yes,Built for emotional intelligence.,Limited business utility.
+Character.AI,Conversational AI,Roleplay,0,$10/mo,0,Yes,Persona-driven roleplay.,Niche use case.
+Hugging Face Spaces,Conversational AI,Demo hosting,0,free / $9+/mo,0,Yes,Try any open-source model in browser.,Latency variable; not production.
+Forefront AI,Conversational AI,API aggregator,0,$20+/mo,0,Yes,One API for multiple model providers.,Adds latency vs direct.
+OpenRouter,Conversational AI,API aggregator,0,passthrough + markup,0,Yes,100+ models behind one API.,Markup adds 5-10% cost.
+Aider,Code generation,CLI,0,API-based,0,Yes,Open-source agentic coder.,Less polished than Claude Code.
+Continue,Code generation,IDE plugin,0,open source,0,Yes,Open-source Cursor alternative.,Smaller community.
+Sourcegraph Cody,Code generation,Code search + AI,0,$9-19/mo,0,Yes,Best for huge monorepos.,Pricing scales with seats.
+Pieces for Developers,Code generation,Snippet management,0,$10-25/mo,0,Yes,AI-organised code snippets.,Niche use case.
+AmazonQ Developer,Code generation,IDE plugin,0,$19/user/mo,0,Yes,AWS-tuned AI coder.,Best within AWS ecosystem.
+Cognition Devin,Code generation,Autonomous agent,0,$500/mo,0,No,Marketed as autonomous SWE.,Quality below human SWE in benchmarks.
+Phind,Code generation,Search-driven,0,free / $15/mo,0,Yes,AI-first dev search.,Smaller community than Google.
+CodeWhisperer (Q),Code generation,AWS-tuned,0,$19/user/mo,0,No,Best inside AWS context.,Less general than Copilot.
+Recraft V3,Image gen,Design assets,0,$10-30/mo,0,Yes,Vector + raster + text.,Newer; smaller community.
+Ideogram 2.0,Image gen,Text in images,0,$8-20/mo,0,Yes,Best text rendering inside images.,Limited style range.
+Stability AI SDXL,Image gen,Open source,0,self-host / API,0,Yes,Open weights; high resolution.,Setup overhead.
+Leonardo.ai,Image gen,Game assets,0,$12-60/mo,0,Yes,Best for game asset workflows.,Niche focus.
+Playground AI,Image gen,Filter-style,0,$15-30/mo,0,Yes,Easy UI for hobbyists.,Less control than peers.
+Civitai,Image gen,Community models,0,free + premium,0,Yes,1000s of fine-tuned models.,Quality variable.
+Photoroom,Image gen,Product photography,0,$10-200/mo,0,Yes,Best for e-commerce product shots.,Specialised; not general gen.
+Magnific.ai,Image gen,Upscaling,0,$39+/mo,0,No,Best upscaler currently available.,Pricing premium.
+Topaz Photo AI,Image gen,Upscaling/cleanup,200,$199 one-time,0,No,Best for photo restoration.,"One-time purchase, not subscription."
+Runway Gen-3 Alpha,Image gen,Video frames,0,$12-95/mo,0,Yes,Frame interpolation for video.,Pricier for image-only.
+Krea AI,Image gen,Real-time,0,$10-60/mo,0,Yes,Iterative generation.,Quality below static gen.
+Sora,Video gen,Text-to-video,0,via ChatGPT,0,No,OpenAI's video model.,Limited access (Plus/Pro).
+Veo 3,Video gen,Google's video,0,limited access,0,No,Top-tier quality.,Limited rollout.
+Hailuo MiniMax,Video gen,Asian-market,0,credits,0,Yes,Strong character consistency.,Less Western coverage.
+Kling,Video gen,ByteDance,0,credits,0,Yes,Long-clip generation.,Geo-restrictions in some markets.
+Genmo,Video gen,Animation,0,$10-30/mo,0,Yes,Stylised animation focus.,Newer.
+Wonder Studio,Video gen,VFX replacement,0,$30-280/mo,0,No,Auto-replace actors with CGI.,Pricing premium.
+Captions.ai,Video gen,Subtitle/lip-sync,0,$10-25/mo,0,Yes,Best for vertical video subtitles.,Niche use case.
+Descript,Video gen,Edit-by-transcript,0,$15-30/mo,0,Yes,Edit video like a doc.,Quality limits at long form.
+Cartesia Sonic,Voice/audio,Fast TTS,0,$5-49/mo + usage,0,Yes,Sub-150ms latency.,Newer.
+PlayHT,Voice/audio,Voice cloning,0,$31-99/mo,0,Yes,Solid mid-tier voice cloning.,Below ElevenLabs quality.
+Murf AI,Voice/audio,TTS for videos,0,$23-99/mo,0,Yes,Best for narration in videos.,Less natural than ElevenLabs.
+Lovo AI,Voice/audio,TTS,0,$24-149/mo,0,Yes,Wide language coverage.,Quality variable across languages.
+Speechify,Voice/audio,Text-to-speech read-aloud,0,$15-30/mo,0,Yes,Best for ADHD/dyslexia accessibility.,Less for creators.
+Otter.ai,Voice/audio,Meeting transcription,0,free / $17+/mo,0,Yes,Most popular meeting transcriber.,Quality below Fireflies.
+Fireflies,Voice/audio,Meeting transcription,0,free / $19+/mo,0,Yes,Best meeting summarisation.,Slack integration weaker.
+Granola,Voice/audio,Meeting notes,0,$14+/mo,0,Yes,"Macbook native, no bot in calls.",Mac-only.
+tldv,Voice/audio,Free meeting recorder,0,free / $20+/mo,0,Yes,Best free meeting recorder.,Bot appears in calls.
+Krisp,Voice/audio,Noise cancellation,0,free / $8+/mo,0,Yes,Industry standard noise cancel.,Subscription required for full feature.
+Qdrant,Knowledge base,Vector DB,0,self-host / cloud,0,Yes,Best Rust-based vector DB.,Smaller community than Pinecone.
+Milvus,Knowledge base,Vector DB,0,self-host / Zilliz cloud,0,Yes,Scales to billions of vectors.,More ops overhead.
+LanceDB,Knowledge base,Embedded vector DB,0,open source / cloud,0,Yes,Embedded; no server needed.,Less production tooling.
+Supabase pgvector,Knowledge base,Postgres vector,0,with Supabase plan,0,Yes,Easiest for Postgres users.,Performance ceiling vs purpose-built.
+Turbopuffer,Knowledge base,Serverless vector,0,usage-based,0,Yes,Pay-per-query pricing.,Newer; less ecosystem.
+MongoDB Atlas Vector Search,Knowledge base,Within MongoDB,0,with Atlas plan,0,Yes,Easiest for MongoDB users.,Less optimised vs purpose-built.
+Elasticsearch vector,Knowledge base,Within ES,0,with ES plan,0,Yes,Hybrid keyword + vector search.,Adds latency.
+Atomic.io,Knowledge base,Personal,0,$8/mo,0,Yes,Personal mem with AI search.,Less mature than peers.
+Rewind,Knowledge base,Personal capture,0,$10-20/mo,0,Yes,Captures everything you've seen/heard.,Mac/iPhone only; privacy considerations.
+Albato,No-code automation,Cloud,0,$13-149/mo,800,Yes,Affordable Zapier alternative.,Smaller integration count.
+Integromat (old Make),No-code automation,Cloud,0,merged into Make,0,Yes,Now branded Make.com.,Brand transition.
+Workato,No-code automation,Enterprise,0,from $10K/year,1000,No,Enterprise iPaaS.,Pricing locks out SMBs.
+Tray.io,No-code automation,Enterprise,0,from $9K/year,600,No,Enterprise iPaaS with code escape.,Pricing premium.
+Boomi,No-code automation,Enterprise,0,from $20K/year,500,No,Legacy enterprise iPaaS.,Slower innovation.
+Mulesoft,No-code automation,Enterprise,0,from $80K/year,1000,No,"Salesforce-owned, full iPaaS.",Heavy enterprise pricing.
+Zoho Flow,No-code automation,SMB,10,$10-29/mo,700,Yes,Best within Zoho ecosystem.,Less useful outside Zoho.
+Latenode,No-code automation,Code-first,0,free / $19+/mo,300,Yes,Best when code is needed.,Smaller community.
+Apollo.io,CRM/Sales,Prospecting,0,free / $49+/mo,50,Yes,Best B2B prospecting database.,Data freshness inconsistent.
+Outreach,CRM/Sales,Sales engagement,100,$100+/user/mo,100,No,Enterprise sales sequencing.,Pricing locks out smaller teams.
+Salesloft,CRM/Sales,Sales engagement,75,$75+/user/mo,100,No,Salesforce-adjacent.,Smaller integration count than Outreach.
+Reply.io,CRM/Sales,Sales engagement,49,$49-99/user/mo,50,No,Multichannel outbound.,Below Outreach in polish.
+Lemlist,CRM/Sales,Cold email,39,$39-79/user/mo,30,No,Best video-personalisation cold email.,Deliverability inconsistent at scale.
+Instantly,CRM/Sales,Cold email,37,$37-97/mo,20,No,Best deliverability cold email.,More complex setup.
+Smartlead,CRM/Sales,Cold email,39,$39-99/mo,20,No,Cold email with rotation.,Niche use case.
+Mixmax,CRM/Sales,Email + scheduling,12,$12-69/user/mo,30,No,Gmail-native sales tools.,Gmail-only.
+Clearbit,CRM/Sales,Enrichment,0,usage / enterprise,100,No,Industry-standard enrichment.,Acquired by HubSpot; pricing in flux.
+ZoomInfo,CRM/Sales,Prospecting,0,enterprise,100,No,Largest B2B data set.,Heavy enterprise pricing.
+Cognism,CRM/Sales,Prospecting + compliance,0,enterprise,50,No,Best GDPR-compliant prospecting.,European-focused.
+LinkedIn Sales Navigator,CRM/Sales,Prospecting,80,$80-150/user/mo,30,No,LinkedIn-native prospecting.,Doesn't expose emails.
+RB2B,CRM/Sales,Visitor identification,0,free / $129+/mo,10,Yes,Identify website visitors.,Coverage limited.
+Common Room,CRM/Sales,Community intel,0,free / $625+/mo,50,Yes,Track community signals.,Pricing premium.
+Beehiiv,Email,Newsletter platform,0,free / $42+/mo,30,Yes,Best for newsletter creators.,Less business automation.
+ConvertKit,Email,Creator-focused,0,free / $9+/mo,100,Yes,Best for solopreneurs.,Less powerful than peers at scale.
+ActiveCampaign,Email,Marketing automation,9,$9-145/mo,200,No,Best behavioural automation.,Complex setup.
+MailerLite,Email,Affordable,0,free / $15+/mo,100,Yes,Best Mailchimp alternative for SMBs.,Less polished UX.
+Brevo (Sendinblue),Email,Multi-channel,0,free / $8.08+/mo,80,Yes,Email + SMS + WhatsApp.,Quality variable across channels.
+Substack,Email,Newsletter,0,free (revenue share),0,Yes,Best for paid newsletters.,Lock-in concerns.
+Ghost,Email,Open source newsletter,0,$9+/mo or self-host,50,Yes,Open-source newsletter + site.,Setup overhead if self-host.
+Klaviyo,Email,E-commerce,0,free / $20+/mo,300,Yes,Best for Shopify-driven brands.,Pricing scales with list.
+Drip,Email,E-commerce,39,$39+/mo,100,No,E-commerce automation.,Less popular than Klaviyo.
+Omnisend,Email,E-commerce,0,free / $16+/mo,100,Yes,E-commerce email + SMS.,Below Klaviyo at scale.
+Hotjar,Analytics,Heatmaps / session recording,0,free / $32+/mo,50,Yes,Industry standard heatmaps.,Performance impact at high traffic.
+Microsoft Clarity,Analytics,Free heatmaps,0,free,0,Yes,Microsoft's free heatmap tool.,Less polished than Hotjar.
+Fullstory,Analytics,Enterprise session,0,enterprise,50,No,Enterprise session replay.,Pricing premium.
+Heap,Analytics,Auto-tracking,0,free / $99+/mo,50,Yes,Auto-tracks every event.,Costs at scale.
+Pendo,Analytics,Product analytics + guidance,0,free / enterprise,50,Yes,Analytics + in-app guidance.,Pricing opaque.
+LogRocket,Analytics,Session replay + error,99,$99+/mo,50,No,Combines analytics + error tracking.,Pricing premium.
+June,Analytics,B2B SaaS analytics,0,free / $149+/mo,30,Yes,Built for B2B SaaS.,Smaller team.
+Userflow,Analytics,User onboarding analytics,0,$240+/mo,30,No,Onboarding-focused.,Niche.
+Statsig,Analytics,Experimentation,0,free / $150+/mo,20,Yes,Best experimentation platform.,Smaller community.
+LaunchDarkly,Analytics,Feature flags + experiments,0,free / $10+/seat/mo,50,Yes,Enterprise feature flags.,Pricing scales.
+Jira,Project management,Atlassian,0,free / $7.16+/user/mo,1000,Yes,Industry default for engineering.,Slower UX than Linear.
+Basecamp,Project management,Flat fee,99,$99/mo (flat),50,No,Best flat-pricing PM.,Less flexible than peers.
+Trello,Project management,Kanban,0,free / $5+/user/mo,200,Yes,Easiest kanban.,Limited reporting.
+Wrike,Project management,Cross-team,0,free / $9.80+/user/mo,400,Yes,Cross-team workflows.,Complex setup.
+Smartsheet,Project management,Spreadsheet-like,0,$9-32+/user/mo,100,No,Best for spreadsheet thinkers.,Excel-feel learning curve.
+Airtable,Project management,Database-like,0,free / $20+/seat/mo,100,Yes,Best database-as-PM.,Pricing scales with rows.
+Productive,Project management,Agency-focused,9,$9-25+/user/mo,50,No,Best for agencies.,Niche.
+Hive,Project management,Email-integrated,5,free / $5+/user/mo,30,Yes,Built into email workflows.,Less powerful.
+MeisterTask,Project management,Kanban + Mind Map,0,free / $7+/user/mo,30,Yes,Visual hybrid.,Smaller community.
+Help Scout,Customer support,Shared inbox,25,$25+/seat/mo,100,Yes,Best for small teams.,Less powerful at scale.
+Tidio,Customer support,Chat + bots,0,free / $29+/mo,100,Yes,Best for SMB e-commerce.,Less powerful.
+Drift,Customer support,Conversational marketing,0,$0-2.5K+/mo,50,Yes,Sales-focused chat.,Pricing locks out SMBs.
+Freshdesk,Customer support,Helpdesk,0,free / $15+/agent/mo,100,Yes,Mid-market alternative to Zendesk.,Below Zendesk in extensibility.
+Kayako,Customer support,Helpdesk,30,$30-100+/agent/mo,50,No,Mid-market helpdesk.,Smaller community.
+LiveAgent,Customer support,Helpdesk,15,$15-69/agent/mo,50,No,Affordable helpdesk.,Less polished.
+ClickUp Helpdesk,Customer support,Bundled,7,$7+/user/mo,100,Yes,Best if already on ClickUp.,Niche.
+Re:amaze,Customer support,Shared inbox + chat,29,$29-89/seat/mo,30,No,E-commerce focused.,Smaller market.
+Customerly,Customer support,All-in-one,7,$7-179/mo,30,Yes,Live chat + CRM + email.,Less depth in any category.
+Beacon (Help Scout),Customer support,In-app chat,25,with Help Scout,0,No,Help Scout's chat widget.,Tied to Help Scout.
+AWS,Hosting/Deploy,Cloud,0,usage-based,1000,Yes,Industry-default cloud.,Cost surprises.
+GCP,Hosting/Deploy,Cloud,0,usage-based,800,Yes,Best for ML / data workloads.,Less mature ecosystem.
+Azure,Hosting/Deploy,Cloud,0,usage-based,1000,Yes,Best for Microsoft shops.,Pricing opaque.
+DigitalOcean,Hosting/Deploy,Simplified cloud,4,$4+/mo,50,No,Simple cloud for developers.,Less feature breadth than AWS.
+Linode (Akamai),Hosting/Deploy,VPS,5,$5+/mo,30,No,Reliable VPS option.,Smaller feature set.
+Hetzner,Hosting/Deploy,European VPS,4,€4+/mo,20,No,Cheapest reliable European VPS.,Limited managed services.
+Fly.io,Hosting/Deploy,Edge container,0,usage-based,30,Yes,Best for global edge.,Newer; less mature.
+Render,Hosting/Deploy,PaaS,0,free / $7+/mo,30,Yes,Best Heroku alternative.,Pricing slightly more than Railway.
+Heroku,Hosting/Deploy,PaaS,5,$5+/mo,100,No,Veteran PaaS.,Pricier than newer entrants.
+Netlify,Hosting/Deploy,JAMstack,0,free / $19+/mo,50,Yes,Best for static + functions.,Pricier than Vercel for some cases.
+Supabase,Hosting/Deploy,Backend-as-Service,0,free / $25+/mo,30,Yes,Open-source Firebase.,Smaller ecosystem.
+Firebase,Hosting/Deploy,Backend-as-Service,0,free / pay-as-go,50,Yes,Google's BaaS.,Lock-in concerns.
+PlanetScale,Hosting/Deploy,MySQL,0,$39+/mo,30,Yes,Branched databases.,Killed free tier; relaunched.
+Neon,Hosting/Deploy,Postgres,0,free / $19+/mo,30,Yes,Serverless Postgres.,Newer.
+Bunny CDN,Hosting/Deploy,CDN,0,$1+/mo,30,No,"Cheap, fast CDN.",Less feature breadth.
+Coolify,Hosting/Deploy,Open-source PaaS,0,self-host / $5+/mo,30,Yes,Self-hosted Heroku alternative.,Setup overhead.
+Cloudways,Hosting/Deploy,Managed cloud,10,$10+/mo,30,No,Managed VPS option.,Adds 20-50% markup.
+New Relic,Observability,Full-stack,0,free / $99+/user/mo,600,Yes,Enterprise APM.,Pricing opaque.
+Honeycomb,Observability,Distributed tracing,0,free / $130+/mo,30,Yes,Best for distributed systems.,Steeper learning curve.
+Grafana Cloud,Observability,Open-source stack,0,free / $8+/mo,50,Yes,Open-source observability.,Setup overhead if self-host.
+Datadog APM,Observability,APM,0,from $31+/host/mo,600,Yes,Enterprise APM.,Bills surprise at scale.
+Sentry Performance,Observability,Performance + errors,0,free / $26+/mo,100,Yes,Performance monitoring inside Sentry.,Pricing scales with events.
+Rollbar,Observability,Error tracking,0,free / $99+/mo,100,Yes,Sentry alternative.,Less popular than Sentry.
+Bugsnag,Observability,Error tracking,0,free / $25+/mo,100,Yes,Strong for mobile.,Less polished than Sentry.
+Splunk,Observability,Logs,0,from $40+/GB,500,No,Enterprise logs.,Most expensive observability.
+Loggly,Observability,Logs,0,free / $79+/mo,100,Yes,Mid-market logging.,Less popular now.
+Papertrail,Observability,Simple logs,7,$7+/mo,30,No,Simple log aggregation.,Less feature breadth.
+AxiomHQ,Observability,Logs + analytics,0,free / $25+/mo,30,Yes,Modern log platform.,Smaller community.
+BetterStack,Observability,Uptime + logs,0,free / $24+/mo,50,Yes,Uptime + log all-in-one.,Newer.
+SEMrush,Marketing,SEO suite,119,$119-499+/mo,50,No,Industry default SEO suite.,Pricing premium.
+Ahrefs,Marketing,SEO suite,99,$99-999+/mo,30,No,Best backlink data.,Pricing premium.
+Moz,Marketing,SEO suite,49,$49-249+/mo,30,Yes,Veteran SEO suite.,Smaller data than peers.
+Surfer SEO,Marketing,On-page SEO AI,89,$89-219+/mo,20,No,Content optimisation.,Niche.
+Clearscope,Marketing,On-page SEO,199,$199+/mo,10,No,Premium content optimisation.,Pricing premium.
+Frase,Marketing,AI SEO content,15,$15-115+/mo,10,Yes,AI-first content brief.,Quality variable.
+Jasper,Marketing,AI copy,49,$49-125+/mo,50,No,AI copy with brand voice.,Less popular post-ChatGPT.
+Copy.ai,Marketing,AI copy,0,free / $36+/mo,20,Yes,Marketing copy variants.,Quality variable.
+Writesonic,Marketing,AI copy,0,free / $13+/mo,20,Yes,Wide use case range.,Quality variable.
+Anyword,Marketing,Marketing AI with scoring,49,$49-499+/mo,20,No,Conversion-scored AI copy.,Pricing premium.
+Tofu,Marketing,Modern AI for B2B,0,$2.5K+/mo,30,No,Enterprise B2B AI marketing.,Pricing locks SMBs.
+Common Sense Machines,Marketing,AI brand voice,0,$99+/mo,30,No,Specialised brand voice.,Niche.
+Figma,Design,Design suite,0,free / $15+/user/mo,50,Yes,Industry default for product design.,Pricing rose post-Adobe attempt.
+Sketch,Design,Design (Mac),10,$10+/user/mo,30,No,Mac-only design tool.,Mac-only restricts teams.
+Adobe XD,Design,Adobe ecosystem,10,via Creative Cloud,30,No,Being deprecated.,Adobe sunsetting.
+Penpot,Design,Open source Figma,0,self-host / cloud,10,Yes,Open-source Figma alternative.,Smaller community.
+Framer,Design,Design + build,0,$20+/site/mo,30,Yes,Design that becomes a site.,Niche use case.
+Canva,Design,Marketing design,0,free / $13+/mo,100,Yes,Industry default for non-designers.,Output quality limits.
+Adobe Express,Design,Marketing,0,free / $10+/mo,50,Yes,Canva alternative within Adobe.,Smaller community than Canva.
+Visme,Design,Presentations,0,free / $29+/user/mo,30,Yes,Best for infographic-style decks.,Niche.
+Beautiful.ai,Design,AI presentations,12,$12-40+/user/mo,30,No,AI-auto-laid-out decks.,Less control.
+Gamma,Design,AI presentations,0,free / $10+/mo,30,Yes,Best AI presentation tool.,Output needs polish.
+Pydantic AI,AI agents,Framework,0,open source,0,Yes,Type-safe agent framework.,Newer.
+DSPy,AI agents,Framework,0,open source,0,Yes,Optimisation-focused framework.,Steep learning curve.
+Haystack,AI agents,RAG framework,0,open source,0,Yes,Deep RAG framework.,Smaller community than LangChain.
+Semantic Kernel,AI agents,Microsoft framework,0,open source,0,Yes,Microsoft's framework.,Less popular outside MS shops.
+Letta (MemGPT),AI agents,Memory-focused,0,open source / cloud,0,Yes,Best long-term memory framework.,Niche.
+Magentic,AI agents,Multi-agent,0,open source,0,Yes,Newer multi-agent framework.,Smaller adoption.
+Smolagents,AI agents,Lightweight,0,open source,0,Yes,Lightweight agent framework.,Newer.
+E2B,AI agents,Sandbox infra,0,$50+/mo,0,Yes,Cloud sandboxes for agents.,Niche.
+Modal Labs,AI agents,Serverless GPU,0,usage-based,0,Yes,Serverless GPU for AI agents.,Smaller community.
+Anyscale,AI agents,Ray-based serving,0,$2+/hour,0,No,Best for Ray-based scaling.,Niche.
+Anchor browser,AI agents,Browser automation,0,$99+/mo,0,No,AI-driven browser automation.,Niche.
+Gong,Sales tools,Conversation intel,0,$100+/user/mo,30,No,Industry-default call intel.,Pricing premium.
+Chorus,Sales tools,Conversation intel,0,$100+/user/mo,30,No,ZoomInfo-owned conv intel.,Below Gong in polish.
+11x.ai,Sales tools,AI SDR,0,$5K+/mo,0,No,AI sales rep.,Quality variable; expensive.
+Artisan,Sales tools,AI sales agents,0,$1K+/mo,0,No,AI SDR product.,Quality variable.
+Reply.io Jason AI,Sales tools,AI assistant,0,within Reply.io,0,No,AI feature within Reply.io.,Tied to platform.
+Trumpet,Sales tools,Buyer enablement,0,$29+/user/mo,20,No,Dynamic buyer rooms.,Niche.
+DealHub,Sales tools,CPQ + buyer rooms,0,$50+/user/mo,50,No,Quote-to-cash.,Enterprise.
+Highspot,Sales tools,Content management,0,enterprise,100,No,Sales content + analytics.,Pricing locks SMBs.
+Showpad,Sales tools,Sales enablement,0,enterprise,50,No,Sales enablement platform.,Enterprise focus.
+Loom,Sales tools,Video messaging,0,free / $15+/user/mo,30,Yes,Best video messaging.,Acquired by Atlassian.
+Vidyard,Sales tools,Video messaging,0,free / $19+/user/mo,30,Yes,Sales-focused video.,Less popular than Loom.
+Cal.com,Sales tools,Open-source scheduler,0,free / $12+/seat/mo,100,Yes,Open-source Calendly.,Smaller integration count.
+SavvyCal,Sales tools,Modern scheduler,12,$12+/user/mo,30,No,Calendar overlap detection.,Niche.
+Chili Piper,Sales tools,Round-robin scheduling,22,$22+/user/mo,50,No,Enterprise scheduler.,Pricing premium.
+Spinify,Sales tools,Sales gamification,0,$5-25/user/mo,30,Yes,Sales team leaderboards.,Niche.
+Datanyze,Sales tools,Technographic data,21,$21-39+/user/mo,20,No,Identify prospect tech stack.,Below Clearbit in coverage.
+Ironclad,Legal,CLM,0,enterprise,30,No,Industry-default CLM.,Enterprise pricing.
+DocuSign CLM,Legal,CLM,0,enterprise,50,No,DocuSign's CLM.,Less innovative than peers.
+Spotdraft,Legal,CLM mid-market,0,$500+/mo,30,No,Mid-market CLM.,Newer.
+LinkSquares,Legal,AI legal search,0,enterprise,30,No,AI for contract intelligence.,Enterprise.
+Lexion,Legal,AI legal,0,enterprise,30,No,Docusign-owned AI legal.,Enterprise.
+Harvey AI,Legal,AI legal research,0,enterprise,0,No,OpenAI-backed legal AI.,Enterprise.
+CoCounsel (Casetext),Legal,AI legal research,0,$225+/mo,0,No,Per-attorney pricing.,Pricing premium.
+Vanta,Compliance,SOC 2 automation,0,$8K+/year,100,No,Industry default SOC 2.,Annual contracts.
+Drata,Compliance,Compliance automation,0,$8K+/year,100,No,Vanta alternative.,Annual contracts.
+Secureframe,Compliance,Compliance automation,0,$5K+/year,100,No,Compliance for SMB+.,Annual contracts.
+FreshBooks,Finance,Small biz accounting,21,$21-65+/mo,100,No,Best for solo/freelance.,Less powerful at scale.
+Wave,Finance,Free accounting,0,free + payment fees,30,Yes,Best free accounting.,Payment processing fees.
+Sage Intacct,Finance,Mid-market ERP,0,$15K+/year,100,No,Mid-market accounting.,Heavy implementation.
+NetSuite,Finance,Enterprise ERP,0,$30K+/year,200,No,Industry standard mid-market ERP.,Pricing opaque.
+Ramp,Finance,Spend management,0,free + interchange,100,Yes,Modern corp card + spend mgmt.,US-only.
+Brex,Finance,Spend management,0,free + interchange,100,Yes,Startup-focused.,US-only.
+Mercury,Finance,Startup banking,0,free,30,Yes,Best startup banking.,US-only.
+Wise Business,Finance,Global banking,0,low fees + FX,30,Yes,Best for international.,Limited US features.
+Stripe Atlas,Finance,Company formation,500,$500 one-time,0,No,Best for tech startup formation.,One-time fee.
+Pilot,Finance,Bookkeeping service,0,$499+/mo,30,No,Outsourced bookkeeping.,Pricing premium.
+Bench,Finance,Bookkeeping service,249,$249+/mo,20,No,Affordable bookkeeping.,Less polished.
+Gusto,HR,Payroll + benefits,40,$40+/mo + per-employee,50,No,Best US payroll for SMBs.,US-only.
+Rippling,HR,All-in-one IT+HR,8,$8+/employee/mo,100,No,IT + HR + payroll suite.,Pricing premium for small teams.
+Deel,HR,Global contractors,49,$49/contractor/mo,100,No,Best for global contractors.,Pricing per contractor.
+Remote,HR,Global employment,0,$29+/contractor/mo,50,Yes,Global EOR.,Pricing per employee.
+BambooHR,HR,SMB HRIS,0,$5.25+/employee/mo,100,No,Best SMB HRIS.,Limited at scale.
+Workday,HR,Enterprise HRIS,0,enterprise,500,No,Industry standard enterprise.,Heavy implementation.
+Lattice,HR,Performance + engagement,11,$11+/seat/mo,30,No,Best performance suite.,Pricing scales.
+Culture Amp,HR,Engagement surveys,0,$4-10/user/mo,30,No,Best engagement surveys.,Enterprise focus.
+Greenhouse,HR,ATS,0,$6K+/year,200,No,Industry standard ATS.,Annual contracts.
+Lever,HR,ATS,0,$3.5K+/year,100,No,Lever's ATS.,Annual contracts.
+Ashby,HR,Modern ATS,0,$300+/year,30,No,Modern ATS.,Newer.
+Workable,HR,ATS mid-market,0,$169+/mo,50,No,SMB+ ATS.,Pricing scales.
+Snowflake,Data,Data warehouse,0,usage-based,100,No,Industry default DW.,Bills surprise at scale.
+BigQuery,Data,Data warehouse,0,usage-based,100,Yes,GCP's DW.,Less mature ecosystem than Snowflake.
+Redshift,Data,Data warehouse,0,usage-based,100,No,AWS's DW.,Less popular than Snowflake.
+Databricks,Data,Lakehouse,0,usage-based,100,No,Best for ML+data workloads.,Pricing opaque.
+DuckDB,Data,Embedded analytics,0,open source,0,Yes,Fast analytics on local data.,Embedded only.
+ClickHouse,Data,Columnar DB,0,self-host / cloud,30,Yes,Best for analytics at scale.,Setup overhead.
+dbt,Data,Transformation,0,open source / $100+/mo,50,Yes,Industry default transformation.,Learning curve.
+Fivetran,Data,ELT,0,usage-based,200,No,Industry default ELT.,Pricing scales.
+Airbyte,Data,ELT open source,0,self-host / cloud,200,Yes,Open-source ELT.,Setup overhead.
+Hightouch,Data,Reverse ETL,0,free / $450+/mo,100,Yes,Best reverse ETL.,Pricing for premium.
+Census,Data,Reverse ETL,0,$300+/mo,100,No,Reverse ETL competitor.,Pricing for premium.
+Looker,Data,BI,0,enterprise,50,No,Google's BI.,Enterprise.
+Tableau,Data,BI,12,$12+/user/mo,100,No,Industry standard BI.,Salesforce-owned.
+Power BI,Data,BI,9.99,$9.99+/user/mo,100,No,Microsoft's BI.,Best for MS shops.
+Metabase,Data,Open-source BI,0,self-host / $85+/mo,30,Yes,Open-source BI.,Smaller community.
+Hex,Data,Notebook + BI,0,free / $24+/user/mo,30,Yes,Modern notebook+BI.,Newer.
+Sigma,Data,Spreadsheet BI,0,$300+/user/mo,30,No,Spreadsheet-style BI.,Pricing premium.
+Preset,Data,Managed Superset,0,free / $20+/seat/mo,30,Yes,Managed Apache Superset.,Smaller community.
+Obsidian,Productivity,Personal notes,0,free / $4+/mo sync,0,Yes,Best personal knowledge.,Sync requires paid.
+Roam Research,Productivity,Bi-directional notes,13.75,$13.75+/mo,0,No,Pioneering bi-directional.,Slower vs peers.
+Logseq,Productivity,Open-source bi-directional,0,free,0,Yes,Roam alternative.,Smaller community.
+Capacities,Productivity,Object-based notes,0,free / $10+/mo,30,Yes,Object-based knowledge.,Newer.
+Tana,Productivity,Smart Notion alt,0,$10-15+/mo,30,No,Modern bi-directional+DB.,Newer; pricing premium.
+Bear,Productivity,Markdown notes (Mac),0,free / $30/year,0,Yes,Best Mac note-taking.,Mac-only.
+Craft,Productivity,Doc + sketches,0,free / $10+/mo,30,Yes,Beautiful Mac/iOS docs.,Mac/iOS only.
+Anytype,Productivity,Local-first knowledge,0,free,0,Yes,Local-first Notion alt.,Newer.
+AppFlowy,Productivity,Open-source Notion,0,free,0,Yes,Open-source Notion clone.,Smaller feature set.
+Slite,Productivity,Team wiki,0,free / $8+/user/mo,30,Yes,Team wiki.,Smaller than Notion.
+GitBook,Productivity,Docs,0,free / $6.70+/user/mo,30,Yes,Best technical docs.,Niche.
+Outline,Productivity,Open-source team wiki,0,self-host / $10+/user/mo,30,Yes,Open-source wiki.,Smaller community.
+Appcues,Product adoption,User onboarding,0,$249+/mo,30,No,Industry default onboarding.,Pricing scales.
+UserGuiding,Product adoption,User onboarding,89,$89-249+/mo,20,No,Mid-market onboarding.,Less polished than Appcues.
+Intro.js,Product adoption,Open-source tours,0,free,0,Yes,Self-host product tours.,Setup overhead.
+Userpilot,Product adoption,Self-serve onboarding,249,$249+/mo,30,No,Onboarding + analytics.,Pricing scales.
+WalkMe,Product adoption,Enterprise DAP,0,enterprise,100,No,Enterprise digital adoption.,Heavy enterprise.
+Whatfix,Product adoption,Enterprise DAP,0,enterprise,100,No,Enterprise digital adoption.,Heavy enterprise.
+FullStory Stories,Product adoption,Targeting,0,with FullStory,30,No,Targeting within FullStory.,Tied to FullStory.
+Dust,Search/AI,Enterprise agents,0,$29+/user/mo,30,No,Modern AI assistants for teams.,Smaller community.
+Mendable,Search/AI,Docs-as-chatbot,0,free / $99+/mo,20,Yes,AI on your docs.,Niche.
+Custom GPT,Search/AI,Doc bots,0,$99+/mo,30,No,Custom GPT marketplace.,Niche.
+Stack AI,Search/AI,No-code AI builder,0,free / $199+/mo,30,Yes,Build AI apps no-code.,Niche.
+Voiceflow,Search/AI,Voice + chat agent builder,0,free / $50+/mo,30,Yes,Best for voice agents.,Niche.
+Botpress,Search/AI,Open-source chatbot,0,free / $25+/mo,50,Yes,Open-source bot builder.,Smaller community.
+Sana,Search/AI,Enterprise learning AI,0,enterprise,50,No,AI learning platform.,Enterprise.
+Slack,Communication,Team chat,0,free / $7.25+/user/mo,2500,Yes,Industry default.,Pricing rose post-Salesforce.
+Microsoft Teams,Communication,Team chat,0,with M365,1500,Yes,Best within MS ecosystem.,Less polished outside MS.
+Discord,Communication,Community chat,0,free / $9.99+/mo Nitro,500,Yes,Best community platform.,Less business-formal.
+Element,Communication,Open-source chat,0,self-host / $5+/user/mo,30,Yes,Open-source secure chat.,Smaller community.
+Mattermost,Communication,Open-source Slack,0,self-host / $10+/user/mo,100,Yes,Open-source Slack alt.,Smaller community.
+Rocket.Chat,Communication,Open-source chat,0,self-host / $4+/user/mo,100,Yes,Open-source chat.,Smaller community.
+Threads (Meta),Communication,Public conversation,0,free,0,Yes,Twitter alternative.,Algorithm changes.
+Bluesky,Communication,Decentralised social,0,free,0,Yes,ATproto-based social.,Smaller user base.
+Beeper,Communication,Multi-platform inbox,0,free / $10+/mo,0,Yes,Unified messaging.,Reliability variable.
+Texts.com,Communication,Multi-platform desktop,15,$15+/mo,0,No,Best Mac multi-messaging.,Mac-only.
+Zoom,Video conferencing,Industry default,0,free / $13.32+/user/mo,100,Yes,Industry default video.,Pricing rose post-pandemic.
+Google Meet,Video conferencing,Google ecosystem,0,with Workspace,30,Yes,Best for Google shops.,Less features than Zoom.
+Teams Video,Video conferencing,Microsoft,0,with M365,30,Yes,Best for MS shops.,Less polished than Zoom.
+Around,Video conferencing,Modern UI,0,free / $10+/user/mo,0,Yes,Compact UI for casual.,Niche.
+Whereby,Video conferencing,Browser-based,0,free / $7+/host/mo,30,Yes,Best browser-only video.,Lower scale.
+Zoom Phone,Video conferencing,VoIP,10,$10+/user/mo,30,No,Zoom's phone.,Tied to Zoom plan.
+Dialpad,Video conferencing,AI phone,15,$15+/user/mo,30,No,AI-driven phone.,Smaller community.
+Talkdesk,Video conferencing,Contact center,75,$75+/seat/mo,50,No,Enterprise contact center.,Enterprise.
+Toast,Vertical,Restaurant POS,0,$165+/mo per location,30,No,Industry default restaurant.,Hardware lock-in.
+Square,Vertical,Retail POS,0,free + interchange,50,Yes,Best small-business POS.,Hardware costs.
+Shopify POS,Vertical,Retail POS,0,with Shopify plan,100,No,Best for Shopify shops.,Tied to Shopify.
+Mindbody,Vertical,Wellness/fitness,129,$129+/mo,30,No,Industry default fitness biz.,Mid-market+.
+ChowNow,Vertical,Restaurant ordering,199,$199+/mo,20,No,Best independent restaurant ordering.,Niche.
+Procore,Vertical,Construction,0,enterprise,100,No,Industry default construction.,Enterprise.
+Clio,Vertical,Law firm management,49,$49+/user/mo,50,No,Industry default law.,Niche.
+Kareo,Vertical,Medical practice,0,$60+/provider/mo,30,No,SMB medical practice.,Niche.
+EHRYourWay,Vertical,Behavioral health,50,$50+/user/mo,30,No,Behavioral health EHR.,Niche.
+Frontify,Vertical,Brand management,0,$8K+/year,50,No,Enterprise brand portal.,Enterprise.
+Bynder,Vertical,DAM,0,enterprise,50,No,Digital asset management.,Enterprise.
+Brandfolder,Vertical,DAM,0,enterprise,50,No,DAM competitor.,Enterprise.
+Bland.ai,AI Voice Agents,Phone AI,0,$0.09+/min,0,Yes,Phone-call AI agent.,Niche.
+Retell AI,AI Voice Agents,Voice AI infra,0,$0.07-0.31/min,0,Yes,Voice AI building blocks.,Newer.
+Vapi,AI Voice Agents,Voice AI infra,0,$0.05+/min,0,Yes,Open-source voice AI.,Smaller community.
+Synthflow,AI Voice Agents,Voice + workflow,0,$29+/mo,0,Yes,Voice + automation.,Niche.
+1Password,Security,Password manager,2.99,$2.99+/user/mo,30,No,Industry default password manager.,Recent UI churn.
+Bitwarden,Security,Open-source password,0,free / $10+/year,30,Yes,Open-source password manager.,Less polished UI.
+Dashlane,Security,Password manager,4.99,$4.99+/user/mo,30,No,Enterprise password manager.,Less popular vs 1Password.
+LastPass,Security,Password manager,3,$3+/user/mo,30,No,Veteran password manager.,Multiple breaches.
+Tailscale,Security,Mesh VPN,0,free / $5+/user/mo,0,Yes,Best mesh VPN.,Niche.
+Cloudflare Zero Trust,Security,Zero-trust,0,free / $7+/user/mo,50,Yes,Zero-trust access.,Niche.
+Twingate,Security,Zero-trust,0,free / $5+/user/mo,30,Yes,Zero-trust competitor.,Newer.
+YubiKey (Yubico),Security,Hardware 2FA,50,$50+ one-time,0,No,Hardware security key.,One-time hardware cost.
+Tessian,Security,Email security AI,0,enterprise,30,No,AI-driven email security.,Enterprise.
+Abnormal Security,Security,Email security AI,0,enterprise,30,No,Email threat AI.,Enterprise.
+Computer Use (Anthropic),AI agents,Browser/computer agent,0,API,0,No,Claude that uses computers.,Beta; reliability variable.
+Operator (OpenAI),AI agents,Browser agent,200,$200/mo Pro,0,No,OpenAI's browser agent.,Pro plan only.
+Magentic-One,AI agents,Multi-agent OS,0,open source,0,Yes,Microsoft's multi-agent system.,Research-stage.
+Claude Computer Use,AI agents,Tool use,0,API,0,No,Anthropic's tool-use API.,Premium pricing.
+Google Project Mariner,AI agents,Browser agent,0,experimental,0,No,Google's browser agent.,Limited access.
+Convergence Proxy,AI agents,Browser agent,0,$25+/mo,0,Yes,Web automation agent.,Newer.
+Adept ACT-1,AI agents,Web actions,0,limited,0,No,Adept's web agent.,Acquired/restructured.
+Warp,Code generation,AI terminal,0,free / $15+/mo,0,Yes,AI-augmented terminal.,Mac/Linux.
+ChatGPT Code Interpreter,Code generation,Sandbox,20,$20/mo via ChatGPT Plus,0,No,Run code in chat.,Limited time per session.
+Lovable,Code generation,AI app builder,0,free / $20+/mo,0,Yes,Build full-stack from prompt.,Newer.
+Bolt.new,Code generation,Browser app builder,0,free / $20+/mo,0,Yes,AI builds + deploys.,Newer.
+v0 by Vercel,Code generation,UI builder,20,$20+/mo,0,No,React component generator.,React-only.
+Exa,Search/AI,Semantic search API,0,free / $20+/mo,0,Yes,Best AI-native search.,Newer.
+Tavily,Search/AI,Search API for AI,0,free / $30+/mo,0,Yes,Built for AI agent search.,Smaller index.
+Brave Search API,Search/AI,Privacy-friendly search,0,free / $3+/M queries,0,Yes,Independent search index.,Smaller than Google.
+You.com API,Search/AI,Multi-modal search,0,$2+/M queries,0,No,AI-augmented search.,Less popular.
+Phind Search,Search/AI,Developer search,0,free / $15+/mo,0,Yes,Programming-focused.,Niche.
+Andi Search,Search/AI,Conversational search,0,free,0,Yes,Bot-like search.,Smaller user base.
+Klaviyo AI,Marketing,E-com AI,0,with Klaviyo plan,0,No,AI within Klaviyo.,Tied to platform.
+Customer.io Journeys,Marketing,Behavioural,0,$100+/mo,50,No,Behavioural email.,Pricing premium.
+Iterable,Marketing,Cross-channel,0,enterprise,100,No,Cross-channel automation.,Enterprise pricing.
+Braze,Marketing,Cross-channel,0,enterprise,100,No,Enterprise customer engagement.,Heavy pricing.
+Insider,Marketing,Personalization,0,enterprise,50,No,Personalization platform.,Enterprise.
+Bloomreach,Marketing,Personalization,0,enterprise,30,No,E-commerce personalisation.,Enterprise.
+Mutiny,Marketing,B2B personalisation,0,enterprise,30,No,Website personalisation for B2B.,Enterprise.
+Dropbox,Storage,Cloud storage,9.99,$9.99+/user/mo,100,Yes,Veteran cloud storage.,Pricing premium.
+Google Drive,Storage,Cloud storage,0,with Workspace,100,Yes,Industry default for SMBs.,Pricing scales.
+OneDrive,Storage,Cloud storage,0,with M365,100,Yes,Best for MS shops.,Tied to M365.
+Box,Storage,Enterprise storage,0,$5+/user/mo,100,Yes,Enterprise file storage.,Less polished UX.
+MEGA,Storage,Privacy storage,0,free / €4.99+/mo,0,Yes,End-to-end encrypted.,Less business features.
+pCloud,Storage,Lifetime plans,0,free / €4.99+/mo,0,Yes,One-time lifetime plan available.,Less enterprise.
+Backblaze B2,Storage,Object storage,0,$5+/TB/mo,30,Yes,Cheapest object storage.,Less integration breadth.
+AWS S3,Storage,Object storage,0,usage-based,1000,Yes,Industry default object storage.,Bills surprise.
+Cloudflare R2,Storage,Object storage,0,$15+/TB/mo,30,Yes,S3-compat with no egress.,Newer.
+Wasabi,Storage,Object storage,0,$6.99/TB/mo,30,Yes,No-egress-fee S3 alt.,Smaller community.
+Pebblely,Image gen,Product photo gen,0,$19+/mo,0,Yes,AI product photography.,Niche.
+Booth.ai,Image gen,Studio photography,0,$99+/mo,0,No,AI fashion + product.,Pricing premium.
+Phygital+,Image gen,3D + animation,0,$19+/mo,0,Yes,3D + image gen.,Niche.
+Pika Labs Pro,Video gen,Animation,28,$28+/mo,0,No,Premium Pika tier.,Costs add up.
+Vidu AI,Video gen,Asian gen,0,credits,0,Yes,Strong text-to-video.,Asian-focused.
+Hedra Character-3,Video gen,Talking avatars,0,$10-50+/mo,0,Yes,AI talking avatars.,Newer.
+Eightfold AI,HR,Talent intelligence,0,enterprise,30,No,AI for talent decisions.,Enterprise.
+Plum,HR,Hiring assessment AI,0,$5+/applicant,30,No,Bias-reduced hiring.,Niche.
+Pymetrics,HR,Behavioural assessments,0,enterprise,30,No,Behavioural science hiring.,Enterprise.
+Modern Hire,HR,Video interviewing AI,0,enterprise,30,No,AI-scored interviews.,Controversial bias.
+HireVue,HR,Video interviewing AI,0,enterprise,30,No,AI video interviews.,Bias concerns.
+Phenom,HR,Talent CRM,0,enterprise,50,No,AI talent CRM.,Enterprise.
+Clay,CRM/Sales,Outbound + enrichment,149,$149+/mo,50,No,Workflow + enrichment.,Pricing premium.
+Apollo Conversations,CRM/Sales,Call recording AI,0,with Apollo,0,No,Apollo's gong.,Less polished than Gong.
+Avoma,CRM/Sales,Conversation intel,24,$24+/user/mo,30,No,Mid-market conv intel.,Below Gong.
+Aviso,CRM/Sales,Revenue intelligence,0,enterprise,30,No,AI revenue forecasting.,Enterprise.
+Crystal,CRM/Sales,Personality AI,0,$49+/mo,30,No,DISC personality predictions.,Niche.
+Tipalti,Finance,AP automation,0,$149+/mo,30,No,AP automation.,Pricing scales.
+Mosaic,Finance,Strategic finance,0,enterprise,30,No,AI finance platform.,Enterprise.
+Pigment,Finance,Modern FP&A,0,enterprise,30,No,Modern FP&A.,Enterprise.
+Cube,Finance,FP&A,0,enterprise,30,No,FP&A connecting Excel + DB.,Enterprise.
+Anaplan,Finance,Enterprise planning,0,enterprise,30,No,Connected planning.,Heavy enterprise.
+Celonis,Process mining,Enterprise,0,enterprise,100,No,Industry default process mining.,Enterprise.
+UiPath Process Mining,Process mining,with UiPath,0,enterprise,100,No,Within UiPath suite.,Enterprise.
+Soroco,Process mining,Work observation,0,enterprise,30,No,Records actual work patterns.,Enterprise.
+Owl Labs,Hardware,Meeting cameras,1099,$1099 one-time,0,No,360 meeting cameras.,Hardware cost.
+Neat,Hardware,Video bars,1500,$1500+ one-time,0,No,Premium meeting hardware.,Hardware cost.
+Logitech Rally,Hardware,Conference camera,1500,$1500+ one-time,0,No,Mid-market video.,Hardware cost.
+Spellbook,Legal,AI contract drafting,0,$99+/user/mo,10,No,AI contract drafting in Word.,Niche.
+EvenUp,Legal,Plaintiff law AI,0,enterprise,0,No,AI for personal injury.,Vertical-specific.
+DraftWise,Legal,Contract AI,0,enterprise,30,No,Contract assembly AI.,Enterprise.
+Segment,CDP,Industry default,0,free / $120+/mo,300,Yes,Twilio-owned CDP.,Pricing scales.
+RudderStack,CDP,Open source,0,free / $500+/mo,100,Yes,Open-source Segment alt.,Smaller community.
+PostHog CDP,CDP,Open source,0,with PostHog plan,30,Yes,PostHog's CDP capabilities.,Less mature than Segment.
+mParticle,CDP,Mobile-first CDP,0,enterprise,100,No,Mobile-focused CDP.,Enterprise.
+Tealium,CDP,Enterprise CDP,0,enterprise,200,No,Enterprise CDP veteran.,Heavy enterprise.
+Riverside.fm,Audio/Podcast,Studio recording,15,$15+/mo,0,Yes,Best remote podcast recording.,Niche.
+Squadcast,Audio/Podcast,Remote recording,0,$10+/mo,0,Yes,Riverside alternative.,Smaller community.
+Hindenburg,Audio/Podcast,Editing,95,$95 one-time,0,No,Podcast editing software.,One-time license.
+Auphonic,Audio/Podcast,Post-production AI,0,free / $11+/mo,0,Yes,Audio levelling + cleanup.,Niche.
+Adobe Podcast,Audio/Podcast,Voice enhancement,0,free / via CC,0,Yes,Best AI voice enhancement.,Tied to Adobe.
+Buzzsprout,Audio/Podcast,Podcast hosting,12,$12+/mo,30,No,Best podcast host.,Niche.
+Transistor,Audio/Podcast,Podcast hosting,19,$19+/mo,30,No,Modern podcast host.,Niche.
+Mailgun,Email,Transactional,0,$35+/mo,30,No,Developer email API.,Less popular than Resend.
+Postal,Email,Open source,0,self-host,0,Yes,Open-source email server.,Setup overhead.
+MXroute,Email,Email hosting,35,$35/year,0,No,Cheap email hosting.,Less enterprise.
+Fastmail,Email,Privacy email,5,$5+/user/mo,0,No,Privacy-focused email.,Less business-oriented.
+ProtonMail,Email,Encrypted email,0,free / $4+/user/mo,0,Yes,End-to-end encrypted.,Less business integration.
+Hey.com,Email,Opinionated email,99,$99/year,0,No,Designed-for-attention email.,Niche.
+Miro,Whiteboard,Industry default,0,free / $8+/user/mo,100,Yes,Industry default whiteboard.,Pricing rose.
+Mural,Whiteboard,Enterprise,0,free / $12+/user/mo,50,Yes,Mural's whiteboard.,Pricier than Miro.
+FigJam,Whiteboard,Figma's,0,with Figma plan,30,Yes,Best for design teams.,Tied to Figma.
+tldraw,Whiteboard,Open source,0,free,0,Yes,Open-source whiteboard.,Smaller community.
+Excalidraw,Whiteboard,Hand-drawn diagrams,0,free / $7+/user/mo plus,0,Yes,Best hand-drawn style.,Niche.
+Lucidchart,Diagram,Diagrams as code,0,free / $7.95+/user/mo,50,Yes,Best diagram suite.,Pricier than alternatives.
+Whimsical,Diagram,Flowcharts + sticky notes,0,free / $10+/user/mo,30,Yes,Modern diagram tool.,Smaller community.
+Mermaid Live,Diagram,Diagrams as code,0,free,0,Yes,Open-source diagram syntax.,Code-only.
+Typeform,Forms,Industry default,0,free / $25+/mo,100,Yes,Best UX for forms.,Pricing rose.
+Tally,Forms,Free Typeform alt,0,free / $29+/mo,30,Yes,Best free Typeform alt.,Smaller community.
+Jotform,Forms,Veteran forms,0,free / $34+/mo,50,Yes,Most features.,UX less polished.
+Google Forms,Forms,Free,0,free with Google,30,Yes,Industry default free.,Basic features.
+Microsoft Forms,Forms,Free for M365,0,with M365,30,No,Best for MS shops.,Tied to M365.
+SurveyMonkey,Forms,Surveys,0,free / $39+/mo,50,Yes,Industry default surveys.,Pricing premium.
+Hotjar Ask,Forms,Embedded surveys,0,with Hotjar,0,Yes,Within Hotjar.,Tied to Hotjar.
+Refiner,Forms,Customer surveys,0,$79+/mo,30,No,B2B customer surveys.,Niche.
+Sprig,Forms,Product surveys,0,free / $175+/mo,30,Yes,Product analytics + surveys.,Pricing scales.
+Hotjar Engage,Forms,User interviews,0,with Hotjar,0,No,Recruit users.,Tied to Hotjar.
+Huginn,No-code automation,Open source,0,self-host,30,Yes,Veteran open-source automation.,Smaller community.
+Apache Airflow,No-code automation,Code-based,0,open source,30,Yes,Industry default ETL/orchestration.,Steep learning curve.
+Dagster,No-code automation,Modern orchestration,0,open source / cloud,30,Yes,Modern Airflow alt.,Newer.
+Prefect,No-code automation,Modern orchestration,0,open source / cloud,30,Yes,Modern orchestration.,Smaller community.
+Apache NiFi,No-code automation,Data integration,0,open source,30,Yes,Enterprise data integration.,Heavy.
+Embedchain,Knowledge base,Open source RAG framework,0,open source,0,Yes,Easy RAG framework.,Less control.
+RAGFlow,Knowledge base,Open source RAG platform,0,open source,0,Yes,Full RAG platform.,Newer.
+LlamaParse,Knowledge base,Parsing,0,free / $0.01+/page,0,Yes,Best PDF parsing.,Pricing scales.
+Unstructured,Knowledge base,Document parsing,0,free / $0.01+/page,0,Yes,Comprehensive parsing.,Smaller community.
+Voyage AI Embeddings,Knowledge base,Embeddings,0,$0.06+/M tokens,0,Yes,Best non-OpenAI embeddings.,Newer.
+Cohere Embed,Knowledge base,Embeddings,0,$0.10+/M tokens,0,No,Cohere's embedding API.,Smaller ecosystem.
+Jina Embeddings,Knowledge base,Embeddings,0,$0.02+/M tokens,0,Yes,Open-source embeddings.,Newer.
+Helicone,AI observability,LLM observability,0,free / $25+/mo,0,Yes,Best for tracking LLM usage.,Newer.
+LangSmith,AI observability,LangChain native,0,free / $39+/user/mo,0,Yes,LangChain's observability.,Tied to LangChain.
+Arize,AI observability,ML observability,0,free / $200+/mo,30,Yes,ML and LLM observability.,Pricing scales.
+Phoenix (Arize),AI observability,Open source,0,open source,0,Yes,Arize's open-source.,Less polished UI.
+Lunary,AI observability,LLM analytics,0,free / $19+/mo,0,Yes,LLM analytics + prompts.,Smaller community.
+Langfuse,AI observability,Open source,0,open source / cloud,0,Yes,Open-source LLM observability.,Newer.
+Pezzo,AI observability,Open source,0,open source,0,Yes,Prompt management.,Niche.
+Traceloop,AI observability,OpenTelemetry-based,0,free / $50+/mo,0,Yes,Standard-based AI observability.,Newer.
+Less Annoying CRM,CRM/Sales,Tiny biz,15,$15+/user/mo,30,No,Best for solos.,Limited at scale.
+Capsule CRM,CRM/Sales,Lightweight,18,$18+/user/mo,50,No,Simple SMB CRM.,Less powerful.
+Insightly,CRM/Sales,Mid-market,29,$29+/user/mo,50,No,Mid-market CRM.,Below HubSpot.
+Copper,CRM/Sales,Google-native,23,$23+/user/mo,50,No,Inside Gmail.,Niche.
+Streak,CRM/Sales,Gmail-only CRM,0,free / $19+/user/mo,30,Yes,Inside Gmail.,Gmail-only.
+Nutshell,CRM/Sales,Affordable CRM,19,$19+/user/mo,50,No,Mid-market CRM.,Smaller community.

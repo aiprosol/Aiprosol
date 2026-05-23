@@ -1,0 +1,227 @@
+{
+  "name": "Aiprosol — Cash position daily snapshot",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "30 8 * * 1-5"
+            }
+          ]
+        }
+      },
+      "id": "da7e51c7-c04b-40d4-82d9-3ed0a0a2d64a",
+      "name": "Weekday 8:30",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://production.plaid.com/accounts/balance/get",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"client_id\":\"{{ $env.PLAID_CLIENT }}\",\"secret\":\"{{ $env.PLAID_SECRET }}\",\"access_token\":\"{{ $env.PLAID_ACCESS_TOKEN }}\"}"
+      },
+      "id": "f61df819-28ab-4bbb-a4af-94ecdd836b5a",
+      "name": "Plaid balance",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        440,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "invoice",
+        "operation": "getAll",
+        "filters": {
+          "status": "AUTHORISED"
+        }
+      },
+      "id": "ba6b18f1-77e5-421c-842b-59b40761cef5",
+      "name": "Xero — AR aging",
+      "type": "n8n-nodes-base.xero",
+      "typeVersion": 1,
+      "position": [
+        440,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "invoice",
+        "operation": "getAll",
+        "filters": {
+          "status": "AUTHORISED",
+          "type": "ACCPAY"
+        }
+      },
+      "id": "29147619-ea4d-44da-bc8c-782a29b997ea",
+      "name": "Xero — AP due 7d",
+      "type": "n8n-nodes-base.xero",
+      "typeVersion": 1,
+      "position": [
+        440,
+        600
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition"
+      },
+      "id": "6acba4d3-1288-4434-b1c7-93068ea04595",
+      "name": "Merge cash data",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        640,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const bal = $('Plaid balance').first().json.accounts[0].balances.available; const ar = $('Xero — AR aging').all().reduce((s,i)=>s+i.json.AmountDue,0); const ap = $('Xero — AP due 7d').all().filter(i=>new Date(i.json.DueDate)<Date.now()+7*864e5).reduce((s,i)=>s+i.json.AmountDue,0); return [{json:{balance:bal,ar_outstanding:ar,ap_due_7d:ap,net_position_7d:bal+ar-ap}}];"
+      },
+      "id": "e70a34bf-8237-4203-9c4b-d95d2f0efe07",
+      "name": "Compute headroom",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        840,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "#finance",
+        "text": "=💰 *Cash — {{ $now.format('EEE dd MMM') }}*\\n• Bank: ${{ $json.balance.toLocaleString() }}\\n• AR (owed to us): ${{ $json.ar_outstanding.toLocaleString() }}\\n• AP due 7d: ${{ $json.ap_due_7d.toLocaleString() }}\\n• Net 7d position: ${{ $json.net_position_7d.toLocaleString() }}"
+      },
+      "id": "5af4e7d7-0eeb-4d6c-8f08-a2fcfcd2d3c3",
+      "name": "Slack — cash summary",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        1040,
+        400
+      ]
+    }
+  ],
+  "connections": {
+    "Weekday 8:30": {
+      "main": [
+        [
+          {
+            "node": "Plaid balance",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Xero — AR aging",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Xero — AP due 7d",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Plaid balance": {
+      "main": [
+        [
+          {
+            "node": "Merge cash data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Xero — AR aging": {
+      "main": [
+        [
+          {
+            "node": "Merge cash data",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Xero — AP due 7d": {
+      "main": [
+        [
+          {
+            "node": "Merge cash data",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Merge cash data": {
+      "main": [
+        [
+          {
+            "node": "Compute headroom",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compute headroom": {
+      "main": [
+        [
+          {
+            "node": "Slack — cash summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "finance"
+    },
+    {
+      "name": "cash"
+    },
+    {
+      "name": "pattern-4"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-playbook-v1"
+  },
+  "pinData": {},
+  "versionId": "ca543f14-3157-40a5-8d21-2ec66b7d712f",
+  "id": "75cb58fa-258a-41e4-9b02-5a99560f4fe7",
+  "_aiprosol": {
+    "description": "Weekday 8:30 → bank balance + AR + AP → 4-line Slack summary",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

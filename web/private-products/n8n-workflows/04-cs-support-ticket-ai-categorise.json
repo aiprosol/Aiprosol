@@ -1,0 +1,125 @@
+{
+  "name": "CS \u00b7 Support ticket \u2192 AI categorise \u2192 Slack routing",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "support-ticket-new",
+        "responseMode": "lastNode"
+      },
+      "id": "1009269f-f9da-4819-bc92-9331a5c34e07",
+      "name": "Ticket created webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "model": "claude-3-5-haiku-20241022",
+        "options": {
+          "temperature": 0.2,
+          "maxTokensToSample": 200
+        },
+        "text": "=You classify a support ticket. Return ONLY JSON like {\"category\":\"bug|feature|billing|onboarding|general\",\"sentiment\":\"positive|neutral|negative\",\"urgency\":\"low|medium|high\"}. Ticket: subject=\"{{ $json.body.subject }}\" body=\"{{ $json.body.body }}\""
+      },
+      "id": "4dc4aba6-d1f0-4af9-80b5-51ba476e34b7",
+      "name": "Claude \u2014 categorise + sentiment",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1,
+      "position": [
+        460,
+        300
+      ],
+      "credentials": {
+        "anthropicApi": {
+          "id": "REPLACE_ME",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const raw = items[0].json.text || '';\nconst match = raw.match(/\\{[\\s\\S]*\\}/);\nlet parsed = { category: 'general', sentiment: 'neutral', urgency: 'low' };\nif (match) { try { parsed = JSON.parse(match[0]); } catch (e) {} }\nreturn [{ json: { ...items[0].json, classifier: parsed } }];"
+      },
+      "id": "c8ed39fc-e4d4-44da-9156-0e2c0966e51c",
+      "name": "Parse classifier JSON",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "post",
+        "channel": "=#support-{{ $json.classifier.category }}",
+        "text": "=:ticket: {{ $json.classifier.urgency }}/{{ $json.classifier.sentiment }} ticket \u2014 {{ $('Ticket created webhook').item.json.body.subject }}"
+      },
+      "id": "cc0d5e78-9c52-40d9-aa19-39f07bdd0007",
+      "name": "Slack assignment by category",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        900,
+        300
+      ],
+      "credentials": {
+        "slackApi": {
+          "id": "REPLACE_ME",
+          "name": "Slack workspace"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Ticket created webhook": {
+      "main": [
+        [
+          {
+            "node": "Claude \u2014 categorise + sentiment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude \u2014 categorise + sentiment": {
+      "main": [
+        [
+          {
+            "node": "Parse classifier JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse classifier JSON": {
+      "main": [
+        [
+          {
+            "node": "Slack assignment by category",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "972ec811-3d3f-4199-9f21-f12cc1852a8d",
+  "id": "f1f4e982-850b-466e-8b64-7c676b2bc4ce",
+  "meta": {
+    "instanceId": "aiprosol-starter-library-v1"
+  },
+  "tags": [],
+  "pinData": {}
+}

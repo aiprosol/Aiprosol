@@ -1,0 +1,370 @@
+[
+  {
+    "slug": "automate-lead-routing",
+    "title": "How to automate lead routing in under 3 minutes",
+    "metaDescription": "Step-by-step: how to build sub-3-minute lead routing with AI scoring + Slack + Calendly. Real n8n workflow included.",
+    "h1": "How to automate lead routing in under 3 minutes",
+    "summary": "The architecture: lead arrives → enrich → AI score → branch on score → route to right queue with notification. Total latency: 60-90 seconds. Conversion lift: 21x vs. 30-minute response.",
+    "totalTime": "PT4H",
+    "estCost": "$50-200/month",
+    "tools": [
+      "n8n",
+      "Slack",
+      "Calendly",
+      "a frontier LLM or budget LLM",
+      "HubSpot or Pipedrive"
+    ],
+    "steps": [
+      {
+        "name": "Capture leads at a single entry point",
+        "text": "Whichever form (Tally, Typeform, custom HTML) posts directly to a webhook URL — not async to a CRM. The webhook receives the lead in <500ms."
+      },
+      {
+        "name": "Enrich with public data (fire-and-forget)",
+        "text": "Use Clearbit, Apollo, or Twenty to enrich company size + industry + revenue. Cap at 15s timeout — if it doesn't return, proceed without it. Don't block the acknowledgment on enrichment."
+      },
+      {
+        "name": "Score the lead 0-100",
+        "text": "4-component model: FIT (40 pts: company size + revenue + industry + decision-maker title), INTENT (30: form type + hours-reported + challenge-length), ENGAGEMENT (20: pages visited + return visit + email engagement), URGENCY (10: time-based keywords)."
+      },
+      {
+        "name": "Branch on score thresholds",
+        "text": "≥85 = HOT → Slack #leads-hot with @AE-on-rota + 5-min SLA. 65-84 = WARM → SDR queue, 4-hour SLA. 40-64 = NURTURE → auto-enter 5-touch sequence. <40 = FUTURE → archive, quarterly re-score."
+      },
+      {
+        "name": "Send acknowledgment email within 90 seconds",
+        "text": "Templated email with personalisation tokens (first name, industry, estimated reclaim). Single CTA: book a call. Calendly link inline."
+      },
+      {
+        "name": "Log to CRM as the LAST step",
+        "text": "CRM write is non-blocking. If the CRM is down, the acknowledgment still went out. Sync the lead + score + segment with the CRM API; don't make the form post directly to the CRM (too slow + brittle)."
+      },
+      {
+        "name": "Set up escalation if AE doesn't respond",
+        "text": "If hot lead unread in Slack after 10 min → escalate to manager. After 20 min → escalate to founder. Build the safety net before launching."
+      },
+      {
+        "name": "Measure + tune weekly",
+        "text": "Track: median time-to-first-response (target <3 min, p95 <5 min), score distribution by segment, segment-to-SQL conversion rate. Adjust scoring weights monthly using closed-won data."
+      }
+    ],
+    "relatedProduct": "lead-generation-automation-playbook",
+    "relatedComparison": "aiprosol-vs-zapier-consultant"
+  },
+  {
+    "slug": "audit-business-processes-for-automation",
+    "title": "How to audit your business processes for automation",
+    "metaDescription": "The 5-step audit framework Aiprosol uses with Enterprise clients: catalogue tasks, triage, score impact×ease, decide tool, ship one per week.",
+    "h1": "How to audit your business processes for automation",
+    "summary": "Most businesses can reclaim 30-50 hrs/week, but only if they audit before building. This 5-step framework produces a prioritised list of automation candidates with explicit impact × ease scoring.",
+    "totalTime": "PT3H",
+    "estCost": "$0 (DIY with our $37 checklist)",
+    "tools": [
+      "Spreadsheet",
+      "Stopwatch",
+      "Calendar review",
+      "Aiprosol Business Process Audit Checklist ($37)"
+    ],
+    "steps": [
+      {
+        "name": "Catalogue every recurring task",
+        "text": "For 30 days, list every task done >3 times. Note frequency (daily / weekly / monthly), duration (minutes per occurrence), and total hours/month (frequency × duration × 4)."
+      },
+      {
+        "name": "Apply Pareto cut",
+        "text": "Top 5 tasks usually consume 60-80% of recurring manual hours. Don't waste effort optimising the bottom 50%."
+      },
+      {
+        "name": "Triage each task into 4 buckets",
+        "text": "(a) Automate now — rule-based, no judgement. (b) Augment with AI — judgement needed but pattern-recognisable. (c) Human-only — relationship, strategy, creativity. (d) Eliminate — doing this at all is the bug (often 10-15% of recurring work)."
+      },
+      {
+        "name": "Score automate / augment tasks on impact × ease",
+        "text": "Impact = hours/month × hourly cost × 12 (annual savings). Ease = build hours (1 if <4 hrs, 3 if 4-16 hrs, 9 if >16 hrs). Sort by impact/ease descending — top 5 are this month's roadmap."
+      },
+      {
+        "name": "Decide tool per task",
+        "text": "Linear pipelines <100 runs/day → Zapier. Branching / iterating → Make. High-volume or state machines → n8n self-hosted. Long-running drip → dedicated SaaS (Customer.io)."
+      },
+      {
+        "name": "Ship one workflow per week for 12 weeks",
+        "text": "Resist parallel building — context-switching kills velocity. Each Monday: pick the highest-impact next task. Each Friday: review what shipped, log baseline metrics, tune next week's pick."
+      }
+    ],
+    "relatedProduct": "business-process-audit-checklist",
+    "relatedComparison": "aiprosol-vs-in-house-build"
+  },
+  {
+    "slug": "score-leads-with-ai",
+    "title": "How to score inbound leads with AI",
+    "metaDescription": "Build a 4-component AI lead scoring model: FIT + INTENT + ENGAGEMENT + URGENCY. Routing thresholds + tuning playbook included.",
+    "h1": "How to score inbound leads with AI",
+    "summary": "Classical lead scoring is rule-based and inflexible. AI-augmented scoring handles free-text fields (challenge descriptions, custom requirements) and free-form intent signals. 4-component model below.",
+    "totalTime": "PT6H",
+    "estCost": "$0-200/month",
+    "tools": [
+      "a frontier LLM or budget LLM",
+      "n8n or Zapier",
+      "Your CRM"
+    ],
+    "steps": [
+      {
+        "name": "Define the 4 scoring components",
+        "text": "FIT (40 pts max — firmographic fit). INTENT (30 — explicit buying signals). ENGAGEMENT (20 — behavioural). URGENCY (10 — time-based). Total 100."
+      },
+      {
+        "name": "Allocate FIT points",
+        "text": "Company size 10-500 employees (+15). Revenue $1M-$50M (+10). Industry in your top-7 ICP (+10). Title is decision-maker (+5)."
+      },
+      {
+        "name": "Allocate INTENT points",
+        "text": "Filled audit form vs. newsletter (+15). Reported manual hours ≥30/week (+10). Wrote >100 chars in challenge field (+5). Use AI to score the challenge field for specificity vs. generic."
+      },
+      {
+        "name": "Allocate ENGAGEMENT + URGENCY points",
+        "text": "Visited ≥3 pages same session (+5). Viewed pricing (+5). Return visit within 7 days (+5). Mentioned urgency keywords (+5). Currently on a competitor's tool (+5)."
+      },
+      {
+        "name": "Set routing thresholds",
+        "text": "85+ HOT: 5-min SLA, Slack-ping AE. 65-84 WARM: 4-hour SLA, SDR queue. 40-64 NURTURE: auto-sequence. 0-39 FUTURE: archive + quarterly re-score."
+      },
+      {
+        "name": "Calibrate against historical closed-won data",
+        "text": "Pull last 90 days of closed-won deals. Calculate their score at the time they entered. If your model says >85 for 80% of them, you're calibrated. If not, tune weights."
+      },
+      {
+        "name": "Re-score every quarter",
+        "text": "Closed-won data accumulates → re-tune weights monthly first 3 months, then quarterly. Track which components predict best — typically FIT does, INTENT second."
+      }
+    ],
+    "relatedProduct": "lead-generation-automation-playbook",
+    "relatedComparison": null
+  },
+  {
+    "slug": "deploy-first-n8n-workflow",
+    "title": "How to deploy your first n8n workflow",
+    "metaDescription": "Step-by-step: from sign-up to first n8n workflow running in production. Importable starter included.",
+    "h1": "How to deploy your first n8n workflow",
+    "summary": "n8n is the most cost-effective workflow orchestrator at SMB scale — unmetered runs on a $5/month VPS. This guide gets you from zero to first workflow live in under 30 minutes.",
+    "totalTime": "PT30M",
+    "estCost": "$5/month (VPS) or free (n8n.cloud trial)",
+    "tools": [
+      "n8n.cloud or self-hosted n8n",
+      "Your existing tools (Slack, Gmail, Stripe, etc.)"
+    ],
+    "steps": [
+      {
+        "name": "Choose hosting: cloud or self-hosted",
+        "text": "Cloud: n8n.cloud free trial, then $20/month. Self-hosted: $5/month VPS (DigitalOcean, Hetzner) + Docker compose. Self-hosted wins on cost at any scale; cloud wins on zero-setup."
+      },
+      {
+        "name": "Sign up + verify email",
+        "text": "Cloud: sign up at n8n.cloud. Self-hosted: docker pull n8nio/n8n + docker-compose up. Either way, you should reach the workflows dashboard within 5 minutes."
+      },
+      {
+        "name": "Import a starter workflow",
+        "text": "Aiprosol's free starter pack includes 25 n8n .json files. Download → Workflows → Import from File → pick the matching .json (e.g. Stripe-charge-to-HubSpot.json)."
+      },
+      {
+        "name": "Connect credentials",
+        "text": "Each workflow shows 'REPLACE_ME' placeholders for credentials. Workflows → Credentials → Create new → pick the provider (Slack, Gmail, Stripe) → OAuth or API key. n8n stores these encrypted."
+      },
+      {
+        "name": "Test with sample payload",
+        "text": "Use n8n's Test mode → click Execute Workflow. Each node lights up green/red. Fix any red nodes (usually a missing field or wrong credential)."
+      },
+      {
+        "name": "Activate the workflow",
+        "text": "Toggle Active → workflow listens for triggers. Test by firing a real event (e.g. test Stripe charge). Verify the downstream action happened (CRM updated, Slack message sent)."
+      },
+      {
+        "name": "Set up failure alerts",
+        "text": "Settings → Error Workflow → create or import an error-handler workflow that posts to Slack on any execution failure. Never run a production workflow without error notifications."
+      }
+    ],
+    "relatedProduct": "workflow-automation-playbook",
+    "relatedComparison": "aiprosol-vs-zapier-consultant"
+  },
+  {
+    "slug": "calculate-roi-of-ai-automation",
+    "title": "How to calculate the ROI of AI automation",
+    "metaDescription": "Honest formula for AI automation ROI: hours reclaimed × hourly cost × annual weeks. Plus how to validate the inputs.",
+    "h1": "How to calculate the ROI of AI automation",
+    "summary": "Most ROI calculations are theatre. This is the formula Aiprosol uses with paying clients — based on measured hours BEFORE and AFTER, not vendor-pitched projections.",
+    "totalTime": "PT2H",
+    "estCost": "$0 (DIY with our $47 calculator)",
+    "tools": [
+      "Spreadsheet",
+      "Calendar review",
+      "Aiprosol ROI Calculator ($47)"
+    ],
+    "steps": [
+      {
+        "name": "Measure baseline manual hours BEFORE automation",
+        "text": "For each candidate workflow, measure how many hours/week the team currently spends. Use time-tracking, calendar review, or self-reported with stopwatch. Don't trust gut estimates — they over-count by ~30%."
+      },
+      {
+        "name": "Estimate post-automation hours",
+        "text": "Conservative: 70% reduction of manual time. Aggressive: 90%. Don't assume 100% — there's always edge cases requiring human handling."
+      },
+      {
+        "name": "Calculate weekly hours reclaimed",
+        "text": "Weekly hours reclaimed = baseline − post-automation. Sanity check: Aiprosol's average across clients is 35 hrs/week. If yours is materially higher or lower, double-check the inputs."
+      },
+      {
+        "name": "Calculate annual savings",
+        "text": "Annual savings = weekly hours × fully-loaded hourly cost × 50 weeks. Fully-loaded hourly cost = (annual salary × 1.4 benefits multiplier) / 2,000 hours. Don't use unloaded rate — it underestimates by 30-40%."
+      },
+      {
+        "name": "Subtract implementation cost",
+        "text": "Implementation cost = (build hours × hourly rate) + tool subscriptions for 12 months + your time investment. For Aiprosol-built: managed plan × 12 months. For DIY: 80-200 hours of internal time."
+      },
+      {
+        "name": "Compute payback in weeks",
+        "text": "Payback weeks = implementation cost / weekly savings. Most automation projects pay back in 4-12 weeks. If yours is >26 weeks, the workflow probably isn't worth automating yet."
+      },
+      {
+        "name": "Don't fake the numbers",
+        "text": "Vendor-pitched ROI assumes best case. Real ROI measures actual hours-reclaimed at days 30/60/90. Aiprosol's 90-day reclaim guarantee is based on measured deltas — that's the standard to hold any automation vendor to."
+      }
+    ],
+    "relatedProduct": "ai-automation-roi-calculator",
+    "relatedComparison": "aiprosol-vs-in-house-build"
+  },
+  {
+    "slug": "build-customer-support-ai",
+    "title": "How to build customer support automation that customers actually like",
+    "metaDescription": "Step-by-step: build AI customer support that resolves 60% of tickets while preserving brand voice + escalating edge cases to humans.",
+    "h1": "How to build customer support automation that customers actually like",
+    "summary": "Most AI support tools frustrate customers. The pattern that works: AI handles routine queries, escalates anything edge-case to humans WITH context pre-loaded. Done right, CSAT goes UP because response times go down.",
+    "totalTime": "PT8H",
+    "estCost": "$50-200/month",
+    "tools": [
+      "Plain / Intercom / Help Scout / Zendesk",
+      "a frontier LLM",
+      "Your knowledge base"
+    ],
+    "steps": [
+      {
+        "name": "Audit your historical tickets",
+        "text": "Export 200-500 recent tickets. Categorise: refund / tracking / sizing / billing / bug / feature-request / other. Identify the top 5 categories by volume — these are your automation targets."
+      },
+      {
+        "name": "Build category classifier",
+        "text": "Use a few-shot prompt that takes ticket subject + first 200 chars + ticket history → outputs one of your top 5 categories. Test on 50 held-out tickets. Target accuracy ≥90% before deploying."
+      },
+      {
+        "name": "Build response drafts for top 3 categories",
+        "text": "For each high-volume category, build a drafted response that includes: greeting (brand-voice-calibrated), specific answer (RAG over your KB), CTA. Test by feeding 20 real tickets through the draft pipeline."
+      },
+      {
+        "name": "Add confidence scoring",
+        "text": "Each response includes a confidence score (0-100). High confidence (>85): auto-send. Medium (60-85): draft + human approves with one click. Low (<60): route to human with no AI draft."
+      },
+      {
+        "name": "Add escalation triggers",
+        "text": "Sentiment analysis flags negative language → human handles, no AI draft. Mentions legal / refund threshold / executive → auto-escalate to senior support. Mentions specific accounts → priority routing."
+      },
+      {
+        "name": "Pilot on 5% of inbound for 2 weeks",
+        "text": "Don't roll out to 100% immediately. Sample 5% randomly. Measure: CSAT vs control group, time-to-first-response, escalation rate, customer feedback. Tune before expanding."
+      },
+      {
+        "name": "Roll out + monitor weekly",
+        "text": "Once pilot CSAT ≥ control CSAT, expand to 100%. Weekly review: deflection rate, escalation accuracy, brand-voice drift. Re-train on misclassified tickets monthly."
+      }
+    ],
+    "relatedProduct": null,
+    "relatedComparison": null
+  },
+  {
+    "slug": "automate-document-processing",
+    "title": "How to automate document processing (invoices, contracts, statements)",
+    "metaDescription": "Build 99%+ accurate document extraction with confidence scoring + audit trail. Replaces manual data entry without OCR pain.",
+    "h1": "How to automate document processing",
+    "summary": "Modern LLMs handle unstructured documents at 99%+ accuracy with proper architecture. This guide covers the extraction pipeline: ingest → AI extract → confidence-score → human review on edge cases → push to system of record.",
+    "totalTime": "PT12H",
+    "estCost": "$100-500/month",
+    "tools": [
+      "a frontier LLM or document-specific extractor for extraction",
+      "Your accounting / ERP / CRM",
+      "Audit log database"
+    ],
+    "steps": [
+      {
+        "name": "Identify the top document type to automate",
+        "text": "Most valuable: invoices (high volume, structured), tax docs (high accuracy required), contracts (high reasoning), receipts (high volume). Start with one type; perfect that pipeline before expanding."
+      },
+      {
+        "name": "Define the extraction schema",
+        "text": "Write the JSON schema you want extracted. For invoices: vendor name, vendor address, invoice #, invoice date, due date, line items (description + quantity + unit price + total), subtotal, tax, total."
+      },
+      {
+        "name": "Build the extraction prompt",
+        "text": "System prompt: 'You are a document data extractor. Output valid JSON matching this schema: [schema]. If a field isn't present, output null. Don't hallucinate.' User prompt: 'Extract from this document: [doc text or image]'."
+      },
+      {
+        "name": "Add confidence scoring per field",
+        "text": "Ask the LLM to output confidence (0-100) per extracted field. Use a frontier LLM's structured output mode or function calling for guaranteed JSON validity."
+      },
+      {
+        "name": "Route by confidence",
+        "text": "All fields >95%: auto-post to ERP/CRM. Any field 70-95%: queue for human review with the AI's reasoning shown. Any field <70%: human handles from scratch."
+      },
+      {
+        "name": "Build the audit log",
+        "text": "Every extraction logs: input doc hash, model used, prompt sent, output JSON, confidence per field, reviewer ID (if reviewed), decision (approve/edit/reject), timestamp. Required for compliance, useful for re-training."
+      },
+      {
+        "name": "Re-train on human corrections weekly",
+        "text": "Every human edit is supervised learning data. Aggregate corrections weekly, update few-shot examples in the prompt. Track accuracy week-over-week; target 99%+ steady-state."
+      }
+    ],
+    "relatedProduct": null,
+    "relatedComparison": null
+  },
+  {
+    "slug": "pick-zapier-vs-make-vs-n8n",
+    "title": "How to pick Zapier vs Make vs n8n for your workflow",
+    "metaDescription": "Decision matrix: when Zapier wins, when Make wins, when n8n wins. Plus cost calculations at your scale.",
+    "h1": "How to pick Zapier vs Make vs n8n for your workflow",
+    "summary": "Each tool has a sweet spot. This is the decision matrix Aiprosol uses with paying clients — based on workflow shape, run volume, team technical level, and cost-per-operation.",
+    "totalTime": "PT1H",
+    "estCost": "$0",
+    "tools": [
+      "The Aiprosol Tool Cost Comparison spreadsheet (free with the Starter Pack)"
+    ],
+    "steps": [
+      {
+        "name": "Identify the workflow shape",
+        "text": "Linear pipeline (trigger → action → action). Branching (1 trigger → multiple paths). Iterating (1 trigger → for-each over array). Scheduled sweep (cron + query + per-row processing). Polling. Approval gate. Long-running state machine."
+      },
+      {
+        "name": "Estimate run volume",
+        "text": "How many times per day will this workflow fire? Counts every internal step too — a 5-step workflow firing 100 times/day = 500 'operations' on Zapier's billing."
+      },
+      {
+        "name": "Check team's technical level",
+        "text": "Non-technical (sales / ops): Zapier wins for ease. Technical-adjacent (ops with light JS): Make wins on visual + cost. Engineering (devs): n8n wins on flexibility + self-host cost."
+      },
+      {
+        "name": "Apply the cost matrix",
+        "text": "Under 100 runs/day, simple shape, non-technical team → Zapier ($20-50/mo). 100-2,000 runs/day OR branching/iterating → Make ($9-29/mo). 2,000+ runs/day OR state machines OR engineering team → n8n self-hosted ($5/mo VPS, unmetered)."
+      },
+      {
+        "name": "Check ecosystem fit",
+        "text": "Zapier: 5,000+ apps integrated, weakest niche tools usually have a Zapier integration. Make: 1,800+ apps, strong on data manipulation. n8n: 350+ official + community nodes, plus full code blocks for anything missing."
+      },
+      {
+        "name": "Stress-test edge cases",
+        "text": "What happens at 10x the expected volume? Zapier: bill jumps + rate limits hit. Make: usually still works, bill is moderate. n8n self-hosted: same VPS cost."
+      },
+      {
+        "name": "Pick one + commit for 90 days",
+        "text": "Don't tool-shop weekly. Pick based on the matrix, commit for 90 days, measure actual cost + dev time vs estimate. Re-evaluate at 90 days."
+      }
+    ],
+    "relatedProduct": "workflow-automation-playbook",
+    "relatedComparison": "aiprosol-vs-zapier-consultant"
+  }
+]

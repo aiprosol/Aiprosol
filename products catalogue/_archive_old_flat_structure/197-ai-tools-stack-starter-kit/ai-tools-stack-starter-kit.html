@@ -1,0 +1,653 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>The AI Tools Stack Starter Kit — Aiprosol</title><style>
+:root { color-scheme: light dark; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif; max-width: 760px; margin: 0 auto; padding: 56px 32px 96px; line-height: 1.75; color: #1F1B2E; background: #FAF8FF; }
+@media (prefers-color-scheme: dark) { body { color: #E5E7EB; background: #0A0613; } a { color: #C084FC; } blockquote { background: rgba(139,92,246,0.08); border-left-color: #8B5CF6; color: #C7CEDB; } code { background: rgba(139,92,246,0.12); color: #C084FC; } pre { background: rgba(0,0,0,0.45); border: 1px solid #2A1F3D; } hr { border-color: #2A1F3D; } table { border-color: #2A1F3D; } th { background: #1A1428; } td, th { border-color: #2A1F3D; } tr:nth-child(even) { background: rgba(139,92,246,0.04); } }
+h1, h2, h3, h4 { font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.2; letter-spacing: -0.01em; }
+h1 { font-size: 36px; margin: 0 0 28px; font-weight: 800; background: linear-gradient(135deg, #8B5CF6, #C084FC); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+h2 { font-size: 24px; margin-top: 48px; margin-bottom: 14px; font-weight: 700; padding-bottom: 8px; border-bottom: 1px solid rgba(139,92,246,0.3); }
+h3 { font-size: 18px; margin-top: 28px; margin-bottom: 10px; font-weight: 700; color: #8B5CF6; }
+@media (prefers-color-scheme: dark) { h3 { color: #C084FC; } }
+h4 { font-size: 15px; margin-top: 18px; margin-bottom: 6px; font-weight: 700; }
+p { margin: 12px 0; }
+a { color: #6D28D9; text-decoration: underline; text-underline-offset: 3px; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+blockquote { background: rgba(139,92,246,0.05); border-left: 3px solid #8B5CF6; padding: 14px 22px; margin: 22px 0; color: #4A4660; border-radius: 6px; }
+hr { border: 0; border-top: 1px solid rgba(139,92,246,0.18); margin: 40px 0; }
+ul, ol { padding-left: 26px; }
+li { margin: 6px 0; }
+code { background: rgba(139,92,246,0.08); padding: 2px 8px; border-radius: 5px; font-family: 'JetBrains Mono', SFMono-Regular, ui-monospace, monospace; font-size: 0.9em; color: #6D28D9; }
+pre { background: #F4F1FA; padding: 18px 22px; border-radius: 10px; overflow-x: auto; border: 1px solid rgba(139,92,246,0.15); margin: 18px 0; }
+pre code { background: none; padding: 0; color: inherit; font-size: 13px; line-height: 1.6; }
+table { border-collapse: collapse; width: 100%; margin: 22px 0; font-size: 14px; border: 1px solid rgba(139,92,246,0.2); border-radius: 8px; overflow: hidden; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid rgba(139,92,246,0.12); }
+th { background: rgba(139,92,246,0.08); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #6D28D9; }
+tr:nth-child(even) { background: rgba(139,92,246,0.025); }
+.brand-footer { margin-top: 80px; padding-top: 28px; border-top: 1px solid rgba(139,92,246,0.18); font-size: 12px; color: #6B7585; text-align: center; }
+.brand-footer a { color: #8B5CF6; text-decoration: none; }
+@media print { body { padding: 0; max-width: 100%; } h1 { page-break-after: avoid; } h2, h3 { page-break-after: avoid; page-break-inside: avoid; } pre, blockquote, table { page-break-inside: avoid; } }
+</style></head><body>
+<h1>The AI Tools Stack Starter Kit</h1>
+<p><strong>8 pre-built, opinionated AI tool stacks for different business shapes. Each stack: tools, monthly cost, integration map, MVP path, scale-up path. Ship in a week.</strong></p>
+<p>Version 1.0 · 2026 · © Aiprosol Ltd</p>
+<hr />
+<h2>How this differs from the AI Tools Comparison Guide</h2>
+<p>The Comparison Guide ($67) tells you <strong>what every tool does</strong>. This kit tells you <strong>which exact stack to assemble</strong> for your specific business shape, and how to wire it together.</p>
+<p>If you bought the Comparison Guide first and want to act, this is the next step.</p>
+<hr />
+<h2>How to use this kit</h2>
+<ol>
+<li>Find the stack closest to your business in §1-§8 below</li>
+<li>Read the <strong>rationale</strong> — why these tools and not others</li>
+<li>Read the <strong>MVP path</strong> — start with the smallest version, add complexity as you grow</li>
+<li>Use the <strong>integration map</strong> to wire the tools together</li>
+<li>Use the <strong>monthly-cost model</strong> to forecast spend as you scale</li>
+</ol>
+<p>Each stack has been built and run inside real Aiprosol client engagements. Costs and tools are accurate as of release date.</p>
+<hr />
+<h1>§1 · The 8-person services agency</h1>
+<p><strong>Shape:</strong> consulting / dev shop / design studio. 8 people. ~£40-80k MRR.</p>
+<h3>The stack</h3>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Tool</th>
+<th>Monthly cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Primary LLM</td>
+<td>Claude.ai Pro Team (5 seats)</td>
+<td>£90</td>
+</tr>
+<tr>
+<td>Workflow runner</td>
+<td>Make Pro</td>
+<td>£18</td>
+</tr>
+<tr>
+<td>CRM</td>
+<td>HubSpot Free</td>
+<td>£0</td>
+</tr>
+<tr>
+<td>Inbox</td>
+<td>Gmail (existing) + Front Pro 5 seats</td>
+<td>£295</td>
+</tr>
+<tr>
+<td>Calendar</td>
+<td>Cal.com</td>
+<td>£0</td>
+</tr>
+<tr>
+<td>Project mgmt</td>
+<td>Notion Plus</td>
+<td>£40</td>
+</tr>
+<tr>
+<td>Time tracking</td>
+<td>Toggl</td>
+<td>£45</td>
+</tr>
+<tr>
+<td>Voice agent</td>
+<td>(none yet)</td>
+<td>£0</td>
+</tr>
+<tr>
+<td>Coding</td>
+<td>Cursor Pro × 3</td>
+<td>£48</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td></td>
+<td><strong>£536/mo</strong></td>
+</tr>
+</tbody>
+</table>
+<h3>The 5 automations to build</h3>
+<ol>
+<li><strong>Inbound enquiry → AI-classified → assigned to right partner</strong> — Make + OpenAI + HubSpot</li>
+<li><strong>Discovery call recording → action items + draft proposal</strong> — Fathom + Make + Claude API + Google Docs</li>
+<li><strong>Project status weekly digest</strong> — Make + Notion + Gmail</li>
+<li><strong>Invoice OCR for incoming bills</strong> — Make + Claude vision + Xero</li>
+<li><strong>Client weekly progress email auto-draft</strong> — Make + Notion + Gmail</li>
+</ol>
+<h3>MVP path (week 1)</h3>
+<p>If you can only do one thing this week: build automation #1 (inbound enquiry classifier). It pays for the entire stack within 30 days.</p>
+<h3>Scale-up triggers</h3>
+<ul>
+<li>Past £150k MRR → add Vapi voice agent for inbound qualifier (£100-200/mo)</li>
+<li>Past £250k MRR → migrate from HubSpot Free to Pipedrive Pro (£35/seat) for better pipeline reporting</li>
+<li>Past 15 people → add Linear (£8/seat) for engineering, separate from project mgmt</li>
+</ul>
+<hr />
+<h1>§2 · The 12-person SaaS startup (post-seed, pre-Series A)</h1>
+<p><strong>Shape:</strong> product-led SaaS. 12 people. £15-50k MRR.</p>
+<h3>The stack</h3>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Tool</th>
+<th>Monthly cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LLM (in-product)</td>
+<td>OpenAI API + Claude API</td>
+<td>£200-500 (variable)</td>
+</tr>
+<tr>
+<td>LLM (internal)</td>
+<td>ChatGPT Team × 12</td>
+<td>£240</td>
+</tr>
+<tr>
+<td>Workflow</td>
+<td>Make Pro</td>
+<td>£18</td>
+</tr>
+<tr>
+<td>CRM</td>
+<td>Attio</td>
+<td>£350</td>
+</tr>
+<tr>
+<td>Customer support</td>
+<td>Intercom Essential + Fin AI</td>
+<td>£175 + per-resolution</td>
+</tr>
+<tr>
+<td>Analytics</td>
+<td>PostHog (free tier)</td>
+<td>£0</td>
+</tr>
+<tr>
+<td>Coding</td>
+<td>Cursor Pro × 8</td>
+<td>£128</td>
+</tr>
+<tr>
+<td>Voice (sales calls)</td>
+<td>Fathom</td>
+<td>£0</td>
+</tr>
+<tr>
+<td>Email (transactional)</td>
+<td>Resend</td>
+<td>£0-25</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td></td>
+<td><strong>£1,136 + variable</strong></td>
+</tr>
+</tbody>
+</table>
+<h3>The 6 automations to build</h3>
+<ol>
+<li><strong>Trial signup → activation tracking → at-risk alerting</strong> (PostHog + Make + Slack)</li>
+<li><strong>Customer support email → AI classifier → Fin AI auto-response or human</strong> (Intercom Fin)</li>
+<li><strong>Churn risk early-warning</strong> (PostHog + Attio)</li>
+<li><strong>Investor update auto-draft from numbers</strong> (Make + Stripe + PostHog + Claude)</li>
+<li><strong>Feature-request triage from support tickets</strong> (Intercom + Make + Notion)</li>
+<li><strong>Onboarding email sequence based on first-action signals</strong> (Make + Resend)</li>
+</ol>
+<h3>MVP path</h3>
+<p>Week 1: support classifier (#2). Highest immediate value.
+Week 2: trial activation tracker (#1).
+Week 3-4: churn early-warning (#3).</p>
+<h3>Scale-up triggers</h3>
+<ul>
+<li>Past £100k MRR → add a dedicated growth engineer or Aiprosol managed plan</li>
+<li>Past 25 people → swap Make for n8n (self-hosted) or step up to Make Enterprise</li>
+<li>Past £500k ARR → custom CDP layer instead of off-the-shelf analytics</li>
+</ul>
+<hr />
+<h1>§3 · The 30-person e-commerce / D2C brand</h1>
+<p><strong>Shape:</strong> Shopify or WooCommerce. £200k-1M MRR. Heavy on customer support and stock management.</p>
+<h3>The stack</h3>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Tool</th>
+<th>Monthly cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LLM</td>
+<td>Claude API + GPT-4o API</td>
+<td>£300</td>
+</tr>
+<tr>
+<td>Workflow</td>
+<td>Make Enterprise</td>
+<td>£190</td>
+</tr>
+<tr>
+<td>Customer support</td>
+<td>Gorgias + Concierge AI</td>
+<td>£350</td>
+</tr>
+<tr>
+<td>Inventory</td>
+<td>InflowInventory or Shopify native</td>
+<td>£0-89</td>
+</tr>
+<tr>
+<td>Email marketing</td>
+<td>Klaviyo</td>
+<td>£350-1,000 (volume)</td>
+</tr>
+<tr>
+<td>Reviews</td>
+<td>Junip</td>
+<td>£80</td>
+</tr>
+<tr>
+<td>Shipping</td>
+<td>ShipStation</td>
+<td>£100</td>
+</tr>
+<tr>
+<td>BI</td>
+<td>Glew.io</td>
+<td>£150</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td></td>
+<td><strong>~£1,500-2,500/mo</strong></td>
+</tr>
+</tbody>
+</table>
+<h3>The 8 automations to build</h3>
+<ol>
+<li><strong>Order anomaly detection</strong> (refund spikes, fraud, stock-outs) → Slack alert</li>
+<li><strong>Support ticket categoriser</strong> → Gorgias auto-route + auto-reply for FAQ-shape</li>
+<li><strong>Abandoned cart recovery</strong> → Klaviyo flow with AI-personalised opening line</li>
+<li><strong>Post-purchase upsell email</strong> → Klaviyo + Make + Claude</li>
+<li><strong>Review → AI sentiment + theme extraction</strong> → product-team weekly digest</li>
+<li><strong>Stock-out predictor</strong> (90-day forecast vs incoming PO)</li>
+<li><strong>Customer LTV scoring</strong> → segment for Klaviyo</li>
+<li><strong>Daily P&amp;L digest</strong> to founder (revenue vs ad spend vs COGS)</li>
+</ol>
+<hr />
+<h1>§4 · The 50-person professional services firm (legal / accounting / consulting)</h1>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Tool</th>
+<th>Monthly cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LLM</td>
+<td>Claude API + on-prem option</td>
+<td>£400-800</td>
+</tr>
+<tr>
+<td>Workflow</td>
+<td>Make Enterprise + n8n self-hosted</td>
+<td>£190 + £40 hosting</td>
+</tr>
+<tr>
+<td>CRM / matter mgmt</td>
+<td>Industry-specific (Clio, Karbon, etc.)</td>
+<td>£400-1,000</td>
+</tr>
+<tr>
+<td>Doc AI</td>
+<td>Reducto or Hyperscience</td>
+<td>£500-2,000</td>
+</tr>
+<tr>
+<td>Inbox</td>
+<td>Outlook / Gmail enterprise</td>
+<td>(existing)</td>
+</tr>
+<tr>
+<td>BI</td>
+<td>Power BI or Tableau</td>
+<td>£140-700</td>
+</tr>
+<tr>
+<td>Voice agent</td>
+<td>Vapi (inbound qualifier)</td>
+<td>£150-400</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td></td>
+<td><strong>~£2,000-5,000/mo</strong></td>
+</tr>
+</tbody>
+</table>
+<h3>Critical considerations</h3>
+<ul>
+<li><strong>Data residency</strong> — UK / EU clients require UK / EU LLM hosting. Use Claude on AWS Bedrock (eu-west-1) or self-host Mistral.</li>
+<li><strong>Audit trail</strong> — every AI output that touches client work logged with input + output + model version for 6 years.</li>
+<li><strong>Privilege</strong> — confidential client data NEVER routed through OpenAI / Anthropic without explicit DPA + data-not-trained guarantee.</li>
+</ul>
+<h3>The 6 automations to build</h3>
+<ol>
+<li><strong>Document review (contracts / filings)</strong> — Claude + Reducto with confidence-thresholded human review</li>
+<li><strong>Time-recording auto-capture</strong> from calendar + email + matter activity</li>
+<li><strong>Client intake automation</strong> — webform → matter created + conflict check + welcome packet</li>
+<li><strong>Billing reconciliation</strong> — auto-match expenses to matters</li>
+<li><strong>Compliance deadline radar</strong> — calendar entries auto-flag for review</li>
+<li><strong>Knowledge management</strong> — internal RAG over historical matters</li>
+</ol>
+<hr />
+<h1>§5 · The solo operator / 2-person consultancy</h1>
+<p><strong>Shape:</strong> you, possibly one helper. £5-30k MRR. Deeply manual still.</p>
+<h3>The stack (kept tight)</h3>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Tool</th>
+<th>Monthly cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LLM</td>
+<td>Claude.ai Pro</td>
+<td>£18</td>
+</tr>
+<tr>
+<td>Workflow</td>
+<td>Make Free or Pro</td>
+<td>£0-9</td>
+</tr>
+<tr>
+<td>CRM</td>
+<td>Notion (free tier)</td>
+<td>£0</td>
+</tr>
+<tr>
+<td>Email</td>
+<td>Gmail</td>
+<td>£0</td>
+</tr>
+<tr>
+<td>Calendar</td>
+<td>Cal.com Free</td>
+<td>£0</td>
+</tr>
+<tr>
+<td>Voice agent</td>
+<td>(none yet)</td>
+<td>£0</td>
+</tr>
+<tr>
+<td>Coding</td>
+<td>Cursor Pro</td>
+<td>£16</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td></td>
+<td><strong>£43-65/mo</strong></td>
+</tr>
+</tbody>
+</table>
+<h3>The 3 automations that buy you back the most time</h3>
+<ol>
+<li><strong>Inbound contact form → AI brief + Slack/email ping</strong> — 30 min/week saved on prospect research</li>
+<li><strong>Recurring client check-in auto-draft</strong> — 90 min/week saved on follow-up writing</li>
+<li><strong>Daily metric digest</strong> (Stripe revenue + new leads) at 8am — 15 min/day saved on dashboard checking</li>
+</ol>
+<p>Total: ~10-15 hrs/wk reclaimed for ~£60/mo. ROI &gt; 100×.</p>
+<h3>Scale-up trigger</h3>
+<ul>
+<li>Past £30k MRR → take a serious look at hiring a Chief of Staff or stepping up to Aiprosol Starter plan ($997/mo). The complexity of YOU as a single point of failure exceeds what Make/Zapier can paper over.</li>
+</ul>
+<hr />
+<h1>§6 · The 15-person manufacturing SMB</h1>
+<p><strong>Shape:</strong> physical goods, 8-50 employees, factory + warehouse + small admin team.</p>
+<h3>The stack</h3>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Tool</th>
+<th>Monthly cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LLM</td>
+<td>Claude API + Vision</td>
+<td>£200</td>
+</tr>
+<tr>
+<td>Workflow</td>
+<td>Make Pro</td>
+<td>£18</td>
+</tr>
+<tr>
+<td>ERP</td>
+<td>Existing (Xero / SAP Business One)</td>
+<td>(existing)</td>
+</tr>
+<tr>
+<td>Vision QC</td>
+<td>Custom on AWS Rekognition or Roboflow</td>
+<td>£200-500</td>
+</tr>
+<tr>
+<td>Predictive maintenance</td>
+<td>Tulip or custom</td>
+<td>£400-1,000</td>
+</tr>
+<tr>
+<td>Customer comms</td>
+<td>Front</td>
+<td>£80</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td></td>
+<td><strong>~£900-1,800/mo</strong></td>
+</tr>
+</tbody>
+</table>
+<h3>The 5 automations</h3>
+<ol>
+<li><strong>Vision QC on production line</strong> (defect detection at 99%+ accuracy)</li>
+<li><strong>Inventory reorder triggering</strong> (forecast + auto-PO drafts)</li>
+<li><strong>Customer order acknowledgement automation</strong></li>
+<li><strong>Quality complaint → root-cause classifier + RCA template auto-draft</strong></li>
+<li><strong>Daily production report from line data → Slack digest</strong></li>
+</ol>
+<hr />
+<h1>§7 · The 10-person real estate brand</h1>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Tool</th>
+<th>Monthly cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LLM</td>
+<td>Claude API</td>
+<td>£100</td>
+</tr>
+<tr>
+<td>Workflow</td>
+<td>Make Pro</td>
+<td>£18</td>
+</tr>
+<tr>
+<td>CRM</td>
+<td>LionDesk or Hubspot Free</td>
+<td>£0-30</td>
+</tr>
+<tr>
+<td>Voice agent (inbound)</td>
+<td>Bland.ai</td>
+<td>£200</td>
+</tr>
+<tr>
+<td>Listing portal</td>
+<td>Rightmove + OnTheMarket integrations</td>
+<td>(per portal)</td>
+</tr>
+<tr>
+<td>Tour booking</td>
+<td>Cal.com</td>
+<td>£0</td>
+</tr>
+<tr>
+<td>Drone / property media</td>
+<td>Matterport</td>
+<td>£80</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td></td>
+<td><strong>~£500-700/mo + portal fees</strong></td>
+</tr>
+</tbody>
+</table>
+<h3>The 5 automations</h3>
+<ol>
+<li><strong>Inbound enquiry → instant AI qualifier on call</strong> (Bland.ai answering before a human picks up)</li>
+<li><strong>Lead → property match → personalised listings email</strong></li>
+<li><strong>Viewing booked → reminder day before + AI-drafted post-viewing follow-up</strong></li>
+<li><strong>Vendor weekly update auto-compiled</strong> from market activity + viewing count</li>
+<li><strong>Offer → contract → automated handover to solicitor</strong></li>
+</ol>
+<hr />
+<h1>§8 · The 25-person healthcare ops team</h1>
+<p><strong>Shape:</strong> clinic, telehealth provider, or medical-services SMB. Heavy on patient intake + records + compliance.</p>
+<h3>The stack — HIPAA / NHS-compliant</h3>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Tool</th>
+<th>Monthly cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LLM</td>
+<td>Claude on AWS Bedrock (HIPAA)</td>
+<td>£300</td>
+</tr>
+<tr>
+<td>Workflow</td>
+<td>n8n self-hosted (no third-party data exposure)</td>
+<td>£40</td>
+</tr>
+<tr>
+<td>EHR</td>
+<td>(existing — Epic / Athenahealth / SystemOne)</td>
+<td>(existing)</td>
+</tr>
+<tr>
+<td>Patient comms</td>
+<td>Klara or Spruce</td>
+<td>£150-400</td>
+</tr>
+<tr>
+<td>Voice agent</td>
+<td>Hippocratic AI or in-house</td>
+<td>£400+</td>
+</tr>
+<tr>
+<td>BI</td>
+<td>Power BI with healthcare connectors</td>
+<td>£140</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td></td>
+<td><strong>~£1,000-1,500/mo</strong></td>
+</tr>
+</tbody>
+</table>
+<h3>Critical compliance notes</h3>
+<ul>
+<li>All AI processing of patient data through HIPAA-eligible / NHS-DSP-certified vendors only</li>
+<li>BAA signed with every vendor processing PHI</li>
+<li>Audit log retention 7 years minimum</li>
+<li>No patient data through general-purpose ChatGPT / Claude.ai consumer tier</li>
+</ul>
+<h3>The 5 automations</h3>
+<ol>
+<li><strong>Patient intake form → triage + appointment slot proposal</strong> (no PHI sent to non-HIPAA AI)</li>
+<li><strong>Insurance verification</strong> (auto-poll payor APIs, flag mismatches)</li>
+<li><strong>Appointment reminder cascade</strong> (24h, 2h, 30min — reduces no-shows 60-80%)</li>
+<li><strong>Clinical note auto-draft from session recording</strong> (HIPAA-compliant transcription only)</li>
+<li><strong>Claims status digest</strong> (daily, not real-time, to staff)</li>
+</ol>
+<hr />
+<h1>Cross-stack: integration patterns</h1>
+<p>Every stack uses some version of these connection patterns:</p>
+<h3>Pattern A — CRM as the source of truth</h3>
+<p>All customer data flows through the CRM. Other tools READ from it, write summaries back. Avoid the trap of "CRM has half the data, Notion has the other half, nobody knows where to look."</p>
+<h3>Pattern B — Workflow runner as the orchestrator</h3>
+<p>Make / Zapier / n8n is your central "glue." Avoid hard-coded API calls between tools — always route through the orchestrator so you have one place to debug.</p>
+<h3>Pattern C — LLM as a service, not a tool</h3>
+<p>Don't pick "ChatGPT" or "Claude" — pick API access. Then you can swap models without re-architecting. Best practice: an internal proxy that routes requests to the right model based on task type.</p>
+<h3>Pattern D — Single dashboard</h3>
+<p>One Notion page or Power BI dashboard pulling from all sources. Three things visible above the fold: revenue this week, active customers, pipeline value. Everything else is one click down.</p>
+<hr />
+<h1>Cost forecasting — the formula</h1>
+<p>For any stack, model the cost as:</p>
+<pre><code>fixed_monthly + (variable_per_request × requests_per_month)
+
+where:
+  fixed_monthly = sum of seat-licensed tools
+  variable_per_request = LLM API cost + workflow runner per-op cost
+  requests_per_month = automated transactions × steps per transaction
+</code></pre>
+<p>For a 10-person services firm running 1,000 automated transactions/month at 3 steps each (3,000 ops):</p>
+<ul>
+<li>Make Pro: £18 (10k ops included)</li>
+<li>LLM: 1,000 × $0.005 = £4</li>
+<li>Total: £22 + your seat-licensed tools (£200-400)</li>
+</ul>
+<p>So <strong>roughly £250-400/month for a 10-person firm fully automated</strong>. This holds for ~95% of SMBs we've worked with.</p>
+<hr />
+<h1>Migration order — recommended</h1>
+<p>If you're starting from zero, build in this order:</p>
+<ol>
+<li><strong>Pick the foundation LLM and the workflow runner.</strong> Standardise. Don't add anything else until these are running.</li>
+<li><strong>CRM as source of truth.</strong> Get every existing customer record into one CRM. De-dupe.</li>
+<li><strong>First automation: lead capture → CRM record.</strong> Foundation that everything else builds on.</li>
+<li><strong>Second automation: support / customer email triage.</strong> Highest immediate time saving.</li>
+<li><strong>Third automation: weekly metrics digest.</strong> Forces visibility.</li>
+<li>From here, follow the stack-specific automation list for your shape.</li>
+</ol>
+<hr />
+<h1>What to avoid</h1>
+<ul>
+<li><strong>Buying tools you don't have a plan to use.</strong> Common mistake: subscribing to 4 AI tools "to try" → forget to cancel → £300/mo bleed.</li>
+<li><strong>Building automations before processes.</strong> If the manual process is broken, automating it makes it broken faster.</li>
+<li><strong>Over-fitting the stack to a single use case.</strong> Each tool should serve at least 2-3 use cases.</li>
+<li><strong>Skipping the dashboard.</strong> A stack you can't see is a stack you can't trust.</li>
+</ul>
+<hr />
+<h2>Licensing</h2>
+<p>Licensed for unlimited internal use. Stack templates may be implemented within the purchaser's organisation. Resale or republication of the stack designs requires written permission. © 2026 Aiprosol Ltd.</p>
+<div class="brand-footer">© 2026 Aiprosol Ltd · <a href="https://aiprosol.com">aiprosol.com</a> · <a href="mailto:hello@aiprosol.com">hello@aiprosol.com</a><br>Licensed to the purchaser for unlimited internal use. Redistribution requires written permission.</div>
+</body></html>

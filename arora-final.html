@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arora — Aiprosol AI Assistant</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#06060d;--s1:#0e0e1a;--s2:#131324;--card:#1a1a2e;
+  --b:rgba(99,102,241,.12);--bh:rgba(99,102,241,.28);
+  --ac:#6366f1;--ac2:#8b5cf6;--glow:rgba(99,102,241,.2);
+  --soft:rgba(99,102,241,.07);--grn:#10b981;
+  --t:#eeeeff;--t2:#c8c8e8;--mu:#6666aa;--ln:rgba(99,102,241,.1);
+}
+html,body{height:100%;overflow:hidden}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);display:flex;flex-direction:column;}
+/* HEADER */
+.hdr{flex-shrink:0;height:60px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;background:rgba(6,6,13,.95);border-bottom:1px solid var(--b);position:relative;z-index:20;}
+.hdr::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:40%;height:1px;background:linear-gradient(90deg,transparent,var(--ac),transparent);}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.lm{width:30px;height:30px;background:linear-gradient(135deg,var(--ac),var(--ac2));border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:13px;color:#fff;box-shadow:0 0 14px var(--glow);}
+.ln{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--t);}
+.ln span{color:var(--ac);}
+.bdg{display:flex;align-items:center;gap:6px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.15);color:var(--grn);font-size:11px;font-weight:500;padding:4px 11px;border-radius:20px;}
+.dot{width:6px;height:6px;background:var(--grn);border-radius:50%;animation:p 2s infinite;}
+@keyframes p{0%,100%{opacity:1;box-shadow:0 0 4px var(--grn)}50%{opacity:.4;box-shadow:0 0 10px var(--grn)}}
+/* LAYOUT */
+.main{flex:1;display:flex;overflow:hidden;}
+/* SIDEBAR */
+.sb{width:252px;flex-shrink:0;border-right:1px solid var(--b);background:var(--s1);display:flex;flex-direction:column;overflow-y:auto;}
+.sb::-webkit-scrollbar{width:3px}.sb::-webkit-scrollbar-thumb{background:var(--b);}
+.ai{padding:22px 18px 18px;border-bottom:1px solid var(--b);}
+.aav{width:48px;height:48px;background:linear-gradient(135deg,var(--ac),var(--ac2));border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:17px;color:#fff;margin-bottom:12px;box-shadow:0 0 20px var(--glow);}
+.an{font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:var(--t);margin-bottom:4px;}
+.ar{font-size:12px;color:var(--mu);line-height:1.5;}
+.ss{padding:16px 18px 0;}
+.sl{font-size:10px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px;font-family:'Syne',sans-serif;}
+.tl{display:flex;flex-direction:column;gap:2px;margin-bottom:18px;}
+.tb{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:9px;border:none;background:transparent;cursor:pointer;text-align:left;width:100%;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--t2);transition:all .15s;}
+.tb:hover{background:var(--soft);color:var(--t);padding-left:14px;}
+.ti{font-size:14px;width:24px;height:24px;background:var(--s2);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--b);}
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:0 18px 18px;}
+.st{background:var(--s2);border:1px solid var(--b);border-radius:10px;padding:11px 9px;text-align:center;}
+.sv{font-family:'Syne',sans-serif;font-weight:800;font-size:17px;background:linear-gradient(135deg,var(--ac),var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block;margin-bottom:3px;}
+.sk{font-size:10px;color:var(--mu);font-weight:500;text-transform:uppercase;letter-spacing:.4px;}
+.sc{margin:0 18px 18px;background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;border:none;padding:11px 14px;border-radius:11px;cursor:pointer;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:7px;text-decoration:none;transition:all .2s;box-shadow:0 4px 18px var(--glow);}
+.sc:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--glow);}
+/* CHAT */
+.ca{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.wl{padding:32px 32px 10px;flex-shrink:0;}
+.wt{display:inline-flex;align-items:center;gap:6px;background:var(--soft);border:1px solid rgba(99,102,241,.18);color:var(--ac);font-size:11px;font-weight:600;padding:4px 11px;border-radius:20px;margin-bottom:16px;font-family:'Syne',sans-serif;letter-spacing:.8px;text-transform:uppercase;}
+.wl h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(20px,2.8vw,32px);line-height:1.15;color:var(--t);margin-bottom:9px;}
+.wl h1 .hi{color:var(--ac);}
+.wp{font-size:13px;color:var(--mu);font-weight:300;line-height:1.7;max-width:420px;}
+.qp{padding:12px 32px;display:flex;gap:7px;flex-wrap:wrap;flex-shrink:0;}
+.qb{background:var(--s1);border:1px solid var(--b);color:var(--t2);font-family:'DM Sans',sans-serif;font-size:12px;padding:6px 13px;border-radius:18px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.qb:hover{border-color:var(--ac);color:var(--ac);background:var(--soft);}
+.msgs{flex:1;overflow-y:auto;padding:10px 32px 14px;display:flex;flex-direction:column;gap:16px;}
+.msgs::-webkit-scrollbar{width:3px}.msgs::-webkit-scrollbar-thumb{background:var(--ln);}
+.mr{display:flex;gap:11px;animation:mi .25s ease both;}
+@keyframes mi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.mr.u{flex-direction:row-reverse;}
+.mav{width:30px;height:30px;border-radius:9px;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
+.mav.b{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;font-family:'Syne',sans-serif;box-shadow:0 0 10px var(--glow);}
+.mav.u{background:var(--s2);border:1px solid var(--b);color:var(--mu);}
+.bub{max-width:74%;padding:12px 16px;font-size:13.5px;line-height:1.75;word-break:break-word;}
+.bub.b{background:var(--s1);border:1px solid var(--b);border-radius:2px 14px 14px 14px;color:var(--t2);}
+.bub.u{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;border-radius:14px 2px 14px 14px;box-shadow:0 4px 14px var(--glow);}
+.bub strong{color:var(--ac);font-weight:600;}
+.bub.u strong{color:rgba(255,255,255,.85);}
+.tr{display:flex;gap:11px;}
+.tb2{background:var(--s1);border:1px solid var(--b);border-radius:2px 14px 14px 14px;padding:12px 16px;display:flex;gap:4px;align-items:center;}
+.td{width:5px;height:5px;background:var(--ac);border-radius:50%;animation:tb 1.2s infinite;}
+.td:nth-child(2){animation-delay:.2s}.td:nth-child(3){animation-delay:.4s}
+@keyframes tb{0%,80%,100%{transform:translateY(0);opacity:.3}40%{transform:translateY(-5px);opacity:1}}
+.bb{padding-left:41px;}
+.bk{display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;text-decoration:none;padding:9px 18px;border-radius:11px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;transition:all .2s;box-shadow:0 4px 14px var(--glow);}
+.bk:hover{transform:translateY(-2px);}
+/* INPUT */
+.iz{flex-shrink:0;padding:12px 32px 20px;border-top:1px solid var(--b);background:rgba(6,6,13,.95);}
+.ir{display:flex;gap:9px;align-items:flex-end;}
+.ib{flex:1;background:var(--s1);border:1px solid var(--b);border-radius:14px;padding:10px 14px;transition:border-color .2s,box-shadow .2s;}
+.ib:focus-within{border-color:var(--ac);box-shadow:0 0 0 3px var(--soft);}
+textarea{width:100%;background:transparent;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--t);resize:none;line-height:1.6;max-height:90px;}
+textarea::placeholder{color:var(--mu);}
+.snd{width:42px;height:42px;background:linear-gradient(135deg,var(--ac),var(--ac2));border:none;border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;box-shadow:0 4px 12px var(--glow);}
+.snd:hover{transform:translateY(-2px);}
+.snd:disabled{opacity:.3;cursor:not-allowed;transform:none;box-shadow:none;}
+.snd svg{width:15px;height:15px;fill:#fff;}
+.ih{margin-top:7px;font-size:10px;color:#333355;text-align:center;}
+.ih span{color:#444488;}
+/* MODAL */
+.mo{position:fixed;inset:0;background:rgba(6,6,13,.8);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;z-index:100;animation:fi .2s ease;}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+.mc{background:var(--s1);border:1px solid var(--b);border-radius:18px;padding:28px;width:340px;box-shadow:0 24px 60px rgba(0,0,0,.6),0 0 36px var(--glow);position:relative;overflow:hidden;}
+.mc::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:60%;height:1px;background:linear-gradient(90deg,transparent,var(--ac),transparent);}
+.mc h2{font-family:'Syne',sans-serif;font-weight:800;font-size:19px;color:var(--t);margin-bottom:7px;}
+.mc p{font-size:12px;color:var(--mu);line-height:1.6;margin-bottom:20px;}
+.mf{display:flex;flex-direction:column;gap:6px;margin-bottom:10px;}
+.mf label{font-size:10px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.8px;font-family:'Syne',sans-serif;}
+.mf input{background:var(--s2);border:1px solid var(--b);border-radius:9px;padding:9px 12px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--t);outline:none;transition:border-color .15s;}
+.mf input:focus{border-color:var(--ac);}
+.mf input::placeholder{color:#444466;}
+.ms{width:100%;background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;border:none;padding:11px;border-radius:11px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;margin-top:4px;box-shadow:0 4px 14px var(--glow);}
+.mx{width:100%;background:transparent;color:var(--mu);border:none;padding:7px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:3px;}
+@media(max-width:640px){.sb{display:none;}.wl,.qp,.msgs,.iz{padding-left:14px;padding-right:14px;}}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <a href="/" class="logo">
+    <div class="lm">A</div>
+    <span class="ln">Aip<span>rosol</span></span>
+  </a>
+  <div class="bdg"><span class="dot"></span>Arora is online</div>
+</header>
+<div class="main">
+  <aside class="sb">
+    <div class="ai">
+      <div class="aav">A</div>
+      <div class="an">Arora</div>
+      <div class="ar">Aiprosol's AI assistant. Ask me anything about automation, pricing, or how we can help your business.</div>
+    </div>
+    <div class="ss">
+      <div class="sl">Topics</div>
+      <div class="tl">
+        <button class="tb" onclick="sq('What automation services does Aiprosol offer?')"><span class="ti">🤖</span>Our Services</button>
+        <button class="tb" onclick="sq('How much does automation cost with Aiprosol?')"><span class="ti">💰</span>Pricing</button>
+        <button class="tb" onclick="sq('What ROI can I expect from automation?')"><span class="ti">📈</span>ROI & Results</button>
+        <button class="tb" onclick="sq('Can you share a relevant case study?')"><span class="ti">📋</span>Case Studies</button>
+        <button class="tb" onclick="sq('What happens on a discovery call?')"><span class="ti">📞</span>Discovery Call</button>
+        <button class="tb" onclick="sq('Where do I start with automation?')"><span class="ti">🚀</span>Getting Started</button>
+        <button class="tb" onclick="sq('What tools does Aiprosol use?')"><span class="ti">⚙️</span>Tools & Tech</button>
+        <button class="tb" onclick="sq('What digital products does Aiprosol sell?')"><span class="ti">📦</span>Digital Products</button>
+      </div>
+    </div>
+    <div class="ss"><div class="sl">By the numbers</div></div>
+    <div class="sg">
+      <div class="st"><span class="sv">35+</span><span class="sk">hrs/wk saved</span></div>
+      <div class="st"><span class="sv">340%</span><span class="sk">avg ROI</span></div>
+      <div class="st"><span class="sv">5wks</span><span class="sk">payback</span></div>
+      <div class="st"><span class="sv">90d</span><span class="sk">guarantee</span></div>
+    </div>
+    <a href="/" class="sc">📅 Book Free Discovery Call</a>
+  </aside>
+  <div class="ca">
+    <div class="wl" id="wl">
+      <div class="wt">✦ AI-Powered · Free</div>
+      <h1>Hi, I'm <span class="hi">Arora.</span><br>How can I help you?</h1>
+      <p class="wp">Ask me anything about automating your business — pricing, case studies, what to build first, or how to get started.</p>
+    </div>
+    <div class="qp" id="qp">
+      <button class="qb" onclick="sq('What should I automate first?')">What should I automate first?</button>
+      <button class="qb" onclick="sq('How much can I save?')">How much can I save?</button>
+      <button class="qb" onclick="sq('I run a law firm — can you help?')">I run a law firm</button>
+      <button class="qb" onclick="sq('I run a property agency — can you help?')">I run a property agency</button>
+      <button class="qb" onclick="sq('Tell me about your guarantee')">Your guarantee?</button>
+    </div>
+    <div class="msgs" id="msgs"></div>
+    <div class="iz">
+      <div class="ir">
+        <div class="ib">
+          <textarea id="inp" placeholder="Ask Arora anything about automation…" rows="1" onkeydown="hk(event)" oninput="rs(this)"></textarea>
+        </div>
+        <button class="snd" id="sb" onclick="send()">
+          <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        </button>
+      </div>
+      <div class="ih">Arora is powered by <span>Groq AI</span> · Part of the Aiprosol team</div>
+    </div>
+  </div>
+</div>
+<div class="mo" id="mo" style="display:none">
+  <div class="mc">
+    <h2>Stay in touch ✦</h2>
+    <p>Drop your details and Srijan will personally reach out — plus we'll send you a free automation audit.</p>
+    <div class="mf"><label>Your name</label><input type="text" id="mn" placeholder="Sarah Johnson"></div>
+    <div class="mf"><label>Business email</label><input type="email" id="me" placeholder="sarah@company.com"></div>
+    <div class="mf"><label>Company</label><input type="text" id="mc2" placeholder="Acme Ltd"></div>
+    <button class="ms" onclick="sl()">Send Me the Free Audit →</button>
+    <button class="mx" onclick="sk()">Skip — continue chatting with Arora</button>
+  </div>
+</div>
+<script>
+// ── CONFIG ──
+const GROQ_KEY = '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';
+const GROQ_MODEL = 'llama3-8b-8192';
+const SID = 'arora_' + Math.random().toString(36).substr(2,8);
+
+const SYS = `You are Arora, the official AI assistant for Aiprosol — a UK-based AI automation consultancy founded by Srijan Paudel. You are a core part of the Aiprosol team.
+
+YOUR IDENTITY:
+- Your name is Arora
+- Warm, direct and genuinely helpful — a trusted advisor, not a salesperson
+- British English (£ not $, "colour" not "color")
+- Specific answers with real numbers — never vague or evasive
+
+ABOUT AIPROSOL:
+Aiprosol helps UK SMBs reclaim 35+ hours per week through bespoke AI automation systems. We design, build and manage automation so business owners can focus on growth.
+Founded by: Srijan Paudel | srijanpaudel219@gmail.com
+Website: https://my-site-1aio4jo0-srijanpaudel219.wix-vibe.com
+Guarantee: 35 hours/week reclaimed in 90 days — or we work for free until you do.
+
+OUR SERVICES & PRICING:
+• Quick Win — £997 one-time: 1 workflow, 5-7 day delivery, guarantee: 5hrs/week saved or full refund
+• Growth System — £2,997 one-time + £497/month: Up to 5 workflows, 90-day onboarding, guarantee: 35hrs/week in 90 days
+• Full Stack — £7,997 one-time + £997/month: Unlimited workflows, dedicated account manager, weekly strategy calls, full money-back guarantee
+
+DIGITAL PRODUCTS: 13 products from £17–£497 including ROI calculators, workflow playbooks, prompt vaults, agency starter packs
+
+PROVEN RESULTS:
+• Law firm (Hargreaves & Sterling): 78% reduction in contract review, 45 billable hrs/week reclaimed, ROI in 3 weeks
+• Property agency (Meridian): Lead response 6hrs → 3 minutes, +28% conversion rate
+• Manufacturer (Vortex): Defect rate 4.1% → 0.6%, throughput +34%, ROI in 11 weeks
+• Retailer (Thornfield): Stockouts -71%, £95,000 annual saving
+
+INDUSTRIES WE SERVE: Legal, Real Estate, Manufacturing, Retail, Financial Services, Professional Services
+
+TOOLS WE USE: Make (Integromat), Zapier, n8n, Claude API, Wix, HubSpot, Pipedrive, ActiveCampaign, Calendly, Xero
+
+HOW IT WORKS:
+1. Free 30-min discovery call — no obligation
+2. Process audit — we map your workflows
+3. Architecture design — you approve before we build
+4. Build & test — 4 weeks
+5. Go live + ongoing monitoring + monthly reports
+
+RESPONSE RULES:
+- Keep responses under 140 words unless a complex question genuinely needs more
+- Always end with a question or a clear next step to keep the conversation moving
+- When someone mentions their industry → reference the relevant case study above
+- When someone asks about pricing → give the actual numbers immediately, no hedging
+- When someone seems ready → suggest booking a free discovery call
+- Booking link: https://my-site-1aio4jo0-srijanpaudel219.wix-vibe.com
+- If you genuinely don't know something specific → be honest and offer to connect them with Srijan directly at srijanpaudel219@gmail.com`;
+
+let H=[], L=false, C=0, shown=false, cap=false, booked=false, gone=false;
+let vN='', vE='', vCo='';
+
+function rs(e){e.style.height='auto';e.style.height=Math.min(e.scrollHeight,90)+'px';}
+function hk(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}}
+function sq(t){document.getElementById('inp').value=t;send();}
+
+function hg(){
+  if(!gone){
+    document.getElementById('wl').style.display='none';
+    document.getElementById('qp').style.display='none';
+    gone=true;
+  }
+}
+
+function fm(t){
+  return t
+    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g,'<em>$1</em>')
+    .replace(/\n/g,'<br>');
+}
+
+function am(role,text){
+  const c=document.getElementById('msgs');
+  const r=document.createElement('div');
+  r.className='mr'+(role==='user'?' u':'');
+  const a=document.createElement('div');
+  a.className='mav '+(role==='user'?'u':'b');
+  a.textContent=role==='user'?'↑':'A';
+  const b=document.createElement('div');
+  b.className='bub '+(role==='user'?'u':'b');
+  b.innerHTML=fm(text);
+  r.appendChild(a);r.appendChild(b);
+  c.appendChild(r);c.scrollTop=c.scrollHeight;
+}
+
+function showTyping(){
+  const c=document.getElementById('msgs');
+  const r=document.createElement('div');
+  r.id='typ';r.className='tr';
+  r.innerHTML='<div class="mav b">A</div><div class="tb2"><div class="td"></div><div class="td"></div><div class="td"></div></div>';
+  c.appendChild(r);c.scrollTop=c.scrollHeight;
+}
+
+function hideTyping(){const t=document.getElementById('typ');if(t)t.remove();}
+
+function showCTA(){
+  const c=document.getElementById('msgs');
+  const d=document.createElement('div');
+  d.className='bb';
+  d.innerHTML='<a href="https://my-site-1aio4jo0-srijanpaudel219.wix-vibe.com" target="_blank" class="bk" onclick="booked=true">📅 Book Your Free Discovery Call →</a>';
+  c.appendChild(d);c.scrollTop=c.scrollHeight;
+}
+
+async function send(){
+  if(L)return;
+  const inp=document.getElementById('inp');
+  const text=inp.value.trim();
+  if(!text)return;
+  hg();
+  inp.value='';inp.style.height='auto';
+  C++;
+  am('user',text);
+  H.push({role:'user',content:text});
+  L=true;
+  document.getElementById('sb').disabled=true;
+  showTyping();
+
+  if(C===4&&!shown&&!cap){
+    shown=true;
+    setTimeout(()=>document.getElementById('mo').style.display='flex',600);
+  }
+
+  try{
+    const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':'Bearer '+GROQ_KEY
+      },
+      body:JSON.stringify({
+        model:GROQ_MODEL,
+        messages:[{role:'system',content:SYS},...H],
+        max_tokens:400,
+        temperature:0.7
+      })
+    });
+    const data=await res.json();
+    hideTyping();
+    const reply=data.choices?.[0]?.message?.content||"I'm having a brief connection issue! Please email srijanpaudel219@gmail.com or book a free call — Srijan will get back to you the same day.";
+    H.push({role:'assistant',content:reply});
+    am('assistant',reply);
+    if(C>=5&&C%4===1)setTimeout(showCTA,700);
+  }catch(e){
+    hideTyping();
+    am('assistant',"Connection issue — sorry about that! Please email **srijanpaudel219@gmail.com** or book a free call at our website and Srijan will reply same day. 🙏");
+  }
+
+  L=false;
+  document.getElementById('sb').disabled=false;
+  inp.focus();
+  logChat();
+}
+
+function sl(){
+  vN=document.getElementById('mn').value.trim();
+  vE=document.getElementById('me').value.trim();
+  vCo=document.getElementById('mc2').value.trim();
+  if(vE)cap=true;
+  document.getElementById('mo').style.display='none';
+  setTimeout(()=>am('assistant',`Thanks${vN?' '+vN.split(' ')[0]:''}! 🎉 I've passed your details to Srijan — expect a personal email within a few hours.\n\nNow, where were we?`),300);
+}
+
+function sk(){document.getElementById('mo').style.display='none';}
+
+function detectIntent(){
+  const t=H.map(m=>m.content.toLowerCase()).join(' ');
+  if(t.includes('price')||t.includes('cost')||t.includes('£'))return'Pricing';
+  if(t.includes('book')||t.includes('call')||t.includes('discovery'))return'Booking';
+  if(t.includes('law')||t.includes('legal'))return'Legal';
+  if(t.includes('property')||t.includes('estate'))return'Real Estate';
+  if(t.includes('manufactur'))return'Manufacturing';
+  if(t.includes('roi')||t.includes('save')||t.includes('return'))return'ROI Query';
+  return'General';
+}
+
+async function logChat(){
+  if(C%3!==0)return;
+  try{
+    await fetch('https://www.wixapis.com/wix-data/v2/items',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        dataCollectionId:'chatbotconversations',
+        dataItem:{data:{
+          visitorName:vN||'Anonymous',
+          visitorEmail:vE||'',
+          firstMessage:H[0]?.content||'',
+          totalMessages:C,
+          intent:detectIntent(),
+          bookedCall:booked,
+          leadCaptured:cap,
+          conversationSummary:H.slice(-2).map(m=>m.role+': '+m.content.substring(0,80)).join(' | '),
+          sessionId:SID,
+          source:'Arora Popup'
+        }}
+      })
+    });
+  }catch(e){}
+}
+
+// Init greeting
+setTimeout(()=>{
+  am('assistant',"Hi! I'm **Arora**, Aiprosol's AI assistant. 👋\n\nI can help you understand what automation could do for your business, walk you through our services and pricing, or share case studies relevant to your industry.\n\nWhat's on your mind?");
+},500);
+</script>
+</body>
+</html>

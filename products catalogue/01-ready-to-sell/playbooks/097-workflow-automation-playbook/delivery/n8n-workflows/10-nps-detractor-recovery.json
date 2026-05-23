@@ -1,0 +1,249 @@
+{
+  "name": "Aiprosol — NPS detractor recovery (branching by score)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "nps-response"
+      },
+      "id": "ff1f1487-0460-4255-8c5b-e3fe9990c0ec",
+      "name": "NPS webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.score }}",
+                    "rightValue": 7,
+                    "operator": {
+                      "type": "number",
+                      "operation": "lt"
+                    }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "detractor"
+            },
+            {
+              "conditions": {
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.score }}",
+                    "rightValue": 9,
+                    "operator": {
+                      "type": "number",
+                      "operation": "lt"
+                    }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "passive"
+            },
+            {
+              "conditions": {
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.score }}",
+                    "rightValue": 9,
+                    "operator": {
+                      "type": "number",
+                      "operation": "gte"
+                    }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "promoter"
+            }
+          ]
+        }
+      },
+      "id": "62e9d661-5bec-49e4-8e06-2fc8a6184913",
+      "name": "Switch by score",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "send",
+        "to": "={{ $json.email }}",
+        "subject": "Sorry we missed the mark — can we talk?",
+        "message": "=Hi {{ $json.name }}, your {{ $json.score }}/10 hit my desk this morning. I want to understand what's not working and fix it. 15 min next week? — Srijan"
+      },
+      "id": "74910dee-f049-467e-a824-9cc007ffd60b",
+      "name": "Detractor → recovery email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        640,
+        150
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "send",
+        "to": "={{ $json.email }}",
+        "subject": "Quick question — what's the ONE thing?",
+        "message": "=Hi {{ $json.name }}, thanks for the {{ $json.score }}/10. What's the ONE specific change that would make it a 9 or 10? Reply with one sentence."
+      },
+      "id": "2a62959f-494d-471e-88a0-aa7ffac26ad2",
+      "name": "Passive → ask one thing",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "send",
+        "to": "={{ $json.email }}",
+        "subject": "You scored us a {{ $json.score }}/10 — small ask",
+        "message": "=Hi {{ $json.name }}, your {{ $json.score }} made my week. Two small asks: (1) would you let us quote you on the site? (2) anyone in your network who'd benefit from what we do? Even a name + 1-line intro is gold."
+      },
+      "id": "d9009112-5071-476f-92cc-34e10131c1b1",
+      "name": "Promoter → testimonial ask",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        640,
+        450
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "#nps-feed",
+        "text": "=NPS {{ $json.score }}/10 from {{ $json.name }} — {{ $json.comment || '(no comment)' }}"
+      },
+      "id": "1e3f4286-c503-4b6f-abcd-9b75a15591b6",
+      "name": "Slack — log all NPS",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        840,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "NPS webhook": {
+      "main": [
+        [
+          {
+            "node": "Switch by score",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch by score": {
+      "main": [
+        [
+          {
+            "node": "Detractor → recovery email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Passive → ask one thing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Promoter → testimonial ask",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Detractor → recovery email": {
+      "main": [
+        [
+          {
+            "node": "Slack — log all NPS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Passive → ask one thing": {
+      "main": [
+        [
+          {
+            "node": "Slack — log all NPS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Promoter → testimonial ask": {
+      "main": [
+        [
+          {
+            "node": "Slack — log all NPS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "customer-success"
+    },
+    {
+      "name": "branching"
+    },
+    {
+      "name": "pattern-2"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-playbook-v1"
+  },
+  "pinData": {},
+  "versionId": "030d1c50-ce8f-4c3d-a6bc-a1cba35536f2",
+  "id": "2489fca7-c896-4276-96b6-abdddced3eaa",
+  "_aiprosol": {
+    "description": "NPS webhook → classify 0-6/7-8/9-10 → personalised follow-up email per band",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

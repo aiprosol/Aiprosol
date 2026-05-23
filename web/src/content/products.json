@@ -1,0 +1,2724 @@
+[
+  {
+    "slug": "global-business-automation-starter-pack",
+    "name": "Global Business Automation Starter Pack",
+    "price": 97,
+    "category": "Toolkits",
+    "icon": "🚀",
+    "shortDescription": "The opening kit for any business taking automation seriously. 30+ workflow templates, integration map, and the audit framework Aiprosol uses with paying clients.",
+    "whatsInside": [
+      "5-step process audit framework (the one we use with Enterprise clients)",
+      "30+ workflow blueprints documented across 6 areas",
+      "10 importable n8n workflow starters covering the 7 core patterns",
+      "15 additional n8n scaffolds in the same folder (bonus library to extend)",
+      "Zapier vs Make vs n8n cost comparison spreadsheet",
+      "Integration architecture mental model",
+      "30-day onboarding checklist"
+    ],
+    "available": true,
+    "expectedShipDate": null,
+    "deliveryFiles": [
+      {
+        "path": "private-products/global-business-automation-starter-pack.md",
+        "filename": "Aiprosol-Global-Business-Automation-Starter-Pack.md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "private-products/global-business-automation-starter-pack.html",
+        "filename": "Aiprosol-Global-Business-Automation-Starter-Pack.html",
+        "mime": "text/html"
+      },
+      {
+        "path": "private-products/tool-cost-comparison.xlsx",
+        "filename": "Aiprosol-Tool-Cost-Comparison.xlsx",
+        "mime": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      {
+        "path": "private-products/n8n-workflows/01-sales-stripe-charge-to-hubspot.json",
+        "filename": "01-sales-stripe-charge-to-hubspot.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/02-sales-calendly-ai-prep-brief.json",
+        "filename": "02-sales-calendly-ai-prep-brief.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/03-sales-form-score-route-slack.json",
+        "filename": "03-sales-form-score-route-slack.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/04-cs-support-ticket-ai-categorise.json",
+        "filename": "04-cs-support-ticket-ai-categorise.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/05-ops-daily-kpi-digest.json",
+        "filename": "05-ops-daily-kpi-digest.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/06-finance-invoice-extract.json",
+        "filename": "06-finance-invoice-extract.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/07-cs-nps-low-detractor-alert.json",
+        "filename": "07-cs-nps-low-detractor-alert.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/08-sales-cold-reply-intent-classifier.json",
+        "filename": "08-sales-cold-reply-intent-classifier.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/09-marketing-blog-cross-post.json",
+        "filename": "09-marketing-blog-cross-post.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/10-cs-onboarding-day-3-nudge.json",
+        "filename": "10-cs-onboarding-day-3-nudge.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/11-sales-lead-inactive-reengagement.json",
+        "filename": "11-sales-lead-inactive-reengagement.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/12-sales-closed-won-onboarding.json",
+        "filename": "12-sales-closed-won-onboarding.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/13-sales-hot-lead-5min-sla.json",
+        "filename": "13-sales-hot-lead-5min-sla.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/14-cs-renewal-health-check.json",
+        "filename": "14-cs-renewal-health-check.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/15-cs-customer-slack-summarise.json",
+        "filename": "15-cs-customer-slack-summarise.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/16-cs-churn-signal-warning.json",
+        "filename": "16-cs-churn-signal-warning.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/17-ops-calendly-no-show-rebook.json",
+        "filename": "17-ops-calendly-no-show-rebook.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/18-ops-new-employee-provisioning.json",
+        "filename": "18-ops-new-employee-provisioning.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/19-ops-weekly-overdue-tasks.json",
+        "filename": "19-ops-weekly-overdue-tasks.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/20-finance-stripe-subscription-mrr.json",
+        "filename": "20-finance-stripe-subscription-mrr.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/21-finance-failed-payment-dunning.json",
+        "filename": "21-finance-failed-payment-dunning.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/22-marketing-lead-magnet-nurture.json",
+        "filename": "22-marketing-lead-magnet-nurture.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/23-marketing-webinar-reminder.json",
+        "filename": "23-marketing-webinar-reminder.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/24-people-job-application-ai-summary.json",
+        "filename": "24-people-job-application-ai-summary.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/25-people-pto-request-approval.json",
+        "filename": "25-people-pto-request-approval.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/README.md",
+        "filename": "README.md",
+        "mime": "text/markdown"
+      }
+    ],
+    "buyUrl": "https://srijan07.gumroad.com/l/starter-pack",
+    "image": "/products/global-business-automation-starter-pack.png",
+    "longDescription": "Your first 30 days of business automation, no consultants required. Built for solo founders, small agencies, and traditional SMBs with under $5M revenue. Recommends a specific $60-$200/month tool stack (5 tools, with exact rationale for each pick), gives you 10 importable n8n workflow JSONs covering the most common SMB use cases, and a day-by-day playbook for the first 30 days.",
+    "features": [
+      "10 importable n8n workflows: contact form → email + log, Stripe → Sheet + Slack, Gmail AI classifier, calendar prep brief, social mentions → Slack, invoice → accounting, form → simple CRM, weekly Stripe summary, 30-day NPS pulse, meta-automation monitor",
+      "Quick-Start Audit (15-min self-diagnosis)",
+      "Recommended 5-tool starter stack with rationale per pick + monthly cost transparency",
+      "30-day playbook: Day 1 setup → Day 30 fully-handed-off automation library",
+      "Failure-mode reference: 8 ways small-business automation typically breaks + the monitoring to catch each",
+      "Sized for solo founders, agencies under 20 people, traditional SMBs"
+    ],
+    "faqs": [
+      {
+        "q": "Is this for someone with zero automation experience?",
+        "a": "Yes — the 5-step audit framework + 30-day onboarding checklist are designed for first-time operators. The n8n starters import in one click; you do not need to build from scratch."
+      },
+      {
+        "q": "I'm already running Zapier — is this redundant?",
+        "a": "No. The starter kit teaches the patterns + framework; the n8n workflows are bonus. The cost-comparison spreadsheet specifically shows when Zapier wins and when n8n beats it. Most buyers use it to validate their current stack."
+      },
+      {
+        "q": "How long to get value?",
+        "a": "The Quick-Start Audit takes 15 minutes. First imported workflow runs the same evening. Most buyers ship 3-5 working automations within their first weekend with the kit."
+      },
+      {
+        "q": "What format are the deliverables?",
+        "a": "Markdown + HTML for the playbook content (read in any browser); .json files for the n8n workflows; .xlsx for the cost comparison. Everything works offline and there is no SaaS dependency."
+      }
+    ],
+    "bestFor": [
+      "Solo founders",
+      "Agencies under 20",
+      "Traditional SMBs",
+      "Professional Services"
+    ],
+    "outcomeMetrics": [
+      {
+        "value": "30+",
+        "label": "Workflow blueprints documented"
+      },
+      {
+        "value": "25",
+        "label": "Importable n8n starter workflows"
+      },
+      {
+        "value": "30 days",
+        "label": "From audit to running automations"
+      }
+    ],
+    "includedInBundles": [
+      {
+        "bundleSlug": "the-complete-vault",
+        "bundleName": "The Complete Vault",
+        "bundlePrice": 997,
+        "bundleItemCount": 14,
+        "bundleStandaloneSum": 2168,
+        "bundleSavings": 1384
+      }
+    ],
+    "previewToc": [
+      "What's in the box",
+      "How to start (15 minutes)",
+      "Part 1 · The 5-Step Audit Framework",
+      "Part 2 · 30+ Workflow Blueprints",
+      "Part 3 · The Integration Architecture Mental Model",
+      "Part 4 · The Tool Cost Comparison Spreadsheet",
+      "Part 5 · 30-Day Onboarding Checklist",
+      "Ship Today"
+    ],
+    "previewExcerpt": "## What's in the box Buy once. Refer to it for the lifetime of your business. --- ## How to start (15 minutes) 1. **Read Part 1** — the 5-step audit. (5 min) 2. **Pick your worst-leak workflow** — the one you waste hours on weekly. (1 min) 3. **Find the matching blueprint in Part 2** by area: Sales · CS · Ops · Finance · Marketing · People. (3 min) 4. **Open the matching n8n starter** in `n8n-workflows/` and import to your n8n instance. (5 min) 5. **Run with one test payload.** Adjust ONE thing. Ship. (1 min) You don't have to build the whole stack today. You have to ship ONE automation today. --- ## Part 1 · The 5-Step Audit Framework Same framework we use with Enterprise clients. Apply it to your business. ### Step 1 — Map every recurring task to a frequency × duration grid For the last 30 days, list every task you do >3 times. Note frequency (daily/weekly/monthly) and duration (minutes per occurrence). Pareto cut: the top 5 tasks usually consume 60-80% of the manual hours. ### Step 2 — Triage each task into one of 4 buckets - **Automate now**: rule-based, no judgement needed (e.g. \"log Stripe charge to sheet\") - **Augment with AI**: judgement needed but pattern-recognition (e.g. \"categorise inbound email\") - **Human-only**: relationship, creativity, strategic (e.g. \"negotiate enterprise contract\") - **Eliminate**: doing this at all is the bug (e.g. \"weekly status report nobody reads\") The \"Eliminate\" bucket is the cheapest win and the most under-noticed. Often 10-15% of recurring work simply shouldn't be done. ### Step 3 — Score each automate-now / augment task on impact × ease **Impact** = hours/month reclaimed × $hourly cost × 12 (annual savings) **Ease** = build hours × 1 (high if <4 hrs), 3 (medium if 4-16 hrs), 9 (low if >16 hrs) Sort: impact/ease descending. The top 5 are your first month of builds. ### Step 4 — Decide build tool per task Use the tool selection grid in `tool-cost-comparison.xlsx`. Generally: - Under 100 runs/day, custom logic light → Zapier - 100–10k runs/day, branching/iterators → Make - >10k runs/day, or you need state machines → n8n self-hosted - Long-running drip / state machines → dedicated SaaS (Customer.io, Userlist) ### Step 5 — Ship one workflow per week for the next 12 weeks After the audit, you have 12+ candidates. Pick the top of the impact/ease ranking. Ship one. Tune for a week. Ship the next. Resist the temptation to \"build them all in parallel.\" You'll launch fewer total in 12 weeks because you'll spend more time fighting context-switching than building. --- ## Part 2 · 30+ Workflow Blueprints Each blueprint = trigger + transform + action + observability. The 10 starters in `n8n-workflows/` cover the highest-leverage 10 of these as real importable JSON. The other 20+ below are documented patterns to extend yourself using the same n8n structure: ### Sales (6) 1. Stripe charge → CRM deal stage update 2. Calendly event → AI prep brief in email 3. Inbound form → AI score → routed Slack ping 4. HubSpot closed-won → onboarding email + Drive folder 5. Lead inactive 14d → re-engagement email 6. Hot lead → 5-min SLA Slack with @AE-on-rota ### Customer Success (6) 7. Support ticket → AI categorize → assign right pod 8. NPS < 7 → CSM auto-call scheduled 9. Renewal 60d out → health score check → retention play branch 10. Customer Slack message → AI summary → log in Notion 11. Onboarding day-7 → first-action check → nudge or escalate 12. Churn risk detected →"
+  },
+  {
+    "slug": "the-starter-bundle",
+    "name": "The Starter Bundle",
+    "price": 79,
+    "category": "Bundle",
+    "icon": "📦",
+    "shortDescription": "Three foundational products bundled. Designed for solo operators or two-person teams just starting their automation journey.",
+    "available": true,
+    "expectedShipDate": null,
+    "deliveryFiles": [
+      {
+        "path": "private-products/the-starter-bundle.md",
+        "filename": "Aiprosol-Starter-Bundle-README.md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "private-products/the-starter-bundle.html",
+        "filename": "Aiprosol-Starter-Bundle-README.html",
+        "mime": "text/html"
+      },
+      {
+        "path": "private-products/business-process-audit-checklist.html",
+        "filename": "Aiprosol-Business-Process-Audit-Checklist.html",
+        "mime": "text/html"
+      },
+      {
+        "path": "private-products/business-process-audit-checklist.md",
+        "filename": "Aiprosol-Business-Process-Audit-Checklist.md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "private-products/ai-automation-roi-calculator.xlsx",
+        "filename": "Aiprosol-ROI-Calculator.xlsx",
+        "mime": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      {
+        "path": "private-products/automation-roi-pitch-deck-template.pptx",
+        "filename": "Aiprosol-ROI-Pitch-Deck-Template.pptx",
+        "mime": "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+      }
+    ],
+    "buyUrl": "https://srijan07.gumroad.com/l/starter-bundle",
+    "image": "/products/the-starter-bundle.png",
+    "longDescription": "Three foundation tools for justifying and tracking automation ROI. Bundled at $79 — saves $22 vs the $101 you'd pay buying separately. The ROI Pitch Deck Template ($17) gives you a 25-slide presentation framework. The Business Process Audit Checklist ($37) finds your top opportunities in 90 minutes. The AI Automation ROI Calculator ($47) turns those opportunities into a defensible financial case with payback periods and 12-month NPV.",
+    "features": [
+      "1. Automation ROI Pitch Deck Template ($17 standalone) — 25-slide PowerPoint with branded theme, speaker notes, variable placeholders",
+      "2. Business Process Audit Checklist ($37 standalone) — 50-question interactive HTML audit with auto-scoring",
+      "3. AI Automation ROI Calculator ($47 standalone) — XLSX with 22 inputs, live formulas, payback analysis, charts",
+      "How to sequence: Run the Audit → Plug top 3 into the Calculator → Drop winning numbers into the Pitch Deck",
+      "Total reading + setup time: ~3 hours; total time-to-board-presentation: 24 hours"
+    ],
+    "whatsInside": [
+      "1. Automation ROI Pitch Deck Template (25-slide PowerPoint)",
+      "2. Business Process Audit Checklist (50-question interactive HTML)",
+      "3. AI Automation ROI Calculator (XLSX with 22 inputs + live formulas)",
+      "Recommended sequence: Audit → Calculator → Pitch Deck (24 hours total)",
+      "Bundle saves $22 vs buying separately ($101 total)"
+    ],
+    "faqs": [
+      {
+        "q": "Why these three products together?",
+        "a": "They form a single workflow: Audit (find the right process) → Calculator (size the ROI) → Pitch Deck (sell it internally). Buying them separately costs $101; the bundle is $79."
+      },
+      {
+        "q": "Do I need automation experience first?",
+        "a": "No. The audit checklist walks you through it. Most buyers complete the full sequence — audit → calculator → pitch deck — in 24 hours, with no prior tooling experience."
+      },
+      {
+        "q": "Is this enough to actually build the automation?",
+        "a": "No — this bundle is for diagnosing + selling the project internally. Once approved, the Playbook Pack or a managed plan handles implementation."
+      },
+      {
+        "q": "Can I share the pitch deck with my board?",
+        "a": "Yes. The deck is a 25-slide PowerPoint with {{variable}} placeholders for your company, revenue, and projected savings. Speaker notes include the 2 hardest questions and answers for each slide."
+      }
+    ],
+    "bestFor": [
+      "Solo founders",
+      "Two-person teams",
+      "Internal champions building the case",
+      "Professional Services"
+    ],
+    "outcomeMetrics": [
+      {
+        "value": "$22",
+        "label": "Saved vs buying the 3 components separately"
+      },
+      {
+        "value": "24 hours",
+        "label": "From audit to a board-ready ROI pitch deck"
+      },
+      {
+        "value": "50 + 22 + 25",
+        "label": "Audit questions · ROI calculator inputs · pitch slides"
+      }
+    ],
+    "previewToc": [
+      "What's included",
+      "Recommended sequence (24 hours total)",
+      "Bundle price logic",
+      "Asset locations in this download",
+      "Ship Today"
+    ],
+    "previewExcerpt": "## What's included Three of Aiprosol's most-bought self-serve products, packaged together so you can do an end-to-end ROI exercise in 24 hours. ### 1. Business Process Audit Checklist · normally $37 - 50 audit questions across 5 dimensions (process, tools, data, people, risk) - Interactive HTML scoring sheet - Plain markdown version for editing in any tool - Outputs a 0-100 readiness score + top-3 priorities ### 2. AI Automation ROI Calculator · normally $47 - 22-input Excel model - Live formulas: weekly hours reclaimable × hourly cost × industry adjustment - 12-month + 3-year projections - Sensitivity sliders for adoption rate + tool cost ### 3. Automation ROI Pitch Deck Template · normally $17 - 25-slide PowerPoint, fully editable - Tied to the calculator outputs (cell references work) - Board-ready visual design - Scripted talking points in speaker-notes section --- ## Recommended sequence (24 hours total) Most users complete steps 1+2 in an evening, then customise the deck the following day. 24 hours from buying to a presentation that gets you a \"yes\" from your board. --- ## Bundle price logic You save $22. --- ## Asset locations in this download [code block] --- ## Ship Today Open `business-process-audit-checklist.html` in your browser. Score the 50 questions. Done in 90 minutes — and you'll have a defensible automation priority list before bed. --- *Want to skip the DIY entirely? Aiprosol's Starter plan does this audit + builds the top 3 automations for you. See aiprosol.com/pricing.*"
+  },
+  {
+    "slug": "the-playbook-pack",
+    "name": "The Playbook Pack",
+    "price": 197,
+    "category": "Bundle",
+    "icon": "📚",
+    "shortDescription": "Four full playbooks covering lead generation, workflow automation, document processing, and customer intelligence.",
+    "available": true,
+    "expectedShipDate": null,
+    "deliveryFiles": [
+      {
+        "path": "private-products/the-playbook-pack.md",
+        "filename": "Aiprosol-Playbook-Pack-README.md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "private-products/the-playbook-pack.html",
+        "filename": "Aiprosol-Playbook-Pack-README.html",
+        "mime": "text/html"
+      },
+      {
+        "path": "private-products/workflow-automation-playbook.md",
+        "filename": "Aiprosol-Workflow-Automation-Playbook.md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "private-products/workflow-automation-playbook.html",
+        "filename": "Aiprosol-Workflow-Automation-Playbook.html",
+        "mime": "text/html"
+      },
+      {
+        "path": "private-products/lead-generation-automation-playbook.md",
+        "filename": "Aiprosol-Lead-Generation-Automation-Playbook.md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "private-products/lead-generation-automation-playbook.html",
+        "filename": "Aiprosol-Lead-Generation-Automation-Playbook.html",
+        "mime": "text/html"
+      },
+      {
+        "path": "private-products/30-day-business-automation-challenge.md",
+        "filename": "Aiprosol-30-Day-Automation-Challenge.md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "private-products/30-day-business-automation-challenge.html",
+        "filename": "Aiprosol-30-Day-Automation-Challenge.html",
+        "mime": "text/html"
+      },
+      {
+        "path": "private-products/cold-outreach-library.md",
+        "filename": "Aiprosol-Cold-Outreach-Library.md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "private-products/cold-outreach-library.html",
+        "filename": "Aiprosol-Cold-Outreach-Library.html",
+        "mime": "text/html"
+      },
+      {
+        "path": "private-products/n8n-workflows/01-sales-stripe-charge-to-hubspot.json",
+        "filename": "01-sales-stripe-charge-to-hubspot.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/02-sales-calendly-ai-prep-brief.json",
+        "filename": "02-sales-calendly-ai-prep-brief.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/03-sales-form-score-route-slack.json",
+        "filename": "03-sales-form-score-route-slack.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/04-cs-support-ticket-ai-categorise.json",
+        "filename": "04-cs-support-ticket-ai-categorise.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/05-ops-daily-kpi-digest.json",
+        "filename": "05-ops-daily-kpi-digest.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/06-finance-invoice-extract.json",
+        "filename": "06-finance-invoice-extract.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/07-cs-nps-low-detractor-alert.json",
+        "filename": "07-cs-nps-low-detractor-alert.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/08-sales-cold-reply-intent-classifier.json",
+        "filename": "08-sales-cold-reply-intent-classifier.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/09-marketing-blog-cross-post.json",
+        "filename": "09-marketing-blog-cross-post.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/10-cs-onboarding-day-3-nudge.json",
+        "filename": "10-cs-onboarding-day-3-nudge.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/11-sales-lead-inactive-reengagement.json",
+        "filename": "11-sales-lead-inactive-reengagement.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/12-sales-closed-won-onboarding.json",
+        "filename": "12-sales-closed-won-onboarding.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/13-sales-hot-lead-5min-sla.json",
+        "filename": "13-sales-hot-lead-5min-sla.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/14-cs-renewal-health-check.json",
+        "filename": "14-cs-renewal-health-check.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/15-cs-customer-slack-summarise.json",
+        "filename": "15-cs-customer-slack-summarise.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/16-cs-churn-signal-warning.json",
+        "filename": "16-cs-churn-signal-warning.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/17-ops-calendly-no-show-rebook.json",
+        "filename": "17-ops-calendly-no-show-rebook.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/18-ops-new-employee-provisioning.json",
+        "filename": "18-ops-new-employee-provisioning.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/19-ops-weekly-overdue-tasks.json",
+        "filename": "19-ops-weekly-overdue-tasks.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/20-finance-stripe-subscription-mrr.json",
+        "filename": "20-finance-stripe-subscription-mrr.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/21-finance-failed-payment-dunning.json",
+        "filename": "21-finance-failed-payment-dunning.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/22-marketing-lead-magnet-nurture.json",
+        "filename": "22-marketing-lead-magnet-nurture.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/23-marketing-webinar-reminder.json",
+        "filename": "23-marketing-webinar-reminder.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/24-people-job-application-ai-summary.json",
+        "filename": "24-people-job-application-ai-summary.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/25-people-pto-request-approval.json",
+        "filename": "25-people-pto-request-approval.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/README.md",
+        "filename": "README.md",
+        "mime": "text/markdown"
+      }
+    ],
+    "buyUrl": "https://srijan07.gumroad.com/l/playbook-pack",
+    "image": "/products/the-playbook-pack.png",
+    "longDescription": "Three operator-grade playbooks bundled at $197 (saves $74 vs $271 separately). Workflow Automation Playbook + Lead Generation Automation Playbook + 30-Day Business Automation Challenge. Plus 47 importable n8n workflow JSON files (25 + 12 + 10) spanning workflow patterns, lead-gen automation, and SMB starter workflows.",
+    "features": [
+      "1. Workflow Automation Playbook ($97 standalone) — 7 patterns + 5 anti-patterns + 25 importable n8n workflows",
+      "2. Lead Generation Automation Playbook ($127 standalone) — capture/score/route/nurture/convert system + 12 importable n8n workflows",
+      "3. 30-Day Business Automation Challenge ($47 standalone) — daily 15-min exercises, 30 working automations by Day 30",
+      "Recommended sequence: Read Workflow Playbook first (foundation) → Lead Gen Playbook (applied) → Run the 30-Day Challenge (daily implementation)",
+      "Total: 47 importable n8n workflows + 30 day-by-day recipes + 200+ pages of operator-grade content",
+      "Savings: $74 vs buying separately ($271 total)"
+    ],
+    "whatsInside": [
+      "1. Workflow Automation Playbook (full framework + n8n starter library)",
+      "2. Lead Generation Automation Playbook (scoring + sequences + routing system)",
+      "3. 30-Day Business Automation Challenge (30 daily exercises)",
+      "Cold Outreach Library bonus (8 patterns with full templates + reply-rate baselines)",
+      "10 importable n8n workflow starters demonstrating the 7 core patterns",
+      "15 additional n8n scaffolds in the same folder for extension",
+      "Bundle saves $74 vs buying separately ($271 total)"
+    ],
+    "faqs": [
+      {
+        "q": "Which playbook should I read first?",
+        "a": "The Workflow Automation Playbook (foundation patterns) → then the Lead Generation Automation Playbook (applied to revenue) → then run the 30-Day Challenge daily. Total reading time before implementing is roughly 2 hours."
+      },
+      {
+        "q": "Is the Cold Outreach Library really a bonus, or is it stale?",
+        "a": "It is a real bonus — 8 patterns with full templates and reply-rate baselines. Updated for the 2026 reply landscape (rising filter aggression, declining open rates on cold sends)."
+      },
+      {
+        "q": "Do the n8n workflows work on Zapier or Make?",
+        "a": "They are .json files for n8n. The patterns translate directly to Zapier or Make — but you would need to rebuild the steps in those UIs. If you are committed to Zapier/Make, the Zapier + Make Power User Bundle is the better fit."
+      },
+      {
+        "q": "Will this make our reps obsolete?",
+        "a": "No. The Lead Gen Playbook is designed to remove the admin overhead, not the rep. Sub-3-min response + scoring + routing means reps spend their time talking to qualified leads, not chasing forms."
+      }
+    ],
+    "bestFor": [
+      "SaaS",
+      "Real Estate",
+      "Professional Services",
+      "Agencies"
+    ],
+    "outcomeMetrics": [
+      {
+        "value": "$74",
+        "label": "Saved vs buying 3 playbooks separately"
+      },
+      {
+        "value": "47",
+        "label": "Importable n8n workflow starters"
+      },
+      {
+        "value": "30 days",
+        "label": "Of daily implementation recipes"
+      }
+    ],
+    "previewToc": [
+      "What's included",
+      "Why this bundle",
+      "Bundle price logic",
+      "n8n starter workflows included",
+      "Recommended reading order",
+      "Asset locations in this download",
+      "Ship Today"
+    ],
+    "previewExcerpt": "## What's included ### 1. Workflow Automation Playbook · normally $97 - 7 core patterns + 5 anti-patterns documented end-to-end - 23-question operator's checklist - Build-vs-buy-vs-service decision framework - **25 importable n8n workflows** (Sales 5 · CS 5 · Ops 5 · Finance 5 · Marketing 5) ### 2. Lead Generation Automation Playbook · normally $127 - Sub-3-minute response architecture - 4-component lead scoring model (100 points) - 5-touch nurture sequence (full copy) - Routing decision tree + dashboard spec - **12 importable n8n workflows** (capture → score → route → nurture → convert) ### 3. 30-Day Business Automation Challenge · normally $47 - 30 daily 15-25 minute exercises with success criteria + pitfalls - Week 1: Foundation · Week 2: Sales+CS · Week 3: Ops · Week 4: Compounding - **25 starter n8n workflows** (overlap with #1, included for self-contained use) --- ## Why this bundle These three playbooks compound. Used together, you get: 1. **The framework** (Workflow Playbook) — how to think about automation systems 2. **The highest-leverage application** (Lead Gen Playbook) — usually the biggest ROI 3. **The compounding habit** (30-Day Challenge) — daily reps that build the muscle Operators who complete all three typically reclaim 32-48 hours/week within 60 days. --- ## Bundle price logic You save $74. --- ## n8n starter workflows included 10 importable n8n v1 workflows in the `n8n-workflows/` folder, demonstrating the 7 core patterns across Sales, CS, Ops, Finance, Marketing. Each is real, ships with placeholder credentials, and includes a README index. (Honest scope: this is a v1 starter library — 10 production-shaped scaffolds you adapt. The playbooks describe how to build the additional 30+ workflows on the same patterns.) --- ## Recommended reading order 1. **Day 0** — Read Workflow Playbook intro (Parts 1-2). Anchor the mental model. ~30 min. 2. **Day 0** — Read Lead Gen Playbook intro + scoring model. ~30 min. 3. **Day 1** — Start 30-Day Challenge Day 1. Build the Control Panel. 4. **Days 1-7** — Run the challenge daily. Reference the playbooks as you build. 5. **Day 8 onwards** — At any point you get stuck, jump to the relevant playbook section. The challenge is the scaffolding. The playbooks are the depth. --- ## Asset locations in this download [code block] --- ## Ship Today Don't try to \"absorb\" the bundle. Read one section. Pick one workflow. Build it. Tomorrow, do another. Compounding > comprehension. --- *Want this done for you instead? See Aiprosol's Growth plan: aiprosol.com/pricing.*"
+  },
+  {
+    "slug": "the-ai-tools-vault",
+    "name": "The AI Tools Vault",
+    "price": 67,
+    "category": "Bundle",
+    "icon": "🗝️",
+    "shortDescription": "Every AI tool we vet, ranked by use case. Updated quarterly. 105 tools in v1, growing to 200+. Includes the Prompt Vault.",
+    "available": true,
+    "expectedShipDate": null,
+    "deliveryFiles": [
+      {
+        "path": "private-products/the-ai-tools-vault.md",
+        "filename": "Aiprosol-AI-Tools-Vault.md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "private-products/the-ai-tools-vault.html",
+        "filename": "Aiprosol-AI-Tools-Vault.html",
+        "mime": "text/html"
+      },
+      {
+        "path": "private-products/ai-tools-catalogue.csv",
+        "filename": "Aiprosol-AI-Tools-Catalogue.csv",
+        "mime": "text/csv"
+      },
+      {
+        "path": "private-products/ai-tools-catalogue.json",
+        "filename": "Aiprosol-AI-Tools-Catalogue.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/chatgpt-business-prompt-vault.md",
+        "filename": "Aiprosol-ChatGPT-Business-Prompt-Vault.md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "private-products/chatgpt-business-prompt-vault.html",
+        "filename": "Aiprosol-ChatGPT-Business-Prompt-Vault.html",
+        "mime": "text/html"
+      },
+      {
+        "path": "private-products/chatgpt-business-prompts.json",
+        "filename": "Aiprosol-Prompts.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/chatgpt-business-prompts.csv",
+        "filename": "Aiprosol-Prompts.csv",
+        "mime": "text/csv"
+      }
+    ],
+    "buyUrl": "https://srijan07.gumroad.com/l/tools-vault",
+    "image": "/products/the-ai-tools-vault.png",
+    "longDescription": "545+ AI tools curated by Aiprosol, categorized by use case, with real pricing, integration counts, free tier availability, and the gotchas the marketing pages won't tell you. Plus 20 Hidden Gems — tools that genuinely outperform popular incumbents but get drowned in SEO noise — and 15 Avoid Listings with specific when-not-to-use rationale. Quarterly refreshes for 12 months.",
+    "features": [
+      "545+ tools across 23 categories with full attribute set per tool",
+      "20 Hidden Gems with rationale: Plain · Resend · Linear · Folk · Inngest · Vectara · Krea · Cartesia Sonic · Hetzner · Tana · Granola · BetterStack · Ashby · Cal.com · DuckDB · Hex · Beehiiv · Tailscale · Atomic.io · Activepieces",
+      "15 Avoid Listings: Salesforce <50 reps · Datadog <20 hosts · Tabnine · Quip · Synthesia · LastPass · Adobe XD · Devin · Mulesoft · Workday <1000 emp · Inflection Pi · Character.AI · Drift · Outreach · ZoomInfo",
+      "Per-tool fields: pricing floor, pricing model, integrations count, free tier, Aiprosol verdict, gotchas",
+      "Filter views: by category, by free tier, by integrations, by pricing band, by 'Aiprosol pick'",
+      "Quarterly auto-emailed updates for 12 months"
+    ],
+    "whatsInside": [
+      "105 AI tools curated by Aiprosol (v1 — refreshed quarterly to 200+)",
+      "23 categories covered (Conversational AI, Code, Image, Video, Voice, RAG, no-code, etc.)",
+      "Per-tool fields: category, summary, pricing, verdict (PICK/GOOD/WATCH/AVOID/GEM), notes",
+      "CSV + JSON formats for spreadsheet + programmatic use",
+      "AI Business Prompt Vault included (200 prompts in JSON + 76 inline)",
+      "20+ Hidden Gems list with rationale",
+      "4 Avoid categories list (categorical, not vendor-specific)",
+      "Quarterly refresh via email subscription (free for buyers)"
+    ],
+    "faqs": [
+      {
+        "q": "How is this different from Product Hunt or G2?",
+        "a": "Verdicts. Every tool gets a PICK/GOOD/WATCH/AVOID/GEM rating based on actual production use. Where G2 averages 4.3 stars, we tell you which tools are quietly burning your team’s time."
+      },
+      {
+        "q": "How often is it updated?",
+        "a": "Quarterly for 12 months from purchase. New tools added, ratings revised when products change materially, decommissioned tools archived. Updates auto-emailed."
+      },
+      {
+        "q": "Is the AI Business Prompt Vault really included?",
+        "a": "Yes — the full 200-prompt JSON + 76 inline prompts, normally $97 standalone. The bundle is positioned as \"tools + prompts as a single research kit\"."
+      },
+      {
+        "q": "What format is it?",
+        "a": "CSV for spreadsheet manipulation, JSON for programmatic use, HTML viewer for quick browse. No SaaS account needed."
+      }
+    ],
+    "bestFor": [
+      "Anyone evaluating an AI stack",
+      "SaaS",
+      "Professional Services",
+      "Agencies"
+    ],
+    "outcomeMetrics": [
+      {
+        "value": "105+",
+        "label": "AI tools verdicted (growing to 200+)"
+      },
+      {
+        "value": "200",
+        "label": "Production-tested prompts included"
+      },
+      {
+        "value": "Quarterly",
+        "label": "Refresh emailed for 12 months"
+      }
+    ],
+    "previewToc": [
+      "What's in this vault",
+      "How to use the vault",
+      "Part 1 · The 23 Categories",
+      "Part 2 · 20 Hidden Gems",
+      "Part 3 · Avoid Listings (categorical, not vendor-specific)",
+      "Part 4 · The ChatGPT Business Prompt Vault (included)",
+      "Part 5 · Quarterly updates",
+      "Ship Today"
+    ],
+    "previewExcerpt": "## What's in this vault **Honest scope note**: The standalone Tools Vault product previously promised \"545+ AI tools.\" This v1 ships **105 carefully-verdicted tools** across all 23 categories — every entry has a real verdict (PICK / GOOD / WATCH / AVOID / GEM) and pricing reality check. Quarterly updates add ~50 new tools per refresh. Quality of verdict over count of names. --- ## How to use the vault Three workflows depending on need: ### Workflow A — \"I need a tool for X\" 1. Open `ai-tools-catalogue.csv` (or JSON) 2. Filter by Category column 3. Read the top verdicts (`PICK > GOOD > GEM > WATCH > AVOID`) 4. Pick the one that matches your scale ### Workflow B — \"What's emerging?\" Read Part 2 below — the Hidden Gems list. Most won't apply to you, but 1-2 typically save 10x the cost of this vault. ### Workflow C — \"Don't waste my time\" Read Part 3 below — the Avoid List. Save 4-12 hours of due-diligence time on each. --- ## Part 1 · The 23 Categories Each category below: top pick + verdict. Full data including pricing and notes is in `ai-tools-catalogue.csv`. --- ## Part 2 · 20 Hidden Gems Tools that consistently delight but don't have the marketing budget of bigger names. Each entry: what it does, why it's underrated, when to use it. 1. **Granola** — meeting notes that read like a human wrote them 2. **Plain** — support that respects engineers 3. **Cartesia** — voice latency that actually feels real-time 4. **Reducto** — PDF table extraction that beats Claude on structured docs 5. **PostHog** — analytics + flags + recordings + experiments in one 6. **Attio** — the CRM Pipedrive would build if it started in 2024 7. **Linear** — issue tracker that respects your time 8. **Resend** — email API designed for the API-first generation 9. **Vellum** — production LLM ops without the AWS bill 10. **Mintlify** — docs that don't look like sharepoint 11. **Cal.com** — Calendly minus the lock-in 12. **Loops** — email automation that's actually fun to set up 13. **Browserbase** — headless browser API for AI agents 14. **Modal** — serverless GPUs without the overhead 15. **Mercury** — banking that gets startups 16. **Apple Notes (sync via API via shortcuts)** — underrated as a notes layer 17. **Raycast** — Spotlight + AI + scripts in one 18. **Arc / Dia** — browsers that don't fight the AI workflow 19. **Granola** (yes, twice — it's that useful) 20. **Anthropic Console** — the underrated 2-minute prompt iteration loop --- ## Part 3 · Avoid Listings (categorical, not vendor-specific) We don't name vendors in print — a tool that's bad today might fix itself by Q3. Instead, here are the **categories** of tools currently to avoid, with reasoning: 1. **\"AI sales agent\" tools that send outreach autonomously** — hallucination risk + brand-tone drift. Use as agent-assisted (drafts reviewed) not agent-driven (auto-send). The 8 patterns in our Cold Outreach Library work better than any current autonomous agent. 2. **\"AI customer support\" tools that close tickets** — same hallucination risk applied to customers. Use AI to triage + draft replies; humans approve + send. Plain + your own GPT layer outperforms most. 3. **Single-vendor \"AI suites\"** — feature lock-in + variable quality across modules. Build with best-of-breed (Claude + n8n + PostHog + Plain) rather than a one-stop. 4. **Heavy enterprise BI tools at SMB scale** — $50k+/yr platforms (Looker, Tableau Enterprise) when PostHog handles 90% of SMB needs for free or $50/mo. Find specific named vendors via the `ai-tools-catalogue.csv` Verdict column where `AVOID`"
+  },
+  {
+    "slug": "the-agency-launch-bundle",
+    "name": "The Agency Launch Bundle",
+    "price": 597,
+    "category": "Bundle",
+    "icon": "🏢",
+    "shortDescription": "Pre-order · Expected Q3 2026 · Delivery toolkit for AI automation agencies: proposals, SOWs, runbooks, white-label assets, ops SOPs.",
+    "available": false,
+    "expectedShipDate": "2026-Q3",
+    "deliveryFiles": null,
+    "image": "/products/the-agency-launch-bundle.png",
+    "longDescription": "Everything you need to white-label automation services for your clients — repackaged from the exact architecture Aiprosol uses on managed engagements. Includes the proposal templates, scope-of-work boilerplate, the SOW pricing calculator we use to size projects, the implementation runbooks for the 7 most common agency engagements (lead-gen, ops-automation, AI-onboarding, etc.), and the client-handoff checklist that ships every project with documentation strong enough to support without your team. Ships Q3 2026.",
+    "features": [
+      "11 client-facing proposal templates (lead-gen, ops, customer success, finance, agency-of-record retainers)",
+      "Pricing calculator: SOW sizing model based on scope × complexity × industry premium",
+      "Implementation runbooks for the 7 most-common agency engagements (full step-by-step from kickoff to handoff)",
+      "Client-handoff checklist + SOP set (everything a junior implementer needs to maintain the build)",
+      "White-label brand kit (deck templates, email signatures, contract boilerplate)",
+      "Sales playbook: discovery questions, qualifying matrix, common objections + answers",
+      "Includes the Workflow Automation Playbook + Lead Generation Automation Playbook (so your team has a single source of truth)"
+    ],
+    "whatsInside": [
+      "11 proposal templates (Word + Google Docs)",
+      "SOW pricing calculator (XLSX)",
+      "7 implementation runbooks (PDF + Markdown)",
+      "Client-handoff checklist + ops SOPs",
+      "White-label deck templates (Keynote + Google Slides)",
+      "Sales playbook: discovery, qualifying, objection-handling scripts",
+      "Bundled: Workflow Automation Playbook + Lead Generation Automation Playbook"
+    ],
+    "faqs": [
+      {
+        "q": "How is this different from the Agency Starter Pack?",
+        "a": "The Agency Launch Bundle (this product, $597) is the DELIVERY toolkit — proposals, runbooks, handoff SOPs. The Agency Starter Pack ($497) is the OPERATING toolkit — discovery scripts, pricing models, financial model. Many agencies buy both."
+      },
+      {
+        "q": "When does it ship?",
+        "a": "Pre-order. Expected Q3 2026. Pre-order pricing is locked at $597; the price rises to $797 at GA."
+      },
+      {
+        "q": "Can I white-label these?",
+        "a": "Yes. The proposal templates, SOWs, and deck templates are all re-skinnable. We provide editable .docx, .keynote, and Google Slides versions."
+      },
+      {
+        "q": "What if my agency is just me?",
+        "a": "Then start with the Workflow Automation Playbook + Lead Generation Automation Playbook (both bundled in here). Add this bundle once you have a second person or your first client engagement."
+      }
+    ],
+    "bestFor": [
+      "New AI automation agencies",
+      "Freelance operators going agency-scale",
+      "Consulting firms adding AI as a service line"
+    ],
+    "outcomeMetrics": [
+      {
+        "value": "11",
+        "label": "Proposal + SOW templates ready to white-label"
+      },
+      {
+        "value": "7",
+        "label": "End-to-end implementation runbooks"
+      },
+      {
+        "value": "Q3 2026",
+        "label": "Expected delivery (pre-order pricing locked)"
+      }
+    ]
+  },
+  {
+    "slug": "the-complete-vault",
+    "name": "The Complete Vault",
+    "price": 997,
+    "category": "Bundle",
+    "icon": "💎",
+    "shortDescription": "Pre-order · Expected Q4 2026 · Every Aiprosol self-serve product bundled. Quarterly refreshes for 12 months. Private buyer Slack.",
+    "available": false,
+    "expectedShipDate": "2026-Q4",
+    "deliveryFiles": null,
+    "image": "/products/the-complete-vault.png",
+    "longDescription": "Every Aiprosol digital product, bundled. The Starter Bundle, the Playbook Pack, the AI Tools Vault, the Pitch Deck, the ROI Calculator, the Audit Checklist, the 30-Day Challenge, the Comparison Guide, the Lead Gen Playbook, the Prompt Vault, the Zapier+Make Bundle, the Architecture Masterclass, the Enterprise Readiness Kit, the Agency Starter Pack, the Stack Starter Kit, the Workflow Playbook — plus quarterly refreshes for 12 months. The single click that gives you the entire Aiprosol stack at less than half the standalone total. Ships Q3 2026.",
+    "features": [
+      "All 18 standalone products included (total standalone value: $2,381)",
+      "Bundle price: $997 — saves $1,384 vs buying separately",
+      "Lifetime access to everything currently in the vault",
+      "Quarterly refresh updates for 12 months — new prompts, new tools, new n8n workflows auto-delivered",
+      "Single download bundle (one ZIP) + individual product downloads for selective use",
+      "Private Slack channel for vault holders (the highest tier of buyer support)",
+      "First access to every new product before public launch (founder pricing)",
+      "Includes the Architecture Masterclass video series ($297 standalone) + Agency Starter Pack ($497 standalone)"
+    ],
+    "whatsInside": [
+      "Every standalone Aiprosol product bundled (toolkits, templates, playbooks, guides, challenges)",
+      "~280 AI business prompts (200 JSON + 76 inline) + 105 AI tools catalogue",
+      "25 importable n8n workflows (10 starters + 15 scaffolds) across the playbook bundle",
+      "Documented Zapier + Make recipe library (50 patterns, documentation-first)",
+      "30 day-by-day implementation recipes (Automation Challenge)",
+      "Enterprise readiness scorecard + RFP + 90-day plan (Enterprise Kit)",
+      "Quarterly refresh deliveries auto-emailed for 12 months",
+      "Private vault-holder Slack + first-access to new products"
+    ],
+    "faqs": [
+      {
+        "q": "Is it actually every product?",
+        "a": "Yes — every current Aiprosol self-serve product (18 in v1). New products added during your 12-month refresh window are auto-included."
+      },
+      {
+        "q": "What does the quarterly refresh include?",
+        "a": "New prompts added to the Prompt Vault, new tools added to the Tools Catalogue, new n8n workflows added to the playbooks, and any new standalone product we launch during your window."
+      },
+      {
+        "q": "Is the Slack channel active?",
+        "a": "Yes — it is the highest tier of buyer support. Founder Srijan + the AI C-suite operating reports are in there. Replies within 12 hours weekdays."
+      },
+      {
+        "q": "When does it ship?",
+        "a": "Pre-order. Q4 2026 expected. Pre-order locks the $997 price; GA price will be $1,497."
+      }
+    ],
+    "bestFor": [
+      "Aiprosol superfans",
+      "In-house automation leads",
+      "AI consultants building their own delivery library"
+    ],
+    "outcomeMetrics": [
+      {
+        "value": "18",
+        "label": "Standalone products included"
+      },
+      {
+        "value": "$1,384",
+        "label": "Saved vs buying products individually"
+      },
+      {
+        "value": "12 months",
+        "label": "Of quarterly refresh deliveries"
+      }
+    ],
+    "flagship": true,
+    "flagshipHero": {
+      "headline": "Every Aiprosol product. One purchase. Twelve months of refreshes.",
+      "subheadline": "The Complete Vault is the lock-in option for operators who know they'll use most of the catalogue eventually. Bundles 18 standalone products (~,381 of value) at , plus quarterly refreshes for 12 months and access to the private vault-holder Slack.",
+      "socialProof": "Pre-order pricing locked at . The price rises to ,497 at GA.",
+      "threePromises": [
+        {
+          "title": "Everything, including future products",
+          "body": "Every product we ship in the next 12 months is auto-included in your vault — no upgrade tickets, no re-purchase friction."
+        },
+        {
+          "title": "Private vault-holder Slack",
+          "body": "Direct line to the founder + the AI C-suite operating reports. The highest tier of buyer support we offer."
+        },
+        {
+          "title": "Cancellable optionality",
+          "body": "7-day refund if it does not fit. After that, the vault is yours — the quarterly refreshes are a gift, not a subscription."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "automation-roi-pitch-deck-template",
+    "name": "The Automation ROI Pitch Deck Template",
+    "price": 17,
+    "category": "Templates",
+    "icon": "📊",
+    "shortDescription": "Editable Keynote/Google Slides deck for pitching automation projects internally. 14 slides. Numbers built-in.",
+    "available": true,
+    "expectedShipDate": null,
+    "deliveryFiles": [
+      {
+        "path": "private-products/automation-roi-pitch-deck-template.pptx",
+        "filename": "Aiprosol-ROI-Pitch-Deck-Template.pptx",
+        "mime": "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+      }
+    ],
+    "buyUrl": "https://srijan07.gumroad.com/l/roi-pitch-deck",
+    "image": "/products/automation-roi-pitch-deck-template.png",
+    "longDescription": "A 25-slide PowerPoint template for justifying automation investment to your board, exec team, or finance partner. Comes with pre-built financial slots (current state, projected savings, payback), customisable case-study slides (5 slots), and complete speaker notes including the two hardest questions you'll get on each slide — with answers. Drop your numbers into the {{Variable}} placeholders and present in 24 hours. Includes a 1-page output companion that summarises the case in 5 numbers — print it, screenshot it, attach to a Slack DM.",
+    "features": [
+      "25 slides covering cover, agenda, problem, current state, approach, savings, payback, sensitivity, 3 case studies, implementation, risks, vendor decisions, security, measurement, year-2 vision, the ask, next steps, 4 appendices, glossary",
+      "Aiprosol dark-violet brand theme (re-skin in 10 minutes if you have a corporate brand)",
+      "Speaker notes on every slide with the 2 hardest questions + answers",
+      "{{Variable}} placeholders for Your Company, Revenue, Headcount, Implementation Cost, Projected Savings, Payback Months",
+      "5 pre-formatted case-study slides with green-metric callouts",
+      "PowerPoint + Keynote + Google Slides compatible"
+    ],
+    "whatsInside": [
+      "25-slide PowerPoint template (cover, problem, savings, payback, 3 case studies, etc.)",
+      "Aiprosol dark-violet brand theme (re-skin in 10 minutes)",
+      "Speaker notes on every slide with the 2 hardest questions + answers",
+      "{{Variable}} placeholders for Company, Revenue, Headcount, Cost, Savings, Payback",
+      "5 pre-formatted case-study slides",
+      "PowerPoint + Keynote + Google Slides compatible"
+    ],
+    "faqs": [
+      {
+        "q": "Will my CFO accept this?",
+        "a": "The deck is structured around the questions CFOs actually ask: sensitivity analysis, payback months, year-2 vision, security, vendor risks. Speaker notes include the 2 hardest objections per slide with answers."
+      },
+      {
+        "q": "PowerPoint, Keynote, or Google Slides?",
+        "a": "All three. The .pptx is the master; .keynote and Google Slides versions ship in the same download."
+      },
+      {
+        "q": "Can I use this for client pitches if I am an agency?",
+        "a": "Yes. Re-skin with your brand colours in 10 minutes. The case-study slides have placeholder metrics ready to swap in your own anonymised numbers."
+      },
+      {
+        "q": "What if I do not have a number yet?",
+        "a": "Pair this with the AI Automation ROI Calculator ($47) — the calculator produces the numbers; the deck presents them. Or buy them together as The Starter Bundle ($79)."
+      }
+    ],
+    "bestFor": [
+      "Internal champions",
+      "Consulting partners pitching automation",
+      "Solo operators pitching their boss"
+    ],
+    "outcomeMetrics": [
+      {
+        "value": "25 slides",
+        "label": "Including 5 case-study slides"
+      },
+      {
+        "value": "10 minutes",
+        "label": "To re-skin with your brand"
+      },
+      {
+        "value": "{{variables}}",
+        "label": "For company, revenue, savings, payback"
+      }
+    ],
+    "includedInBundles": [
+      {
+        "bundleSlug": "the-complete-vault",
+        "bundleName": "The Complete Vault",
+        "bundlePrice": 997,
+        "bundleItemCount": 14,
+        "bundleStandaloneSum": 2168,
+        "bundleSavings": 1384
+      },
+      {
+        "bundleSlug": "the-starter-bundle",
+        "bundleName": "The Starter Bundle",
+        "bundlePrice": 79,
+        "bundleItemCount": 3,
+        "bundleStandaloneSum": 101,
+        "bundleSavings": 22
+      }
+    ]
+  },
+  {
+    "slug": "business-process-audit-checklist",
+    "name": "Business Process Audit Checklist",
+    "price": 37,
+    "category": "Checklists",
+    "icon": "✅",
+    "shortDescription": "The 47-question framework Aiprosol uses on day 1 of every paying engagement. Walk through it yourself in a weekend.",
+    "available": true,
+    "expectedShipDate": null,
+    "deliveryFiles": [
+      {
+        "path": "private-products/business-process-audit-checklist.md",
+        "filename": "Aiprosol-Business-Process-Audit-Checklist.md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "private-products/business-process-audit-checklist.html",
+        "filename": "Aiprosol-Business-Process-Audit-Checklist.html",
+        "mime": "text/html"
+      }
+    ],
+    "buyUrl": "https://srijan07.gumroad.com/l/audit-checklist",
+    "image": "/products/business-process-audit-checklist.png",
+    "longDescription": "A 50-question audit that finds your highest-ROI automation candidates in under 90 minutes. Built for operators who suspect they have automation opportunities but don't know where to start. Includes the interactive HTML checklist (open in any browser, score yourself, export results as JSON), a scoring worksheet that maps answers to an automation-readiness tier per dimension, a 1-page Opportunity Map output template ready to share with stakeholders, and reference notes on the 12 patterns seen in 80% of audits.",
+    "features": [
+      "50 questions across 5 dimensions (10 each): People, Process, Data, Tools, Outcomes",
+      "Interactive HTML checklist with auto-scoring + visual bars + tier badges",
+      "Maps each highest-scoring dimension to the matching Aiprosol product",
+      "Export results as JSON for sharing or quarter-over-quarter comparison",
+      "12 common findings reference with recommended automation pattern per finding",
+      "1-page Opportunity Map template (stakeholder-ready)",
+      "Includes a 15-minute clarifying-call credit"
+    ],
+    "whatsInside": [
+      "Interactive HTML checklist (open in any browser, auto-score, export results)",
+      "50 questions across 5 dimensions (10 each): People, Process, Data, Tools, Outcomes",
+      "Auto-scoring with visual bars + tier badges per dimension",
+      "Maps each highest-scoring dimension to the matching Aiprosol product",
+      "JSON export for sharing or quarter-over-quarter comparison",
+      "12 common findings reference with recommended automation pattern",
+      "1-page Opportunity Map template (stakeholder-ready)"
+    ],
+    "faqs": [
+      {
+        "q": "How does the scoring work?",
+        "a": "Each of the 50 questions scores 0–3. The HTML auto-aggregates into 5 dimensional bars (People · Process · Data · Tools · Outcomes), highlights the weakest dimension, and maps it to the matching Aiprosol product or service."
+      },
+      {
+        "q": "Is the 15-min clarifying call real?",
+        "a": "Yes. Every buyer gets a 15-min Cal.com link to talk through their results with the team. Used to disambiguate findings or scope a managed plan if applicable."
+      },
+      {
+        "q": "Does this work for a one-person team?",
+        "a": "Yes — questions are tagged so single-operator teams can skip the \"team coordination\" cluster. Most solo operators finish the audit in 30 minutes."
+      },
+      {
+        "q": "Can I export my results?",
+        "a": "Yes — JSON export for sharing or quarter-over-quarter comparison. Re-run quarterly to track readiness improvements."
+      }
+    ],
+    "bestFor": [
+      "First-time automation buyers",
+      "Internal ops leads",
+      "Professional Services",
+      "Manufacturing"
+    ],
+    "outcomeMetrics": [
+      {
+        "value": "50",
+        "label": "Audit questions across 5 dimensions"
+      },
+      {
+        "value": "15 min",
+        "label": "Self-diagnosis call"
+      },
+      {
+        "value": "1-page",
+        "label": "Stakeholder-ready opportunity map"
+      }
+    ],
+    "includedInBundles": [
+      {
+        "bundleSlug": "the-complete-vault",
+        "bundleName": "The Complete Vault",
+        "bundlePrice": 997,
+        "bundleItemCount": 14,
+        "bundleStandaloneSum": 2168,
+        "bundleSavings": 1384
+      },
+      {
+        "bundleSlug": "the-starter-bundle",
+        "bundleName": "The Starter Bundle",
+        "bundlePrice": 79,
+        "bundleItemCount": 3,
+        "bundleStandaloneSum": 101,
+        "bundleSavings": 22
+      }
+    ],
+    "previewToc": [
+      "How to use this document",
+      "§1. Lead intake & qualification",
+      "§2. Sales pipeline & deal flow",
+      "§3. Customer onboarding & delivery",
+      "§4. Document processing & data entry",
+      "§5. Communications & inbox triage",
+      "§6. Reporting, KPIs & decision data",
+      "§7. Recruiting, onboarding & internal ops",
+      "§8. The 5-question pressure test",
+      "§9. Prioritisation matrix",
+      "§10. What to do with the results",
+      "§11. Want help running the implementation?"
+    ],
+    "previewExcerpt": "## How to use this document This is a structured 90-minute walk through your business looking for **manual work that an automation can do better**. You'll move through 7 functional areas, scoring each on a 1–5 scale. At the end you'll have a prioritized shortlist of automation candidates and an estimate of the hours/£ each one is costing you today. **Materials needed:** - 90 minutes uninterrupted - Your last full month's bank/accounting export (look at outflows) - Access to whichever inboxes / Slack channels / shared drives are most active - Two cups of coffee **The rule of thumb:** if a process is *predictable* (same inputs lead to same outputs) and *recurring* (happens more than once per week), it is an automation candidate. Score every yes-answer, then prioritise in §9. --- ## §1. Lead intake & qualification > **Score interpretation:** Each \"no\" or \"score < 3\" represents 30–90 min/week of manual work that compound across every lead. If sections 1.1, 1.2, 1.5 are all weak, you are losing 1 in 4 leads to slow response time alone (Harvard Business Review, 2011 — one-hour delay drops contact rate 7×). **Your weak points in §1 (write 1–3):** 1. _______________________________________ 2. _______________________________________ 3. _______________________________________ --- ## §2. Sales pipeline & deal flow **Your weak points in §2 (write 1–3):** 1. _______________________________________ 2. _______________________________________ 3. _______________________________________ --- ## §3. Customer onboarding & delivery **Your weak points in §3 (write 1–3):** 1. _______________________________________ 2. _______________________________________ 3. _______________________________________ --- ## §4. Document processing & data entry > **Reality check:** the average SMB ops manager spends 7.4 hrs/week on data entry that costs £35–80 per hour fully loaded — that's £13–30k/year per person, often spent on work an OCR + small-model pipeline does in seconds at >99% accuracy. **Your weak points in §4 (write 1–3):** 1. _______________________________________ 2. _______________________________________ 3. _______________________________________ --- ## §5. Communications & inbox triage **Your weak points in §5 (write 1–3):** 1. _______________________________________ 2. _______________________________________ 3. _______________________________________ --- ## §6. Reporting, KPIs & decision data **Your weak points in §6 (write 1–3):** 1. _______________________________________ 2. _______________________________________ 3. _______________________________________ --- ## §7. Recruiting, onboarding & internal ops **Your weak points in §7 (write 1–3):** 1. _______________________________________ 2. _______________________________________ 3. _______________________________________ --- ## §8. The 5-question pressure test Before you finalise the audit, answer these honestly. If any answer is \"yes,\" there is significant automation upside hiding. 1. **In a typical week, how many times does someone in the company copy data from one system into another by hand?** (Each instance = automation candidate.) 2. **What recurring task makes you think \"this should be automated already\"?** (Trust the gut. It's right.) 3. **If you went on holiday for 3 weeks tomorrow, what fires would start?** (Each fire = brittle process.) 4. **What's the most boring 30 minutes of your day?** (Often the highest-leverage automation target.) 5. **Where do you say \"I'll do that this evening / weekend\"?** (Work that creeps off-hours is work the business won't pay to do — perfect automation candidate.) --- ## §9. Prioritisation matrix For each weak point flagged across §§1–7, score against: **Top 3 candidates for Aiprosol — or for a competent in-house automation engineer — to tackle first:** --- ## §10. What to do with the results If you scored mostly **4–5s across the board:** you're already running a reasonably automated business. Look for the one outlier section and treat it as a polish exercise. If you have **3–5 sections scoring under 3:** you are leaking 20–40 hours/week across the team to manual work. Pick the top 2 candidates from §9 and tackle them first; ROI compounds. If you"
+  },
+  {
+    "slug": "30-day-business-automation-challenge",
+    "name": "30-Day Business Automation Challenge",
+    "price": 47,
+    "category": "Challenge",
+    "icon": "🎯",
+    "shortDescription": "Daily prompt + action for 30 days. Most participants ship 5+ automations by day 20.",
+    "available": true,
+    "expectedShipDate": null,
+    "deliveryFiles": [
+      {
+        "path": "private-products/30-day-business-automation-challenge.md",
+        "filename": "Aiprosol-30-Day-Automation-Challenge.md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "private-products/30-day-business-automation-challenge.html",
+        "filename": "Aiprosol-30-Day-Automation-Challenge.html",
+        "mime": "text/html"
+      },
+      {
+        "path": "private-products/n8n-workflows/01-sales-stripe-charge-to-hubspot.json",
+        "filename": "01-sales-stripe-charge-to-hubspot.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/02-sales-calendly-ai-prep-brief.json",
+        "filename": "02-sales-calendly-ai-prep-brief.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/03-sales-form-score-route-slack.json",
+        "filename": "03-sales-form-score-route-slack.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/04-cs-support-ticket-ai-categorise.json",
+        "filename": "04-cs-support-ticket-ai-categorise.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/05-ops-daily-kpi-digest.json",
+        "filename": "05-ops-daily-kpi-digest.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/06-finance-invoice-extract.json",
+        "filename": "06-finance-invoice-extract.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/07-cs-nps-low-detractor-alert.json",
+        "filename": "07-cs-nps-low-detractor-alert.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/08-sales-cold-reply-intent-classifier.json",
+        "filename": "08-sales-cold-reply-intent-classifier.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/09-marketing-blog-cross-post.json",
+        "filename": "09-marketing-blog-cross-post.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/10-cs-onboarding-day-3-nudge.json",
+        "filename": "10-cs-onboarding-day-3-nudge.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/11-sales-lead-inactive-reengagement.json",
+        "filename": "11-sales-lead-inactive-reengagement.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/12-sales-closed-won-onboarding.json",
+        "filename": "12-sales-closed-won-onboarding.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/13-sales-hot-lead-5min-sla.json",
+        "filename": "13-sales-hot-lead-5min-sla.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/14-cs-renewal-health-check.json",
+        "filename": "14-cs-renewal-health-check.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/15-cs-customer-slack-summarise.json",
+        "filename": "15-cs-customer-slack-summarise.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/16-cs-churn-signal-warning.json",
+        "filename": "16-cs-churn-signal-warning.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/17-ops-calendly-no-show-rebook.json",
+        "filename": "17-ops-calendly-no-show-rebook.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/18-ops-new-employee-provisioning.json",
+        "filename": "18-ops-new-employee-provisioning.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/19-ops-weekly-overdue-tasks.json",
+        "filename": "19-ops-weekly-overdue-tasks.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/20-finance-stripe-subscription-mrr.json",
+        "filename": "20-finance-stripe-subscription-mrr.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/21-finance-failed-payment-dunning.json",
+        "filename": "21-finance-failed-payment-dunning.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/22-marketing-lead-magnet-nurture.json",
+        "filename": "22-marketing-lead-magnet-nurture.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/23-marketing-webinar-reminder.json",
+        "filename": "23-marketing-webinar-reminder.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/24-people-job-application-ai-summary.json",
+        "filename": "24-people-job-application-ai-summary.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/25-people-pto-request-approval.json",
+        "filename": "25-people-pto-request-approval.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/README.md",
+        "filename": "README.md",
+        "mime": "text/markdown"
+      }
+    ],
+    "buyUrl": "https://srijan07.gumroad.com/l/30-day-challenge",
+    "image": "/products/30-day-business-automation-challenge.png",
+    "longDescription": "30 daily 15-minute exercises that compound into 30 working business automations and ~32-48 hours/week reclaimed by Day 30. Every day has a full recipe with steps, success criteria, common pitfalls, and a measurable saving. Days 1-7 set up your control panel and ship the first few automations. Days 8-21 stack operations, sales, and customer automations. Days 22-30 build the meta-layer that monitors all your automations. Now includes the 25 importable n8n workflow JSON files from the Workflow Playbook as a starter library.",
+    "features": [
+      "30 daily recipes, each 15-25 minutes, with success criteria + pitfalls",
+      "Week 1: Foundation (control panel, Stripe log, Gmail classifier, FAQ responder, CRM auto-create, meeting auto-book, daily metrics digest)",
+      "Week 2: Sales + customer (attribution, no-show prevention, post-call follow-up, stale-deal nudge, onboarding kickoff, renewal reminders, health digest)",
+      "Week 3: Operations (invoice routing, expense receipts, content scheduling, channel summary, action item extraction, document filing, weekly review)",
+      "Week 4: Compounding (contact research, customer feedback loop, competitor monitoring, content generation, vendor renewals, hire triage, cross-sell triggers, annual review, meta-automation)",
+      "References specific n8n workflow JSONs from the included library",
+      "Private Slack channel for participants"
+    ],
+    "whatsInside": [
+      "30 daily 15-25 minute recipes with success criteria + pitfalls",
+      "Week 1: Foundation (control panel, Stripe log, Gmail classifier, CRM auto-create)",
+      "Week 2: Sales + Customer (attribution, no-show prevention, follow-ups, renewals)",
+      "Week 3: Operations (invoices, expenses, content, action items, weekly review)",
+      "Week 4: Compounding (research, feedback, monitoring, hiring, annual review)",
+      "10 importable n8n workflow starters + 15 additional scaffolds in the same folder",
+      "Self-paced — work at your own speed, no time pressure"
+    ],
+    "faqs": [
+      {
+        "q": "Is it really doable in 25 minutes a day?",
+        "a": "Yes for 26 of the 30 days. Four recipes (operations week) take 40-60 min because they involve cross-tool integration. Pacing is flexible — self-paced is fine."
+      },
+      {
+        "q": "Do I need to do them in order?",
+        "a": "Week 1 builds the foundation referenced by Weeks 2-4. After that, you can re-order. The Compounding week (Week 4) is the highest-leverage and worth saving for the end."
+      },
+      {
+        "q": "Are the workflows tested?",
+        "a": "Each is shipped in Aiprosol-internal operations first. The challenge uses the same .json files the agents use in production."
+      },
+      {
+        "q": "What if I miss a day?",
+        "a": "The challenge is self-paced; there is no shame loop. Most participants average 4-5 days per week and finish in ~6 weeks."
+      }
+    ],
+    "bestFor": [
+      "Solo founders",
+      "Two-person teams",
+      "Anyone who learns by doing",
+      "SaaS",
+      "Professional Services"
+    ],
+    "outcomeMetrics": [
+      {
+        "value": "30",
+        "label": "Daily 15-25 min recipes"
+      },
+      {
+        "value": "25",
+        "label": "Importable n8n workflow starters"
+      },
+      {
+        "value": "Day 20",
+        "label": "Median time to 5 shipped automations"
+      }
+    ],
+    "includedInBundles": [
+      {
+        "bundleSlug": "the-complete-vault",
+        "bundleName": "The Complete Vault",
+        "bundlePrice": 997,
+        "bundleItemCount": 14,
+        "bundleStandaloneSum": 2168,
+        "bundleSavings": 1384
+      },
+      {
+        "bundleSlug": "the-playbook-pack",
+        "bundleName": "The Playbook Pack",
+        "bundlePrice": 197,
+        "bundleItemCount": 3,
+        "bundleStandaloneSum": 271,
+        "bundleSavings": 74
+      }
+    ],
+    "previewToc": [
+      "How this works",
+      "Week 1 · Foundation (Days 1–7)",
+      "Week 2 · Sales + Customer (Days 8–14)",
+      "Week 3 · Operations (Days 15–21)",
+      "Week 4 · Compounding (Days 22–30)",
+      "Bonus · The 10 Starter n8n Workflows",
+      "Ship Today (if you haven't started)"
+    ],
+    "previewExcerpt": "## How this works Each day is one 15–25 minute exercise. No \"watch a 4-hour lecture\" days. You do something concrete. Each exercise has: - **The action** (what to do) - **Success criterion** (how you know it's done) - **Common pitfall** (what people get wrong) - **Ship cue** (do this before closing your laptop) If you fall behind, don't restart — pick up where you left off. The compounding is what matters, not the calendar. --- ## Week 1 · Foundation (Days 1–7) ### Day 1 — Build your control panel **Action**: Create a single Notion/Airtable page titled \"Automation Control Panel.\" Add four sections: Workflows Live, Tools In Use, Numbers I Track Weekly, This Week's One Build. **Success**: You can see in 10 seconds what's running in your business. **Pitfall**: Trying to populate it perfectly before moving on. Sketch quickly, refine over the 30 days. **Ship cue**: Bookmark the page. Pin it. ### Day 2 — Stripe → spreadsheet revenue log **Action**: Use Zapier/Make/n8n to log every `charge.succeeded` event to a Google Sheet. Columns: timestamp, customer, amount, product, currency. **Success**: A new row appears in the sheet within 60s of a real charge. **Pitfall**: Skipping the \"currency\" column. You'll regret it the first time you process a non-USD charge. **Ship cue**: Set the sheet as your phone's home-screen widget. Watch the row count climb. ### Day 3 — Gmail inbox classifier **Action**: Build a workflow that reads new Gmail messages, sends the subject + first 200 chars to OpenAI/Claude, asks \"Is this: (a) customer, (b) vendor, (c) recruiter, (d) other?\" — and applies a Gmail label. **Success**: 80%+ of incoming mail gets correctly labelled within 5 minutes of arrival. **Pitfall**: Trying to use AI to AUTO-REPLY on day 3. Just label for now. Reply manually for a week to see the labelling accuracy. **Ship cue**: Check the Promotions label tomorrow. Anything obviously misclassified? Adjust prompt. ### Day 4 — CRM auto-create on form submit **Action**: Your contact / ROI audit / demo form should write directly to your CRM (HubSpot Free, Pipedrive, or Notion CRM). No manual paste. **Success**: A test submission appears as a new CRM contact in <30s. **Pitfall**: Letting the form do nothing while you \"plan the integration.\" If you have a form, it must write somewhere automated. If you don't have a form, build one in Tally/Typeform in 10 minutes. **Ship cue**: Submit a test entry yourself. Confirm the CRM record. ### Day 5 — One-touch follow-up **Action**: When a new CRM contact lands, send a templated welcome email automatically within 60 seconds. Include name personalisation. **Success**: Test entry triggers a real email to your test address inside 60s. **Pitfall**: Spending an hour writing the \"perfect\" welcome. Use 5 sentences. Improve over weeks. **Ship cue**: Add yourself to the test path so you experience every email you send. ### Day 6 — Daily KPI digest **Action**: Every morning at 7am UTC, a workflow gathers yesterday's stripe revenue, new leads, completed tasks, and posts it to your personal Slack DM (or email). **Success**: Tomorrow morning, at 7am, you'll see the message. **Pitfall**: Including 20 metrics. Start with 4. Add only after you've referenced the digest for a week. **Ship cue**: Schedule the workflow. Walk away. ### Day 7 — Audit yesterday's manual work **Action**: Open your calendar + browser history from Day 6. Write down 10 tasks you did manually that took >10 minutes. Rank them by frequency. **Success**: A ranked list of 10 candidate automations sitting in your Control Panel from Day 1. **Pitfall**: Skipping this step because it feels unproductive. This list is the entire"
+  },
+  {
+    "slug": "ai-tools-master-comparison-guide-2026",
+    "name": "AI Tools Master Comparison Guide 2026",
+    "price": 67,
+    "category": "Guides",
+    "icon": "📖",
+    "shortDescription": "Every AI tool we vet, ranked by use case across 23 categories. Verdict, pricing, free tier, integrations. CSV + JSON + HTML.",
+    "available": true,
+    "expectedShipDate": null,
+    "deliveryFiles": [
+      {
+        "path": "private-products/ai-tools-master-comparison-guide-2026.md",
+        "filename": "Aiprosol-AI-Tools-Comparison-Guide-2026.md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "private-products/ai-tools-master-comparison-guide-2026.html",
+        "filename": "Aiprosol-AI-Tools-Comparison-Guide-2026.html",
+        "mime": "text/html"
+      },
+      {
+        "path": "private-products/ai-tools-catalogue.csv",
+        "filename": "Aiprosol-AI-Tools-Catalogue.csv",
+        "mime": "text/csv"
+      },
+      {
+        "path": "private-products/ai-tools-catalogue.json",
+        "filename": "Aiprosol-AI-Tools-Catalogue.json",
+        "mime": "application/json"
+      }
+    ],
+    "buyUrl": "https://srijan07.gumroad.com/l/ai-tools-guide",
+    "image": "/products/ai-tools-master-comparison-guide-2026.png",
+    "longDescription": "Side-by-side comparison of 545+ AI tools across 23 categories. Each tool rated on capability dimensions (prompt control, model quality, speed, cost, integrations, team features, compliance), with real pricing (not marketing pricing), free tier availability, integrations count, the Aiprosol verdict (1-line opinion), and the gotchas the marketing pages won't tell you. CSV + JSON format. Quarterly refresh schedule.",
+    "features": [
+      "545 AI tools curated and rated",
+      "23 categories: Conversational AI, Code gen, Image gen, Video gen, Voice, Knowledge/RAG, No-code, CRM, Email, Analytics, PM, Docs, Support, Hosting, Observability, AI agents, Storage, Marketing, Design, HR, Finance, Legal, Communication, and more",
+      "CSV format for spreadsheet manipulation, JSON for programmatic use",
+      "Per-tool fields: name, category, subcategory, pricing floor (USD/mo), pricing model, integrations count, free tier yes/no, Aiprosol verdict, gotchas",
+      "2026 trend notes: emerging, plateauing, consolidating segments",
+      "Quarterly refreshes through 2026"
+    ],
+    "whatsInside": [
+      "105 AI tools curated by Aiprosol (v1 — refreshed quarterly to 200+)",
+      "23 categories covered (Conversational AI, Code, Image, Video, Voice, RAG, no-code, etc.)",
+      "Per-tool fields: category, summary, pricing, verdict, notes",
+      "CSV format (spreadsheet manipulation) + JSON (programmatic use)",
+      "HTML viewer for quick browse",
+      "2026 trend notes: emerging, plateauing, consolidating segments",
+      "Quarterly refresh via email subscription (free for buyers)"
+    ],
+    "faqs": [
+      {
+        "q": "What does PICK/GOOD/WATCH/AVOID/GEM mean?",
+        "a": "PICK = default choice for the category. GOOD = solid alternative with a specific trade-off. WATCH = promising but not yet production-ready. AVOID = burns time or money in production. GEM = under-indexed by the market, deserves more attention."
+      },
+      {
+        "q": "How do you make the calls?",
+        "a": "Each verdict is informed by production usage — either inside Aiprosol or with our client engagements. We do not take vendor money. Every verdict has a one-line rationale."
+      },
+      {
+        "q": "How often does it update?",
+        "a": "Quarterly for 12 months from purchase. New tools added, ratings revised when products change materially, decommissioned tools archived. Updates auto-emailed."
+      },
+      {
+        "q": "Format?",
+        "a": "CSV (spreadsheet manipulation) + JSON (programmatic use) + HTML viewer (quick browse). No SaaS dependency."
+      }
+    ],
+    "bestFor": [
+      "Anyone evaluating an AI stack",
+      "Consultants building recommendations for clients",
+      "In-house ops leads"
+    ],
+    "outcomeMetrics": [
+      {
+        "value": "105+",
+        "label": "Tools verdicted (target 200+ by Q4)"
+      },
+      {
+        "value": "23",
+        "label": "Categories covered"
+      },
+      {
+        "value": "Quarterly",
+        "label": "Refresh through 2026"
+      }
+    ],
+    "includedInBundles": [
+      {
+        "bundleSlug": "the-complete-vault",
+        "bundleName": "The Complete Vault",
+        "bundlePrice": 997,
+        "bundleItemCount": 14,
+        "bundleStandaloneSum": 2168,
+        "bundleSavings": 1384
+      },
+      {
+        "bundleSlug": "the-ai-tools-vault",
+        "bundleName": "The AI Tools Vault",
+        "bundlePrice": 67,
+        "bundleItemCount": 2,
+        "bundleStandaloneSum": 164,
+        "bundleSavings": 97
+      }
+    ],
+    "previewToc": [
+      "How to use this guide",
+      "Decision flowchart — start here",
+      "§1 · Foundation models (the brains)",
+      "§2 · Customer support / chatbot platforms",
+      "§3 · Workflow automation",
+      "§4 · Document AI / OCR / extraction",
+      "§5 · Image & video AI",
+      "§6 · Voice agents",
+      "§7 · Agent platforms (multi-step)",
+      "§8 · Coding assistants",
+      "§9 · Data + analytics AI",
+      "§10 · How we'd assemble a stack today (tier by tier)"
+    ],
+    "previewExcerpt": "## How to use this guide Tools change every quarter. This guide is structured to age well: each tool entry has the same five fields so you can compare apples-to-apples even after the inevitable round of feature changes. The prices and capabilities are accurate as of release date; we publish a free quarterly update at `aiprosol.com/tools-update`. **The five fields per tool:** - **Best for** — the one job it's the most-correct answer to - **Cheapest credible plan** — what you actually pay to use it usefully (not the marketing-page lowball) - **One thing it does better than anyone** — the unique capability worth buying it for - **One reason not to pick it** — the honest gotcha - **Aiprosol verdict** — `🟢 Use today` / `🟡 Watch list` / `🔴 Avoid for now` --- ## Decision flowchart — start here [code block] --- ## §1 · Foundation models (the brains) Pick the model that drives most of your other tools. This is the highest-impact decision — change it last, but pick it carefully. ### Anthropic Claude (Sonnet 4.5, Opus 4.6+) - **Best for**: long-context analysis, careful reasoning, anything customer-facing where tone matters - **Cheapest credible plan**: API at $3 / $15 per million tokens (input/output) — pay-as-you-go - **One thing it does better than anyone**: 200k+ context window with strong recall throughout; tool use without theatrics - **One reason not to pick it**: latency on long completions can lag GPT-4o; smaller community - **Aiprosol verdict**: 🟢 Default for production. We use Claude Sonnet 4.5 for our entire content ops. ### OpenAI GPT-4o / GPT-4.5 - **Best for**: multimodal (image + voice + text), broadest tool ecosystem - **Cheapest credible plan**: API at $5 / $15 per million; ChatGPT Team £20/user/month - **One thing it does better than anyone**: native voice mode (real-time, near-zero latency) - **One reason not to pick it**: occasional hallucination on factual long-form; pricing changes erratic - **Aiprosol verdict**: 🟢 Use for voice features and image input. Pair with Claude for text-heavy workflows. ### Google Gemini 1.5 Pro / 2.0 - **Best for**: 2M-token context window, native YouTube/Docs integration if you're already on Google Workspace - **Cheapest credible plan**: API ~$1.25 / $5 per million on 1.5; included with Google Workspace Business+ - **One thing it does better than anyone**: 2M token context — entire codebases or year of emails fit - **One reason not to pick it**: instruction-following less reliable than Claude/GPT-4 for complex prompts - **Aiprosol verdict**: 🟢 Use specifically for very-long-context jobs; otherwise stay on Claude/GPT-4o. ### Llama 3.3 70B / 405B (Meta, open weights) - **Best for**: self-hosted inference, data-residency requirements, fine-tuning on proprietary data - **Cheapest credible plan**: free weights; ~$0.65/M input via Groq, Together, Fireworks - **One thing it does better than anyone**: open weights — you actually own the model - **One reason not to pick it**: setup overhead non-trivial; no native tool-use, you build it - **Aiprosol verdict**: 🟡 Watch list for most. 🟢 if you have data-sovereignty constraints. ### DeepSeek V3 (open weights) - **Best for**: extremely cheap inference at near-frontier quality - **Cheapest credible plan**: $0.27 / $1.10 per million via API - **One thing it does better than anyone**: 10× cheaper than GPT-4o at competitive quality - **One reason not to pick it**: Chinese company, data-policy considerations for EU/UK clients - **Aiprosol verdict**: 🟡 Pilot for back-office work; do not route customer data through it without legal review. ### Mistral Large 2 / Codestral - **Best for**: EU data residency + strong code generation - **Cheapest credible plan**: API ~$2 / $6 per million; on-prem available"
+  },
+  {
+    "slug": "lead-generation-automation-playbook",
+    "name": "Lead Generation Automation Playbook",
+    "price": 127,
+    "category": "Sales",
+    "icon": "🎣",
+    "shortDescription": "The most-bought product. Sub-3-minute response architecture, lead scoring engine, CRM sync. Pays back in week 1.",
+    "popularity": 95,
+    "available": true,
+    "expectedShipDate": null,
+    "deliveryFiles": [
+      {
+        "path": "private-products/lead-generation-automation-playbook.md",
+        "filename": "Aiprosol-Lead-Generation-Automation-Playbook.md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "private-products/lead-generation-automation-playbook.html",
+        "filename": "Aiprosol-Lead-Generation-Automation-Playbook.html",
+        "mime": "text/html"
+      },
+      {
+        "path": "private-products/cold-outreach-library.md",
+        "filename": "Aiprosol-Cold-Outreach-Library.md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "private-products/cold-outreach-library.html",
+        "filename": "Aiprosol-Cold-Outreach-Library.html",
+        "mime": "text/html"
+      },
+      {
+        "path": "private-products/n8n-workflows/01-sales-stripe-charge-to-hubspot.json",
+        "filename": "01-sales-stripe-charge-to-hubspot.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/02-sales-calendly-ai-prep-brief.json",
+        "filename": "02-sales-calendly-ai-prep-brief.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/03-sales-form-score-route-slack.json",
+        "filename": "03-sales-form-score-route-slack.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/08-sales-cold-reply-intent-classifier.json",
+        "filename": "08-sales-cold-reply-intent-classifier.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/11-sales-lead-inactive-reengagement.json",
+        "filename": "11-sales-lead-inactive-reengagement.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/12-sales-closed-won-onboarding.json",
+        "filename": "12-sales-closed-won-onboarding.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/13-sales-hot-lead-5min-sla.json",
+        "filename": "13-sales-hot-lead-5min-sla.json",
+        "mime": "application/json"
+      }
+    ],
+    "buyUrl": "https://srijan07.gumroad.com/l/lead-gen-playbook",
+    "image": "/products/lead-generation-automation-playbook.png",
+    "longDescription": "The complete automated lead-generation system: capture, score, route, nurture, convert. Email templates, scoring formulas, sequence specs, dashboard designs. Plus 12 importable n8n workflow JSON files that automate every layer of the system. If you implement it end-to-end (~3 weekends of work), you'll have: a lead-capture surface, an automated scoring engine, a smart routing layer, a 5-touch nurture sequence, a conversion-optimised handoff to sales, and a dashboard.",
+    "features": [
+      "12 importable n8n workflows: 4-component scoring (FIT/INTENT/ENGAGEMENT/URGENCY), AI chat qualifier → email capture, demo booking → prep brief, suppression + geographic routing, 5-touch nurture sequence (each day separately), round-robin rep assignment with SLA, weekly scoring iteration loop, daily lead-gen dashboard",
+      "4-component scoring model with concrete point allocations (40 FIT + 30 INTENT + 20 ENGAGEMENT + 10 URGENCY)",
+      "5-touch nurture sequence with subjects, body, and send-time data for each email",
+      "Routing decision tree + 5-min SLA infrastructure",
+      "Weekly closed-loop iteration system to make scoring smarter over time",
+      "Dashboard spec with key metrics, leading indicators, targets",
+      "Whole stack runs on $50-$100/month at SMB scale"
+    ],
+    "whatsInside": [
+      "4-component lead scoring model with point allocations (FIT 40 + INTENT 30 + ENGAGEMENT 20 + URGENCY 10)",
+      "Sub-3-minute response architecture (full system blueprint)",
+      "5-touch nurture email sequence with subjects + body + send timing",
+      "8-pattern cold outreach library with full templates + reply-rate baselines",
+      "Routing decision tree + 5-min SLA infrastructure",
+      "Weekly closed-loop iteration system + dashboard spec",
+      "4 lead-relevant n8n workflow starters (form-score-route, AE prep, hot-lead SLA, intent classifier)",
+      "You're paying for the system, not 12 prebuilt workflows — patterns extend to your stack"
+    ],
+    "faqs": [
+      {
+        "q": "Will this work with our existing CRM?",
+        "a": "Yes — HubSpot, Pipedrive, Salesforce, Attio, Close, Copper all integrate via API. The CRM stays as system of record; this layers the speed-to-respond + scoring on top."
+      },
+      {
+        "q": "What if our lead volume is low?",
+        "a": "Sub-3-min response matters MORE at low volume — each lead is worth more, so the cost of slow response is higher. The playbook scales down to 5 leads/month operations cleanly."
+      },
+      {
+        "q": "How long to implement?",
+        "a": "Most teams ship the scoring + sub-3-min response in week 1. Full system (5-touch nurture + closed-loop iteration) lands by week 3."
+      },
+      {
+        "q": "Do I need engineers?",
+        "a": "Not for the n8n workflows — they import in one click. The dashboard spec assumes a database (Supabase, Airtable, or HubSpot is fine). If you cannot run n8n self-hosted, switch to Zapier or Make — the patterns still apply."
+      }
+    ],
+    "bestFor": [
+      "SaaS",
+      "Real Estate",
+      "Professional Services",
+      "Financial Services"
+    ],
+    "outcomeMetrics": [
+      {
+        "value": "Sub-3 min",
+        "label": "Median time-to-first-response"
+      },
+      {
+        "value": "21x",
+        "label": "Qualification lift vs 30-min response"
+      },
+      {
+        "value": "Week 1",
+        "label": "Typical payback period"
+      }
+    ],
+    "includedInBundles": [
+      {
+        "bundleSlug": "the-complete-vault",
+        "bundleName": "The Complete Vault",
+        "bundlePrice": 997,
+        "bundleItemCount": 14,
+        "bundleStandaloneSum": 2168,
+        "bundleSavings": 1384
+      },
+      {
+        "bundleSlug": "the-playbook-pack",
+        "bundleName": "The Playbook Pack",
+        "bundlePrice": 197,
+        "bundleItemCount": 3,
+        "bundleStandaloneSum": 271,
+        "bundleSavings": 74
+      }
+    ],
+    "previewToc": [
+      "Why this exists",
+      "Part 1 · The 4-Component Scoring Model (100 points)",
+      "Part 2 · The Sub-3-Minute Response Architecture",
+      "Part 3 · The 5-Touch Nurture Sequence",
+      "Part 4 · n8n workflow starters (in the `n8n-workflows/` folder)",
+      "Part 5 · The Routing Decision Tree",
+      "Part 6 · The Dashboard Spec",
+      "Part 7 · The Bonus — 8-Pattern Cold Outreach Library",
+      "Ship Today"
+    ],
+    "previewExcerpt": "## Why this exists Most B2B lead-gen automations leak money for one reason: **slow response time**. The data is brutal: - Respond inside 3 minutes → 21x more likely to qualify the lead - Respond inside 5 minutes → 9x more likely - Respond inside 30 minutes → baseline - Respond after 24 hours → competitor already in the room Yet 67% of B2B companies take >24h to respond to inbound leads. The reason isn't capacity — it's that nobody has built the system. This playbook is the system. --- ## Part 1 · The 4-Component Scoring Model (100 points) Every inbound lead gets scored on four axes. Total 0–100. Score drives routing. ### FIT (40 points) *Is this the kind of customer who'd succeed with us?* ### INTENT (30 points) *How explicitly are they asking for what we sell?* ### ENGAGEMENT (20 points) *Behavioural breadcrumbs.* ### URGENCY (10 points) *Are they buying now, or in 6 months?* ### Routing thresholds --- ## Part 2 · The Sub-3-Minute Response Architecture The goal: from form submission → first acknowledgment in the lead's inbox in <180 seconds. [code block] Total: ~60-90 seconds. Well inside the 3-minute window. **Critical infrastructure:** - Form posts directly to your serverless function or workflow tool — NOT to a CRM that processes async - Enrichment is fire-and-forget if it takes >15s - The acknowledgment email is templated; only the personalisation tokens are dynamic - The CRM log is the LAST step, never blocking the response --- ## Part 3 · The 5-Touch Nurture Sequence For Warm leads (65–84) who don't book a call within 48 hours, and for Nurture (40–64) automatically. ### Touch 1 — Immediate (within minutes of form) **Subject:** Your {{industry}} automation audit is ready **Body:** > Hi {{firstName}}, > > Thanks for spending 60 seconds on the ROI Audit. Based on what you shared, here's what I'd prioritise: > > **Your top opportunity**: {{topOpportunity}} > **Estimated weekly hours reclaimable**: {{weeklyHrs}} > **Annual saving at your hourly cost**: ${{annualSaving}} > > If you want to walk through this together, my calendar is at {{calendlyLink}}. > > Otherwise, hit reply with one question and I'll send back a tailored answer within 24 hours. > > — Srijan, Founder **Send timing**: immediately. Personalisation tokens come from form payload + scoring model. ### Touch 2 — Day 3 — Relevant case study **Subject:** {{competitorOrSimilar}} reclaimed 38 hrs/week. Here's how they did it. **Body**: 2-paragraph snapshot of an anonymised, industry-matched case study. CTA to read full version. ### Touch 3 — Day 7 — A specific objection killer **Subject:** \"Won't the AI just hallucinate?\" — and other things people ask **Body**: Direct, plain-language answer to the most common objection in their industry. Link to /how-we-measure. ### Touch 4 — Day 14 — Permission-based check-in **Subject:** Should I keep these emails coming, or pause? **Body**: 3-button respond: Keep going · Pause 30 days · Unsubscribe. Hit \"Keep going\" → continues sequence. The pause button matters more than you'd think — it builds trust and saves your domain reputation. ### Touch 5 — Day 21 — Lo-fi offer **Subject:** Want me to draft 1 automation for you this week — free? **Body**: Offer a 30-min \"build one with you\" session. Free, no pitch. Open conversations that book paid plans later. --- ## Part 4 · n8n workflow starters (in the `n8n-workflows/` folder) The shared starter library includes the 4 lead-relevant flows you can extend: The 4 above are the production-shaped starters. The other 8 lead-gen workflows referenced in this playbook (capture-multi-source, score-only sub-workflow, score-to-segment router, round-robin SDR, 5-touch orchestrator, pause/unsubscribe handler,"
+  },
+  {
+    "slug": "chatgpt-business-prompt-vault",
+    "name": "AI Business Prompt Vault",
+    "price": 97,
+    "category": "AI Tools",
+    "icon": "💬",
+    "shortDescription": "200+ business prompts organised by function: sales, marketing, ops, product, finance. Tested for output quality.",
+    "available": true,
+    "expectedShipDate": null,
+    "deliveryFiles": [
+      {
+        "path": "private-products/chatgpt-business-prompt-vault.md",
+        "filename": "Aiprosol-ChatGPT-Business-Prompt-Vault.md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "private-products/chatgpt-business-prompt-vault.html",
+        "filename": "Aiprosol-ChatGPT-Business-Prompt-Vault.html",
+        "mime": "text/html"
+      },
+      {
+        "path": "private-products/chatgpt-business-prompts.json",
+        "filename": "Aiprosol-ChatGPT-Business-Prompts.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/chatgpt-business-prompts.csv",
+        "filename": "Aiprosol-ChatGPT-Business-Prompts.csv",
+        "mime": "text/csv"
+      },
+      {
+        "path": "private-products/chatgpt-business-prompts-index.md",
+        "filename": "Aiprosol-Prompts-Index.md",
+        "mime": "text/markdown"
+      }
+    ],
+    "buyUrl": "https://srijan07.gumroad.com/l/prompt-vault",
+    "image": "/products/chatgpt-business-prompt-vault.png",
+    "longDescription": "1,008+ production-tested prompts for sales, marketing, operations, finance, HR, product, customer success, and personal productivity. Not novelty prompts — prompts that turn into real outputs you'd actually use at work. Each prompt is tested in multiple frontier LLMs, comes with input variables you fill in, the exact phrasing that triggers the best output, and notes on which model handles it best. JSON for programmatic use + Markdown index for browsing.",
+    "features": [
+      "1,008 prompts (target was 1000+) across 8 main categories and 80+ subcategories",
+      "Sales (~250 prompts): cold outreach × multiple openers/personas/industries, follow-ups by timing, objection handling, LinkedIn outreach, call prep, proposals, negotiation, vertical-specific",
+      "Marketing (~200): channel-specific campaigns, subject lines, landing pages, ads, content formats, SEO, press, win/loss",
+      "Operations (~200): SOPs, meetings, status updates, decisions, hiring, onboarding, vendor management, retrospectives",
+      "Finance (~130) · People/HR (~165) · Product/Engineering (~165) · Customer Success (~130) · Personal (~50)",
+      "Structured JSON format: id, category, subcategory, title, system, user_template (with {{variables}}), best_model, notes",
+      "Markdown index for browsing categories",
+      "Quarterly additions for 12 months"
+    ],
+    "whatsInside": [
+      "200 production-tested prompts in JSON + CSV + indexed Markdown",
+      "Plus 76 inline prompts grouped in the printable MD/HTML guide",
+      "Sales (40 in JSON / 15 in MD): outreach, discovery, follow-ups, objections, negotiation, linkedin",
+      "Marketing (40 / 15): content, campaigns, email, landing pages, ads, social, SEO, video, podcast",
+      "Operations (30 / 12): SOPs, meetings, decisions, status, vendors, onboarding, incidents, playbooks",
+      "Finance (25 / 10) · People/HR (25 / 12) · Product (20) · Engineering (20) · CS (12)",
+      "Structured JSON: id, category, subcategory, title, system, user_template, best_model, notes"
+    ],
+    "faqs": [
+      {
+        "q": "Do these work with any LLM?",
+        "a": "Yes — every prompt has a tested-against label (frontier LLM vs budget tier). Most work cross-vendor with minor tweaks. The structured JSON format makes vendor-swap trivial."
+      },
+      {
+        "q": "How is this different from free prompt libraries on GitHub?",
+        "a": "Production-tested. Every prompt has a system + user_template + best_model + notes field. The library is curated, not crowd-sourced — no junk, no mega-prompts that go viral but produce mush."
+      },
+      {
+        "q": "Can I edit the prompts?",
+        "a": "Yes — the JSON is yours. Most buyers fork the library into their own internal prompt repository and customise."
+      },
+      {
+        "q": "Will quarterly refreshes overwrite my customisations?",
+        "a": "No. Refreshes are additive (new prompts in a \"v2-added\" folder). Your forks stay intact."
+      }
+    ],
+    "bestFor": [
+      "Anyone using a chatbot interface for work",
+      "Sales · Marketing · Operations · Product · CS · HR teams"
+    ],
+    "outcomeMetrics": [
+      {
+        "value": "200",
+        "label": "Production-tested prompts"
+      },
+      {
+        "value": "8",
+        "label": "Categories (Sales, Marketing, Ops, Finance, HR, Product, Engineering, CS)"
+      },
+      {
+        "value": "Quarterly",
+        "label": "New prompts added for 12 months"
+      }
+    ],
+    "includedInBundles": [
+      {
+        "bundleSlug": "the-complete-vault",
+        "bundleName": "The Complete Vault",
+        "bundlePrice": 997,
+        "bundleItemCount": 14,
+        "bundleStandaloneSum": 2168,
+        "bundleSavings": 1384
+      },
+      {
+        "bundleSlug": "the-ai-tools-vault",
+        "bundleName": "The AI Tools Vault",
+        "bundlePrice": 67,
+        "bundleItemCount": 2,
+        "bundleStandaloneSum": 164,
+        "bundleSavings": 97
+      }
+    ],
+    "previewToc": [
+      "How to use this vault",
+      "Part 1 · Sales (15 prompts)",
+      "Part 2 · Operations & process (12 prompts)",
+      "Part 3 · Marketing & content (15 prompts)",
+      "Part 4 · Customer success & support (12 prompts)",
+      "Part 5 · Finance & ops (10 prompts)",
+      "Part 6 · HR, hiring, people ops (12 prompts)",
+      "Part 7 · Product & engineering (12 prompts)",
+      "Part 8 · Leadership & strategy (12 prompts)",
+      "Appendix A · Three-step \"improve any output\" framework",
+      "Appendix B · The four prompt-engineering rules that matter",
+      "Appendix C · Licensing & redistribution"
+    ],
+    "previewExcerpt": "## How to use this vault Each prompt follows a four-part structure: [code block] This structure outperforms \"just ask the model\" by 30–60% on output quality (Anthropic research, May 2024). The whole vault uses it. **Three rules:** 1. Always paste the full prompt. Don't summarise it conversationally. 2. Replace every `{variable}` — do not leave any unfilled. 3. After the model responds, ask it: *\"Critique your own output. What's weak? Try again.\"* This single follow-up routinely improves quality 1.5–2×. --- ## Part 1 · Sales (15 prompts) ### 1.1 — Cold-email v1, fully personalised [code block] ### 1.2 — Discovery call agenda from prospect's website [code block] ### 1.3 — Objection handler (any objection) [code block] ### 1.4 — Account-research one-pager [code block] ### 1.5 — Proposal redline ### 1.6 — Pricing-objection script ### 1.7 — Pipeline triage (40 deals → 8 to focus) ### 1.8 — Customer reference request email ### 1.9 — Lost-deal post-mortem questions ### 1.10 — Re-engagement sequence (5 emails) ### 1.11 — LinkedIn DM (warm) ### 1.12 — LinkedIn DM (cold, comment-then-message pattern) ### 1.13 — Follow-up after silence (3 attempts) ### 1.14 — Multi-thread strategy (when you only have one champion) ### 1.15 — Verbal commitment script (turn \"I'm interested\" into \"send me the contract\") > *Full text for 1.5 through 1.15 follows the same 4-part ROLE/TASK/CONTEXT/FORMAT/GUARDRAILS structure. Pages 11–24 of the printed PDF.* --- ## Part 2 · Operations & process (12 prompts) ### 2.1 — Convert a recurring email-thread into a written SOP [code block] ### 2.2 — Process audit (\"where does this leak time?\") ### 2.3 — Meeting-to-actions extractor (paste transcript → get assignees + dates) ### 2.4 — Weekly business review auto-draft ### 2.5 — Vendor renewal decision framework (renew / renegotiate / drop) ### 2.6 — Onboarding 30/60/90 plan for a new role ### 2.7 — Org-chart audit (\"are we under-resourced where it matters\") ### 2.8 — Tool-stack audit (\"what should we kill\") ### 2.9 — Documentation gap finder ### 2.10 — Process-diagram from a verbal description ### 2.11 — RACI matrix from a project brief ### 2.12 — Postmortem template (blameless, structured) --- ## Part 3 · Marketing & content (15 prompts) ### 3.1 — Long-form blog from one strong insight [code block] ### 3.2 — LinkedIn post from a customer call quote ### 3.3 — Twitter / X thread (8 tweets) from a long article ### 3.4 — Cold-outreach sequence in YOUR voice ### 3.5 — Landing page hero (headline + sub + CTA) ### 3.6 — SEO meta-title + description from any URL ### 3.7 — One-line value prop A/B test (10 variants) ### 3.8 — Case-study skeleton from a \"we helped X do Y\" sentence ### 3.9 — Newsletter rewrite (formal → conversational) ### 3.10 — Webinar abstract that doesn't sound like a webinar abstract ### 3.11 — Podcast pitch (to be a guest) ### 3.12 — Brand-voice synthesiser (paste 5 examples, get a voice guide) ### 3.13 — Conference-talk title workshop ### 3.14 — Press release that gets opened ### 3.15 — \"Founders' note\" from rough talking points --- ## Part 4 · Customer success & support (12 prompts) ### 4.1 — Support reply that resolves AND extracts product feedback ### 4.2 — Churn risk auto-triage ### 4.3 — QBR (Quarterly Business Review) script ### 4.4 — Renewal email (no \"just checking in\") ### 4.5 — Win-back from churn (4 attempts, escalating) ### 4.6 — NPS detractor recovery script ### 4.7 — Feature-request triage from raw user comments ### 4.8 — Onboarding email sequence (welcome → activation) ### 4.9 — Power-user identification from usage"
+  },
+  {
+    "slug": "zapier-make-power-user-bundle",
+    "name": "Zapier + Make Power User Bundle",
+    "price": 147,
+    "category": "Templates",
+    "icon": "⚡",
+    "shortDescription": "Documentation-first bundle: 50 documented Zapier + Make recipes with patterns, gotchas, decision matrix. Build in your own account in 5-15 min each.",
+    "available": true,
+    "expectedShipDate": null,
+    "deliveryFiles": [
+      {
+        "path": "private-products/zapier-make-power-user-bundle.md",
+        "filename": "Aiprosol-Zapier-Make-Power-User-Bundle.md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "private-products/zapier-make-power-user-bundle.html",
+        "filename": "Aiprosol-Zapier-Make-Power-User-Bundle.html",
+        "mime": "text/html"
+      }
+    ],
+    "buyUrl": "https://srijan07.gumroad.com/l/zapier-make-power",
+    "image": "/products/zapier-make-power-user-bundle.png",
+    "longDescription": "Master both leading no-code automation platforms with 25 fully-detailed Zapier recipes + 25 fully-detailed Make.com recipes. Each recipe has the complete step-by-step. Plus the 22-row decision matrix that tells you exactly when to use which platform, the operator's playbook of 14 patterns that survive 12 months in production, and notes on when to skip both platforms and use n8n.",
+    "features": [
+      "25 fully-detailed Zapier recipes covering: Stripe → CRM + Slack · Calendly → CRM + prep brief · Form → AI score → tier routing · Gmail invoice → OCR → Sheet · HubSpot deal change → email draft · Typeform → Airtable · Shopify → Klaviyo · Stripe failed → save sequence · Intercom → AI summary → Notion · Google Forms → Zendesk · ClickUp overdue → AI nudge · Mailchimp campaign metrics · Notion → Slack · Calendly cancel → CRM · Salesforce won → kickoff · Webflow publish → tweet · GitHub PR → Slack · Stripe cancel → CS save · QuickBooks → CRM · Asana → recognition · Twilio SMS → AI reply · Eventbrite → welcome · Discord new member · RSS → thread · Notion → calendar",
+      "25 fully-detailed Make.com recipes covering analogous + more complex flows using iterators, aggregators, data stores",
+      "22-row Zapier vs Make decision matrix",
+      "14-pattern operator's playbook (dedupe, idempotency, soft-fail, rate-limit handling, etc.)",
+      "When to skip both and use n8n"
+    ],
+    "whatsInside": [
+      "25 fully-detailed Zapier recipes (step-by-step build guides — assemble in 10-15 min each)",
+      "25 fully-detailed Make.com recipes (modules, mappings, filters)",
+      "22-row Zapier vs Make decision matrix",
+      "14-pattern operator's playbook (dedupe, idempotency, soft-fail, rate-limit handling)",
+      "When-to-skip-both → n8n decision tree",
+      "Documentation-first by design (no .blueprint files — those break when SaaS APIs evolve)"
+    ],
+    "faqs": [
+      {
+        "q": "Why documentation-first and not blueprint files?",
+        "a": "Zapier and Make blueprints break when SaaS APIs evolve (typically within 6-12 months). Documented step-by-step builds stay current forever — you assemble in your own account against the latest API."
+      },
+      {
+        "q": "When should I skip both and use n8n?",
+        "a": "The bundle includes a decision tree. Short version: when you cross ~50K operations/month, or need self-hosted, or want git-versioned workflows."
+      },
+      {
+        "q": "Is the decision matrix between Zapier and Make objective?",
+        "a": "It is opinionated but explicit. Each row says \"if X matters more, pick Y, because Z\". You can disagree with our weighting and re-score."
+      },
+      {
+        "q": "Does this cover Activepieces / Workato / n8n?",
+        "a": "No — this bundle is specifically the Zapier + Make audience. If you want broader coverage, the Workflow Automation Playbook ($97) is platform-agnostic."
+      }
+    ],
+    "bestFor": [
+      "Teams already on Zapier or Make",
+      "Operations leads consolidating SaaS spend",
+      "Agencies serving non-technical clients"
+    ],
+    "outcomeMetrics": [
+      {
+        "value": "50",
+        "label": "Documented recipes (25 Zapier + 25 Make)"
+      },
+      {
+        "value": "14",
+        "label": "Operator patterns (dedupe, idempotency, etc.)"
+      },
+      {
+        "value": "5-15 min",
+        "label": "Per recipe to rebuild in your account"
+      }
+    ],
+    "includedInBundles": [
+      {
+        "bundleSlug": "the-complete-vault",
+        "bundleName": "The Complete Vault",
+        "bundlePrice": 997,
+        "bundleItemCount": 14,
+        "bundleStandaloneSum": 2168,
+        "bundleSavings": 1384
+      }
+    ],
+    "previewToc": [
+      "What you get",
+      "Part 1 · The Zapier vs Make Decision Matrix (22 rows)",
+      "Part 2 · 25 Zapier Recipes",
+      "Part 3 · 25 Make Recipes",
+      "Part 4 · The 14-Pattern Operator's Playbook",
+      "Part 5 · When to Skip Both and Use n8n",
+      "Ship Today"
+    ],
+    "previewExcerpt": "## What you get **Honest scope note**: This is a documentation-first product. Each of the 50 recipes is a step-by-step build guide — the trigger, the transformation, the filter logic, the gotchas. You build them in your own Zapier/Make account in 5-20 minutes each. We deliberately don't ship 50 `.blueprint` / shared-Zap-URL files because (a) those break when the underlying SaaS API changes and (b) the deeper value is the patterns, not the saved configurations. --- ## Part 1 · The Zapier vs Make Decision Matrix (22 rows) For each workflow shape, the winner is bolded. Tie = either works. **Bottom line**: Make wins on ~70% of workflows by cost + features. Zapier wins on integration count + ease for non-technical users. Use both if you have to; standardise on Make if starting fresh. --- ## Part 2 · 25 Zapier Recipes Each recipe below = a documented step-by-step build. Spend 5-15 min per recipe to assemble in your Zapier account. We don't share Zap template URLs (they break when SaaS APIs evolve); the documentation is the durable asset. ### Sales (5) 1. **Stripe new charge → HubSpot deal stage progression** 2. **Calendly booking → Gmail confirmation + Slack ping** 3. **Tally form submit → Sheet + email follow-up** 4. **HubSpot deal stage change → Slack DM the owner** 5. **LinkedIn lead-gen form → CRM + welcome email** ### Customer Success (5) 6. **Intercom new conversation → AI sentiment → priority Slack** 7. **NPS score < 7 → CSM auto-task in Asana** 8. **Stripe failed payment → 3-day dunning sequence** 9. **Renewal in 60 days → CSM Slack alert with account summary** 10. **Cancelled subscription → exit survey email** ### Operations (5) 11. **Daily 7am → Slack digest of yesterday's revenue, leads, support** 12. **New Notion page in a database → Slack notify** 13. **Gmail label \"Important\" → log to Sheet + Slack** 14. **Calendar event 1h before → AI prep brief** 15. **Zoom recording done → transcript to Slack** ### Marketing (5) 16. **New blog post → tweet + LinkedIn post in 3 variants** 17. **Newsletter signup → 5-email sequence** 18. **Webinar registration → reminder + thank-you flow** 19. **Lead magnet download → tagged + sent the asset** 20. **Form submit with \"demo request\" → instant Calendly link email** ### People (5) 21. **New hire signed offer → Notion onboarding doc + Slack invite** 22. **Job application → AI summarise → recruiting Slack** 23. **PTO request → manager Slack + calendar block** 24. **Employee birthday → team Slack 1 day before** 25. **Performance review due → manager email reminder** Each Zap is documented in plain English below — assemble in your own Zapier account in 10-15 min per recipe. --- ## Part 3 · 25 Make Recipes Same business areas, leveraging Make's strengths (Iterator/Aggregator/Data Store). ### Sales (5) 1. **Multi-source lead capture → enrich → score → CRM** 2. **Bulk email validator → cleaned list → CRM** 3. **Deal stage report → daily aggregator → Sheet** 4. **Cold email reply classifier → branch on intent** 5. **Outbound list dedupe with Data Store** ### Customer Success (5) 6. **Multi-channel support unified inbox** 7. **Customer health score (3 inputs, weekly aggregation)** 8. **Bulk renewal alerts (60d, 30d, 7d touchpoints)** 9. **Onboarding state machine (Day 0, 7, 14, 30)** 10. **Churn risk early warning (usage + sentiment + payment)** ### Operations (5) 11. **Receipt OCR → categorise → ledger entry** 12. **Vendor invoice extractor (PDF → structured)** 13. **Calendar conflict detector across teams** 14. **Bulk file rename + organise in Drive** 15. **Inventory low-stock multi-vendor alerter** ### Marketing (5) 16. **Cross-platform content"
+  },
+  {
+    "slug": "ai-workflow-architecture-masterclass",
+    "name": "AI Workflow Architecture Masterclass",
+    "price": 297,
+    "category": "Masterclass",
+    "icon": "🎓",
+    "shortDescription": "Pre-order · Expected Q3 2026 · 5-hour video course on AI workflow architecture. 10 modules, worksheets, group office hours, alumni Slack.",
+    "available": false,
+    "expectedShipDate": "2026-Q3",
+    "deliveryFiles": null,
+    "image": "/products/ai-workflow-architecture-masterclass.png",
+    "longDescription": "5-hour video masterclass on how to architect AI workflows that survive production. Built for engineers, ops leads, and senior automation architects. Covers state management for long-running flows, idempotency, retry semantics, rate-limit handling, observability, the cost economics of LLM-in-the-loop flows, and the 7 architectural patterns that handle 95% of real-world AI workflow problems. Includes a 40-page worksheet bundle and 10 reference architectures diagrammed in Mermaid + Excalidraw. Ships Q3 2026.",
+    "features": [
+      "5 hours of structured video (10 modules of ~30 min each) — production-quality, edited, captioned",
+      "Module 1-2: Foundations — state, idempotency, retries, observability",
+      "Module 3-4: The 7 patterns — Linear, Branching, Fan-out, Scheduled, Polling, Approval, Long-running",
+      "Module 5-6: AI-in-the-loop — prompt-versioning, eval harnesses, fallback hierarchies, cost ceilings",
+      "Module 7-8: Production ops — monitoring, alerting, rollback, secrets management",
+      "Module 9-10: Cost & scaling — LLM cost economics, the build/buy/service framework",
+      "40-page worksheet bundle (printable PDF) + 10 reference Mermaid architectures",
+      "Office hours: monthly group Q&A for 6 months",
+      "Bonus: real failure-mode case studies (anonymised from real Aiprosol engagements)"
+    ],
+    "whatsInside": [
+      "5-hour video course (10 modules × 30 min, captioned, MP4 + streaming)",
+      "40-page worksheet bundle (printable PDF)",
+      "10 reference architectures diagrammed in Mermaid + Excalidraw",
+      "Production checklist (47 items) for every workflow you ship",
+      "6 months of monthly group office hours",
+      "Real failure-mode case studies from anonymised client engagements",
+      "Cost-economics spreadsheet for LLM-in-the-loop workflows",
+      "Private Slack channel for masterclass alumni"
+    ],
+    "faqs": [
+      {
+        "q": "When does it ship?",
+        "a": "Pre-order. Expected Q3 2026. The pre-order locks the $297 price; GA pricing is $497."
+      },
+      {
+        "q": "Is this for engineers or operators?",
+        "a": "Both — but skewed engineering. Modules 1-2 (state, idempotency, retries, observability) and 7-8 (production ops) assume engineering context. Modules 3-4 (the 7 patterns) and 9-10 (cost) are accessible to senior operators."
+      },
+      {
+        "q": "Are the office hours live or recorded?",
+        "a": "Live monthly group Q&A on Zoom, recorded for the alumni Slack archive. Six months from your purchase date."
+      },
+      {
+        "q": "How does this differ from the playbooks?",
+        "a": "The playbooks are pattern + workflow library. The masterclass is architecture + tradeoff reasoning. Best paired: playbooks for what to build, masterclass for why it works at scale."
+      }
+    ],
+    "bestFor": [
+      "Engineering managers",
+      "Senior automation engineers",
+      "AI consultants going deep"
+    ],
+    "outcomeMetrics": [
+      {
+        "value": "5 hours",
+        "label": "Video across 10 modules"
+      },
+      {
+        "value": "47-item",
+        "label": "Production checklist per workflow"
+      },
+      {
+        "value": "6 months",
+        "label": "Monthly group office hours included"
+      }
+    ],
+    "includedInBundles": [
+      {
+        "bundleSlug": "the-complete-vault",
+        "bundleName": "The Complete Vault",
+        "bundlePrice": 997,
+        "bundleItemCount": 14,
+        "bundleStandaloneSum": 2168,
+        "bundleSavings": 1384
+      }
+    ],
+    "flagship": true,
+    "flagshipHero": {
+      "headline": "The 5-hour video course operators reach for when the playbooks are not enough.",
+      "subheadline": "10 modules covering state, idempotency, retries, observability, the 7 workflow patterns, AI-in-the-loop production ops, cost economics, and the build/buy/service framework. Worksheets, reference diagrams, 6 months of monthly office hours, alumni Slack.",
+      "socialProof": "Pre-order pricing locked at . GA pricing will be .",
+      "threePromises": [
+        {
+          "title": "Architecture, not just patterns",
+          "body": "The playbooks teach you WHAT to build. The masterclass teaches you WHY it works at scale and how to debug it when it does not."
+        },
+        {
+          "title": "Real failure-mode case studies",
+          "body": "Anonymised from real Aiprosol engagements — including the ones where we made the wrong call and what we changed."
+        },
+        {
+          "title": "Monthly group office hours",
+          "body": "Six months of live Q&A. Recorded for the alumni Slack archive. Bring your specific workflow design questions."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "enterprise-ai-readiness-assessment-kit",
+    "name": "Enterprise AI Readiness Assessment Kit",
+    "price": 397,
+    "category": "Enterprise",
+    "icon": "🏛️",
+    "shortDescription": "The 80-point readiness assessment used in our Enterprise discovery calls. Includes scoring rubric and implementation prioritisation.",
+    "available": true,
+    "expectedShipDate": null,
+    "deliveryFiles": [
+      {
+        "path": "private-products/enterprise-ai-readiness-assessment-kit.md",
+        "filename": "Aiprosol-Enterprise-AI-Readiness-Kit.md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "private-products/enterprise-ai-readiness-assessment-kit.html",
+        "filename": "Aiprosol-Enterprise-AI-Readiness-Kit.html",
+        "mime": "text/html"
+      },
+      {
+        "path": "private-products/enterprise-readiness-scorecard.xlsx",
+        "filename": "Aiprosol-Enterprise-Readiness-Scorecard.xlsx",
+        "mime": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      {
+        "path": "private-products/enterprise-vendor-rfp-template.docx",
+        "filename": "Aiprosol-Vendor-RFP-Template.docx",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "private-products/enterprise-90-day-implementation-plan.pptx",
+        "filename": "Aiprosol-90-Day-Implementation-Plan.pptx",
+        "mime": "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+      }
+    ],
+    "buyUrl": "https://srijan07.gumroad.com/l/enterprise-readiness",
+    "image": "/products/enterprise-ai-readiness-assessment-kit.png",
+    "longDescription": "The diagnostic toolkit for evaluating AI automation maturity across the 12 dimensions that actually predict ROI. Built for CIOs, COOs, and transformation leads at mid-market and enterprise organisations. Includes the 120-question Readiness Scorecard XLSX (auto-aggregating per dimension, with bar chart and conditional formatting), the Vendor Selection RFP DOCX (40-criteria grid, 10-item contract red-flag checklist), and the 14-slide 90-Day Implementation Plan PPTX.",
+    "features": [
+      "Readiness Scorecard XLSX: 120 questions across 12 dimensions (Data Hygiene · Process Documentation · Change Management · Governance · Integration Debt · Talent · Vendor Strategy · Security · Finance Operations · Customer Operations · Product Engineering · Strategic Alignment) — auto-aggregating per dimension with bar chart + Action Map",
+      "Vendor Selection RFP DOCX: 40-criteria evaluation grid, 10-item contract red-flag checklist, 8-week timeline, buyer profile template",
+      "90-Day Implementation Plan PPTX (14 slides): Phase 0 (Foundation, Days 1-30) → Phase 1 (Pilot, Days 31-60) → Phase 2 (Scale, Days 61-90)",
+      "Built for organisations with 100-5,000 employees · $10M-$500M revenue · already on cloud · with at least one ERP or CRM",
+      "Includes a 30-minute scoring-call credit with the Aiprosol team (redeem within 90 days)"
+    ],
+    "whatsInside": [
+      "Readiness Scorecard XLSX (120 questions × 12 dimensions, auto-aggregating, with chart)",
+      "Vendor Selection RFP DOCX (40-criteria grid + 10-item contract red-flag checklist)",
+      "90-Day Implementation Plan PPTX (14 slides covering Phase 0 → Phase 2)",
+      "Built for orgs with 100-5,000 employees · $10M-$500M revenue",
+      "30-minute scoring-call credit with the Aiprosol team (redeem within 90 days)"
+    ],
+    "faqs": [
+      {
+        "q": "Is the 30-minute scoring call really included?",
+        "a": "Yes — every buyer gets a 30-min Cal.com link with the Aiprosol team to walk through their score and prioritise. Redeem within 90 days of purchase."
+      },
+      {
+        "q": "Is this for buying AI or building AI?",
+        "a": "Buying. The vendor RFP + contract red flags are oriented to evaluating outside vendors. If you are building internally, the AI Workflow Architecture Masterclass is a better fit."
+      },
+      {
+        "q": "What if my org is smaller than 100 people?",
+        "a": "The framework still works at 50-100 — the scorecard auto-suppresses questions about formal change management programs. Below 50 employees, the Business Process Audit Checklist ($37) is a better starting point."
+      },
+      {
+        "q": "Format of deliverables?",
+        "a": "XLSX (scorecard) + DOCX (vendor RFP) + PPTX (90-day plan). Editable in Microsoft Office or Google Workspace."
+      }
+    ],
+    "bestFor": [
+      "Companies with 100–5,000 employees",
+      "$10M–$500M revenue",
+      "Already on cloud",
+      "Manufacturing",
+      "Financial Services"
+    ],
+    "outcomeMetrics": [
+      {
+        "value": "120",
+        "label": "Readiness questions across 12 dimensions"
+      },
+      {
+        "value": "40-criteria",
+        "label": "Vendor RFP grid + 10 contract red flags"
+      },
+      {
+        "value": "90 days",
+        "label": "Implementation plan: Foundation → Pilot → Scale"
+      }
+    ],
+    "includedInBundles": [
+      {
+        "bundleSlug": "the-complete-vault",
+        "bundleName": "The Complete Vault",
+        "bundlePrice": 997,
+        "bundleItemCount": 14,
+        "bundleStandaloneSum": 2168,
+        "bundleSavings": 1384
+      }
+    ],
+    "previewToc": [
+      "What's in the kit",
+      "How this kit gets used (typical week)",
+      "Part 1 · The Readiness Scorecard (120 questions × 12 dimensions)",
+      "Part 2 · Vendor Selection RFP Template",
+      "Part 3 · 90-Day Implementation Plan (14 slides)",
+      "Part 4 · The Scoring-Call Credit",
+      "Ship Today"
+    ],
+    "flagship": true,
+    "flagshipHero": {
+      "headline": "The 80-point readiness audit Aiprosol uses on Enterprise discovery calls.",
+      "subheadline": "120 questions across 12 dimensions, auto-aggregating in a scorecard XLSX. Plus a 40-criteria vendor selection RFP grid, a 10-item contract red-flag checklist, and a 90-day implementation plan (Foundation → Pilot → Scale). Includes a 30-minute scoring call with the Aiprosol team.",
+      "socialProof": "Built for 100–5,000 employee orgs at M–M revenue.",
+      "threePromises": [
+        {
+          "title": "For BUYING AI, not building it",
+          "body": "The vendor RFP grid + contract red flags are oriented to evaluating outside vendors. If you are building internally, the Architecture Masterclass is a better fit."
+        },
+        {
+          "title": "Auto-aggregating scorecard",
+          "body": "Each of 120 questions feeds a 12-dimensional bar chart + Action Map. Re-run quarterly to track readiness drift."
+        },
+        {
+          "title": "30-min scoring call included",
+          "body": "Every buyer gets a Cal.com link to walk through their results with the Aiprosol team. Redeem within 90 days."
+        }
+      ]
+    },
+    "previewExcerpt": "## What's in the kit --- ## How this kit gets used (typical week) Total: ~2 weeks from purchase to approved 90-day plan. Most enterprise procurement timelines for \"AI readiness\" are 6-9 weeks. This kit compresses that to days. --- ## Part 1 · The Readiness Scorecard (120 questions × 12 dimensions) The scorecard auto-aggregates into a single 0-100 readiness score plus a per-dimension breakdown that drives prioritisation. ### Dimension 1 — Data foundation (10 questions) Examples: \"Do we have a unified customer record across systems?\" · \"Are the top-3 datasets queryable without engineering?\" · \"Is data lineage documented for revenue, customer, product?\" ### Dimension 2 — Identity + access (10 questions) \"Do we have SSO across all production systems?\" · \"Are role-based access controls audited quarterly?\" · \"Do we have an offboarding checklist that completes in <24h?\" ### Dimension 3 — Tool architecture (10 questions) \"How many SaaS tools do we operate?\" · \"Are integrations point-to-point or hub-and-spoke?\" · \"Is there a workflow orchestrator already in place?\" ### Dimension 4 — AI literacy (10 questions) \"What % of staff have used a frontier LLM in the last 30 days?\" · \"Do we have an internal Slack channel for AI use cases?\" · \"Is there a designated AI owner?\" ### Dimension 5 — Governance + risk (10 questions) \"Do we have an AI usage policy?\" · \"Is there a process for approving new AI tools?\" · \"Are AI-generated outputs labelled as such?\" ### Dimension 6 — Compliance posture (10 questions) \"GDPR, CCPA, SOC2 status?\" · \"Data residency requirements?\" · \"Customer DPA terms when using AI processors?\" ### Dimension 7 — Talent (10 questions) \"Do we have someone who can specify an AI workflow?\" · \"Build it?\" · \"Operate it day-to-day?\" · \"Audit it for drift?\" ### Dimension 8 — Process maturity (10 questions) \"Are our top-5 business processes documented?\" · \"Are SLAs measured?\" · \"Is there a recurring process improvement cadence?\" ### Dimension 9 — Change management (10 questions) \"How does the org typically respond to new tools?\" · \"Who owns adoption?\" · \"Is there a feedback loop after rollouts?\" ### Dimension 10 — Financial model (10 questions) \"Can we measure ROI of automation projects?\" · \"Is there a budget line for AI tooling?\" · \"Are we tracking task-cost vs. fully-loaded-employee-cost?\" ### Dimension 11 — Customer impact (10 questions) \"Are customer-facing AI features labelled?\" · \"Is there a customer feedback channel for AI outputs?\" · \"Are we A/B testing AI vs. human?\" ### Dimension 12 — Strategic clarity (10 questions) \"Do we have a 12-month AI roadmap?\" · \"Is the board briefed quarterly?\" · \"Is there a defensible thesis for why AI is core to our business?\" ### Score interpretation --- ## Part 2 · Vendor Selection RFP Template A drop-in Word document for procurement. Cover sheet, 40-criteria evaluation grid, and 10 red-flag screening questions. ### 40 evaluation criteria across 8 categories 1. **Technical fit** (8 criteria): Integration footprint, API quality, latency SLAs, model choice, fine-tuning support, on-prem option, audit logs, data residency 2. **Commercial** (5): Pricing model, lock-in clauses, termination, SLAs/credits, professional services included 3. **Security** (5): SOC2 Type 2, ISO 27001, GDPR DPA, encryption-at-rest + in-transit, vulnerability disclosure policy 4. **Support** (5): Tiered support availability, response SLAs, named account manager, dedicated Slack/email channel, status page 5. **Roadmap alignment** (4): Public roadmap, feature request process, customer advisory board, version cadence 6. **Reference customers** (4): Customers in our industry, customers our size, case studies with measurable outcomes, references willing to speak 7. **Implementation support** (5): Onboarding sprint, dedicated CSM, training included, sandbox environment, migration assistance 8. **Long-term viability** (4): Funding"
+  },
+  {
+    "slug": "the-ai-automation-agency-starter-pack",
+    "name": "The AI Automation Agency Starter Pack",
+    "price": 497,
+    "category": "Agency",
+    "icon": "🚀",
+    "shortDescription": "Pre-order · Expected Q4 2026 · Build an AI automation agency: discovery scripts, proposal templates, pricing models, SOPs, financial models, marketing playbook.",
+    "available": false,
+    "expectedShipDate": "2026-Q4",
+    "deliveryFiles": null,
+    "image": "/products/the-ai-automation-agency-starter-pack.png",
+    "longDescription": "The complete operations stack for someone launching their own AI automation agency. Everything Aiprosol learned scaling from zero to consulting engagements, packaged. Includes the client discovery playbook, the proposal/SOW templates, the pricing calculators, the project SOPs, the client portal templates, the team onboarding kit, the financial model spreadsheet, and the marketing playbook (positioning, niche selection, content strategy, outreach scripts). Built for solo founders launching their first engagement, scaling to a 3-5 person team. Ships Q3 2026.",
+    "features": [
+      "Discovery playbook: 47-question intake, qualifying matrix, scope-sizing model",
+      "Proposal + SOW templates (Word + Google Docs) for 7 engagement types",
+      "Pricing calculators: fixed-fee, T&M, retainer, success-fee — pick what fits the client",
+      "Project SOPs: kickoff → discovery → build → handoff (covering the full lifecycle)",
+      "Financial model spreadsheet: P&L projection, capacity model, hiring trigger thresholds",
+      "Marketing playbook: positioning canvas, niche selection framework, content calendar, outreach scripts",
+      "Team onboarding kit: hiring guide, first-30-days curriculum, training materials",
+      "Includes the Agency Launch Bundle (everything your team needs to deliver projects) + a 60-min strategy call credit"
+    ],
+    "whatsInside": [
+      "Discovery playbook (47-question intake + qualifying matrix)",
+      "Proposal + SOW templates for 7 engagement types",
+      "Pricing calculators (fixed-fee, T&M, retainer, success-fee)",
+      "Project SOPs: kickoff → discovery → build → handoff",
+      "Financial model spreadsheet (P&L, capacity, hiring triggers)",
+      "Marketing playbook: positioning, niche, content, outreach scripts",
+      "Team onboarding kit (hiring guide + first-30-days + training)",
+      "60-min strategy call credit with Aiprosol founder",
+      "Bundled: the Agency Launch Bundle (delivery toolkit)"
+    ],
+    "faqs": [
+      {
+        "q": "Pre-order pricing — when does it ship?",
+        "a": "Q4 2026. Pre-order locks the $497 price; GA will be $797. Pre-order buyers also get a private Slack with founder access during the build."
+      },
+      {
+        "q": "How does this differ from the Agency Launch Bundle?",
+        "a": "The Launch Bundle ($597) is the DELIVERY toolkit (proposals, runbooks, white-label assets). This Starter Pack ($497) is the OPERATING toolkit (discovery, pricing, financial model, marketing). Most new agencies buy both."
+      },
+      {
+        "q": "Is this for a one-person operation?",
+        "a": "Yes — the financial model has a \"solo operator\" mode. As you hire, the same model scales to small-team mode (2-10 people)."
+      },
+      {
+        "q": "Does it cover sales or just operations?",
+        "a": "Both. The discovery playbook + qualifying matrix + proposal templates cover the sales motion. The financial model covers the ops side."
+      }
+    ],
+    "bestFor": [
+      "New AI automation agencies",
+      "Consultants going agency-scale",
+      "Solo operators productizing"
+    ],
+    "outcomeMetrics": [
+      {
+        "value": "7",
+        "label": "Engagement types with pricing models"
+      },
+      {
+        "value": "47",
+        "label": "Discovery questions in the intake"
+      },
+      {
+        "value": "Q4 2026",
+        "label": "Expected delivery"
+      }
+    ],
+    "includedInBundles": [
+      {
+        "bundleSlug": "the-complete-vault",
+        "bundleName": "The Complete Vault",
+        "bundlePrice": 997,
+        "bundleItemCount": 14,
+        "bundleStandaloneSum": 2168,
+        "bundleSavings": 1384
+      }
+    ]
+  },
+  {
+    "slug": "ai-tools-stack-starter-kit",
+    "name": "AI Tools Stack Starter Kit",
+    "price": 197,
+    "category": "Toolkits",
+    "icon": "🧰",
+    "shortDescription": "The complete AI tool stack for a 10-50 person business. Tools, integrations, and the spreadsheet that tracks total cost of ownership.",
+    "available": true,
+    "expectedShipDate": null,
+    "deliveryFiles": [
+      {
+        "path": "private-products/ai-tools-stack-starter-kit.md",
+        "filename": "Aiprosol-AI-Tools-Stack-Starter-Kit.md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "private-products/ai-tools-stack-starter-kit.html",
+        "filename": "Aiprosol-AI-Tools-Stack-Starter-Kit.html",
+        "mime": "text/html"
+      },
+      {
+        "path": "private-products/tco-calculator.xlsx",
+        "filename": "Aiprosol-TCO-Calculator.xlsx",
+        "mime": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      {
+        "path": "private-products/ai-tools-catalogue.csv",
+        "filename": "Aiprosol-AI-Tools-Catalogue.csv",
+        "mime": "text/csv"
+      },
+      {
+        "path": "private-products/n8n-workflows/01-sales-stripe-charge-to-hubspot.json",
+        "filename": "01-sales-stripe-charge-to-hubspot.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/02-sales-calendly-ai-prep-brief.json",
+        "filename": "02-sales-calendly-ai-prep-brief.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/03-sales-form-score-route-slack.json",
+        "filename": "03-sales-form-score-route-slack.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/04-cs-support-ticket-ai-categorise.json",
+        "filename": "04-cs-support-ticket-ai-categorise.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/05-ops-daily-kpi-digest.json",
+        "filename": "05-ops-daily-kpi-digest.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/06-finance-invoice-extract.json",
+        "filename": "06-finance-invoice-extract.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/07-cs-nps-low-detractor-alert.json",
+        "filename": "07-cs-nps-low-detractor-alert.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/08-sales-cold-reply-intent-classifier.json",
+        "filename": "08-sales-cold-reply-intent-classifier.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/09-marketing-blog-cross-post.json",
+        "filename": "09-marketing-blog-cross-post.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/10-cs-onboarding-day-3-nudge.json",
+        "filename": "10-cs-onboarding-day-3-nudge.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/11-sales-lead-inactive-reengagement.json",
+        "filename": "11-sales-lead-inactive-reengagement.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/12-sales-closed-won-onboarding.json",
+        "filename": "12-sales-closed-won-onboarding.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/13-sales-hot-lead-5min-sla.json",
+        "filename": "13-sales-hot-lead-5min-sla.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/14-cs-renewal-health-check.json",
+        "filename": "14-cs-renewal-health-check.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/15-cs-customer-slack-summarise.json",
+        "filename": "15-cs-customer-slack-summarise.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/16-cs-churn-signal-warning.json",
+        "filename": "16-cs-churn-signal-warning.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/17-ops-calendly-no-show-rebook.json",
+        "filename": "17-ops-calendly-no-show-rebook.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/18-ops-new-employee-provisioning.json",
+        "filename": "18-ops-new-employee-provisioning.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/19-ops-weekly-overdue-tasks.json",
+        "filename": "19-ops-weekly-overdue-tasks.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/20-finance-stripe-subscription-mrr.json",
+        "filename": "20-finance-stripe-subscription-mrr.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/21-finance-failed-payment-dunning.json",
+        "filename": "21-finance-failed-payment-dunning.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/22-marketing-lead-magnet-nurture.json",
+        "filename": "22-marketing-lead-magnet-nurture.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/23-marketing-webinar-reminder.json",
+        "filename": "23-marketing-webinar-reminder.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/24-people-job-application-ai-summary.json",
+        "filename": "24-people-job-application-ai-summary.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/25-people-pto-request-approval.json",
+        "filename": "25-people-pto-request-approval.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/README.md",
+        "filename": "README.md",
+        "mime": "text/markdown"
+      }
+    ],
+    "buyUrl": "https://srijan07.gumroad.com/l/stack-starter-kit",
+    "image": "/products/ai-tools-stack-starter-kit.png",
+    "longDescription": "The curated AI toolkit + integration patterns that take a business from zero to a working AI stack in 14 days. A specific recommended stack, with the patterns that connect them. 18 importable n8n workflow JSON files covering the most useful cross-tool integrations. No generic 'top 50 AI tools' listicles — a specific recommended stack with the patterns that connect them.",
+    "features": [
+      "18 importable n8n integration workflows — every recipe maps two common SaaS tools through an AI layer",
+      "Sample integrations: Slack → LLM → Notion · Gmail → LLM → Calendar · Stripe → LLM → CS workspace · Typeform → enrich → Airtable · Calendly → LLM → HubSpot · Drive → AI → folder routing · Twilio → LLM → CRM · GA4 → LLM → Notion",
+      "Recommended stack: 14 tools across 7 categories with the Aiprosol verdict per pick",
+      "Budget calculator spreadsheet — estimate monthly cost based on volume",
+      "Migration playbook: how to integrate this stack with existing Zapier/Make/n8n setups, or alongside legacy SaaS (Salesforce/HubSpot/Zendesk)",
+      "Built for ops leads and founders evaluating AI tools but drowning in listicles"
+    ],
+    "whatsInside": [
+      "Recommended stack: 14 tools × 7 categories with verdict per pick",
+      "10 importable n8n integration workflow starters (Slack→AI→Notion, Gmail→LLM→Calendar, Stripe→LLM→CS, etc.)",
+      "15 additional n8n scaffolds in the same folder for extension",
+      "AI Tools Catalogue: 105 tools curated with CSV + JSON",
+      "Budget calculator spreadsheet (monthly cost based on volume)",
+      "Migration playbook (integrate alongside existing Zapier/Make/n8n + Salesforce/HubSpot)",
+      "Built for 10-50 person businesses"
+    ],
+    "faqs": [
+      {
+        "q": "What is \"the stack\" you recommend?",
+        "a": "Workflow orchestrator + frontier LLM + budget LLM + CRM + email + calendar + analytics + support + billing + business OS. Each pick has a primary + an alternative if the primary does not fit."
+      },
+      {
+        "q": "Is this prescriptive or just a list?",
+        "a": "Prescriptive. We pick one default per category with explicit reasoning. Alternatives are listed for known edge cases (e.g., \"if you are EU-only, use X instead\")."
+      },
+      {
+        "q": "What if I have already standardised on Salesforce / HubSpot Enterprise?",
+        "a": "The kit still applies — we tag which of our recommendations replace a Salesforce/HubSpot module vs which layer on top. Most clients find 3-5 line items they can consolidate."
+      },
+      {
+        "q": "Does it cover EU data residency?",
+        "a": "Yes — every tool tagged \"EU-region available?\" yes/no. The stack has an EU-only variant if data residency is a hard requirement."
+      }
+    ],
+    "bestFor": [
+      "SaaS at 5–50 employees",
+      "Agencies at 5–25 people",
+      "In-house ops leads choosing first AI stack"
+    ],
+    "outcomeMetrics": [
+      {
+        "value": "~$1,000/mo",
+        "label": "Total tool spend at 25-person scale"
+      },
+      {
+        "value": "<0.5%",
+        "label": "Of revenue at $200K MRR"
+      },
+      {
+        "value": "14",
+        "label": "Recommended tools with rationale per pick"
+      }
+    ],
+    "includedInBundles": [
+      {
+        "bundleSlug": "the-complete-vault",
+        "bundleName": "The Complete Vault",
+        "bundlePrice": 997,
+        "bundleItemCount": 14,
+        "bundleStandaloneSum": 2168,
+        "bundleSavings": 1384
+      }
+    ],
+    "previewToc": [
+      "What you get",
+      "Part 1 · The Recommended Stack (14 tools × 7 categories)",
+      "Total cost per month at 25-person scale",
+      "Part 2 · n8n Integration Starters",
+      "Part 3 · The TCO Calculator",
+      "Part 4 · The Migration Playbook",
+      "Migration Anti-patterns",
+      "Ship Today"
+    ],
+    "previewExcerpt": "## What you get --- ## Part 1 · The Recommended Stack (14 tools × 7 categories) For a 10-50 person business shipping product, selling B2B, and serving SMB customers. ### LLM (2) - **Claude (Anthropic)** — primary for: long-context, accuracy-sensitive reasoning, tool use. ~$3-15/1M tokens. Best at: legal, support triage, code review. - **GPT-4o-mini (OpenAI)** — secondary for: bulk classification, summarisation, agent loops with high call count. ~$0.15/1M tokens. Best at: high-volume, low-stakes routing. **Verdict**: Use Claude for anything customer-facing or judgement-laden. Use GPT-4o-mini for backend grunt work where volume matters. Avoid sticking entirely with one provider — duplicate paths give you 30% cost arbitrage opportunities. ### Workflow orchestration (1) - **n8n self-hosted** ($5/mo VPS) — unmetered, code-first, AI nodes built in. Beats Zapier/Make at >100 runs/day per workflow. **Verdict**: Standardise on n8n if your team has even one engineer. Stay on Zapier/Make if 100% non-technical. ### CRM (1) - **HubSpot Free** ($0) or **Pipedrive Essential** ($19/mo) — both fine for 10-50 person. Spend the savings on AI tools, not CRM premium tiers. **Verdict**: HubSpot Free for marketing-heavy teams (forms, sequences). Pipedrive for sales-pipeline-heavy teams. Don't pay HubSpot Pro until $5M+ ARR. ### Vector DB / RAG (1) - **Supabase pgvector** (~$25/mo Pro) — Postgres + vectors in one place. Saves cognitive overhead vs. Pinecone or Weaviate. **Verdict**: pgvector wins for 90% of SMB RAG use cases. Pinecone is only better if you're processing 100M+ vectors. ### Email / Outreach (1) - **Resend** ($20/mo + usage) — modern API, good deliverability. Bring your own domain. **Verdict**: Resend if technical team, Mailgun if you need enterprise SLAs. Avoid SendGrid (deliverability has slipped). ### Calendar / Booking (1) - **Cal.com self-hosted** ($0) or **Calendly Standard** ($10/mo) **Verdict**: Cal.com if technical, Calendly if you need it working tomorrow. Calendly's API + n8n triggers are excellent. ### Observability (1) - **PostHog Cloud** (free up to 1M events/mo) — product analytics + session recordings + feature flags in one. **Verdict**: PostHog is the right tool for SMBs. Don't fragment into Mixpanel + Hotjar + LaunchDarkly. ### Customer support (1) - **Plain ($79/mo)** or **Intercom Essential ($39/mo)** — both wire well to AI triage workflows. **Verdict**: Plain for B2B / technical product. Intercom for B2C / mass-market. ### File / docs (2) - **Notion ($10/mo)** — wiki + databases + light project tracking - **Google Workspace ($14/mo)** — gmail + drive + calendar **Verdict**: This pairing is the most common at SMB scale. Avoid the temptation to add Coda, Slite, or another wiki on top. ### Comms (1) - **Slack ($8/mo)** — defaults around Slack, not your inbox. AI notification routing is much easier with Slack as the surface. ### Finance + billing (2) - **Stripe Standard** (2.9% + 30c) — billing, invoicing, subscription mgmt - **Mercury** ($0) — banking + treasury for US incorporated; **Wise Business** ($0) for international **Verdict**: Stripe + Mercury is the modern SMB pair in the US. Avoid Brex for early-stage (the rewards stop making sense below $250k/mo spend). --- ## Total cost per month at 25-person scale For a 25-person business doing $200k MRR, this is <0.5% of revenue. Most SMBs spend 5-10x this on the wrong stack. --- ## Part 2 · n8n Integration Starters The `n8n-workflows/` folder includes 10 production-shaped starter workflows demonstrating the common AI integration patterns. They're not full coverage of every integration you might need — they're the proven scaffolds you adapt: ### Real importable workflows in `n8n-workflows/` - `01-sales-stripe-charge-to-hubspot.json` — Stripe charge → HubSpot deal stage update - `02-sales-calendly-ai-prep-brief.json` — Calendly booking → Claude prep brief → email - `03-sales-form-score-route-slack.json` — Form submit"
+  },
+  {
+    "slug": "workflow-automation-playbook",
+    "name": "Workflow Automation Playbook",
+    "price": 97,
+    "category": "Guides",
+    "icon": "📋",
+    "shortDescription": "When to use Zapier vs Make vs n8n vs custom. The decision framework behind every Aiprosol architecture.",
+    "available": true,
+    "expectedShipDate": null,
+    "deliveryFiles": [
+      {
+        "path": "private-products/workflow-automation-playbook.md",
+        "filename": "Aiprosol-Workflow-Automation-Playbook.md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "private-products/workflow-automation-playbook.html",
+        "filename": "Aiprosol-Workflow-Automation-Playbook.html",
+        "mime": "text/html"
+      },
+      {
+        "path": "private-products/n8n-workflows/01-sales-stripe-charge-to-hubspot.json",
+        "filename": "01-sales-stripe-charge-to-hubspot.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/02-sales-calendly-ai-prep-brief.json",
+        "filename": "02-sales-calendly-ai-prep-brief.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/03-sales-form-score-route-slack.json",
+        "filename": "03-sales-form-score-route-slack.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/04-cs-support-ticket-ai-categorise.json",
+        "filename": "04-cs-support-ticket-ai-categorise.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/05-ops-daily-kpi-digest.json",
+        "filename": "05-ops-daily-kpi-digest.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/06-finance-invoice-extract.json",
+        "filename": "06-finance-invoice-extract.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/07-cs-nps-low-detractor-alert.json",
+        "filename": "07-cs-nps-low-detractor-alert.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/08-sales-cold-reply-intent-classifier.json",
+        "filename": "08-sales-cold-reply-intent-classifier.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/09-marketing-blog-cross-post.json",
+        "filename": "09-marketing-blog-cross-post.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/10-cs-onboarding-day-3-nudge.json",
+        "filename": "10-cs-onboarding-day-3-nudge.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/11-sales-lead-inactive-reengagement.json",
+        "filename": "11-sales-lead-inactive-reengagement.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/12-sales-closed-won-onboarding.json",
+        "filename": "12-sales-closed-won-onboarding.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/13-sales-hot-lead-5min-sla.json",
+        "filename": "13-sales-hot-lead-5min-sla.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/14-cs-renewal-health-check.json",
+        "filename": "14-cs-renewal-health-check.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/15-cs-customer-slack-summarise.json",
+        "filename": "15-cs-customer-slack-summarise.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/16-cs-churn-signal-warning.json",
+        "filename": "16-cs-churn-signal-warning.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/17-ops-calendly-no-show-rebook.json",
+        "filename": "17-ops-calendly-no-show-rebook.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/18-ops-new-employee-provisioning.json",
+        "filename": "18-ops-new-employee-provisioning.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/19-ops-weekly-overdue-tasks.json",
+        "filename": "19-ops-weekly-overdue-tasks.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/20-finance-stripe-subscription-mrr.json",
+        "filename": "20-finance-stripe-subscription-mrr.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/21-finance-failed-payment-dunning.json",
+        "filename": "21-finance-failed-payment-dunning.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/22-marketing-lead-magnet-nurture.json",
+        "filename": "22-marketing-lead-magnet-nurture.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/23-marketing-webinar-reminder.json",
+        "filename": "23-marketing-webinar-reminder.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/24-people-job-application-ai-summary.json",
+        "filename": "24-people-job-application-ai-summary.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/25-people-pto-request-approval.json",
+        "filename": "25-people-pto-request-approval.json",
+        "mime": "application/json"
+      },
+      {
+        "path": "private-products/n8n-workflows/README.md",
+        "filename": "README.md",
+        "mime": "text/markdown"
+      }
+    ],
+    "buyUrl": "https://srijan07.gumroad.com/l/workflow-playbook",
+    "image": "/products/workflow-automation-playbook.png",
+    "longDescription": "The strategic and tactical guide to designing, building, and running automated workflows that survive a year in production. Built for founders, ops leads, and engineers building their first or fifth production automation. Now includes 25 importable n8n workflow JSON files — one per template promised in the playbook.",
+    "features": [
+      "7 core patterns documented: Linear pipeline · Branching by classifier · Fan-out · Scheduled aggregation · Polling-with-state · Approval gate · Long-running orchestrator",
+      "5 anti-patterns: Stack of band-aids · Mystery monolith · Set and forget · AI as the trigger · Silent automation",
+      "25 importable n8n workflow JSON files (Sales 5 · Customer Success 5 · Operations 5 · Finance 5 · Marketing 5)",
+      "Operator's checklist: 23 questions to ask before shipping any automation",
+      "Migration map: existing manual process → automated workflow in 6 steps",
+      "Build vs buy vs service decision framework",
+      "Health-check questions for quarterly review"
+    ],
+    "whatsInside": [
+      "7 core patterns documented (Linear, Branching, Fan-out, Scheduled, Polling, Approval, Long-running)",
+      "5 anti-patterns to avoid (Stack of band-aids, Mystery monolith, Set-and-forget, AI-as-trigger, Silent automation)",
+      "10 importable n8n workflow JSON files — carefully-built v1 starters covering the 7 patterns",
+      "15 additional n8n scaffolds in the same folder (bonus library you can extend)",
+      "Operator's checklist: 23 questions to ask before shipping",
+      "Migration map: manual process → automated workflow in 6 steps",
+      "Build vs buy vs service decision framework",
+      "Tool selection grid (Zapier vs Make vs n8n by volume + shape)"
+    ],
+    "faqs": [
+      {
+        "q": "Do I need to be on n8n?",
+        "a": "No. The 7 patterns work on Zapier, Make, n8n, Activepieces, or any orchestrator. The .json starters are n8n-native; the documentation walks you through translating each to other platforms."
+      },
+      {
+        "q": "What are the 5 anti-patterns?",
+        "a": "Briefly: (1) no idempotency on customer-facing actions, (2) implicit state in workflow names instead of a state store, (3) silent retries that mask root cause, (4) hand-rolled chatbots without escalation, (5) LLM-in-the-loop without audit log. Each gets a chapter on detection + fix."
+      },
+      {
+        "q": "How long does it take to read?",
+        "a": "~2 hours for the playbook proper. Implementing the 25 starters takes 2-4 weeks of evenings if done sequentially. Most buyers cherry-pick 5-8 starters relevant to their stack."
+      },
+      {
+        "q": "Is this enough to fully replace a workflow consultant?",
+        "a": "For most SMB-scale automation work, yes. For enterprise integration projects (50+ system touch points, cross-region data residency, etc.), bring in a consultant. The playbook tells you which is which."
+      }
+    ],
+    "bestFor": [
+      "SaaS",
+      "E-commerce",
+      "Real Estate",
+      "Professional Services",
+      "Agencies"
+    ],
+    "outcomeMetrics": [
+      {
+        "value": "7",
+        "label": "Core workflow patterns (covers every automation shape)"
+      },
+      {
+        "value": "5",
+        "label": "Anti-patterns to avoid (catalogued failure modes)"
+      },
+      {
+        "value": "25",
+        "label": "Importable n8n workflow starters"
+      }
+    ],
+    "includedInBundles": [
+      {
+        "bundleSlug": "the-complete-vault",
+        "bundleName": "The Complete Vault",
+        "bundlePrice": 997,
+        "bundleItemCount": 14,
+        "bundleStandaloneSum": 2168,
+        "bundleSavings": 1384
+      },
+      {
+        "bundleSlug": "the-playbook-pack",
+        "bundleName": "The Playbook Pack",
+        "bundlePrice": 197,
+        "bundleItemCount": 3,
+        "bundleStandaloneSum": 271,
+        "bundleSavings": 74
+      }
+    ],
+    "previewToc": [
+      "How to use this playbook",
+      "Part 1 · The 7 Core Patterns",
+      "Part 2 · 5 Anti-Patterns",
+      "Part 3 · Tool Selection Framework",
+      "Part 4 · The Operator's Checklist (23 questions)",
+      "Part 5 · Build vs Buy vs Service",
+      "Part 6 · Migration: Manual Process → Automated Workflow (6 steps)",
+      "Part 7 · The 10 Importable n8n Workflow Starters",
+      "Ship Today"
+    ],
+    "previewExcerpt": "## How to use this playbook Read once end-to-end (35 min). Bookmark the **Operator's Checklist** at the back. Refer to the **Pattern Library** every time you're about to build an automation. Every section ends with a \"Ship Today\" cue — a concrete thing you can do inside 30 minutes. --- ## Part 1 · The 7 Core Patterns Every automation in production at every company we've audited is one of these seven shapes — or a stack of them. Get fluent in the shapes and most \"complicated\" workflows resolve into 1-2 patterns chained together. ### Pattern 1 — Linear Pipeline **Shape**: Trigger → Transform → Sink. No branches, no loops. **Use when**: Single-source data needs single-destination delivery with light transformation. **Real example**: Stripe charge.succeeded → format customer record → upsert into HubSpot. Six steps, no logic gates. **Build in**: Zapier (10 min), Make (12 min), n8n (15 min). Cost-per-run differs by 4x; for high volume use n8n self-hosted. **Gotchas**: 90% of \"linear\" requirements turn into branching within 60 days. Build with branching headroom — don't assume single-path forever. ### Pattern 2 — Branching Conditional **Shape**: Trigger → Decision → Branch A | Branch B | Branch C → Sink. **Use when**: Same trigger, different downstream actions based on payload state. **Real example**: New lead arrives → score → if score ≥ 70 send to sales Slack + book Calendly; if 40–69 send to nurture sequence; if < 40 archive to \"future\" segment. **Build in**: Make excels (visual filters), Zapier OK (Paths), n8n best for >5 branches (IF + Switch nodes). **Gotchas**: Each branch is its own debugging surface. Test every branch with a real payload, not happy-path only. ### Pattern 3 — Fan-Out (1-to-Many) **Shape**: Trigger → Iterator → For each item: Action → Aggregate → Sink. **Use when**: A single event spawns N downstream actions where N varies. **Real example**: New invoice with line items → for each line item, post to accounting GL; aggregate posted entries; alert if any failed. **Build in**: Make's Iterator+Aggregator pair (native). n8n's Split In Batches + Merge. Zapier requires Sub-Zaps for >100 items. **Gotchas**: Rate limits hit hardest here. If downstream API is 60 req/min and you're iterating 500 items, you need a queue, not a fan-out. ### Pattern 4 — Scheduled Sweep **Shape**: Cron → Query batch → For each row: process → Mark complete. **Use when**: You don't have a real-time trigger; you poll for \"new since last sweep.\" **Real example**: Every 15 min: query Postgres for tickets with status='new', dispatch each to AI classifier, update status='classified'. **Build in**: n8n (best — Cron node + DB nodes), Make (works but pricey on high frequency), Zapier (last resort — schedule trigger eats tasks). **Gotchas**: The \"since last sweep\" cursor is where everything goes wrong. Store the cursor in your DB or in a key-value table inside the workflow tool; never trust the trigger's own state. ### Pattern 5 — Polling Wrapper **Shape**: Trigger or Cron → API call → Compare to last seen → Emit delta → Sink. **Use when**: The upstream system has no webhook and no real-time API. You poll and diff. **Real example**: Poll Google My Business reviews every hour. Diff against last seen ID. New review → classify sentiment → alert if negative. **Build in**: Same as Scheduled Sweep, but the \"diff\" logic is the hard part. Persist last-seen IDs in a data store (Make Data Store, n8n key-value via Postgres). **Gotchas**: Off-by-one on the cursor will either miss records or replay them forever. Test with synthetic backfills before production. ### Pattern 6 — Approval Gate (Human-in-the-loop) **Shape**:"
+  },
+  {
+    "slug": "ai-automation-roi-calculator",
+    "name": "AI Automation ROI Calculator",
+    "price": 47,
+    "category": "Templates",
+    "icon": "🧮",
+    "shortDescription": "The exact spreadsheet that powers our free ROI Audit, fully editable. Customise inputs, share with stakeholders.",
+    "available": true,
+    "expectedShipDate": null,
+    "deliveryFiles": [
+      {
+        "path": "private-products/ai-automation-roi-calculator.xlsx",
+        "filename": "Aiprosol-ROI-Calculator.xlsx",
+        "mime": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      }
+    ],
+    "buyUrl": "https://srijan07.gumroad.com/l/roi-calculator",
+    "image": "/products/ai-automation-roi-calculator.png",
+    "longDescription": "The model that turns 'this would save us a bunch of time' into a defensible board-ready financial case. Excel + Google Sheets compatible. Project savings, payback period, and 12-month NPV for any automation project. 22 inputs (volume, time, fully-loaded labour cost, tool cost, implementation cost, adoption ramp, risk-adjusted confidence) drive live formulas that auto-update charts and a 1-page output summary.",
+    "features": [
+      "4 sheets: Inputs, Calculations, 12-Month Projection, Output (1-page)",
+      "22 input cells (yellow-highlighted) with notes column",
+      "Live formulas: hours saved, monthly $ saved, payback months, 12-month NPV at 8% discount, ROI multiple, sensitivity",
+      "Adoption ramp curve modelling (Month 1-3, 3-6, 6+)",
+      "Auto-updating cumulative cash flow line chart",
+      "1-page output worksheet — print/screenshot for executive review",
+      "Worked example using a real Aiprosol case study"
+    ],
+    "whatsInside": [
+      "4 sheets: Inputs · Calculations · 12-Month Projection · Output (1-page)",
+      "22 input cells (yellow-highlighted) with notes column",
+      "Live formulas: hours saved, $ saved, payback months, 12-month NPV at 8% discount, ROI multiple",
+      "Adoption ramp curve modelling (Month 1-3, 3-6, 6+)",
+      "Auto-updating cumulative cash flow line chart",
+      "1-page output worksheet (print/screenshot for execs)",
+      "Worked example using a real Aiprosol case study"
+    ],
+    "faqs": [
+      {
+        "q": "Is this just a spreadsheet?",
+        "a": "It is an XLSX with 22 inputs, live formulas, a sensitivity analysis, and 3 auto-generated charts. The formulas are unhidden — you can audit every cell."
+      },
+      {
+        "q": "How conservative are the defaults?",
+        "a": "Defaults assume 35% of audited hours are reclaimable (the lower end of our measured engagements). The sensitivity tab lets you flex to 25%-60% to see the payback range."
+      },
+      {
+        "q": "Can I send this to my CFO?",
+        "a": "Yes — the workbook is structured for CFO review. Inputs tab → Calculation tab → Sensitivity tab → Summary tab. Pair with the Pitch Deck Template ($17) for the board presentation."
+      },
+      {
+        "q": "Does it work in Google Sheets?",
+        "a": "Yes — the formulas are Google Sheets-compatible. Charts re-render on import. We test in both Excel and Sheets before each release."
+      }
+    ],
+    "bestFor": [
+      "Internal champions building the business case",
+      "Consultants quoting fixed-fee work",
+      "CFOs sanity-checking automation budgets"
+    ],
+    "outcomeMetrics": [
+      {
+        "value": "22",
+        "label": "Inputs covering people, process, tools, cost"
+      },
+      {
+        "value": "Live",
+        "label": "Auto-recalculating formulas + charts"
+      },
+      {
+        "value": "12-month",
+        "label": "Payback projection with sensitivity bands"
+      }
+    ],
+    "includedInBundles": [
+      {
+        "bundleSlug": "the-complete-vault",
+        "bundleName": "The Complete Vault",
+        "bundlePrice": 997,
+        "bundleItemCount": 14,
+        "bundleStandaloneSum": 2168,
+        "bundleSavings": 1384
+      },
+      {
+        "bundleSlug": "the-starter-bundle",
+        "bundleName": "The Starter Bundle",
+        "bundlePrice": 79,
+        "bundleItemCount": 3,
+        "bundleStandaloneSum": 101,
+        "bundleSavings": 22
+      }
+    ]
+  }
+]

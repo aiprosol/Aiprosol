@@ -1,0 +1,159 @@
+{
+  "name": "Aiprosol Starter — Contact form → instant email reply + log",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "contact-form"
+      },
+      "id": "0113bb3c-2130-4dba-933f-bb4580b0aa8a",
+      "name": "Form webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o-mini"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Write a 60-word warm acknowledgement reply. Use the visitor's name. Promise a human reply within 24 hours."
+            },
+            {
+              "role": "user",
+              "content": "=Name: {{ $json.name }}\\nMessage: {{ $json.message }}"
+            }
+          ]
+        }
+      },
+      "id": "b4df12d1-3486-4eaa-8ccf-668de90961dc",
+      "name": "AI acknowledgement",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "send",
+        "to": "={{ $('Form webhook').first().json.email }}",
+        "subject": "Thanks for getting in touch",
+        "message": "={{ $json.message.content }}"
+      },
+      "id": "6a39a79e-1c3d-4f48-a88c-0ea63c459b3d",
+      "name": "Send reply",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "sheet",
+        "operation": "append",
+        "documentId": "CONTACTS_SHEET_ID",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "Name",
+              "fieldValue": "={{ $('Form webhook').first().json.name }}"
+            },
+            {
+              "fieldId": "Email",
+              "fieldValue": "={{ $('Form webhook').first().json.email }}"
+            },
+            {
+              "fieldId": "Message",
+              "fieldValue": "={{ $('Form webhook').first().json.message }}"
+            },
+            {
+              "fieldId": "Date",
+              "fieldValue": "={{ $now.toISO() }}"
+            }
+          ]
+        }
+      },
+      "id": "66781fb0-5a74-4724-91c4-9a6debe330fe",
+      "name": "Log to Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        840,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Form webhook": {
+      "main": [
+        [
+          {
+            "node": "AI acknowledgement",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI acknowledgement": {
+      "main": [
+        [
+          {
+            "node": "Send reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send reply": {
+      "main": [
+        [
+          {
+            "node": "Log to Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "starter"
+    },
+    {
+      "name": "lead-capture"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "aefbdafd-639f-44b6-a03e-142519a5cef2",
+  "id": "8fc9c1e0-c62d-4107-86fe-2746bb3052bc",
+  "_aiprosol": {
+    "description": "The simplest possible: webhook from your site contact form → AI generates a personalised acknowledgement reply → sends via Gmail → logs to a Google Sheet. 4 nodes.",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

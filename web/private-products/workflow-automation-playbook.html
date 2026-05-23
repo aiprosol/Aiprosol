@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Workflow Automation Playbook — Aiprosol</title>
+<style>
+:root { color-scheme: light dark; }
+* { box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif;
+  max-width: 760px; margin: 0 auto; padding: 56px 32px 96px;
+  line-height: 1.75; color: #1F1B2E; background: #FAF8FF;
+}
+@media (prefers-color-scheme: dark) {
+  body { color: #E5E7EB; background: #0A0613; }
+  a { color: #C084FC; }
+  blockquote { background: rgba(139, 92, 246, 0.08); border-left-color: #8B5CF6; color: #C7CEDB; }
+  code { background: rgba(139, 92, 246, 0.12); color: #C084FC; }
+  pre { background: rgba(0,0,0,0.45); border: 1px solid #2A1F3D; }
+  hr { border-color: #2A1F3D; }
+  table { border-color: #2A1F3D; }
+  th { background: #1A1428; }
+  td, th { border-color: #2A1F3D; }
+  tr:nth-child(even) { background: rgba(139, 92, 246, 0.04); }
+}
+h1, h2, h3, h4 { font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.2; letter-spacing: -0.01em; }
+h1 { font-size: 36px; margin: 0 0 28px; font-weight: 800; background: linear-gradient(135deg, #8B5CF6, #C084FC); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+h2 { font-size: 24px; margin-top: 48px; margin-bottom: 14px; font-weight: 700; padding-bottom: 8px; border-bottom: 1px solid rgba(139,92,246,0.3); }
+h3 { font-size: 18px; margin-top: 28px; margin-bottom: 10px; font-weight: 700; color: #8B5CF6; }
+@media (prefers-color-scheme: dark) { h3 { color: #C084FC; } }
+h4 { font-size: 15px; margin-top: 18px; margin-bottom: 6px; font-weight: 700; }
+p { margin: 12px 0; }
+a { color: #6D28D9; text-decoration: underline; text-underline-offset: 3px; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+blockquote { background: rgba(139,92,246,0.05); border-left: 3px solid #8B5CF6; padding: 14px 22px; margin: 22px 0; color: #4A4660; border-radius: 6px; }
+hr { border: 0; border-top: 1px solid rgba(139,92,246,0.18); margin: 40px 0; }
+ul, ol { padding-left: 26px; }
+li { margin: 6px 0; }
+code { background: rgba(139,92,246,0.08); padding: 2px 8px; border-radius: 5px; font-family: 'JetBrains Mono', SFMono-Regular, ui-monospace, monospace; font-size: 0.9em; color: #6D28D9; }
+pre { background: #F4F1FA; padding: 18px 22px; border-radius: 10px; overflow-x: auto; border: 1px solid rgba(139,92,246,0.15); margin: 18px 0; }
+pre code { background: none; padding: 0; color: inherit; font-size: 13px; line-height: 1.6; }
+table { border-collapse: collapse; width: 100%; margin: 22px 0; font-size: 14px; border: 1px solid rgba(139,92,246,0.2); border-radius: 8px; overflow: hidden; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid rgba(139,92,246,0.12); }
+th { background: rgba(139,92,246,0.08); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #6D28D9; }
+tr:nth-child(even) { background: rgba(139,92,246,0.025); }
+.brand-footer { margin-top: 80px; padding-top: 28px; border-top: 1px solid rgba(139,92,246,0.18); font-size: 12px; color: #6B7585; text-align: center; }
+.brand-footer a { color: #8B5CF6; text-decoration: none; }
+.brand-footer a:hover { text-decoration: underline; }
+@media print {
+  body { padding: 0; max-width: 100%; }
+  h1 { page-break-after: avoid; }
+  h2, h3 { page-break-after: avoid; page-break-inside: avoid; }
+  pre, blockquote, table { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<h1>The Workflow Automation Playbook</h1>
+
+<p><strong>When to use Zapier vs Make vs n8n vs custom. The decision framework behind every Aiprosol architecture.</strong></p>
+
+<p>Version 1.0 · 2026 · The full framework (this guide) + 10 importable n8n workflow starters covering the 7 core patterns</p>
+
+<hr>
+
+<h2>How to use this playbook</h2>
+
+<p>Read once end-to-end (35 min). Bookmark the <strong>Operator's Checklist</strong> at the back. Refer to the <strong>Pattern Library</strong> every time you're about to build an automation.</p>
+
+<p>Every section ends with a "Ship Today" cue — a concrete thing you can do inside 30 minutes.</p>
+
+<hr>
+
+<h2>Part 1 · The 7 Core Patterns</h2>
+
+<p>Every automation in production at every company we've audited is one of these seven shapes — or a stack of them. Get fluent in the shapes and most "complicated" workflows resolve into 1-2 patterns chained together.</p>
+
+<h3>Pattern 1 — Linear Pipeline</h3>
+
+<p><strong>Shape</strong>: Trigger → Transform → Sink. No branches, no loops.</p>
+
+<p><strong>Use when</strong>: Single-source data needs single-destination delivery with light transformation.</p>
+
+<p><strong>Real example</strong>: Stripe charge.succeeded → format customer record → upsert into HubSpot. Six steps, no logic gates.</p>
+
+<p><strong>Build in</strong>: Zapier (10 min), Make (12 min), n8n (15 min). Cost-per-run differs by 4x; for high volume use n8n self-hosted.</p>
+
+<p><strong>Gotchas</strong>: 90% of "linear" requirements turn into branching within 60 days. Build with branching headroom — don't assume single-path forever.</p>
+
+<h3>Pattern 2 — Branching Conditional</h3>
+
+<p><strong>Shape</strong>: Trigger → Decision → Branch A | Branch B | Branch C → Sink.</p>
+
+<p><strong>Use when</strong>: Same trigger, different downstream actions based on payload state.</p>
+
+<p><strong>Real example</strong>: New lead arrives → score → if score ≥ 70 send to sales Slack + book Calendly; if 40–69 send to nurture sequence; if &lt; 40 archive to "future" segment.</p>
+
+<p><strong>Build in</strong>: Make excels (visual filters), Zapier OK (Paths), n8n best for &gt;5 branches (IF + Switch nodes).</p>
+
+<p><strong>Gotchas</strong>: Each branch is its own debugging surface. Test every branch with a real payload, not happy-path only.</p>
+
+<h3>Pattern 3 — Fan-Out (1-to-Many)</h3>
+
+<p><strong>Shape</strong>: Trigger → Iterator → For each item: Action → Aggregate → Sink.</p>
+
+<p><strong>Use when</strong>: A single event spawns N downstream actions where N varies.</p>
+
+<p><strong>Real example</strong>: New invoice with line items → for each line item, post to accounting GL; aggregate posted entries; alert if any failed.</p>
+
+<p><strong>Build in</strong>: Make's Iterator+Aggregator pair (native). n8n's Split In Batches + Merge. Zapier requires Sub-Zaps for &gt;100 items.</p>
+
+<p><strong>Gotchas</strong>: Rate limits hit hardest here. If downstream API is 60 req/min and you're iterating 500 items, you need a queue, not a fan-out.</p>
+
+<h3>Pattern 4 — Scheduled Sweep</h3>
+
+<p><strong>Shape</strong>: Cron → Query batch → For each row: process → Mark complete.</p>
+
+<p><strong>Use when</strong>: You don't have a real-time trigger; you poll for "new since last sweep."</p>
+
+<p><strong>Real example</strong>: Every 15 min: query Postgres for tickets with status='new', dispatch each to AI classifier, update status='classified'.</p>
+
+<p><strong>Build in</strong>: n8n (best — Cron node + DB nodes), Make (works but pricey on high frequency), Zapier (last resort — schedule trigger eats tasks).</p>
+
+<p><strong>Gotchas</strong>: The "since last sweep" cursor is where everything goes wrong. Store the cursor in your DB or in a key-value table inside the workflow tool; never trust the trigger's own state.</p>
+
+<h3>Pattern 5 — Polling Wrapper</h3>
+
+<p><strong>Shape</strong>: Trigger or Cron → API call → Compare to last seen → Emit delta → Sink.</p>
+
+<p><strong>Use when</strong>: The upstream system has no webhook and no real-time API. You poll and diff.</p>
+
+<p><strong>Real example</strong>: Poll Google My Business reviews every hour. Diff against last seen ID. New review → classify sentiment → alert if negative.</p>
+
+<p><strong>Build in</strong>: Same as Scheduled Sweep, but the "diff" logic is the hard part. Persist last-seen IDs in a data store (Make Data Store, n8n key-value via Postgres).</p>
+
+<p><strong>Gotchas</strong>: Off-by-one on the cursor will either miss records or replay them forever. Test with synthetic backfills before production.</p>
+
+<h3>Pattern 6 — Approval Gate (Human-in-the-loop)</h3>
+
+<p><strong>Shape</strong>: Trigger → Compose → Pause → Wait for human approval → Branch on approve/reject.</p>
+
+<p><strong>Use when</strong>: AI outputs need human sign-off, or a workflow has financial/legal stakes.</p>
+
+<p><strong>Real example</strong>: AI drafts cold outreach email → Slack message with Approve/Edit/Reject buttons → on approve, send via Gmail; on edit, open editor; on reject, archive draft.</p>
+
+<p><strong>Build in</strong>: n8n (best — Wait node + Slack approval pattern), Make (works with custom webhook callback), Zapier (Slack Approval is paid + flaky).</p>
+
+<p><strong>Gotchas</strong>: How long do you wait? Add a 24h auto-archive so abandoned approvals don't pile up. Track approval rate as a KPI — if approvers are bulk-approving without reading, the gate is theatre.</p>
+
+<h3>Pattern 7 — Long-Running State Machine</h3>
+
+<p><strong>Shape</strong>: Multi-step process spread across days/weeks. Each step persists state and waits for either a time or an external event.</p>
+
+<p><strong>Use when</strong>: Onboarding flows, drip sequences, multi-day approval chains, lifecycle workflows.</p>
+
+<p><strong>Real example</strong>: 30-day customer onboarding. Day 0: welcome email. Day 3: check first-action; if no action send nudge. Day 7: schedule call. Day 14: pulse survey. Day 30: NPS request. State persists in your CRM or a dedicated table.</p>
+
+<p><strong>Build in</strong>: n8n with persisted state OR a dedicated tool (Customer.io, Userlist). Zapier "Delay Until" works for ≤7 day flows. Make's "Sleep" module similar.</p>
+
+<p><strong>Gotchas</strong>: If you build this in pure Zapier/Make, you lose visibility — you can't see "who's on day 12 of which sequence." Use a CRM stage or a workflow state table to keep auditable state.</p>
+
+<hr>
+
+<h2>Part 2 · 5 Anti-Patterns</h2>
+
+<p>These break in production. Refuse to ship them.</p>
+
+<h3>Anti-pattern 1 — Stack of band-aids</h3>
+
+<blockquote>9 Zaps, each handling a tiny piece of a workflow that should be one flow.</blockquote>
+**Symptom**: You can't draw the data path on a napkin in &lt;60s.
+
+<p><strong>Fix</strong>: Consolidate into a single workflow with branching. Saves 60-80% of your task quota.</p>
+
+<h3>Anti-pattern 2 — Mystery monolith</h3>
+
+<blockquote>One workflow with 47 steps, no comments, no tests, owned by the founder.</blockquote>
+**Symptom**: Nobody touches it because nobody understands it. When it breaks, the business stops.
+
+<p><strong>Fix</strong>: Decompose into named sub-workflows. Add a README in the workflow's description field. Tag steps with intent comments.</p>
+
+<h3>Anti-pattern 3 — Set-and-forget</h3>
+
+<blockquote>Built once 14 months ago. Nobody monitors it. Has been silently failing 12% of the time for 6 months.</blockquote>
+**Symptom**: Customer churn or revenue leakage you can't explain.
+
+<p><strong>Fix</strong>: Every production workflow needs: <ol><li>A failed-run notification (Slack/email)</li><li>A weekly success-rate report</li><li>An owner of record (named human)</li></ol> <h3>Anti-pattern 4 — AI-as-trigger</h3></p>
+
+<blockquote>"When AI thinks the email is important, send it to Slack." Hallucination risk is now ops risk.</blockquote>
+**Symptom**: False positives wake people up at 3am. False negatives lose deals.
+
+<p><strong>Fix</strong>: AI classifies + scores. A rule-based threshold (not AI) decides the action. Always have a manual override.</p>
+
+<h3>Anti-pattern 5 — Silent automation</h3>
+
+<blockquote>No logs, no audit trail, no way to answer "what did this workflow do at 2:47pm on Tuesday?"</blockquote>
+**Symptom**: Customer asks "did you send X?" and you can't answer.
+
+<p><strong>Fix</strong>: Log every meaningful action to a single table (Postgres, Airtable, Notion). Include workflow name, trigger ID, outcome, timestamp, payload hash.</p>
+
+<hr>
+
+<h2>Part 3 · Tool Selection Framework</h2>
+
+<table><thead><tr><th>Workflow shape</th><th>&lt; 100 runs/day</th><th>100 – 10k runs/day</th><th>&gt; 10k runs/day</th></tr></thead><tbody><tr><td>Linear pipeline</td><td>Zapier</td><td>Make</td><td>n8n self-hosted</td></tr><tr><td>Branching conditional</td><td>Make</td><td>Make or n8n</td><td>n8n</td></tr><tr><td>Fan-out (1-many)</td><td>Make</td><td>n8n</td><td>n8n</td></tr><tr><td>Scheduled sweep</td><td>n8n (cron is cheap)</td><td>n8n</td><td>n8n or custom</td></tr><tr><td>Polling wrapper</td><td>n8n</td><td>n8n</td><td>n8n</td></tr><tr><td>Approval gate</td><td>n8n</td><td>n8n</td><td>n8n</td></tr><tr><td>Long-running state machine</td><td>n8n + DB</td><td>Customer.io or dedicated tool</td><td>Dedicated tool</td></tr></tbody></table>
+**The rule of thumb**: under 100 runs/day, optimise for build speed (Zapier or Make). Above that, optimise for cost-per-run (n8n self-hosted). Above 100k runs/day, you're writing custom code; the orchestrator is just the dispatcher.
+
+<hr>
+
+<h2>Part 4 · The Operator's Checklist (23 questions)</h2>
+
+<p>Before shipping any workflow, every "yes" is required:</p>
+
+<p><strong>Functional (6)</strong> <ol><li>Tested with at least 3 real-payload examples?</li><li>Tested with at least 1 malformed payload? (missing field, wrong type, empty)</li><li>Tested with rate-limit failure response from each downstream API?</li><li>Tested idempotency? (replay same trigger twice — does nothing duplicate?)</li><li>Tested with the bigger volume? (10x expected daily)</li><li>Does the workflow exit cleanly on every branch? (no orphan executions)</li></ol> <strong>Operational (8)</strong> <ol><li>Named owner of record documented in workflow description?</li><li>Failed-run notification configured (Slack / email)?</li><li>Workflow named clearly: <code>[area]-[trigger]-[primary-action]</code> (e.g. <code>sales-stripe-charge-to-hubspot</code>)?</li><li>Steps tagged with intent comments?</li><li>Versioned: previous version archived, not deleted?</li><li>Secrets stored in tool's credential manager (not pasted into URL/body)?</li><li>Rate limits documented (X req/min for each external API)?</li><li>Average + p95 runtime baselined for first week of production?</li></ol> <strong>Risk (5)</strong> <ol><li>What happens if the trigger fires 1000 times in 60 seconds? (DOS yourself, downstream blowup, runaway cost?)</li><li>What happens if the LLM step times out? (default action?)</li><li>What happens if the credential expires? (notification path?)</li><li>Personal data: where does it sit? GDPR/CCPA compliant?</li><li>Financial side-effects (charges, refunds): require approval gate?</li></ol> <strong>Cost (4)</strong> <ol><li>Cost-per-run × expected daily volume = monthly tool cost. Is that in budget?</li><li>LLM-token cost: same calc. Logged separately for finance.</li><li>Hidden costs: data-store reads/writes, API overages on the downstream side?</li><li>Build-vs-buy: would a $20/mo SaaS replace this entire workflow?</li></ol> <hr></p>
+
+<h2>Part 5 · Build vs Buy vs Service</h2>
+
+<p>Three decisions, in order:</p>
+
+<ol><li><strong>Build</strong>: you (or a team member) construct + maintain the workflow in Zapier/Make/n8n yourself. Best for: stable processes, in-house expertise, low complexity.</li></ol>
+<ol><li><strong>Buy</strong>: a vertical SaaS already does this (Customer.io for nurture, Pipefy for approvals, Retool for internal tools). Best for: complex requirements, low in-house expertise, premium support needed.</li></ol>
+<ol><li><strong>Service</strong>: Aiprosol (or another consultancy) builds + operates it for you on a managed retainer. Best for: critical workflows, fast time-to-value, in-house team strapped.</li></ol>
+**Default to Buy** for any workflow that's commodity (lead routing, NPS, scheduling). Build only where you genuinely need custom logic. Service when the workflow is critical AND you don't have an in-house specialist.
+
+<hr>
+
+<h2>Part 6 · Migration: Manual Process → Automated Workflow (6 steps)</h2>
+
+<ol><li><strong>Document the manual flow.</strong> Walk it. Time it. Note every tool touched. Note every decision made.</li><li><strong>Find the 80%-case.</strong> What payload shape applies to 80% of work? Automate THAT first. Edge cases stay manual or get escalation rules.</li><li><strong>Build the happy path.</strong> Trigger → Transform → Sink. Skip branching for v1.</li><li><strong>Add edge-case branches.</strong> What payloads hit the 20%? Add a branch for each common one.</li><li><strong>Add observability.</strong> Failure notifications. Weekly success-rate. An "I went looking and found X" report.</li><li><strong>Hand off.</strong> Document. Train the human owner. Schedule a 30-day post-launch review.</li></ol>
+<hr>
+
+<h2>Part 7 · The 10 Importable n8n Workflow Starters</h2>
+
+<p>You'll find these in the <code>n8n-workflows/</code> folder. Each is a real, importable n8n v1 <code>.json</code> file. Each covers one of the 7 core patterns above so you can extend them yourself for your specific stack.</p>
+
+<table><thead><tr><th>File</th><th>Pattern</th><th>Area</th><th>What it does</th></tr></thead><tbody><tr><td><code>01-sales-stripe-charge-to-hubspot.json</code></td><td>Linear pipeline</td><td>Sales</td><td>Stripe charge → HubSpot deal closed-won</td></tr><tr><td><code>02-sales-calendly-ai-prep-brief.json</code></td><td>Linear + AI</td><td>Sales</td><td>Calendly booking → Claude prep brief → email</td></tr><tr><td><code>03-sales-form-score-route-slack.json</code></td><td>Branching</td><td>Sales</td><td>Form submit → AI score → routed Slack ping (hot/warm/nurture)</td></tr><tr><td><code>04-cs-support-ticket-ai-categorise.json</code></td><td>Branching with AI</td><td>CS</td><td>Ticket → Claude classify → Slack channel routing</td></tr><tr><td><code>05-ops-daily-kpi-digest.json</code></td><td>Scheduled sweep</td><td>Ops</td><td>Cron 7am → pull KPIs → Slack digest</td></tr><tr><td><code>06-finance-invoice-extract.json</code></td><td>Polling + AI</td><td>Finance</td><td>Gmail invoice label → AI extract → Sheet ledger</td></tr><tr><td><code>07-cs-nps-low-detractor-alert.json</code></td><td>Branching</td><td>CS</td><td>NPS &lt; 7 → CSM Slack alert</td></tr><tr><td><code>08-sales-cold-reply-intent-classifier.json</code></td><td>Branching with AI</td><td>Sales</td><td>Cold reply → AI intent → branch on interested/unsubscribe</td></tr><tr><td><code>09-marketing-blog-cross-post.json</code></td><td>Fan-out + AI</td><td>Marketing</td><td>Blog publish → AI drafts LinkedIn + Twitter → Notion review</td></tr><tr><td><code>10-cs-onboarding-day-3-nudge.json</code></td><td>Long-running state</td><td>CS</td><td>Welcome email → wait 3d → check action → nudge if needed</td></tr></tbody></table>
+<h3>How to import</h3>
+
+<ol><li>Open your n8n instance</li><li>Workflows → Import from File</li><li>Pick one of the <code>.json</code> files</li><li>Replace placeholder credentials (anything marked <code>REPLACE_ME</code>)</li><li>Activate</li></ol>
+<h3>Honest scope note</h3>
+
+<p>This is a <strong>v1 starter library</strong>. It demonstrates the 7 core patterns so you can build the workflows specific to your stack. We deliberately ship 10 carefully-built workflows, not 50 brittle ones — quality of pattern-demonstration matters more than count.</p>
+
+<p>Folder index: <code>n8n-workflows/README.md</code>.</p>
+
+<hr>
+
+<h2>Ship Today</h2>
+
+<p>Pick ONE workflow from the 25 above. Import it. Configure one credential. Replace one piece of hardcoded data with your own. Run it once with a test payload.</p>
+
+<p>That's it. 30 minutes from now you have a working automation in production. Most operators stall here for weeks "planning the architecture." Don't.</p>
+
+<hr>
+
+<p><em>Aiprosol designs, builds, and operates the AI automation that reclaims 35+ hours a week for your team. If you'd rather not build any of this yourself, see our managed plans at aiprosol.com/pricing.</em></p>
+<div class="brand-footer">
+  Aiprosol · <a href="https://aiprosol.com">aiprosol.com</a> · Automate the boring. Scale the important.
+</div>
+</body>
+</html>

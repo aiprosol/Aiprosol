@@ -1,0 +1,209 @@
+{
+  "name": "CS \u00b7 Onboarding day-3 nudge state machine",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "customer-signed-up",
+        "responseMode": "lastNode"
+      },
+      "id": "75788974-2878-4d98-a173-100026d4f9cc",
+      "name": "Customer signed up",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "sendTo": "={{ $json.body.email }}",
+        "subject": "Welcome to Aiprosol",
+        "message": "=Hi {{ $json.body.name }}, welcome. Here's your getting-started doc: https://aiprosol.com/onboarding"
+      },
+      "id": "4a640baf-ae0b-4250-8f26-9e0530aca1ef",
+      "name": "Day 0 \u00b7 Welcome email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 1,
+      "position": [
+        460,
+        300
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_ME",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 3,
+        "unit": "days"
+      },
+      "id": "9c24fd00-855f-45b2-ba33-89cf7db8c525",
+      "name": "Wait 3 days",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://your-app.com/api/users/{{ $('Customer signed up').item.json.body.id }}/has-completed-step-1",
+        "method": "GET"
+      },
+      "id": "841ce041-cbc6-43d8-b322-3e018d373de5",
+      "name": "Check first-action status",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        900,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "1",
+              "leftValue": "={{ $json.completed }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "bbe5d018-1ef5-4645-afef-8cbe2b4d4f87",
+      "name": "Completed step 1?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        300
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "2570c93f-03da-458c-a8cc-34e30d20b75d",
+      "name": "Step 1 done \u2014 sequence continues",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "sendTo": "={{ $('Customer signed up').item.json.body.email }}",
+        "subject": "Stuck? 5-minute video for step 1",
+        "message": "=Hi {{ $('Customer signed up').item.json.body.name }}, you haven't completed step 1 yet. 5-minute video walkthrough: https://aiprosol.com/onboarding/step-1-video"
+      },
+      "id": "2e2e7c22-4e2f-4a67-8fa1-45e6fff800d7",
+      "name": "Nudge email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        400
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_ME",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Customer signed up": {
+      "main": [
+        [
+          {
+            "node": "Day 0 \u00b7 Welcome email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Day 0 \u00b7 Welcome email": {
+      "main": [
+        [
+          {
+            "node": "Wait 3 days",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 3 days": {
+      "main": [
+        [
+          {
+            "node": "Check first-action status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check first-action status": {
+      "main": [
+        [
+          {
+            "node": "Completed step 1?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Completed step 1?": {
+      "main": [
+        [
+          {
+            "node": "Step 1 done \u2014 sequence continues",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Nudge email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "62ccb4f5-a9f4-4031-8cd2-f6673b0eba36",
+  "id": "29a47ba1-63a6-45cd-8c37-402dae326b09",
+  "meta": {
+    "instanceId": "aiprosol-starter-library-v1"
+  },
+  "tags": [],
+  "pinData": {}
+}

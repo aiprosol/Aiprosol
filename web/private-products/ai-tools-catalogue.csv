@@ -1,0 +1,106 @@
+Tool,Category,Summary,Pricing,Verdict,Notes
+Claude,Conversational AI,Anthropic frontier LLM. Best for accuracy + long context.,$3-15/1M tokens,PICK,Use for customer-facing + judgement-sensitive.
+GPT-4o,Conversational AI,OpenAI's flagship multimodal model.,$2.50-10/1M tokens,PICK,Best ecosystem + integrations.
+GPT-4o-mini,Conversational AI,Cheap workhorse for bulk classification.,$0.15-0.60/1M tokens,PICK,Use for high-volume backend grunt work.
+Gemini 1.5 Pro,Conversational AI,Google's frontier model. Free tier via AI Studio.,Free tier + $1.25/1M,GOOD,Best if you live in Google Workspace.
+Claude Haiku,Conversational AI,Anthropic's small + fast model.,$0.80/1M tokens,PICK,Cheaper Claude for routine tasks.
+Llama 3.3 70B,Open-source LLM,Meta's flagship open model.,Free + hosting,PICK,Self-host or via Groq/Together for cheap inference.
+Mistral Large 2,Open-source LLM,Strong European open model.,Pay-per-use,GOOD,Better for European data residency.
+DeepSeek V3,Open-source LLM,"Strong reasoning + math, open weights.",Free + hosting,GOOD,Surprisingly capable for math/code.
+Qwen 2.5 72B,Open-source LLM,"Alibaba's open model, multilingual.",Free + hosting,GOOD,Best for non-English at scale.
+Claude Code,Code generation,Anthropic's CLI agent for code.,Bundled with Claude API,PICK,Best agentic coding tool.
+Cursor,Code generation,AI-first IDE.,$20/mo,PICK,Best balance of speed + control.
+Windsurf,Code generation,Codeium's agentic IDE.,$15/mo,GOOD,Alternative to Cursor.
+GitHub Copilot,Code generation,Embedded in VS Code / JetBrains.,$10/mo,GOOD,Adequate. Falling behind frontier.
+Aider,Code generation,Terminal-native pair programming.,Free (BYO API),GOOD,For terminal-first devs.
+Midjourney,Image generation,Quality leader for stylised images.,$10-60/mo,PICK,Use for marketing creative.
+DALL-E 3,Image generation,Best prompt-following.,Pay-per-use,GOOD,Embedded in ChatGPT Plus.
+Stable Diffusion 3.5,Image generation,"Open weights, full control.",Free + GPU,GOOD,When you need control or volume.
+Ideogram,Image generation,Best for text-in-image.,Free tier + $8/mo,GOOD,"Posters, logos with text."
+Runway Gen-3,Video generation,Best for editing-style video work.,$15-95/mo,PICK,Production-ready clips.
+Veo (Google),Video generation,Best realism.,Limited access,WATCH,Wait for general release.
+Pika,Video generation,Animation + stylised video.,$10-95/mo,GOOD,Faster than Runway for sketches.
+ElevenLabs,Voice cloning,Quality + voice library.,$5-330/mo,PICK,Best quality on the market.
+Play.ht,Voice cloning,Most stable for long-form.,$39-99/mo,GOOD,Reliable for podcasts.
+Cartesia,Voice cloning,Latency leader (real-time).,$10-99/mo,PICK,For live voice agents.
+Deepgram,Voice transcription,Best for live transcription.,Pay-per-use,PICK,Real-time use cases.
+Whisper,Voice transcription,OpenAI open-source transcription.,Free + GPU,PICK,"Batch transcription, self-host."
+Otter,Voice transcription,Meeting-focused.,$10-30/mo,GOOD,For meeting notes specifically.
+LangChain,RAG orchestration,Python framework for LLM apps.,Free,GOOD,Flexible but heavy. Pick selectively.
+LlamaIndex,RAG orchestration,RAG-focused framework.,Free,PICK,Best RAG-specific tool.
+Vellum,LLM ops,Production prompt management.,$50-300/mo,GOOD,For teams with >5 prod prompts.
+LangSmith,LLM ops,LangChain's observability platform.,Free + paid,GOOD,If you use LangChain.
+pgvector (Supabase),Vector DB,Postgres + vectors.,$25/mo Pro,PICK,"Best for SMB. One DB, fewer integrations."
+Pinecone,Vector DB,Specialist managed vector DB.,$70+/mo,GOOD,Only when 100M+ vectors.
+Weaviate,Vector DB,Hybrid search-friendly.,Free + paid,GOOD,Self-host for control.
+Groq,LLM inference,Fastest inference (LPU hardware).,Pay-per-use,PICK,When latency matters most.
+Together AI,LLM inference,Wide model selection.,Pay-per-use,PICK,Cheap alternative to OpenAI.
+Fireworks AI,LLM inference,Fast + serverless.,Pay-per-use,GOOD,Good for fine-tuned models.
+Replicate,LLM inference,Image + video model hosting.,Pay-per-use,GOOD,For media model variety.
+n8n,Workflow automation,Open-source visual workflow tool.,$5/mo VPS or $20+ cloud,PICK,Best for engineers + ops teams.
+Make.com,Workflow automation,Visual workflow at SMB scale.,$9-29/mo,PICK,Best for non-developer ops teams.
+Zapier,Workflow automation,Most integrations (5000+).,$20-69+/mo,GOOD,Use for niche tool integrations.
+Pipedream,Workflow automation,Code-first serverless workflows.,Free + paid,GOOD,If you prefer code over visual.
+v0 (Vercel),No-code/landing,AI landing pages + components.,$20-50/mo,PICK,For landing pages + UI.
+Lovable,No-code/app,AI full-stack app builder.,$20-99/mo,GOOD,Whole-app prototypes.
+Replit,No-code/app,AI-assisted full-stack.,$15-25/mo,GOOD,Quick prototypes + agent workflows.
+Bolt.new,No-code/app,AI app builder.,$20-100/mo,WATCH,"Newer entrant, evolving."
+Tally,Forms,"Free, polished forms.",Free + $24/mo,PICK,Best free tier.
+Typeform,Forms,Beautiful forms.,$25-83/mo,GOOD,For brand-sensitive surveys.
+Fillout,Forms,Logic-heavy forms.,$20-50/mo,GOOD,When you need branching.
+Resend,Email API,Modern email API.,$20+ + usage,PICK,API-first email sending.
+Lemlist,Cold outreach,Cold email + personalisation.,$59-99/mo,GOOD,If you do cold outreach at scale.
+Customer.io,Email automation,Behavioural email + sequences.,$100+/mo,PICK,For lifecycle email.
+Loops,Email automation,Startup-friendly transactional + lifecycle.,$49+/mo,GOOD,Easy onboarding.
+HubSpot,CRM,Free CRM with strong marketing.,Free + $20-3600/mo,PICK,Free tier is the default SMB choice.
+Pipedrive,CRM,Sales-pipeline-first CRM.,$19-99/mo,PICK,Best for sales-led orgs.
+Attio,CRM,Modern CRM.,$29-99/mo,GOOD,Like Pipedrive but built in 2024.
+Folk,CRM,Network-style CRM.,$20+/mo,GOOD,For consultancy / agency use.
+Plain,Customer support,Engineer-friendly B2B support.,$79+/mo per seat,PICK,For SaaS / technical product.
+Intercom,Customer support,Multi-channel + AI agent.,$39-139+/mo,GOOD,For B2C SaaS / mass market.
+Help Scout,Customer support,Inbox-style support.,$25-65/mo,GOOD,Email-centric teams.
+PostHog,Product analytics,Analytics + recordings + flags.,Free + paid,PICK,"Best SMB choice. One tool, multiple jobs."
+Amplitude,Product analytics,Cohort-focused analytics.,Free + $50k+/yr,GOOD,Enterprise cohorts.
+Mixpanel,Product analytics,Event-based analytics.,Free + paid,GOOD,Alternative to Amplitude.
+Sentry,Error tracking,Best error monitoring.,Free + paid,PICK,Industry standard for error tracking.
+Axiom,Logs,Modern log management.,Free + usage,PICK,Cheaper than Datadog.
+Highlight.io,Session replay,Full-session recording.,Free + paid,GOOD,If you need session replays.
+Unstructured,Document parsing,Best PDF/document parser.,Pay-per-use,PICK,For RAG document prep.
+Mathpix,Math OCR,Math-aware OCR.,Free + paid,GOOD,Niche but excellent at math.
+Reducto,Tables OCR,Best PDF table extraction.,Pay-per-use,PICK,Better than Claude on tables.
+Notion,Wiki / docs,Wiki + databases + project tracking.,$10/seat/mo,PICK,SMB default.
+Linear,Issue tracking,Engineering-first issue tracker.,$8-14/seat/mo,PICK,Best for product/eng teams.
+Granola,Meeting notes,AI meeting notes.,$14-25/mo,PICK,Best meeting notes app.
+Cap,Loom replacement,Open-source screen recording.,Free + paid,GOOD,Privacy-respecting alt to Loom.
+Ahrefs,SEO,Best SEO research tool.,$108-449/mo,PICK,Industry standard for SEO.
+Frase,Content / SEO,Content briefs from SERP.,$15-115/mo,GOOD,For content teams.
+Beehiiv,Newsletters,Newsletter platform.,Free + paid,GOOD,Best newsletter tool right now.
+ConvertKit (Kit),Newsletters,Creator-focused email.,Free + $25+/mo,GOOD,Creator alternative.
+Stripe,Payments + billing,Standard SMB billing platform.,2.9% + 30c,PICK,Default for online billing.
+Mercury,Banking,Startup-friendly US banking.,Free,PICK,For US-incorporated startups.
+Wise Business,Banking,International banking.,Free,PICK,For multi-currency businesses.
+Pulley,Cap table,Cap table mgmt.,Free + paid,GOOD,For equity tracking.
+1Password,Password mgr,Team password manager.,$8-12/seat/mo,PICK,Standard for SMB security.
+Vanta,SOC2 / compliance,SOC 2 automation.,$10k+/yr,PICK,For SOC 2 audits.
+Drata,SOC2 / compliance,Alt to Vanta.,$10k+/yr,GOOD,Competitive with Vanta.
+Cal.com,Booking,Open-source Calendly.,Free self-host + paid,PICK,For technical teams.
+Calendly,Booking,Industry standard.,Free + $10-16/mo,PICK,For non-technical teams.
+LangGraph,Agent framework,LangChain's agent orchestration.,Free,GOOD,If using LangChain.
+CrewAI,Agent framework,Multi-agent orchestration.,Free,WATCH,"Earlier-stage, evolving."
+E2B,Agent sandbox,Code interpreter sandboxes.,Pay-per-use,PICK,For code-executing agents.
+Browserbase,Browser agent,Headless browser for AI.,Pay-per-use,PICK,For browser-using agents.
+Modal,Serverless GPU,Serverless GPU for AI.,Pay-per-use,PICK,For custom AI workloads.
+Apify,Web scraping,Web scraping platform.,Free + paid,GOOD,For scraping at scale.
+Firecrawl,Web crawling,AI-friendly crawler.,$19+/mo,PICK,For RAG document collection.
+Datalab,OCR / parsing,Marker open-source PDF.,Pay-per-use,GOOD,Self-host alternative to Unstructured.
+Generic AI sales agent X,Sales automation,Often hallucinates outreach details.,$199+/mo,AVOID,"Use as agent-assisted, not agent-driven."
+Heavy enterprise BI tool,Analytics,Costly + slow for SMB scale.,$50k+/yr,AVOID,PostHog covers 90% of SMB needs.
+Single-vendor AI suite,Various,Lock-in risk + variable quality.,$200+/mo,AVOID,Build with best-of-breed instead.
+AI customer-support agent,Support,Hallucination + brand-tone drift.,$300+/mo,AVOID,Use AI for triage; humans close.
+Tursо (libSQL),Database,Edge SQLite.,Free + paid,GEM,Replicated SQLite at the edge.
+Trigger.dev,Background jobs,Modern background jobs.,Free + paid,GEM,Better DX than serverless functions.
+Inngest,Event-driven backend,Event-first backend.,Free + paid,GEM,For event-driven workflows.
+Defer,Background jobs,Background jobs + workflows.,Free + paid,GEM,Worth watching.
+Webstudio,Visual web builder,Open-source visual web.,Free + paid,GEM,Webflow alternative.
+Raycast,Mac productivity,Spotlight + AI + scripts.,Free + $8/mo Pro,GEM,Most underrated Mac tool.
+Arc / Dia,Browser,Browser built around AI.,Free,GEM,Worth trying as primary.

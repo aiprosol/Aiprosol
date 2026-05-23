@@ -1,0 +1,150 @@
+{
+  "name": "Aiprosol Stack — ClickUp task overdue → OpenAI → Slack nudge",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 9 * * 1-5"
+            }
+          ]
+        }
+      },
+      "id": "4bc3dbe8-1a92-4372-8188-daaec09cb339",
+      "name": "Daily 9am",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "task",
+        "operation": "getAll",
+        "filters": {
+          "due_date_lt": "={{ $now.toMillis() }}"
+        }
+      },
+      "id": "0325f281-120c-4019-85e2-48cb78a5235d",
+      "name": "ClickUp overdue",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o-mini"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Draft a 30-word kind reminder for an overdue task."
+            },
+            {
+              "role": "user",
+              "content": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        }
+      },
+      "id": "24a041c5-319c-4a1d-ad69-ba1592516e67",
+      "name": "Draft nudge",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "select": "user",
+        "user": "={{ $('ClickUp overdue').first().json.assignee.id }}",
+        "text": "={{ $json.message.content }}"
+      },
+      "id": "c2caaab1-7822-4d1e-a7ff-717090777443",
+      "name": "Slack DM assignee",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        840,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Daily 9am": {
+      "main": [
+        [
+          {
+            "node": "ClickUp overdue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ClickUp overdue": {
+      "main": [
+        [
+          {
+            "node": "Draft nudge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Draft nudge": {
+      "main": [
+        [
+          {
+            "node": "Slack DM assignee",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "stack"
+    },
+    {
+      "name": "clickup"
+    },
+    {
+      "name": "slack"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "4f6f602e-e4a3-4781-84e8-36dc2af2056e",
+  "id": "76951d75-7a20-4dbc-a1ba-951e446e3a3f",
+  "_aiprosol": {
+    "description": "Daily check: ClickUp tasks past due → OpenAI drafts a kind reminder per task → DM to the assignee.",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

@@ -1,0 +1,145 @@
+{
+  "name": "Finance \u00b7 Vendor invoice email \u2192 AI extract \u2192 Sheet ledger",
+  "nodes": [
+    {
+      "parameters": {
+        "labelIds": [
+          "INVOICE"
+        ],
+        "downloadAttachments": true,
+        "options": {
+          "includeSpamTrash": false
+        }
+      },
+      "id": "41d381c3-835f-4091-876b-61139c2a7076",
+      "name": "Gmail label INVOICE",
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_ME",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "claude-3-5-sonnet-20241022",
+        "options": {
+          "temperature": 0.0,
+          "maxTokensToSample": 400
+        },
+        "text": "=Extract from this vendor invoice. Return JSON with fields: vendor_name, invoice_number, invoice_date (YYYY-MM-DD), total_amount (number, no currency), currency, line_items (array of {description, amount}). Email subject: \"{{ $json.subject }}\". Body: \"{{ $json.snippet }}\"."
+      },
+      "id": "ed0a6f47-7c9d-4366-93bc-7b835f582a77",
+      "name": "Claude \u2014 extract invoice fields",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1,
+      "position": [
+        460,
+        300
+      ],
+      "credentials": {
+        "anthropicApi": {
+          "id": "REPLACE_ME",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const raw = items[0].json.text || '';\nconst m = raw.match(/\\{[\\s\\S]*\\}/);\nif (!m) return [{ json: { error: 'no JSON in response', raw } }];\nlet parsed;\ntry { parsed = JSON.parse(m[0]); } catch (e) { return [{ json: { error: e.message, raw } }]; }\nreturn [{ json: parsed }];"
+      },
+      "id": "4911ad48-d830-4b38-9c6e-5139db9deb53",
+      "name": "Parse extraction",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": "YOUR_SHEET_ID",
+        "sheetName": "AP Ledger",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Date": "={{ $json.invoice_date }}",
+            "Vendor": "={{ $json.vendor_name }}",
+            "Invoice #": "={{ $json.invoice_number }}",
+            "Amount": "={{ $json.total_amount }}",
+            "Currency": "={{ $json.currency }}"
+          }
+        }
+      },
+      "id": "4dde07f7-8e44-4284-afed-c7bd27d7e504",
+      "name": "Log to Sheet (AP Ledger)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 1,
+      "position": [
+        900,
+        300
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_ME",
+          "name": "Google Sheets"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Gmail label INVOICE": {
+      "main": [
+        [
+          {
+            "node": "Claude \u2014 extract invoice fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude \u2014 extract invoice fields": {
+      "main": [
+        [
+          {
+            "node": "Parse extraction",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse extraction": {
+      "main": [
+        [
+          {
+            "node": "Log to Sheet (AP Ledger)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "0dc0f86c-9187-4028-84a6-92f6315fd2dd",
+  "id": "7228a053-cade-4f70-8178-ed6c0d0053b1",
+  "meta": {
+    "instanceId": "aiprosol-starter-library-v1"
+  },
+  "tags": [],
+  "pinData": {}
+}

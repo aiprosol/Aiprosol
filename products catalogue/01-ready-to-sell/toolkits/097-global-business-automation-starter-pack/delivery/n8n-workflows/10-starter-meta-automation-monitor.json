@@ -1,0 +1,132 @@
+{
+  "name": "Aiprosol Starter — Meta-automation — daily health check on your other workflows",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 7 * * *"
+            }
+          ]
+        }
+      },
+      "id": "41f1472d-6dbc-4192-aca3-5f3f11f238fc",
+      "name": "Daily 7am",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://yourdomain.app.n8n.cloud/api/v1/executions?limit=200"
+      },
+      "id": "eaeb7cea-004d-42a3-9acc-c9900beb788d",
+      "name": "List executions",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const all = $input.first().json.data; const cut = Date.now() - 24*60*60*1000; const recent = all.filter(e => new Date(e.startedAt).getTime() > cut); const byWf = {}; for (const e of recent) { byWf[e.workflowId] = byWf[e.workflowId] || {total:0, failed:0, name: e.workflowName}; byWf[e.workflowId].total++; if (e.finished === false || e.status === 'error') byWf[e.workflowId].failed++; } const flagged = Object.values(byWf).filter(w => w.total>0 && (w.failed/w.total)>0.05); return [{json: {total_workflows: Object.keys(byWf).length, flagged}}];"
+      },
+      "id": "066b5d3e-06ad-4e7f-96dc-3f60cea9c6b2",
+      "name": "Aggregate per workflow",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "#automations-log",
+        "text": "=🩺 Daily automation health · {{ $json.total_workflows }} workflows ran in 24h\\n{{ $json.flagged.length === 0 ? '✅ All healthy' : '⚠️ Flagged:\\n' + $json.flagged.map(w => `• ${w.name}: ${w.failed}/${w.total} failed`).join('\\n') }}"
+      },
+      "id": "06cbe669-b2e3-4ce2-8f0d-976dc362926c",
+      "name": "Slack health digest",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        840,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Daily 7am": {
+      "main": [
+        [
+          {
+            "node": "List executions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List executions": {
+      "main": [
+        [
+          {
+            "node": "Aggregate per workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate per workflow": {
+      "main": [
+        [
+          {
+            "node": "Slack health digest",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "starter"
+    },
+    {
+      "name": "meta-monitoring"
+    },
+    {
+      "name": "pattern-4"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "0c4b0476-7534-4d52-9d4b-3816665a3ced",
+  "id": "b1407d79-11f8-488f-9b80-0054c9eb0333",
+  "_aiprosol": {
+    "description": "Every morning 7am: queries n8n API for executions of all your workflows in the past 24h → flags any with >5% failure rate → Slack ping. The starter version of automation-monitoring.",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

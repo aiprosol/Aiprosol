@@ -1,0 +1,407 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>The Enterprise AI Readiness Assessment Kit — Aiprosol</title><style>
+:root { color-scheme: light dark; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif; max-width: 760px; margin: 0 auto; padding: 56px 32px 96px; line-height: 1.75; color: #1F1B2E; background: #FAF8FF; }
+@media (prefers-color-scheme: dark) { body { color: #E5E7EB; background: #0A0613; } a { color: #C084FC; } blockquote { background: rgba(139,92,246,0.08); border-left-color: #8B5CF6; color: #C7CEDB; } code { background: rgba(139,92,246,0.12); color: #C084FC; } pre { background: rgba(0,0,0,0.45); border: 1px solid #2A1F3D; } hr { border-color: #2A1F3D; } table { border-color: #2A1F3D; } th { background: #1A1428; } td, th { border-color: #2A1F3D; } tr:nth-child(even) { background: rgba(139,92,246,0.04); } }
+h1, h2, h3, h4 { font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.2; letter-spacing: -0.01em; }
+h1 { font-size: 36px; margin: 0 0 28px; font-weight: 800; background: linear-gradient(135deg, #8B5CF6, #C084FC); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+h2 { font-size: 24px; margin-top: 48px; margin-bottom: 14px; font-weight: 700; padding-bottom: 8px; border-bottom: 1px solid rgba(139,92,246,0.3); }
+h3 { font-size: 18px; margin-top: 28px; margin-bottom: 10px; font-weight: 700; color: #8B5CF6; }
+@media (prefers-color-scheme: dark) { h3 { color: #C084FC; } }
+h4 { font-size: 15px; margin-top: 18px; margin-bottom: 6px; font-weight: 700; }
+p { margin: 12px 0; }
+a { color: #6D28D9; text-decoration: underline; text-underline-offset: 3px; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+blockquote { background: rgba(139,92,246,0.05); border-left: 3px solid #8B5CF6; padding: 14px 22px; margin: 22px 0; color: #4A4660; border-radius: 6px; }
+hr { border: 0; border-top: 1px solid rgba(139,92,246,0.18); margin: 40px 0; }
+ul, ol { padding-left: 26px; }
+li { margin: 6px 0; }
+code { background: rgba(139,92,246,0.08); padding: 2px 8px; border-radius: 5px; font-family: 'JetBrains Mono', SFMono-Regular, ui-monospace, monospace; font-size: 0.9em; color: #6D28D9; }
+pre { background: #F4F1FA; padding: 18px 22px; border-radius: 10px; overflow-x: auto; border: 1px solid rgba(139,92,246,0.15); margin: 18px 0; }
+pre code { background: none; padding: 0; color: inherit; font-size: 13px; line-height: 1.6; }
+table { border-collapse: collapse; width: 100%; margin: 22px 0; font-size: 14px; border: 1px solid rgba(139,92,246,0.2); border-radius: 8px; overflow: hidden; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid rgba(139,92,246,0.12); }
+th { background: rgba(139,92,246,0.08); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #6D28D9; }
+tr:nth-child(even) { background: rgba(139,92,246,0.025); }
+.brand-footer { margin-top: 80px; padding-top: 28px; border-top: 1px solid rgba(139,92,246,0.18); font-size: 12px; color: #6B7585; text-align: center; }
+.brand-footer a { color: #8B5CF6; text-decoration: none; }
+@media print { body { padding: 0; max-width: 100%; } h1 { page-break-after: avoid; } h2, h3 { page-break-after: avoid; page-break-inside: avoid; } pre, blockquote, table { page-break-inside: avoid; } }
+</style></head><body>
+<h1>The Enterprise AI Readiness Assessment Kit</h1>
+<p><strong>A 5-dimension, 50-question maturity model for enterprises evaluating AI adoption. Includes scoring rubric, gap-analysis template, executive briefing structure, and 12-month roadmap framework.</strong></p>
+<p>Version 1.0 · 2026 · © Aiprosol Ltd</p>
+<hr />
+<h2>Audience</h2>
+<p>This kit is for:
+- <strong>CIOs / CTOs / CDOs</strong> building the case for AI investment
+- <strong>Heads of Transformation</strong> running pilots before company-wide rollout
+- <strong>Strategy + Risk teams</strong> assessing AI maturity across business units
+- <strong>Boards / executive committees</strong> asking "are we ready, and where are the gaps?"</p>
+<p>If you're a 5-50 person SMB, this kit is overkill — use the Business Process Audit Checklist ($37) instead. This is built for organisations of 200+ employees with multiple business units, regulated data, and formal IT governance.</p>
+<hr />
+<h2>What's in the kit</h2>
+<ol>
+<li><strong>The 5-Dimension Maturity Model</strong> — the framework for evaluating readiness</li>
+<li><strong>The 50-Question Assessment</strong> — 10 questions per dimension, 5-point scoring</li>
+<li><strong>The Gap Analysis Template</strong> — translating scores into concrete gaps</li>
+<li><strong>The 12-Month Roadmap Framework</strong> — what to do in months 0-3, 4-9, 10-12</li>
+<li><strong>The Executive Briefing Structure</strong> — how to present findings to the board</li>
+<li><strong>The Pilot Selection Criteria</strong> — picking the right first AI use case</li>
+</ol>
+<p>The whole kit is designed to be run by an internal team in 4-6 weeks. If you want it run as a service, Aiprosol Enterprise plans deliver this as a 6-week engagement.</p>
+<hr />
+<h2>Part 1 · The 5-Dimension Maturity Model</h2>
+<p>We assess AI readiness across five dimensions. Each is scored 1-5, where:</p>
+<ul>
+<li><strong>1 — Absent:</strong> No formal capability or activity in this dimension</li>
+<li><strong>2 — Ad-hoc:</strong> Sporadic, project-by-project, no strategy</li>
+<li><strong>3 — Defined:</strong> Formal approach documented, partial implementation</li>
+<li><strong>4 — Managed:</strong> Implemented across most of the organisation with governance</li>
+<li><strong>5 — Optimising:</strong> Continuously improving, measuring, leading-edge</li>
+</ul>
+<h3>Dimension 1 — DATA</h3>
+<p>Are you ready to feed AI?</p>
+<ul>
+<li>Single source of truth for major datasets</li>
+<li>Data quality measured and known</li>
+<li>Data lineage documented</li>
+<li>Data classification (PII, IP, public) enforced</li>
+<li>Master data management for entities (customers, products)</li>
+<li>Real-time data pipelines vs. batch</li>
+<li>Data team capacity vs. demand</li>
+</ul>
+<h3>Dimension 2 — INFRASTRUCTURE</h3>
+<p>Can you run AI at scale?</p>
+<ul>
+<li>Cloud / on-prem strategy clear</li>
+<li>Compute (GPU) availability + cost control</li>
+<li>ML platform (MLflow, Vertex, SageMaker, custom)</li>
+<li>Vector storage / retrieval infrastructure</li>
+<li>Identity + access management for AI workloads</li>
+<li>Network / security architecture for inference endpoints</li>
+<li>Observability (logging, monitoring, alerting) for AI systems</li>
+</ul>
+<h3>Dimension 3 — PEOPLE &amp; SKILLS</h3>
+<p>Do you have the team?</p>
+<ul>
+<li>Senior AI/ML leadership in place</li>
+<li>Data science capacity vs. backlog</li>
+<li>ML engineering / MLOps capacity</li>
+<li>AI literacy among broader staff</li>
+<li>Change management capacity</li>
+<li>Hiring pipeline for AI roles</li>
+<li>External partnerships / vendor management</li>
+</ul>
+<h3>Dimension 4 — GOVERNANCE &amp; RISK</h3>
+<p>Can you deploy AI safely?</p>
+<ul>
+<li>AI ethics framework formalised</li>
+<li>Model risk management process</li>
+<li>Privacy + GDPR compliance for AI systems</li>
+<li>Bias / fairness monitoring</li>
+<li>Audit trail for AI decisions affecting customers</li>
+<li>Vendor due diligence for AI tools</li>
+<li>Incident response for AI failures</li>
+</ul>
+<h3>Dimension 5 — ROI &amp; VALUE</h3>
+<p>Are you measuring what matters?</p>
+<ul>
+<li>Business cases mandatory for AI investment</li>
+<li>Pre + post-deployment metrics tracked</li>
+<li>Cost-of-AI tracked at workload level</li>
+<li>Value delivered tracked (£, time, NPS)</li>
+<li>Sunk-cost discipline (kill underperforming AI)</li>
+<li>Portfolio view across all AI initiatives</li>
+<li>Comparable benchmarks</li>
+</ul>
+<hr />
+<h2>Part 2 · The 50-Question Assessment</h2>
+<h3>DATA — 10 questions</h3>
+<ol>
+<li>We have a documented data strategy aligned with business strategy. <em>(1-5)</em></li>
+<li>Master data (customer, product, employee) is single-sourced. <em>(1-5)</em></li>
+<li>Data quality is measured continuously. <em>(1-5)</em></li>
+<li>Data lineage is documented for our top 20 data assets. <em>(1-5)</em></li>
+<li>PII and confidential data are classified and access-controlled. <em>(1-5)</em></li>
+<li>We have real-time data pipelines for at least 3 critical workflows. <em>(1-5)</em></li>
+<li>Our data team is staffed at industry benchmarks (1 data person per 50 employees). <em>(1-5)</em></li>
+<li>We have a vector / embedding infrastructure for semantic search. <em>(1-5)</em></li>
+<li>We can join data across business units when needed. <em>(1-5)</em></li>
+<li>Data is documented with metadata (definitions, owners, freshness). <em>(1-5)</em></li>
+</ol>
+<p><strong>Score interpretation:</strong>
+- 40-50: Optimising — your data is ready
+- 30-39: Managed — minor gaps, mostly ready
+- 20-29: Defined — significant data work needed before AI scales
+- 10-19: Ad-hoc — fix data before doing AI; AI on bad data accelerates failure
+- &lt; 10: Absent — six months minimum of data foundation work first</p>
+<h3>INFRASTRUCTURE — 10 questions</h3>
+<ol>
+<li>Our cloud strategy is documented and aligned with corporate strategy. <em>(1-5)</em></li>
+<li>We have an ML platform in production (MLflow, Vertex AI, SageMaker, Databricks, or equivalent). <em>(1-5)</em></li>
+<li>GPU availability + cost is tracked and controlled. <em>(1-5)</em></li>
+<li>AI inference endpoints are versioned, monitored, and rollback-able. <em>(1-5)</em></li>
+<li>We have a vector database in production. <em>(1-5)</em></li>
+<li>AI workloads run with same identity/access controls as production systems. <em>(1-5)</em></li>
+<li>AI systems have logging + alerting at the same level as core systems. <em>(1-5)</em></li>
+<li>We can spin up dev/staging/prod parity for AI. <em>(1-5)</em></li>
+<li>CI/CD applies to AI artefacts (models, prompts, weights). <em>(1-5)</em></li>
+<li>Disaster recovery covers AI systems. <em>(1-5)</em></li>
+</ol>
+<h3>PEOPLE &amp; SKILLS — 10 questions</h3>
+<ol>
+<li>We have a head of AI / Chief AI Officer or equivalent in place. <em>(1-5)</em></li>
+<li>Our data science team is staffed for the workload. <em>(1-5)</em></li>
+<li>We have ML engineering / MLOps capacity. <em>(1-5)</em></li>
+<li>AI literacy training is mandatory for senior leaders. <em>(1-5)</em></li>
+<li>We have an enterprise change-management capability for AI rollouts. <em>(1-5)</em></li>
+<li>AI hiring is competitive (we win talent we want). <em>(1-5)</em></li>
+<li>We have at least 2 vetted external AI partners. <em>(1-5)</em></li>
+<li>Internal staff can self-serve basic AI tools. <em>(1-5)</em></li>
+<li>Cross-functional AI working groups exist. <em>(1-5)</em></li>
+<li>AI-related learning is tracked (training hours, certifications). <em>(1-5)</em></li>
+</ol>
+<h3>GOVERNANCE &amp; RISK — 10 questions</h3>
+<ol>
+<li>AI ethics framework documented and signed off by board. <em>(1-5)</em></li>
+<li>Model risk management policy in place. <em>(1-5)</em></li>
+<li>AI privacy impact assessments are mandatory for new deployments. <em>(1-5)</em></li>
+<li>Bias / fairness monitoring runs for customer-facing AI. <em>(1-5)</em></li>
+<li>Every AI decision affecting customers has audit trail. <em>(1-5)</em></li>
+<li>AI vendor due diligence is documented and follows procurement standards. <em>(1-5)</em></li>
+<li>AI incident response playbook exists. <em>(1-5)</em></li>
+<li>Regulatory compliance (GDPR, EU AI Act, NIST AI RMF, etc.) is mapped. <em>(1-5)</em></li>
+<li>AI use cases are categorised by risk tier (high/medium/low). <em>(1-5)</em></li>
+<li>Board-level AI oversight is in place. <em>(1-5)</em></li>
+</ol>
+<h3>ROI &amp; VALUE — 10 questions</h3>
+<ol>
+<li>Every AI investment has a written business case before approval. <em>(1-5)</em></li>
+<li>Pre + post-deployment metrics are mandatory. <em>(1-5)</em></li>
+<li>Cost of AI (compute, licences, headcount) tracked at workload level. <em>(1-5)</em></li>
+<li>Business value delivered tracked in £ / time / NPS / risk reduction. <em>(1-5)</em></li>
+<li>Underperforming AI initiatives are killed within 6 months. <em>(1-5)</em></li>
+<li>Portfolio view of all AI initiatives is reviewed quarterly by executive committee. <em>(1-5)</em></li>
+<li>We benchmark our AI ROI against industry peers. <em>(1-5)</em></li>
+<li>AI is in the operating budget, not "innovation" budget. <em>(1-5)</em></li>
+<li>Hidden costs (training data, integration, change management) are forecast. <em>(1-5)</em></li>
+<li>We can answer "what's our AI portfolio yield this quarter?". <em>(1-5)</em></li>
+</ol>
+<hr />
+<h2>Part 3 · The Gap Analysis Template</h2>
+<p>For each of the 5 dimensions:</p>
+<ol>
+<li><strong>Score</strong> (sum of 10 questions, max 50)</li>
+<li><strong>Strengths</strong> — questions where you scored 4 or 5</li>
+<li><strong>Gaps</strong> — questions where you scored 1 or 2</li>
+<li><strong>Stranded mid-scores</strong> — questions where you scored 3 (the "stuck in the middle" zone, often most actionable)</li>
+<li><strong>Top 3 priority interventions</strong> — what will move the score most for least cost</li>
+</ol>
+<p>Output: a heat-map dashboard showing all 50 question scores at a glance + the priority intervention list.</p>
+<hr />
+<h2>Part 4 · The 12-Month Roadmap Framework</h2>
+<h3>Months 0-3 — Foundation</h3>
+<p>If you scored &lt; 30 on Data dimension:
+- Stop adding AI. Fix data infrastructure first. Six months minimum work.
+- Establish data ownership, MDM, classification.</p>
+<p>If Data ≥ 30:
+- Stand up the ML platform (if not already).
+- Identify and approve 2-3 pilot use cases (low-risk, high-visibility).
+- Train executive team on AI literacy (mandatory).
+- Establish AI governance committee.</p>
+<h3>Months 4-9 — Pilot + iterate</h3>
+<ul>
+<li>Run 2-3 pilots end-to-end with measurement.</li>
+<li>Build out AI vendor portfolio (don't lock into one).</li>
+<li>Hire / contract critical roles based on Q1 gap analysis.</li>
+<li>Establish model risk management.</li>
+<li>First quarterly portfolio review.</li>
+</ul>
+<h3>Months 10-12 — Scale + plan year 2</h3>
+<ul>
+<li>Promote successful pilots to production.</li>
+<li>Kill underperforming pilots without ego.</li>
+<li>Document lessons learned.</li>
+<li>Plan year 2 portfolio with confidence intervals.</li>
+<li>Update governance based on year 1 incidents.</li>
+</ul>
+<hr />
+<h2>Part 5 · The Executive Briefing Structure</h2>
+<p>For your board / executive committee briefing, structure exactly as:</p>
+<h3>Slide 1 — Title + your name + date</h3>
+<h3>Slide 2 — The single-page summary</h3>
+<p>A radar chart showing your scores across 5 dimensions, vs. industry benchmark.</p>
+<h3>Slide 3 — Where we are vs. where we should be</h3>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Current</th>
+<th>12-month target</th>
+<th>Gap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data</td>
+<td>32</td>
+<td>42</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Infrastructure</td>
+<td>28</td>
+<td>40</td>
+<td>12</td>
+</tr>
+<tr>
+<td>People</td>
+<td>25</td>
+<td>38</td>
+<td>13</td>
+</tr>
+<tr>
+<td>Governance</td>
+<td>15</td>
+<td>35</td>
+<td>20</td>
+</tr>
+<tr>
+<td>ROI</td>
+<td>22</td>
+<td>38</td>
+<td>16</td>
+</tr>
+</tbody>
+</table>
+<h3>Slide 4 — The cost of doing nothing</h3>
+<p>Compute the 12-month opportunity cost of NOT investing — based on internal benchmarks of current manual work + competitor automation activity.</p>
+<h3>Slide 5 — The proposed investment</h3>
+<p>The 3-pillar plan: Foundation, Pilot, Scale. Each with budget, headcount, dependencies, deliverables.</p>
+<h3>Slide 6 — Risk + mitigation</h3>
+<p>Top 5 risks (model failure, vendor lock-in, data breach, regulatory, cultural resistance) + mitigations.</p>
+<h3>Slide 7 — The decision</h3>
+<p>What you're asking for: budget, headcount, governance approval. Be specific.</p>
+<h3>Slide 8 — What success looks like in 12 months</h3>
+<p>Concrete deliverables. Concrete measurements. Concrete commitments.</p>
+<h3>Slide 9 — Q&amp;A / appendix</h3>
+<p>Detailed scores per question, vendor selections, governance committee charter.</p>
+<hr />
+<h2>Part 6 · Pilot Selection Criteria</h2>
+<p>The single biggest predictor of an AI rollout's success: <strong>picking the right first pilot.</strong></p>
+<p>Score candidate pilots 1-5 across:</p>
+<table>
+<thead>
+<tr>
+<th>Criterion</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Time-to-value</strong> (1 = &gt;12 months, 5 = ≤3 months)</td>
+<td>Long pilots lose executive support</td>
+</tr>
+<tr>
+<td><strong>Visibility</strong> (1 = invisible to leadership, 5 = board-level)</td>
+<td>Visible wins build momentum</td>
+</tr>
+<tr>
+<td><strong>Reversibility</strong> (1 = irreversible, 5 = easy rollback)</td>
+<td>First pilot must allow rollback</td>
+</tr>
+<tr>
+<td><strong>Data sufficiency</strong> (1 = need to build pipeline, 5 = data already exists)</td>
+<td>Avoid pilots that require 6 months of data prep</td>
+</tr>
+<tr>
+<td><strong>Risk tier</strong> (1 = high risk, 5 = low risk)</td>
+<td>First pilot should be Low Risk</td>
+</tr>
+<tr>
+<td><strong>Replicable pattern</strong> (1 = unique, 5 = pattern reusable elsewhere)</td>
+<td>Pilots that teach generalisable lessons</td>
+</tr>
+</tbody>
+</table>
+<p>A good first pilot scores 25+ across these 6 criteria.</p>
+<p><strong>Common bad first pilots:</strong>
+- Customer-facing chatbot (high risk, irreversible if it fails)
+- Predictive analytics on data you don't yet have
+- "AI strategy" — not a pilot at all</p>
+<p><strong>Common good first pilots:</strong>
+- Internal employee Q&amp;A over your knowledge base (low risk, high visibility, replicable)
+- Document classification for incoming mail (well-bounded, measurable)
+- Sales meeting transcript → action items (clear ROI, low risk)</p>
+<hr />
+<h2>Part 7 · Common Failure Modes</h2>
+<p>We've watched 30+ enterprise AI rollouts. The same failure patterns repeat:</p>
+<ol>
+<li><strong>Skipping the data dimension.</strong> Building AI on broken data foundations. Result: 6 months wasted.</li>
+<li><strong>One-vendor monoculture.</strong> Locked into one platform's idioms. Result: 18 months later a different vendor has the right tool but you can't move.</li>
+<li><strong>Pilot purgatory.</strong> 14 ongoing pilots, none promoted to production, none killed. Result: confusion, no ROI signal.</li>
+<li><strong>Governance theatre.</strong> Committee meetings with no actual decision authority. Result: production deployments without proper review, eventual incident.</li>
+<li><strong>Innovation budget trap.</strong> AI funded from "innovation" budget = not part of operating commitment = first to be cut. Move to operating budget Year 1.</li>
+<li><strong>Underestimating change management.</strong> Tooling rolled out, behaviour didn't change. Result: tools unused.</li>
+<li><strong>Over-engineering the framework.</strong> 200-page AI ethics policy written before any system shipped. Result: paralysis.</li>
+</ol>
+<hr />
+<h2>Part 8 · The 6-week assessment timeline</h2>
+<p>If running internally, this is the realistic timeline:</p>
+<table>
+<thead>
+<tr>
+<th>Week</th>
+<th>Activity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Stakeholder kickoff. Distribute assessment to 10-15 senior staff across functions.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Score collection + reconciliation (1:1 follow-up where scores differ widely).</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Gap analysis. Initial roadmap draft.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Stakeholder review + roadmap iteration.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Executive briefing prep. Pilot selection workshop.</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Board presentation. Final roadmap published. Year 1 budget approved.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Bonus material — The downloadable scoring sheet</h2>
+<p>A separate <code>enterprise-ai-readiness-scoring.xlsx</code> workbook (in the same product folder when produced):
+- 50-question scoring sheet with auto-aggregation per dimension
+- Heat map visualisation
+- Industry benchmark comparison
+- Recommended-priorities sheet that updates from scores
+- Roadmap template populated from results</p>
+<blockquote>
+<p>Note: The XLSX is a separate file — see <code>enterprise-ai-readiness-scoring.xlsx</code> in this product's folder. <em>(Currently to be generated — see external help section.)</em></p>
+</blockquote>
+<hr />
+<h2>What external help is needed for this product</h2>
+<ul>
+<li><strong>A working .xlsx</strong> with formulas + heat-map conditional formatting (~3 hrs of focused work; I can produce in a separate session if requested)</li>
+<li><strong>A real industry benchmark dataset.</strong> Currently the kit references "industry benchmark" without backing data. To make it credible, we need to source a real dataset — Gartner CIO survey, McKinsey AI report, or run our own survey. <strong>Recommendation:</strong> Aiprosol commissions a 100-respondent survey of UK/EU/US enterprise CIOs in Q3 2026; results published as the canonical benchmark.</li>
+</ul>
+<hr />
+<h2>Licensing</h2>
+<p>Licensed for internal enterprise use within purchaser's organisation, including use by external consultants engaged by the purchaser. Resale or republication of the maturity model or assessment requires written permission. © 2026 Aiprosol Ltd.</p>
+<div class="brand-footer">© 2026 Aiprosol Ltd · <a href="https://aiprosol.com">aiprosol.com</a> · <a href="mailto:hello@aiprosol.com">hello@aiprosol.com</a><br>Licensed to the purchaser for unlimited internal use. Redistribution requires written permission.</div>
+</body></html>

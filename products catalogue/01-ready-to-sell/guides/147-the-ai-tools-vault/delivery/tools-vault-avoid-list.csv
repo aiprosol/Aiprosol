@@ -1,0 +1,16 @@
+Name,Category,Why to avoid (when)
+Salesforce,CRM/Sales,If your team is <50 reps. Implementation cost > license cost.
+Datadog,Observability,If you're under 20 hosts. Cheaper alternatives suffice.
+Tabnine,Code generation,Quality consistently below newer entrants.
+Quip,Documents,Only makes sense if deeply in Salesforce.
+Synthesia,Video gen,Avatars look uncanny in close-up. HeyGen's better.
+LastPass,Security,Multiple breaches. Switch to 1Password or Bitwarden.
+Adobe XD,Design,Adobe sunsetting; use Figma.
+Devin (Cognition),Code generation,Marketing > capability at current state.
+Mulesoft,No-code automation,$80K+ pricing locks out anyone not enterprise.
+Workday,HR,Implementation cost > license. Use Rippling/BambooHR until 1000+ employees.
+Inflection Pi,Conversational AI,"Built for friendship, not business."
+Character.AI,Conversational AI,Niche use case.
+Drift,Customer support,Sales-focused chat; SMBs locked out by pricing.
+Outreach,CRM/Sales,Pricing locks out teams under 20 reps.
+ZoomInfo,CRM/Sales,Heavy enterprise pricing for what Apollo+Clearbit can do.

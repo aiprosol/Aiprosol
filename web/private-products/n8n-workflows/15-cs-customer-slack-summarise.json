@@ -1,0 +1,117 @@
+{
+  "name": "CS \u00b7 Customer Slack message \u2192 AI summarise \u2192 Notion log",
+  "nodes": [
+    {
+      "parameters": {
+        "trigger": "message",
+        "channelId": "YOUR_CHANNEL_ID"
+      },
+      "id": "f72911de-58fb-44eb-bcb7-b85542a16b42",
+      "name": "Slack message trigger",
+      "type": "n8n-nodes-base.slackTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ],
+      "credentials": {
+        "slackApi": {
+          "id": "REPLACE_ME",
+          "name": "Slack"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "claude-3-5-sonnet-20241022",
+        "options": {
+          "temperature": 0.2,
+          "maxTokensToSample": 200
+        },
+        "text": "=Summarise this customer Slack message in 1 sentence. Categorise as: feature_request, bug_report, usage_question, complaint, kudos. Output JSON: {\"summary\":\"...\",\"category\":\"...\"}. Message: \"{{ $json.text }}\"."
+      },
+      "id": "53fc6ad3-99e3-42b4-a223-9327d7320e47",
+      "name": "Claude \u00b7 summarise + categorise",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1,
+      "position": [
+        460,
+        300
+      ],
+      "credentials": {
+        "anthropicApi": {
+          "id": "REPLACE_ME",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "append",
+        "databaseId": "YOUR_NOTION_DB",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Summary",
+              "title": "={{ $json.text }}"
+            },
+            {
+              "key": "Channel",
+              "richText": "=slack-customer"
+            }
+          ]
+        }
+      },
+      "id": "7689c9ee-0fc2-4bd6-8bdd-4b83e5d3c255",
+      "name": "Append to Notion log",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 1,
+      "position": [
+        680,
+        300
+      ],
+      "credentials": {
+        "notionApi": {
+          "id": "REPLACE_ME",
+          "name": "Notion"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Slack message trigger": {
+      "main": [
+        [
+          {
+            "node": "Claude \u00b7 summarise + categorise",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude \u00b7 summarise + categorise": {
+      "main": [
+        [
+          {
+            "node": "Append to Notion log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "e5e5fb8c-1751-4340-ba8e-536750c80e5b",
+  "id": "a4e8c5a8-8a82-4acb-a201-295202c9b06c",
+  "meta": {
+    "instanceId": "aiprosol-starter-library-v1"
+  },
+  "tags": [],
+  "pinData": {}
+}

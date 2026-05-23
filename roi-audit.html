@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Free ROI Audit — Aiprosol</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0A1628;
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: #ffffff;
+    min-height: 100vh;
+  }
+
+  /* ── SCREENS ─────────────────────────────────────── */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* ── FORM SCREEN ──────────────────────────────────── */
+  #form-screen {
+    padding: 48px 20px;
+  }
+
+  .form-wrap {
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .badge {
+    display: inline-block;
+    background: rgba(0,212,255,0.15);
+    color: #00D4FF;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+
+  .form-title {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .form-title span { color: #00D4FF; }
+
+  .form-sub {
+    color: #8899AA;
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+
+  .form-card {
+    background: #0D1F3C;
+    border: 1px solid #1E3A5F;
+    border-radius: 14px;
+    padding: 28px;
+  }
+
+  .field { margin-bottom: 16px; }
+
+  label {
+    display: block;
+    color: #E8F4FD;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  input, select, textarea {
+    width: 100%;
+    background: #0A1628;
+    border: 1px solid #1E3A5F;
+    border-radius: 8px;
+    padding: 11px 14px;
+    color: #ffffff;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: #00D4FF;
+  }
+
+  select option { background: #0D1F3C; }
+
+  textarea { resize: none; }
+
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .btn-primary {
+    width: 100%;
+    background: #00D4FF;
+    color: #0A1628;
+    border: none;
+    border-radius: 8px;
+    padding: 15px;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: opacity 0.2s;
+  }
+
+  .btn-primary:hover { opacity: 0.9; }
+
+  .form-note {
+    color: #8899AA;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 12px;
+  }
+
+  /* ── LOADING SCREEN ───────────────────────────────── */
+  #loading-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+    text-align: center;
+  }
+
+  .loading-icon { font-size: 52px; margin-bottom: 20px; animation: pulse 1.5s infinite; }
+
+  @keyframes pulse { 0%,100%{ transform: scale(1); } 50%{ transform: scale(1.1); } }
+
+  .loading-title { color: #00D4FF; font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+
+  .loading-sub { color: #8899AA; font-size: 14px; margin-bottom: 24px; }
+
+  .progress-bar {
+    width: 220px;
+    height: 4px;
+    background: #1E3A5F;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: #00D4FF;
+    border-radius: 4px;
+    animation: progress 4s ease-in-out infinite;
+  }
+
+  @keyframes progress { 0%{ width:0% } 100%{ width:100% } }
+
+  /* ── REPORT SCREEN ────────────────────────────────── */
+  #report-screen { padding: 48px 20px; }
+
+  .report-wrap { max-width: 860px; margin: 0 auto; }
+
+  .report-header { text-align: center; margin-bottom: 40px; }
+
+  .report-title {
+    font-size: 30px;
+    font-weight: 800;
+    margin-top: 14px;
+    line-height: 1.3;
+  }
+
+  .report-title span { color: #00D4FF; }
+
+  .report-sub { color: #8899AA; font-size: 13px; margin-top: 8px; }
+
+  /* Stats grid */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .stat-card {
+    background: #0D1F3C;
+    border: 1px solid #1E3A5F;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .stat-value { font-size: 28px; font-weight: 800; margin-bottom: 6px; }
+  .stat-label { color: #8899AA; font-size: 12px; }
+
+  /* Section cards */
+  .section-card {
+    background: #0D1F3C;
+    border: 1px solid #1E3A5F;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+
+  .section-card.cyan-border { border-color: #00D4FF; }
+
+  .section-title {
+    color: #00D4FF;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .opp-item {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+    align-items: flex-start;
+  }
+
+  .opp-num {
+    background: #00D4FF;
+    color: #0A1628;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .opp-text { color: #E8F4FD; font-size: 14px; line-height: 1.5; }
+
+  .arora-label {
+    color: #00D4FF;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .arora-note {
+    color: #E8F4FD;
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .recommend-heading {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  /* Product cards */
+  .product-card {
+    background: #0D1F3C;
+    border: 1px solid #1E3A5F;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .product-card.best { border: 2px solid #00D4FF; }
+
+  .best-tag {
+    display: inline-block;
+    background: rgba(0,212,255,0.15);
+    color: #00D4FF;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .product-name { color: #ffffff; font-weight: 700; font-size: 15px; }
+  .product-why { color: #8899AA; font-size: 13px; margin-top: 4px; }
+
+  .product-right { text-align: right; flex-shrink: 0; }
+
+  .product-price { color: #00D4FF; font-size: 22px; font-weight: 800; }
+
+  .btn-buy {
+    display: inline-block;
+    background: #00D4FF;
+    color: #0A1628;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 13px;
+    text-decoration: none;
+    margin-top: 8px;
+  }
+
+  /* Plan card */
+  .plan-card {
+    background: #0D1F3C;
+    border: 2px solid #00D4FF;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+
+  .plan-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .plan-tag {
+    display: inline-block;
+    background: #00D4FF;
+    color: #0A1628;
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .plan-name { color: #ffffff; font-size: 16px; font-weight: 700; }
+  .plan-why { color: #8899AA; font-size: 13px; margin-top: 6px; }
+
+  .plan-price { color: #00D4FF; font-size: 26px; font-weight: 800; text-align: right; flex-shrink: 0; }
+  .plan-price span { color: #8899AA; font-size: 13px; font-weight: 400; }
+
+  .btn-plan {
+    display: inline-block;
+    background: #00D4FF;
+    color: #0A1628;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+  }
+
+  /* Call card */
+  .call-card {
+    background: #0D1F3C;
+    border: 1px solid #1E3A5F;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+
+  .call-title { color: #ffffff; font-weight: 700; font-size: 16px; margin-bottom: 8px; }
+  .call-text { color: #8899AA; font-size: 14px; margin-bottom: 16px; }
+
+  .btn-call {
+    display: inline-block;
+    background: transparent;
+    color: #00D4FF;
+    border: 2px solid #00D4FF;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+  }
+
+  .payback-note {
+    color: #8899AA;
+    font-size: 13px;
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  .payback-note strong { color: #00D4FF; }
+
+  /* ── ERROR MSG ────────────────────────────────────── */
+  .error-msg {
+    color: #FF6B6B;
+    font-size: 13px;
+    margin-top: 10px;
+    text-align: center;
+    display: none;
+  }
+
+  /* ── RESPONSIVE ───────────────────────────────────── */
+  @media (max-width: 600px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .field-row { grid-template-columns: 1fr; }
+    .product-card { flex-direction: column; align-items: flex-start; }
+    .product-right { text-align: left; }
+    .plan-top { flex-direction: column; }
+    .plan-price { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════
+     SCREEN 1 — FORM
+════════════════════════════════════════════════════ -->
+<div id="form-screen" class="screen active">
+  <div class="form-wrap">
+    <div class="badge">FREE ROI AUDIT</div>
+    <h1 class="form-title">Find out what automation is<br><span>worth to your business</span></h1>
+    <p class="form-sub">Fill in your details and Arora will instantly generate your personalised report.</p>
+
+    <div class="form-card">
+      <div class="field-row">
+        <div class="field">
+          <label>Your full name *</label>
+          <input id="f-name" type="text" placeholder="e.g. John Smith" />
+        </div>
+        <div class="field">
+          <label>Email address *</label>
+          <input id="f-email" type="email" placeholder="e.g. john@company.com" />
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Company name</label>
+          <input id="f-company" type="text" placeholder="e.g. Smith & Co" />
+        </div>
+        <div class="field">
+          <label>Number of employees</label>
+          <input id="f-employees" type="number" placeholder="e.g. 12" min="1" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Industry</label>
+        <select id="f-industry">
+          <option value="">Select your industry</option>
+          <option>Professional Services</option>
+          <option>E-commerce</option>
+          <option>Healthcare</option>
+          <option>Real Estate</option>
+          <option>Food & Hospitality</option>
+          <option>Education</option>
+          <option>Manufacturing</option>
+          <option>Marketing Agency</option>
+          <option>Finance</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Monthly revenue</label>
+          <select id="f-revenue">
+            <option value="">Select range</option>
+            <option>Under £5k</option>
+            <option>£5k–£20k</option>
+            <option>£20k–£50k</option>
+            <option>£50k–£100k</option>
+            <option>£100k–£500k</option>
+            <option>Over £500k</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Automation experience</label>
+          <select id="f-experience">
+            <option value="">Select level</option>
+            <option>None — never used automation</option>
+            <option>Some — tried a few tools</option>
+            <option>Experienced — running automations</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Hours lost to manual work/week</label>
+          <input id="f-hours" type="number" placeholder="e.g. 20" min="0" />
+        </div>
+        <div class="field">
+          <label>Avg staff hourly cost (£)</label>
+          <input id="f-cost" type="number" placeholder="e.g. 15" min="0" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Your biggest business challenge</label>
+        <textarea id="f-challenge" rows="3" placeholder="e.g. We spend too much time on manual invoicing and chasing payments"></textarea>
+      </div>
+
+      <button class="btn-primary" onclick="submitForm()">Get My Free ROI Report →</button>
+      <p class="form-note">Free. No credit card. No obligation.</p>
+      <p class="error-msg" id="error-msg">⚠️ Please enter your name and email to continue.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SCREEN 2 — LOADING
+════════════════════════════════════════════════════ -->
+<div id="loading-screen" class="screen">
+  <div class="loading-icon">⚡</div>
+  <div class="loading-title">Arora is analysing your business...</div>
+  <div class="loading-sub">Calculating your automation ROI — about 5 seconds</div>
+  <div class="progress-bar"><div class="progress-fill"></div></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SCREEN 3 — REPORT
+════════════════════════════════════════════════════ -->
+<div id="report-screen" class="screen">
+  <div class="report-wrap">
+
+    <div class="report-header">
+      <div class="badge">PERSONALISED AUTOMATION REPORT</div>
+      <h1 class="report-title">Your report for <span id="r-company">your business</span></h1>
+      <p class="report-sub">Generated by Arora, CEO of Aiprosol</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-value" id="r-hours" style="color:#FF4444">-- hrs</div>
+        <div class="stat-label">Hours Lost Per Week</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="r-cost" style="color:#FF8C00">£--</div>
+        <div class="stat-label">Monthly Cost of Manual Work</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="r-savings" style="color:#00C851">£--</div>
+        <div class="stat-label">Potential Monthly Savings</div>
+      </div>
+    </div>
+
+    <!-- Opportunities -->
+    <div class="section-card">
+      <div class="section-title">🎯 Your Top 3 Automation Opportunities</div>
+      <div id="r-opps"></div>
+    </div>
+
+    <!-- Arora note -->
+    <div class="section-card cyan-border">
+      <div class="arora-label">👩‍💼 Arora's Note</div>
+      <div class="arora-note" id="r-note"></div>
+    </div>
+
+    <!-- Recommendations -->
+    <div class="recommend-heading">📦 What We Recommend For You</div>
+
+    <!-- Digital products (shown for small biz) -->
+    <div id="r-products-section" style="display:none; margin-bottom:24px;">
+      <p style="color:#8899AA; font-size:14px; margin-bottom:16px;">Based on your profile — available instantly, no call needed:</p>
+      <div id="r-products"></div>
+    </div>
+
+    <!-- Service plan (shown for medium biz) -->
+    <div id="r-plan-section" style="display:none;">
+      <div class="plan-card">
+        <div class="plan-top">
+          <div>
+            <div class="plan-tag" id="r-plan-tag">Starter Plan</div>
+            <div class="plan-name">Done-for-you automation system</div>
+            <div class="plan-why" id="r-plan-why"></div>
+          </div>
+          <div class="plan-price">
+            <span id="r-plan-price">£997</span><br>
+            <span>/month</span>
+          </div>
+        </div>
+        <a href="/pricing" class="btn-plan">View Plan & Get Started →</a>
+      </div>
+    </div>
+
+    <!-- Enterprise (shown for large biz) -->
+    <div id="r-enterprise-section" style="display:none;">
+      <div class="plan-card">
+        <div class="plan-tag">Enterprise Plan</div>
+        <div class="plan-name">Custom AI Transformation Programme</div>
+        <div class="plan-why" id="r-ent-why" style="color:#8899AA; font-size:13px; margin-top:6px;"></div>
+        <div class="plan-price" style="margin-top:12px; text-align:left;">
+          £7,997<span style="color:#8899AA; font-size:14px; font-weight:400;">/month</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Discovery call (only shown when needed) -->
+    <div id="r-call-section" style="display:none;">
+      <div class="call-card">
+        <div class="call-title" id="r-call-title">🤔 Not sure which option is right?</div>
+        <div class="call-text" id="r-call-text">Book a free 30-minute call and we will walk you through the best option for you.</div>
+        <a href="https://calendly.com/srijanpaudel219/30min" target="_blank" class="btn-call">Book a Free 30-Min Call</a>
+      </div>
+    </div>
+
+    <p class="payback-note">⚡ Estimated payback period: <strong id="r-payback">-- weeks</strong></p>
+
+  </div>
+</div>
+
+<script>
+// ── SHOW/HIDE SCREENS ──────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ── FORM SUBMIT ────────────────────────────────────
+async function submitForm() {
+  const name     = document.getElementById('f-name').value.trim();
+  const email    = document.getElementById('f-email').value.trim();
+  const company  = document.getElementById('f-company').value.trim();
+  const employees = document.getElementById('f-employees').value.trim();
+  const industry  = document.getElementById('f-industry').value;
+  const revenue   = document.getElementById('f-revenue').value;
+  const experience = document.getElementById('f-experience').value;
+  const hours     = document.getElementById('f-hours').value.trim();
+  const cost      = document.getElementById('f-cost').value.trim();
+  const challenge = document.getElementById('f-challenge').value.trim();
+
+  if (!name || !email) {
+    document.getElementById('error-msg').style.display = 'block';
+    return;
+  }
+  document.getElementById('error-msg').style.display = 'none';
+
+  // Show loading
+  showScreen('loading-screen');
+
+  try {
+    // ── 1. Save to Wix CMS via REST ──────────────────
+    // NOTE: This will work when embedded in Wix — 
+    // the Wix CMS REST API handles the auth automatically via cookies
+    await fetch('https://www.wixapis.com/wix-data/v2/items', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({
+        dataCollectionId: 'leads',
+        dataItem: {
+          data: {
+            fullName: name,
+            email: email,
+            companyName: company,
+            companySize: parseInt(employees) || 0,
+            industry: industry,
+            monthlyRevenue: revenue,
+            manualHoursPerWeek: parseFloat(hours) || 0,
+            avgHourlyCost: parseFloat(cost) || 0,
+            primaryChallenge: challenge,
+            automationExperience: experience,
+            leadStatus: 'New Lead — ROI Report',
+            leadScore: 70
+          }
+        }
+      })
+    }).catch(e => console.log('CMS save note:', e));
+    // Note: we continue even if CMS save fails — report still generates
+
+    // ── 2. Call Claude AI ────────────────────────────
+    const aiRes = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{
+          role: 'user',
+          content: `You are Arora CEO of Aiprosol AI automation consultancy. Return ONLY valid JSON no extra text no markdown.
+
+RULES:
+- employees under 10 OR revenue under 5k = type "digital". No plan. showCall false.
+- employees 10-50 OR revenue 5k-100k = type "plan". Starter or Growth plan.
+- employees over 50 OR revenue over 100k = type "enterprise". showCall true.
+
+PRODUCTS: Business Process Audit Checklist £37, AI Automation ROI Calculator £47, 30-Day Automation Challenge £47, AI Tools Comparison Guide £67, Workflow Automation Playbook £97, ChatGPT Prompt Vault £97, Global Automation Starter Pack £97, Lead Generation Playbook £127, Starter Bundle £79, Playbook Pack £197, AI Tools Vault £147, Zapier Make Bundle £197, AI Tools Stack Kit £197, Agency Launch Bundle £597, Architecture Masterclass £297, Enterprise Readiness Kit £397, Agency Starter Pack £497, Complete Vault £997
+
+PLANS: Starter £997/month, Growth £2997/month, Enterprise £7997/month
+
+CLIENT: name=${name}, company=${company}, employees=${employees}, revenue=${revenue}, industry=${industry}, hours lost=${hours}/week, hourly cost=£${cost}, challenge=${challenge}, experience=${experience}
+
+Return this exact JSON:
+{"hoursLost":0,"monthlyCost":0,"monthlySavings":0,"paybackWeeks":0,"opportunities":["string","string","string"],"type":"digital","products":[{"name":"string","price":0,"why":"string"}],"plan":null,"showCall":false,"callReason":null,"note":"string"}`
+        }]
+      })
+    });
+
+    const aiData = await aiRes.json();
+    const report = JSON.parse(aiData.content[0].text);
+
+    // ── 3. Render report ─────────────────────────────
+    renderReport(report, name, company);
+    showScreen('report-screen');
+
+  } catch (err) {
+    console.error('Error:', err);
+    // Fallback: generate a basic report without AI if API fails
+    renderFallbackReport(name, company, parseInt(employees) || 5, hours, cost);
+    showScreen('report-screen');
+  }
+}
+
+// ── RENDER REPORT ──────────────────────────────────
+function renderReport(r, name, company) {
+  document.getElementById('r-company').textContent = company || name;
+  document.getElementById('r-hours').textContent = r.hoursLost + ' hrs';
+  document.getElementById('r-cost').textContent = '£' + (r.monthlyCost || 0).toLocaleString();
+  document.getElementById('r-savings').textContent = '£' + (r.monthlySavings || 0).toLocaleString();
+  document.getElementById('r-payback').textContent = r.paybackWeeks + ' weeks';
+  document.getElementById('r-note').textContent = '"' + r.note + '"';
+
+  // Opportunities
+  const oppsEl = document.getElementById('r-opps');
+  oppsEl.innerHTML = '';
+  (r.opportunities || []).forEach((opp, i) => {
+    oppsEl.innerHTML += `
+      <div class="opp-item">
+        <div class="opp-num">${i+1}</div>
+        <div class="opp-text">${opp}</div>
+      </div>`;
+  });
+
+  // Digital products
+  if (r.type === 'digital' && r.products && r.products.length > 0) {
+    document.getElementById('r-products-section').style.display = 'block';
+    const prodsEl = document.getElementById('r-products');
+    prodsEl.innerHTML = '';
+    r.products.forEach((p, i) => {
+      prodsEl.innerHTML += `
+        <div class="product-card ${i===0?'best':''}">
+          <div>
+            ${i===0 ? '<div class="best-tag">BEST MATCH</div>' : ''}
+            <div class="product-name">${p.name}</div>
+            <div class="product-why">${p.why}</div>
+          </div>
+          <div class="product-right">
+            <div class="product-price">£${p.price}</div>
+            <a href="/digital-vault" class="btn-buy">Get Instant Access →</a>
+          </div>
+        </div>`;
+    });
+  }
+
+  // Service plan
+  if (r.type === 'plan' && r.plan) {
+    document.getElementById('r-plan-section').style.display = 'block';
+    document.getElementById('r-plan-tag').textContent = r.plan.name + ' Plan';
+    document.getElementById('r-plan-why').textContent = r.plan.why;
+    document.getElementById('r-plan-price').textContent = '£' + (r.plan.price || 997).toLocaleString();
+  }
+
+  // Enterprise
+  if (r.type === 'enterprise' && r.plan) {
+    document.getElementById('r-enterprise-section').style.display = 'block';
+    document.getElementById('r-ent-why').textContent = r.plan.why;
+  }
+
+  // Discovery call
+  if (r.showCall) {
+    document.getElementById('r-call-section').style.display = 'block';
+    if (r.type === 'enterprise') {
+      document.getElementById('r-call-title').textContent = '📞 This needs a custom approach';
+    }
+    if (r.callReason) {
+      document.getElementById('r-call-text').textContent = r.callReason;
+    }
+  }
+}
+
+// ── FALLBACK REPORT (if AI fails) ─────────────────
+function renderFallbackReport(name, company, employees, hours, cost) {
+  const h = parseFloat(hours) || 15;
+  const c = parseFloat(cost) || 15;
+  const monthly = Math.round(h * c * 4);
+  const savings = Math.round(monthly * 0.7);
+
+  const fallback = {
+    hoursLost: Math.round(h),
+    monthlyCost: monthly,
+    monthlySavings: savings,
+    paybackWeeks: 8,
+    opportunities: [
+      'Automate lead capture and follow-up to save 5+ hours per week',
+      'Set up automated invoicing and payment chasing',
+      'Connect your tools to eliminate manual data entry'
+    ],
+    type: employees < 10 ? 'digital' : (employees < 50 ? 'plan' : 'enterprise'),
+    products: [
+      { name: 'Global Automation Starter Pack', price: 97, why: 'Perfect starting point for your business size and stage' },
+      { name: 'Workflow Automation Playbook', price: 97, why: 'Strategic guide to automating your top processes' }
+    ],
+    plan: employees >= 10 ? { name: 'Starter', price: 997, why: 'Done-for-you automation system built for your business' } : null,
+    showCall: employees >= 50,
+    callReason: 'Your business size and complexity warrants a custom approach — book a free call.',
+    note: `Based on your profile, ${company || 'your business'} has significant automation potential. The right systems could save you hours every week and free your team to focus on what matters most.`
+  };
+
+  renderReport(fallback, name, company);
+}
+</script>
+
+</body>
+</html>

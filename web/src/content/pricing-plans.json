@@ -1,0 +1,57 @@
+[
+  {
+    "id": "starter",
+    "name": "Starter",
+    "price": 997,
+    "tagline": "Your first managed automations",
+    "target": "SMBs · 10–50 employees · $5k–$100k/mo revenue",
+    "features": [
+      "Up to 3 active automations",
+      "Arora chat widget on your site",
+      "Lead capture & CRM sync",
+      "Monthly performance report",
+      "14-day onboarding",
+      "Email support · 24h response"
+    ],
+    "cta": "Start with Starter",
+    "ctaUrl": "/checkout?plan=starter"
+  },
+  {
+    "id": "growth",
+    "name": "Growth",
+    "price": 2997,
+    "tagline": "Scale across the operation",
+    "target": "Growing businesses · 50–200 employees",
+    "featured": true,
+    "highlight": "Most popular",
+    "features": [
+      "Up to 10 active automations",
+      "Custom AI chatbot trained on your data",
+      "Sales & marketing automation",
+      "Bi-weekly strategy calls",
+      "Document processing (IDP)",
+      "Priority support · 4h response",
+      "Quarterly automation roadmap"
+    ],
+    "cta": "Start with Growth",
+    "ctaUrl": "/checkout?plan=growth"
+  },
+  {
+    "id": "enterprise",
+    "name": "Enterprise",
+    "price": 7997,
+    "tagline": "Architectural-grade automation",
+    "target": "200+ employees · $500k+/mo revenue",
+    "features": [
+      "Unlimited automations",
+      "Dedicated AI workflow architect",
+      "Full system integration",
+      "Customer intelligence layer",
+      "White-glove onboarding",
+      "Weekly C-suite calls with Arora",
+      "SLA · 1h response"
+    ],
+    "cta": "Talk to Enterprise",
+    "ctaUrl": "https://calendly.com/srijanpaudel219/30min"
+  }
+]

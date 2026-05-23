@@ -1,0 +1,160 @@
+{
+  "name": "Sales \u00b7 Hot lead (score \u2265 85) \u2192 5-min SLA Slack + 10-min escalation",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "hot-lead",
+        "responseMode": "lastNode"
+      },
+      "id": "cc14f482-76c9-4f75-9e24-57f0478d1b8a",
+      "name": "Hot lead webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "1",
+              "leftValue": "={{ $json.body.score }}",
+              "rightValue": 85,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "baf8e6a4-c840-40af-8a92-df398ebd6f9b",
+      "name": "Score \u2265 85?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "post",
+        "channel": "leads-hot",
+        "text": "=:fire: HOT LEAD \u00b7 score {{ $json.body.score }} \u00b7 {{ $json.body.name }} @ {{ $json.body.company }} ({{ $json.body.industry }})\\n<@AE-on-rota> SLA 5 min \u00b7 {{ $json.body.calendlyLink }}"
+      },
+      "id": "ab1ad8fe-3dd0-44a1-8357-b0656f4978e2",
+      "name": "Slack #leads-hot @AE",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        680,
+        200
+      ],
+      "credentials": {
+        "slackApi": {
+          "id": "REPLACE_ME",
+          "name": "Slack workspace"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 10,
+        "unit": "minutes"
+      },
+      "id": "8f61a4a3-cf37-4691-b812-184815d86b5c",
+      "name": "Wait 10 min",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        680,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "post",
+        "channel": "leads-hot-escalation",
+        "text": "=:warning: HOT LEAD unread for 10 min \u00b7 {{ $('Hot lead webhook').item.json.body.name }} @ {{ $('Hot lead webhook').item.json.body.company }}\\n<@manager-on-rota>"
+      },
+      "id": "9fc84ec6-0b1b-4995-b034-45dae987a085",
+      "name": "Slack escalate to manager",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        900,
+        400
+      ],
+      "credentials": {
+        "slackApi": {
+          "id": "REPLACE_ME",
+          "name": "Slack workspace"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Hot lead webhook": {
+      "main": [
+        [
+          {
+            "node": "Score \u2265 85?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Score \u2265 85?": {
+      "main": [
+        [
+          {
+            "node": "Slack #leads-hot @AE",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait 10 min",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 10 min": {
+      "main": [
+        [
+          {
+            "node": "Slack escalate to manager",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "02e9b398-7911-4754-b10d-1360c03fbddf",
+  "id": "00d35362-22a4-4670-b3b3-4fe8ed6ce7f0",
+  "meta": {
+    "instanceId": "aiprosol-starter-library-v1"
+  },
+  "tags": [],
+  "pinData": {}
+}

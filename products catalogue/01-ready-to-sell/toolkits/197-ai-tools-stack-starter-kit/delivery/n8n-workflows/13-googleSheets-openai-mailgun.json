@@ -1,0 +1,114 @@
+{
+  "name": "Aiprosol Stack — Google Sheets row → OpenAI → Mailgun send",
+  "nodes": [
+    {
+      "parameters": {
+        "event": "rowAdded"
+      },
+      "id": "6c66f8bb-c01e-4005-a518-fabd97744763",
+      "name": "Sheet new row",
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Personalise this template using the row data."
+            },
+            {
+              "role": "user",
+              "content": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        }
+      },
+      "id": "e53c27e1-42b2-4477-bf44-c0442d6f55b8",
+      "name": "Personalise body",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "toEmail": "={{ $('Sheet new row').first().json.email }}",
+        "fromEmail": "hello@aiprosol.com",
+        "subject": "={{ $('Sheet new row').first().json.subject }}",
+        "text": "={{ $json.message.content }}"
+      },
+      "id": "29f10379-8aca-459d-a5d7-378a8ed317c3",
+      "name": "Mailgun send",
+      "type": "n8n-nodes-base.mailgun",
+      "typeVersion": 1,
+      "position": [
+        640,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Sheet new row": {
+      "main": [
+        [
+          {
+            "node": "Personalise body",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Personalise body": {
+      "main": [
+        [
+          {
+            "node": "Mailgun send",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "stack"
+    },
+    {
+      "name": "sheets"
+    },
+    {
+      "name": "mailgun"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "961bdf31-083e-4424-90c9-4855afb2c210",
+  "id": "93807bd9-7ced-49a4-a6dc-4df6bbebada9",
+  "_aiprosol": {
+    "description": "New row in 'send-list' Google Sheet → OpenAI personalises body using row data → Mailgun sends.",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

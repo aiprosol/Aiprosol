@@ -1,0 +1,157 @@
+{
+  "name": "Aiprosol Stack — Slack message → OpenAI → Notion page",
+  "nodes": [
+    {
+      "parameters": {
+        "events": [
+          "reaction_added"
+        ],
+        "filters": {
+          "reaction": "memo"
+        }
+      },
+      "id": "5612af5e-5ce0-4684-b5cb-095cdbf6b733",
+      "name": "Slack reaction event",
+      "type": "n8n-nodes-base.slackTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "get",
+        "channel": "={{ $json.item.channel }}",
+        "ts": "={{ $json.item.ts }}"
+      },
+      "id": "ff6abefb-9685-4685-ac61-dfaf3724cbbc",
+      "name": "Get message text",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o-mini"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Summarise in <50 words, plus a title in title-case."
+            },
+            {
+              "role": "user",
+              "content": "={{ $json.messages[0].text }}"
+            }
+          ]
+        }
+      },
+      "id": "b3b2b297-2cf7-4eac-961d-3519099bfbe3",
+      "name": "Summarise",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "create",
+        "databaseId": "NOTES_DB_ID",
+        "title": "={{ $json.message.content.split('\\n')[0] }}",
+        "blockUi": {
+          "blockValues": [
+            {
+              "type": "paragraph",
+              "textContent": "={{ $json.message.content }}"
+            }
+          ]
+        }
+      },
+      "id": "3ca5e4a3-5d83-4464-94e9-8ed1083351c7",
+      "name": "Create Notion page",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        840,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Slack reaction event": {
+      "main": [
+        [
+          {
+            "node": "Get message text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get message text": {
+      "main": [
+        [
+          {
+            "node": "Summarise",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarise": {
+      "main": [
+        [
+          {
+            "node": "Create Notion page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "stack"
+    },
+    {
+      "name": "slack"
+    },
+    {
+      "name": "openai"
+    },
+    {
+      "name": "notion"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "4bc1b5f9-f68d-4d10-8a6e-d23181d83d77",
+  "id": "02dbf3f9-eabe-4305-a236-de49cfb20fca",
+  "_aiprosol": {
+    "description": "When a message with a 📝 reaction is added in Slack, the message text is sent to OpenAI for summarisation and a new Notion page is created with the result.",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

@@ -1,0 +1,35 @@
+1
+00:00:00,000 --> 00:00:04,000
+I'm the only HUMAN at my company's C-suite table.
+
+2
+00:00:04,000 --> 00:00:08,000
+Our CEO is named Arora. She's an AI.
+
+3
+00:00:08,000 --> 00:00:14,000
+She runs strategy, customer interactions, content — most of the day-to-day. I handle the 5-10 strategic calls a month that genuinely need a human.
+
+4
+00:00:14,000 --> 00:00:17,000
+This isn't a thought experiment.
+
+5
+00:00:17,000 --> 00:00:21,000
+A law firm — 45 hours per partner per week reclaimed. Three-week ROI.
+
+6
+00:00:21,000 --> 00:00:25,000
+A real estate agency — lead response, 6 hours to 3 minutes. Conversion up 28%.
+
+7
+00:00:25,000 --> 00:00:29,000
+A manufacturer — defect rate 4% to 0.6%.
+
+8
+00:00:29,000 --> 00:00:33,000
+If we're going to sell automation, our company should run on it. Otherwise we're selling vibes.
+
+9
+00:00:33,000 --> 00:00:36,000
+Free 60-second ROI Audit. Link in bio.

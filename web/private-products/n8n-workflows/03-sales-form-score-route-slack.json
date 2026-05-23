@@ -1,0 +1,234 @@
+{
+  "name": "Sales \u00b7 Form submit \u2192 AI score \u2192 routed Slack",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-form-submit",
+        "responseMode": "lastNode"
+      },
+      "id": "a80b5aa6-a5e8-4406-91ee-332b43cf17e4",
+      "name": "Form Submit Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "// Aiprosol 4-component scoring model\nconst d = items[0].json.body;\nlet score = 30;\nconst emp = Number(d.employees || 0);\nif (emp >= 10) score += 20;\nif (emp >= 50) score += 15;\nif (d.monthlyRevenue === '$100k \u2013 $500k') score += 15;\nif (d.monthlyRevenue === '$500k+') score += 25;\nif (Number(d.manualHoursPerWeek || 0) >= 30) score += 10;\nif ((d.primaryChallenge || '').length > 20) score += 5;\nconst hot = new Set(['Legal','Financial Services','SaaS','Real Estate']);\nconst warm = new Set(['Professional Services','E-commerce','Healthcare']);\nif (hot.has(d.industry)) score += 10;\nelse if (warm.has(d.industry)) score += 5;\nscore = Math.min(100, score);\nlet segment = 'future';\nif (score >= 85) segment = 'hot';\nelse if (score >= 65) segment = 'warm';\nelse if (score >= 40) segment = 'nurture';\nreturn [{ json: { ...d, score, segment } }];"
+      },
+      "id": "5da30918-cabb-446f-8e29-cfcfa016c39e",
+      "name": "Score lead 0-100",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "expression",
+        "output": "input",
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "1",
+                    "leftValue": "={{ $json.segment }}",
+                    "rightValue": "hot",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "outputKey": "hot"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "2",
+                    "leftValue": "={{ $json.segment }}",
+                    "rightValue": "warm",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "outputKey": "warm"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "3",
+                    "leftValue": "={{ $json.segment }}",
+                    "rightValue": "nurture",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "outputKey": "nurture"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "id": "404f7dd9-ddd2-49a2-993d-61cb9bf8edf7",
+      "name": "Route on segment",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "post",
+        "channel": "leads-hot",
+        "text": "=:fire: *HOT lead* \u2014 {{ $json.name }} @ {{ $json.company }} ({{ $json.industry }}) \u00b7 score {{ $json.score }}\\n<@AE-on-rota> \u00b7 SLA 5 min"
+      },
+      "id": "bbf015dd-17f6-4756-a77b-a3ef2b821cb1",
+      "name": "Slack #leads-hot",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        900,
+        200
+      ],
+      "credentials": {
+        "slackApi": {
+          "id": "REPLACE_ME",
+          "name": "Slack workspace"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "post",
+        "channel": "leads-warm",
+        "text": "=:warm: *Warm lead* \u2014 {{ $json.name }} @ {{ $json.company }} \u00b7 score {{ $json.score }} \u00b7 same-day callback SLA"
+      },
+      "id": "77d93514-cc1f-4330-b356-ee5ba3889feb",
+      "name": "Slack #leads-warm",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        900,
+        300
+      ],
+      "credentials": {
+        "slackApi": {
+          "id": "REPLACE_ME",
+          "name": "Slack workspace"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "18d58905-75b7-49ef-b007-5be7d56f6a7e",
+      "name": "Enter 5-touch nurture",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        900,
+        400
+      ]
+    }
+  ],
+  "connections": {
+    "Form Submit Webhook": {
+      "main": [
+        [
+          {
+            "node": "Score lead 0-100",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Score lead 0-100": {
+      "main": [
+        [
+          {
+            "node": "Route on segment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route on segment": {
+      "main": [
+        [
+          {
+            "node": "Slack #leads-hot",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Slack #leads-warm",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Enter 5-touch nurture",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "7689e8c5-4b5b-48af-b887-bd7169d89f1f",
+  "id": "2e282696-3a1f-4a0b-947d-2867674518f7",
+  "meta": {
+    "instanceId": "aiprosol-starter-library-v1"
+  },
+  "tags": [],
+  "pinData": {}
+}

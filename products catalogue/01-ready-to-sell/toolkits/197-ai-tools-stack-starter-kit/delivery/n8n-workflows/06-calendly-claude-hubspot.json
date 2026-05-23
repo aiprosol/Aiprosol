@@ -1,0 +1,124 @@
+{
+  "name": "Aiprosol Stack — Calendly booking → Claude → HubSpot deal",
+  "nodes": [
+    {
+      "parameters": {
+        "events": [
+          "invitee.created"
+        ]
+      },
+      "id": "ae398f8b-2a2b-4558-b534-9ca54e7e6d07",
+      "name": "Calendly booking",
+      "type": "n8n-nodes-base.calendlyTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "model": "claude-3-5-sonnet-20241022",
+        "messages": {
+          "values": [
+            {
+              "role": "user",
+              "content": "=Extract company info from this booking: {{ JSON.stringify($json) }}"
+            }
+          ]
+        }
+      },
+      "id": "5b0f8e6a-a549-4447-8fc5-2d895de9494b",
+      "name": "Claude context",
+      "type": "@n8n/n8n-nodes-langchain.anthropic",
+      "typeVersion": 1,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "deal",
+        "operation": "create",
+        "additionalFields": {
+          "properties": {
+            "property": [
+              {
+                "property": "dealname",
+                "value": "=Discovery — {{ $('Calendly booking').first().json.payload.invitee.name }}"
+              },
+              {
+                "property": "dealstage",
+                "value": "appointmentscheduled"
+              }
+            ]
+          }
+        }
+      },
+      "id": "4084b601-19ec-4f1d-a77b-898449a4c8b9",
+      "name": "HubSpot create deal",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2,
+      "position": [
+        640,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Calendly booking": {
+      "main": [
+        [
+          {
+            "node": "Claude context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude context": {
+      "main": [
+        [
+          {
+            "node": "HubSpot create deal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "stack"
+    },
+    {
+      "name": "calendly"
+    },
+    {
+      "name": "hubspot"
+    },
+    {
+      "name": "claude"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "2bc3b71e-fd20-4865-a268-f503426e90c1",
+  "id": "f86daab8-7ebc-48f3-863f-df9c427f1c07",
+  "_aiprosol": {
+    "description": "New Calendly booking → Claude extracts meeting context → creates HubSpot deal with stage='discovery'.",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

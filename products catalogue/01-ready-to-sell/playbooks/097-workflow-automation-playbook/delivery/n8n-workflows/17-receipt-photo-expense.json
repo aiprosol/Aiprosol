@@ -1,0 +1,171 @@
+{
+  "name": "Aiprosol — Receipt photo → expense entry",
+  "nodes": [
+    {
+      "parameters": {
+        "event": "fileCreated",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "RECEIPTS_FOLDER_ID"
+        }
+      },
+      "id": "a25d991b-66fa-44fa-8f18-0bbe5504345a",
+      "name": "Drive — Receipts folder watch",
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Read the receipt photo. Return JSON {\"vendor\":string, \"date\":\"YYYY-MM-DD\", \"total\":number, \"currency\":string, \"category\":\"meals|travel|software|office|other\", \"tax\":number}"
+            },
+            {
+              "role": "user",
+              "content": "Receipt image attached"
+            }
+          ]
+        },
+        "options": {
+          "responseFormat": "json_object"
+        }
+      },
+      "id": "382cb6ff-2e5c-49f4-b139-223b80199ad3",
+      "name": "AI vision extract",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "expense",
+        "operation": "create",
+        "additionalFields": {
+          "VendorRef": "={{ JSON.parse($json.message.content).vendor }}",
+          "TotalAmt": "={{ JSON.parse($json.message.content).total }}",
+          "TxnDate": "={{ JSON.parse($json.message.content).date }}"
+        }
+      },
+      "id": "8c6a2316-7eaa-4bc6-8be1-d77909c61c04",
+      "name": "QuickBooks — create expense",
+      "type": "n8n-nodes-base.quickbooks",
+      "typeVersion": 1,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "sheet",
+        "operation": "append",
+        "documentId": "EXPENSES_SHEET_ID",
+        "sheetName": "Receipts",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "Date",
+              "fieldValue": "={{ JSON.parse($('AI vision extract').first().json.message.content).date }}"
+            },
+            {
+              "fieldId": "Vendor",
+              "fieldValue": "={{ JSON.parse($('AI vision extract').first().json.message.content).vendor }}"
+            },
+            {
+              "fieldId": "Amount",
+              "fieldValue": "={{ JSON.parse($('AI vision extract').first().json.message.content).total }}"
+            },
+            {
+              "fieldId": "Category",
+              "fieldValue": "={{ JSON.parse($('AI vision extract').first().json.message.content).category }}"
+            }
+          ]
+        }
+      },
+      "id": "ee7e1329-dfa3-4f5b-912e-dbb4219b86ba",
+      "name": "Sheet log",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        840,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Drive — Receipts folder watch": {
+      "main": [
+        [
+          {
+            "node": "AI vision extract",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI vision extract": {
+      "main": [
+        [
+          {
+            "node": "QuickBooks — create expense",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "QuickBooks — create expense": {
+      "main": [
+        [
+          {
+            "node": "Sheet log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "finance"
+    },
+    {
+      "name": "ocr"
+    },
+    {
+      "name": "pattern-1"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-playbook-v1"
+  },
+  "pinData": {},
+  "versionId": "c95fbc08-f64b-4247-be22-20dc51535854",
+  "id": "ca95b65c-159a-47c4-81a2-09d13c719818",
+  "_aiprosol": {
+    "description": "Drive receipt photo → AI vision extract → expense entry in accounting",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

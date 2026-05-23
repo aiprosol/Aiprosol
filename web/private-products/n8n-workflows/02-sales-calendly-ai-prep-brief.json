@@ -1,0 +1,146 @@
+{
+  "name": "Sales \u00b7 Calendly booking \u2192 AI prep brief",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "calendly-invitee-created",
+        "responseMode": "lastNode"
+      },
+      "id": "18c11ab2-c278-4455-88d4-37e9b37d98f4",
+      "name": "Calendly Webhook (invitee.created)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1",
+              "name": "name",
+              "value": "={{ $json.body.payload.invitee.name }}",
+              "type": "string"
+            },
+            {
+              "id": "2",
+              "name": "email",
+              "value": "={{ $json.body.payload.invitee.email }}",
+              "type": "string"
+            },
+            {
+              "id": "3",
+              "name": "scheduledStart",
+              "value": "={{ $json.body.payload.scheduled_event.start_time }}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "id": "4dc645dd-abfb-4073-acf2-910b62b80738",
+      "name": "Pull invitee fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "model": "claude-3-5-sonnet-20241022",
+        "options": {
+          "temperature": 0.4,
+          "maxTokensToSample": 600
+        },
+        "text": "=Generate a 5-bullet prep brief for an upcoming sales call with {{ $json.name }} (email: {{ $json.email }}). Bullets: 1. likely-role inferred from email domain, 2. one prediction about why they booked, 3. 2 questions to open with, 4. one objection to anticipate, 5. one resource to send after. Output plain text, no markdown."
+      },
+      "id": "20e704b8-a4c3-40db-9c24-0f29a7d4da30",
+      "name": "Claude \u2014 generate prep brief",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1,
+      "position": [
+        680,
+        300
+      ],
+      "credentials": {
+        "anthropicApi": {
+          "id": "REPLACE_ME",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "sendTo": "ae@yourdomain.com",
+        "subject": "=Prep brief: {{ $('Pull invitee fields').item.json.name }} ({{ $('Pull invitee fields').item.json.scheduledStart }})",
+        "message": "={{ $json.text }}"
+      },
+      "id": "6e272096-d7ee-418a-be42-beee1303d8f8",
+      "name": "Send prep brief to AE",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 1,
+      "position": [
+        900,
+        300
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_ME",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Calendly Webhook (invitee.created)": {
+      "main": [
+        [
+          {
+            "node": "Pull invitee fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pull invitee fields": {
+      "main": [
+        [
+          {
+            "node": "Claude \u2014 generate prep brief",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude \u2014 generate prep brief": {
+      "main": [
+        [
+          {
+            "node": "Send prep brief to AE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c23dfcc4-d4be-48a1-b14b-bf931494c1ba",
+  "id": "95ca00d4-6db1-4fba-8991-595daa26ec26",
+  "meta": {
+    "instanceId": "aiprosol-starter-library-v1"
+  },
+  "tags": [],
+  "pinData": {}
+}

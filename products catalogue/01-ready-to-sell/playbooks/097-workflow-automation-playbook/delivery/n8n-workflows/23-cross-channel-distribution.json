@@ -1,0 +1,206 @@
+{
+  "name": "Aiprosol — Cross-channel content distribution",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "blog-published"
+      },
+      "id": "be83b133-be93-47ac-a50f-62cf06c83e7b",
+      "name": "Blog publish webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "From this blog post, generate JSON with 5 variants tuned for each platform: {linkedin: 280-word post, x_thread: array of 5 tweets, newsletter: 1-paragraph excerpt + CTA, reddit: title + first comment positioning, hackernews: title only}"
+            },
+            {
+              "role": "user",
+              "content": "={{ $json.title }}\\n\\n{{ $json.content }}"
+            }
+          ]
+        },
+        "options": {
+          "responseFormat": "json_object"
+        }
+      },
+      "id": "62e3aeb3-1d0a-47c4-a62a-94096379fca4",
+      "name": "Generate variants",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "post",
+        "operation": "create",
+        "text": "={{ JSON.parse($json.message.content).linkedin }}"
+      },
+      "id": "2a6354a4-41c1-4209-853d-5e8e6a9dad96",
+      "name": "Post LinkedIn",
+      "type": "n8n-nodes-base.linkedIn",
+      "typeVersion": 1,
+      "position": [
+        640,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "tweet",
+        "operation": "create",
+        "text": "={{ JSON.parse($json.message.content).x_thread[0] }}"
+      },
+      "id": "121b84f2-0787-4a47-9a3f-f18aa5f3c7d1",
+      "name": "Post X thread",
+      "type": "n8n-nodes-base.twitter",
+      "typeVersion": 2,
+      "position": [
+        640,
+        250
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "NEWSLETTER_DOC_ID",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "insert",
+              "text": "={{ JSON.parse($json.message.content).newsletter }}\\n\\n"
+            }
+          ]
+        }
+      },
+      "id": "727c9063-624e-4d7f-8838-2954d705b798",
+      "name": "Save to newsletter draft",
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        640,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "#marketing",
+        "text": "=📌 Reddit post drafted: {{ JSON.parse($json.message.content).reddit }} — review before posting"
+      },
+      "id": "876321ec-60a7-4b93-bfbe-789870a77db1",
+      "name": "Slack — Reddit draft",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        640,
+        550
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "#marketing",
+        "text": "=🟠 HN title: {{ JSON.parse($json.message.content).hackernews }}"
+      },
+      "id": "40ea9575-4509-4f7c-b8c8-0254c9c37f2b",
+      "name": "Slack — HN draft",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        640,
+        700
+      ]
+    }
+  ],
+  "connections": {
+    "Generate variants": {
+      "main": [
+        [
+          {
+            "node": "Post LinkedIn",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Post X thread",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Save to newsletter draft",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Slack — Reddit draft",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Slack — HN draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Blog publish webhook": {
+      "main": [
+        [
+          {
+            "node": "Generate variants",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "marketing"
+    },
+    {
+      "name": "distribution"
+    },
+    {
+      "name": "pattern-3"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-playbook-v1"
+  },
+  "pinData": {},
+  "versionId": "6de5b467-3a90-448f-9f93-c26a3efe391f",
+  "id": "9f9cabc4-daf0-479e-a45b-e42627b9f0a8",
+  "_aiprosol": {
+    "description": "Blog publish webhook → AI variants → fan-out: LinkedIn + X + Newsletter + Reddit + HN",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

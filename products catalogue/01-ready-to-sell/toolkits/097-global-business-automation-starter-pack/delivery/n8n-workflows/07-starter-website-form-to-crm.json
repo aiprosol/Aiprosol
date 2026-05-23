@@ -1,0 +1,172 @@
+{
+  "name": "Aiprosol Starter — Website form → simple CRM entry",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-form-simple"
+      },
+      "id": "10d26306-b383-4d04-99aa-013e6d9cc6ee",
+      "name": "Form webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o-mini"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Guess company name and likely role from this email address. Return JSON {company:string, likely_role:string}"
+            },
+            {
+              "role": "user",
+              "content": "={{ $json.email }}"
+            }
+          ]
+        },
+        "options": {
+          "responseFormat": "json_object"
+        }
+      },
+      "id": "b24adf1e-1f6e-4ba5-bea7-d883c14b5763",
+      "name": "AI extract company/role",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "sheet",
+        "operation": "append",
+        "documentId": "LEADS_SHEET_ID",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "Email",
+              "fieldValue": "={{ $('Form webhook').first().json.email }}"
+            },
+            {
+              "fieldId": "Name",
+              "fieldValue": "={{ $('Form webhook').first().json.name }}"
+            },
+            {
+              "fieldId": "Company",
+              "fieldValue": "={{ JSON.parse($json.message.content).company }}"
+            },
+            {
+              "fieldId": "Role guess",
+              "fieldValue": "={{ JSON.parse($json.message.content).likely_role }}"
+            },
+            {
+              "fieldId": "Status",
+              "fieldValue": "New"
+            },
+            {
+              "fieldId": "Date",
+              "fieldValue": "={{ $now.toISO() }}"
+            }
+          ]
+        }
+      },
+      "id": "fff01ec8-3f6e-4603-8258-72c7ebbf4555",
+      "name": "Append lead",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "#leads",
+        "text": "=📝 New lead: {{ $('Form webhook').first().json.name }} ({{ JSON.parse($('AI extract company/role').first().json.message.content).company }})"
+      },
+      "id": "217982fa-58a0-4181-93b7-d548c9e052af",
+      "name": "Slack new lead",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        840,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Form webhook": {
+      "main": [
+        [
+          {
+            "node": "AI extract company/role",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI extract company/role": {
+      "main": [
+        [
+          {
+            "node": "Append lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append lead": {
+      "main": [
+        [
+          {
+            "node": "Slack new lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "starter"
+    },
+    {
+      "name": "lead-capture"
+    },
+    {
+      "name": "pattern-1"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "071cdc96-aaf2-4498-b415-41230b272dff",
+  "id": "b7257d67-2ca0-4fb5-b45b-13b45d1c361d",
+  "_aiprosol": {
+    "description": "Form submission → AI extracts company + role from email signature → row appended to a Leads sheet (basic CRM). No HubSpot needed.",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

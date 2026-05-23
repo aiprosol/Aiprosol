@@ -1,0 +1,156 @@
+{
+  "name": "Finance \u00b7 Stripe new subscription \u2192 MRR log \u2192 Slack",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "stripe-subscription-created",
+        "responseMode": "lastNode"
+      },
+      "id": "1aad4dcc-3403-4bb4-80c2-bf484fd2577d",
+      "name": "Stripe webhook \u00b7 subscription.created",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1",
+              "name": "mrrDelta",
+              "value": "={{ $json.body.data.object.items.data[0].price.unit_amount / 100 }}",
+              "type": "number"
+            },
+            {
+              "id": "2",
+              "name": "customerId",
+              "value": "={{ $json.body.data.object.customer }}",
+              "type": "string"
+            },
+            {
+              "id": "3",
+              "name": "subId",
+              "value": "={{ $json.body.data.object.id }}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "id": "bd8a3a4d-7f8a-4078-a174-f96348717b72",
+      "name": "Compute MRR delta",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://YOUR_PROJECT.supabase.co/rest/v1/mrr_log",
+        "method": "POST",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "customer_id",
+              "value": "={{ $json.customerId }}"
+            },
+            {
+              "name": "subscription_id",
+              "value": "={{ $json.subId }}"
+            },
+            {
+              "name": "mrr_delta",
+              "value": "={{ $json.mrrDelta }}"
+            },
+            {
+              "name": "event",
+              "value": "subscription.created"
+            }
+          ]
+        }
+      },
+      "id": "6d12681e-42e0-4a38-a202-3a2e87aa2884",
+      "name": "Log to MRR table (Supabase)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "post",
+        "channel": "revenue",
+        "text": "=:moneybag: New subscription \u00b7 +${{ $json.mrrDelta }}/mo \u00b7 customer {{ $json.customerId }}"
+      },
+      "id": "c292b5c0-07df-461f-abb9-1a38451d79f8",
+      "name": "Slack #revenue",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        900,
+        300
+      ],
+      "credentials": {
+        "slackApi": {
+          "id": "REPLACE_ME",
+          "name": "Slack workspace"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Stripe webhook \u00b7 subscription.created": {
+      "main": [
+        [
+          {
+            "node": "Compute MRR delta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compute MRR delta": {
+      "main": [
+        [
+          {
+            "node": "Log to MRR table (Supabase)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log to MRR table (Supabase)": {
+      "main": [
+        [
+          {
+            "node": "Slack #revenue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "fec591aa-a80a-457b-ae42-d180a773501e",
+  "id": "ee6b137d-4aa2-4112-904d-7aa68c2a2e9b",
+  "meta": {
+    "instanceId": "aiprosol-starter-library-v1"
+  },
+  "tags": [],
+  "pinData": {}
+}

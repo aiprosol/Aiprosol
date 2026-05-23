@@ -1,0 +1,117 @@
+{
+  "name": "Aiprosol Stack — Pipedrive deal won → OpenAI → Gmail kickoff email",
+  "nodes": [
+    {
+      "parameters": {
+        "events": [
+          "deal.updated"
+        ]
+      },
+      "id": "204e2783-5ac4-49a1-9696-10eec7fc74b5",
+      "name": "Pipedrive deal won",
+      "type": "n8n-nodes-base.pipedriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Draft a 150-word kickoff email. Include link to onboarding doc."
+            },
+            {
+              "role": "user",
+              "content": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        }
+      },
+      "id": "bf9b61cc-2265-407d-969c-965adc2f5c1c",
+      "name": "Draft kickoff",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "operation": "create",
+        "to": "={{ $('Pipedrive deal won').first().json.contact_email }}",
+        "subject": "Welcome aboard",
+        "message": "={{ $json.message.content }}"
+      },
+      "id": "03deec17-4a18-4159-b08e-32b8407cd251",
+      "name": "Gmail draft",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        640,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Pipedrive deal won": {
+      "main": [
+        [
+          {
+            "node": "Draft kickoff",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Draft kickoff": {
+      "main": [
+        [
+          {
+            "node": "Gmail draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "stack"
+    },
+    {
+      "name": "pipedrive"
+    },
+    {
+      "name": "gmail"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "8b371326-3c72-4a2b-8316-74b2a506d2bd",
+  "id": "4ef94436-a9fa-4269-9629-729341a0a282",
+  "_aiprosol": {
+    "description": "Deal moves to 'won' in Pipedrive → OpenAI drafts an onboarding kickoff email → Gmail draft created.",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

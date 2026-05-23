@@ -1,0 +1,177 @@
+{
+  "name": "Aiprosol Starter — Invoice email → forward + log to accounting sheet",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "filters": {
+          "labelIds": [
+            "INVOICES"
+          ],
+          "search": "has:attachment"
+        }
+      },
+      "id": "508baa69-2a54-4b5f-8616-7c7168617c62",
+      "name": "Email trigger — INVOICES label",
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "From this invoice email, return JSON {vendor:string, amount:number, due_date:YYYY-MM-DD, currency:string}"
+            },
+            {
+              "role": "user",
+              "content": "=Subject: {{ $json.subject }}\\nBody: {{ $json.snippet }}"
+            }
+          ]
+        },
+        "options": {
+          "responseFormat": "json_object"
+        }
+      },
+      "id": "57a7b944-e16e-417e-bce2-c3b8aa11eab3",
+      "name": "AI extract",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "sheet",
+        "operation": "append",
+        "documentId": "ACCOUNTING_SHEET_ID",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "Date received",
+              "fieldValue": "={{ $now.toISO() }}"
+            },
+            {
+              "fieldId": "Vendor",
+              "fieldValue": "={{ JSON.parse($json.message.content).vendor }}"
+            },
+            {
+              "fieldId": "Amount",
+              "fieldValue": "={{ JSON.parse($json.message.content).amount }}"
+            },
+            {
+              "fieldId": "Due",
+              "fieldValue": "={{ JSON.parse($json.message.content).due_date }}"
+            }
+          ]
+        }
+      },
+      "id": "0e62a3a8-eb84-4a39-b8cc-62ac7f6b9942",
+      "name": "Append accounting log",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "upload",
+        "name": "=Invoice — {{ JSON.parse($('AI extract').first().json.message.content).vendor }}.pdf",
+        "parents": [
+          "INVOICES_FOLDER_ID"
+        ]
+      },
+      "id": "6abd72da-3307-4b1d-a53e-ab740b25158b",
+      "name": "File PDF in Drive",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        840,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Email trigger — INVOICES label": {
+      "main": [
+        [
+          {
+            "node": "AI extract",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI extract": {
+      "main": [
+        [
+          {
+            "node": "Append accounting log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append accounting log": {
+      "main": [
+        [
+          {
+            "node": "File PDF in Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "starter"
+    },
+    {
+      "name": "finance"
+    },
+    {
+      "name": "pattern-1"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "f2c5b6e8-71fd-4d74-abcf-f47bb7bb2193",
+  "id": "de426358-24b2-4088-b676-c9013e8b2c4a",
+  "_aiprosol": {
+    "description": "Vendor invoice arrives via email → AI extracts vendor + amount + due date → row appended to Accounting Log → original PDF auto-filed in Drive.",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

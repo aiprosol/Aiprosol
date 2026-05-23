@@ -1,0 +1,150 @@
+{
+  "name": "Aiprosol Starter — New social mention → Slack ping",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 15
+            }
+          ]
+        }
+      },
+      "id": "a452481a-e518-423d-8477-61eba3380cd2",
+      "name": "Every 15 min",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "tweet",
+        "operation": "search",
+        "searchText": "YourBrand",
+        "additionalFields": {
+          "resultType": "recent"
+        }
+      },
+      "id": "35f872ee-d84c-43a5-9663-fd422c906246",
+      "name": "Twitter search",
+      "type": "n8n-nodes-base.twitter",
+      "typeVersion": 2,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o-mini"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Score sentiment: positive/neutral/negative. Return only label."
+            },
+            {
+              "role": "user",
+              "content": "={{ $json.text }}"
+            }
+          ]
+        }
+      },
+      "id": "72f4a571-f589-41bc-b817-e9521a1b7bfb",
+      "name": "AI sentiment",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "#mentions",
+        "text": "=🔔 [{{ $json.message.content }}] {{ $('Twitter search').first().json.user.screen_name }}: {{ $('Twitter search').first().json.text }}"
+      },
+      "id": "e218f04f-c6c8-4e78-8263-774a64fd1334",
+      "name": "Slack mention",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        840,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Every 15 min": {
+      "main": [
+        [
+          {
+            "node": "Twitter search",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Twitter search": {
+      "main": [
+        [
+          {
+            "node": "AI sentiment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI sentiment": {
+      "main": [
+        [
+          {
+            "node": "Slack mention",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "starter"
+    },
+    {
+      "name": "social"
+    },
+    {
+      "name": "pattern-5"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "421f2cef-3cc0-465c-a198-200863dfce39",
+  "id": "c6915922-0ef0-4dc1-8633-7fddf59ad158",
+  "_aiprosol": {
+    "description": "Polls Twitter/X (and optional Instagram) for new mentions of your brand → Slack ping with sentiment label so you can engage in real-time.",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

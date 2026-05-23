@@ -1,0 +1,382 @@
+{
+  "name": "Aiprosol — Lead 4-component scoring",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-score"
+      },
+      "id": "11ff79f5-d094-400d-a3e5-2e403dce8e16",
+      "name": "Webhook · /lead",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o-mini"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Score FIT 0-40. ICP: 10-200 employees, professional services/SaaS, UK/EU/US. Return integer."
+            },
+            {
+              "role": "user",
+              "content": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        }
+      },
+      "id": "13159a24-5b6d-4d1c-8340-12873a35b874",
+      "name": "FIT score 0-40",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        440,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o-mini"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Score INTENT 0-30. Signals: page visited (pricing=10, blog=4), specificity of stated problem, budget signal. Return integer."
+            },
+            {
+              "role": "user",
+              "content": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        }
+      },
+      "id": "228e4f93-de4f-489a-9ed7-a9e72007def0",
+      "name": "INTENT score 0-30",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        440,
+        350
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o-mini"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Score ENGAGEMENT 0-20. Pages, time, opens, clicks. Return integer."
+            },
+            {
+              "role": "user",
+              "content": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        }
+      },
+      "id": "a408ec93-aaa1-43eb-b66d-56a0c77176ed",
+      "name": "ENGAGEMENT score 0-20",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        440,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o-mini"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Score URGENCY 0-10. Stated timeline + recent trigger events. Return integer."
+            },
+            {
+              "role": "user",
+              "content": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        }
+      },
+      "id": "a0453930-233d-483e-ab2e-558dc17e35e1",
+      "name": "URGENCY score 0-10",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        440,
+        650
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition"
+      },
+      "id": "5d3849e6-0363-4c1a-98e9-4130285186ef",
+      "name": "Merge scores",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        640,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const fit=Number($('FIT score 0-40').first().json.message.content); const intent=Number($('INTENT score 0-30').first().json.message.content); const eng=Number($('ENGAGEMENT score 0-20').first().json.message.content); const urg=Number($('URGENCY score 0-10').first().json.message.content); const total=fit+intent+eng+urg; const tier=total>=80?'hot':total>=60?'warm':total>=40?'watch':'cold'; return [{json:{...$('Webhook · /lead').first().json, fit, intent, engagement:eng, urgency:urg, total, tier}}];"
+      },
+      "id": "2aea0cc9-4407-4780-a94d-6fb0b5d8ba4a",
+      "name": "Composite + tier",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        840,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "contact",
+        "operation": "upsert",
+        "email": "={{ $json.email }}",
+        "additionalFields": {
+          "properties": {
+            "property": [
+              {
+                "property": "lead_score",
+                "value": "={{ $json.total }}"
+              },
+              {
+                "property": "lead_tier",
+                "value": "={{ $json.tier }}"
+              },
+              {
+                "property": "fit_score",
+                "value": "={{ $json.fit }}"
+              }
+            ]
+          }
+        }
+      },
+      "id": "7056a70d-4649-4b77-954e-6cc75611686c",
+      "name": "HubSpot — upsert",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "1",
+              "leftValue": "={{ $json.tier }}",
+              "rightValue": "hot",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ]
+        }
+      },
+      "id": "3221bd19-2ed9-4ba3-8b2a-8de5e1d89421",
+      "name": "Slack if hot",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1240,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "#sales-hot",
+        "text": "=🔥 HOT LEAD — score {{ $json.total }} ({{ $json.fit }}/40 fit, {{ $json.intent }}/30 intent)\\n{{ $json.email }} at {{ $json.company }}"
+      },
+      "id": "a5bde0a2-f930-495c-bb07-184ae9a1f90c",
+      "name": "Slack hot ping",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        1440,
+        350
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook · /lead": {
+      "main": [
+        [
+          {
+            "node": "FIT score 0-40",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "INTENT score 0-30",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "ENGAGEMENT score 0-20",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "URGENCY score 0-10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FIT score 0-40": {
+      "main": [
+        [
+          {
+            "node": "Merge scores",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "INTENT score 0-30": {
+      "main": [
+        [
+          {
+            "node": "Merge scores",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "ENGAGEMENT score 0-20": {
+      "main": [
+        [
+          {
+            "node": "Merge scores",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "URGENCY score 0-10": {
+      "main": [
+        [
+          {
+            "node": "Merge scores",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Merge scores": {
+      "main": [
+        [
+          {
+            "node": "Composite + tier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Composite + tier": {
+      "main": [
+        [
+          {
+            "node": "HubSpot — upsert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HubSpot — upsert": {
+      "main": [
+        [
+          {
+            "node": "Slack if hot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slack if hot": {
+      "main": [
+        [
+          {
+            "node": "Slack hot ping",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "lead-gen"
+    },
+    {
+      "name": "scoring"
+    },
+    {
+      "name": "pattern-3"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "f81f913d-555e-4bac-bdd1-f0087a288c89",
+  "id": "59101107-298a-4d96-a0a5-a442741fb1e6",
+  "_aiprosol": {
+    "description": "Webhook → 4 parallel AI scorers → composite → CRM + Slack",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

@@ -1,0 +1,176 @@
+{
+  "name": "Aiprosol — Competitor changelog monitor",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 10 * * 1"
+            }
+          ]
+        }
+      },
+      "id": "fe4f7549-26b5-43b2-8ed5-13e2d65154ed",
+      "name": "Mon 10am",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://competitor1.com/feed",
+        "options": {
+          "maxItems": 20
+        }
+      },
+      "id": "a30e021a-9caf-43a3-9d61-1d1a1fb2ecbc",
+      "name": "RSS competitors",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.1,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You're a competitive intel analyst at Aiprosol (AI automation consultancy). For each item, rank: genuine_threat | interesting | noise. Return JSON {items:[{title, url, rank, why}]}"
+            },
+            {
+              "role": "user",
+              "content": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        },
+        "options": {
+          "responseFormat": "json_object"
+        }
+      },
+      "id": "9aba490d-a823-4ba0-a131-c4d8b777695a",
+      "name": "AI threat rank",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "return JSON.parse($input.first().json.message.content).items.filter(i => i.rank === 'genuine_threat').map(json => ({json}));"
+      },
+      "id": "74b1df46-2d64-41ef-a357-e72ddcbbbe02",
+      "name": "Filter: genuine threats",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        840,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "#competitive-intel",
+        "text": "=🎯 *Competitor watch — {{ $now.format('dd MMM') }}*\\n\\n{{ $items().map(i => `• [${i.json.title}](${i.json.url}) — ${i.json.why}`).join('\\n') }}"
+      },
+      "id": "0ff0abc8-71e4-4189-acc5-1468d009160f",
+      "name": "Slack — competitive intel",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        1040,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Mon 10am": {
+      "main": [
+        [
+          {
+            "node": "RSS competitors",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS competitors": {
+      "main": [
+        [
+          {
+            "node": "AI threat rank",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI threat rank": {
+      "main": [
+        [
+          {
+            "node": "Filter: genuine threats",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter: genuine threats": {
+      "main": [
+        [
+          {
+            "node": "Slack — competitive intel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "marketing"
+    },
+    {
+      "name": "competitive"
+    },
+    {
+      "name": "pattern-5"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-playbook-v1"
+  },
+  "pinData": {},
+  "versionId": "8db78460-b8d2-4090-82d2-93a84d7b5dd4",
+  "id": "660310f3-4f74-40d8-8822-aa1fb7243e76",
+  "_aiprosol": {
+    "description": "Mon 10am → poll 5 competitor RSS → AI threat-rank → Slack",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

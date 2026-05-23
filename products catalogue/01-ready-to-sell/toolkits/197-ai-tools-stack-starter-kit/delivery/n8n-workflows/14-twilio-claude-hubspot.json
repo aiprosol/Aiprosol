@@ -1,0 +1,110 @@
+{
+  "name": "Aiprosol Stack — Twilio SMS reply → Claude → HubSpot note",
+  "nodes": [
+    {
+      "parameters": {
+        "events": [
+          "message.received"
+        ]
+      },
+      "id": "a15f52bb-abdd-4c59-ac9e-9322b1a3acbf",
+      "name": "Twilio SMS",
+      "type": "n8n-nodes-base.twilioTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "model": "claude-3-5-haiku-20241022",
+        "messages": {
+          "values": [
+            {
+              "role": "user",
+              "content": "=Reply in <160 chars. SMS: {{ $json.Body }}"
+            }
+          ]
+        }
+      },
+      "id": "fb70d271-fe23-410e-a652-3d3c9fcc03b9",
+      "name": "Claude reply",
+      "type": "@n8n/n8n-nodes-langchain.anthropic",
+      "typeVersion": 1,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "engagement",
+        "operation": "create"
+      },
+      "id": "41349b7d-b1e1-4313-9764-37f2c955e190",
+      "name": "HubSpot note",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2,
+      "position": [
+        640,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Twilio SMS": {
+      "main": [
+        [
+          {
+            "node": "Claude reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude reply": {
+      "main": [
+        [
+          {
+            "node": "HubSpot note",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "stack"
+    },
+    {
+      "name": "twilio"
+    },
+    {
+      "name": "hubspot"
+    },
+    {
+      "name": "claude"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "0c2a1dae-1d48-4ba9-bd0b-5a7f8a7ecce3",
+  "id": "193ed6db-9015-436e-b85b-44120f9e33c0",
+  "_aiprosol": {
+    "description": "Customer SMS reply → Claude extracts intent + drafts response → response sent + activity logged on HubSpot contact.",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

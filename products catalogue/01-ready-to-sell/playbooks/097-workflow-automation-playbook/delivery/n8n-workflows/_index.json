@@ -1,0 +1,281 @@
+{
+  "version": "1.0",
+  "count": 25,
+  "workflows": [
+    {
+      "file": "01-inbound-lead-score-route.json",
+      "title": "Inbound lead \u2192 CRM + lead score + Slack",
+      "description": "Sales \u2014 Pattern 1 (linear pipeline). Webhook trigger receives lead form data. OpenAI scores against ICP. HubSpot creates contact. Slack pings sales channel with score and one-line summary.",
+      "nodes": 7,
+      "tags": [
+        "sales",
+        "lead-gen",
+        "pattern-1"
+      ]
+    },
+    {
+      "file": "02-discovery-call-to-proposal.json",
+      "title": "Discovery-call recording \u2192 action items + draft proposal",
+      "description": "Sales \u2014 Pattern 1 + AI. Triggered when Fireflies/Otter posts a meeting transcript webhook. Extracts: pain points, budget signals, decision criteria, next steps. Drafts a tailored proposal in Google Docs.",
+      "nodes": 5,
+      "tags": [
+        "sales",
+        "ai-drafting",
+        "pattern-1"
+      ]
+    },
+    {
+      "file": "03-stale-deal-radar.json",
+      "title": "Stale-deal radar \u2014 daily pipeline hygiene",
+      "description": "Sales \u2014 Pattern 4 (scheduled aggregation). Every weekday 8am pull all deals from HubSpot, find ones with no activity in >14 days, post a digest to Slack with last-touch dates and recommended next actions.",
+      "nodes": 5,
+      "tags": [
+        "sales",
+        "pipeline-hygiene",
+        "pattern-4"
+      ]
+    },
+    {
+      "file": "04-pipeline-review-autodoc.json",
+      "title": "Pipeline review prep auto-doc",
+      "description": "Sales \u2014 Pattern 4. Every Monday 7am pulls all deals, groups by stage, computes totals + week-over-week changes, generates a markdown brief in Notion. Sales lead opens it before the 10am pipeline meeting.",
+      "nodes": 6,
+      "tags": [
+        "sales",
+        "reporting",
+        "pattern-4"
+      ]
+    },
+    {
+      "file": "05-deal-stage-change-email.json",
+      "title": "Deal stage change \u2192 AI-drafted next-step email",
+      "description": "Sales \u2014 Pattern 1 + Approval gate. HubSpot webhook fires on deal stage change. AI drafts the appropriate next email based on which stage was entered (demo-booked \u2192 confirmation, proposal-sent \u2192 check-in, etc.). Saves as draft in Gmail.",
+      "nodes": 6,
+      "tags": [
+        "sales",
+        "ai-drafting",
+        "pattern-1"
+      ]
+    },
+    {
+      "file": "06-welcome-packet-fanout.json",
+      "title": "Welcome packet \u2014 60-second customer onboarding fan-out",
+      "description": "Customer success \u2014 Pattern 3 (fan-out). Stripe new-customer webhook fires 5 actions in parallel: welcome email, Slack #customers channel ping, Notion project workspace, calendar kickoff slot, Trello onboarding board.",
+      "nodes": 6,
+      "tags": [
+        "customer-success",
+        "onboarding",
+        "pattern-3"
+      ]
+    },
+    {
+      "file": "07-onboarding-milestones.json",
+      "title": "Onboarding milestone tracker \u2014 Day 1/7/30 checkpoints",
+      "description": "Customer success \u2014 Pattern 7 (long-running orchestrator). On new customer, schedules 3 future checkpoints: Day 1 'how was kickoff?', Day 7 'first deliverable shipped?', Day 30 'are you using the thing?'. Each fires an automated check + Slack if a milestone is missed.",
+      "nodes": 7,
+      "tags": [
+        "customer-success",
+        "long-running",
+        "pattern-7"
+      ]
+    },
+    {
+      "file": "08-at-risk-early-warning.json",
+      "title": "At-risk customer early-warning \u2014 daily scan",
+      "description": "Customer success \u2014 Pattern 4. Every day 8am pull all active customers, check for at-risk signals (no login 14d, support tickets +50%, NPS<7, payment retry). AI scores risk 0-100. Anyone over 60 \u2192 Slack ping CS lead with full context.",
+      "nodes": 6,
+      "tags": [
+        "customer-success",
+        "retention",
+        "pattern-4"
+      ]
+    },
+    {
+      "file": "09-qbr-autodraft.json",
+      "title": "Quarterly Business Review auto-draft from usage data",
+      "description": "Customer success \u2014 Pattern 4. On the 1st of each new quarter, for each active customer, pull last 90 days of usage + outcomes data, generate a draft QBR slide deck (markdown that Google Slides API converts to deck). CS team edits + presents.",
+      "nodes": 6,
+      "tags": [
+        "customer-success",
+        "reporting",
+        "pattern-4"
+      ]
+    },
+    {
+      "file": "10-nps-detractor-recovery.json",
+      "title": "NPS detractor recovery loop",
+      "description": "Customer success \u2014 Pattern 2 (branching by classifier). NPS response webhook arrives. Score 0-6 = detractor \u2192 branch into AI-generated personal apology + recovery offer + book-call CTA; 7-8 = passive \u2192 ask for one specific improvement; 9-10 = promoter \u2192 ask for testimonial + referral.",
+      "nodes": 6,
+      "tags": [
+        "customer-success",
+        "branching",
+        "pattern-2"
+      ]
+    },
+    {
+      "file": "11-slack-daily-summariser.json",
+      "title": "Slack channel daily summariser",
+      "description": "Operations \u2014 Pattern 4. Every 18:00 reads the last 24h of messages from configured channels (e.g., #engineering, #sales, #cs), runs AI summary, posts 'what happened today in 5 bullets' to #daily-digest.",
+      "nodes": 7,
+      "tags": [
+        "operations",
+        "summarisation",
+        "pattern-4"
+      ]
+    },
+    {
+      "file": "12-meeting-action-items.json",
+      "title": "Meeting recording \u2192 action items + owner assignment",
+      "description": "Operations \u2014 Pattern 1 + AI. Fireflies/Otter webhook posts meeting transcript. AI extracts action items with proposed owners. Posts to Slack + creates Linear/Asana tasks for each.",
+      "nodes": 5,
+      "tags": [
+        "operations",
+        "meetings",
+        "pattern-1"
+      ]
+    },
+    {
+      "file": "13-vendor-renewal-radar.json",
+      "title": "Vendor renewal radar \u2014 60-day forward look",
+      "description": "Operations \u2014 Pattern 4. Daily 9am pull all vendors from Notion DB. For any renewing within 60 days: pull last-90d usage if SaaS, draft a 'keep / negotiate / cancel' note via AI, ping the finance channel with priority sorted by spend.",
+      "nodes": 5,
+      "tags": [
+        "operations",
+        "finance",
+        "pattern-4"
+      ]
+    },
+    {
+      "file": "14-document-filing.json",
+      "title": "Document filing auto-router (Drive uploads \u2192 AI-categorised \u2192 moved)",
+      "description": "Operations \u2014 Pattern 2. New file in Drive 'Inbox' folder \u2192 AI classifies (invoice / contract / receipt / proposal / personal) \u2192 moved to right destination folder + tagged.",
+      "nodes": 7,
+      "tags": [
+        "operations",
+        "documents",
+        "pattern-2"
+      ]
+    },
+    {
+      "file": "15-async-standup.json",
+      "title": "Async standup aggregator",
+      "description": "Operations \u2014 Pattern 4. Every weekday 9:30, post a standup prompt in DM to each team member; collect responses by 10:00; AI-summarise blockers across team; post to #standup channel.",
+      "nodes": 7,
+      "tags": [
+        "operations",
+        "team",
+        "pattern-4"
+      ]
+    },
+    {
+      "file": "16-invoice-ocr-accounting.json",
+      "title": "Invoice OCR \u2192 accounting system entry",
+      "description": "Documents & finance \u2014 Pattern 1 + vision. Email with PDF attachment hits accounts@yourdomain \u2192 AI vision extracts vendor, amount, due date, line items \u2192 creates entry in Xero / QuickBooks \u2192 Slack confirm + file in Drive.",
+      "nodes": 5,
+      "tags": [
+        "finance",
+        "ocr",
+        "pattern-1"
+      ]
+    },
+    {
+      "file": "17-receipt-photo-expense.json",
+      "title": "Receipt photo \u2192 categorised expense in accounting tool",
+      "description": "Documents & finance \u2014 Pattern 1 + vision. Photo uploaded to a 'Receipts' Drive folder (or sent to receipts@) \u2192 AI extracts vendor, amount, category \u2192 posted to Brex/Ramp/QuickBooks as an expense.",
+      "nodes": 4,
+      "tags": [
+        "finance",
+        "ocr",
+        "pattern-1"
+      ]
+    },
+    {
+      "file": "18-contract-redline-assistant.json",
+      "title": "Contract redline assistant (approval-gated)",
+      "description": "Documents & finance \u2014 Pattern 6 (approval gate). New contract dropped in a Drive folder \u2192 AI compares to your standard terms \u2192 flags risky clauses \u2192 posts a Slack thread with 'Approve / Edit / Reject' buttons \u2192 only files final version when approved.",
+      "nodes": 3,
+      "tags": [
+        "finance",
+        "legal",
+        "pattern-6"
+      ]
+    },
+    {
+      "file": "19-tax-document-collator.json",
+      "title": "Tax document auto-collator (year-end)",
+      "description": "Documents & finance \u2014 Pattern 4. December 15th cron: pulls all invoices, receipts, payroll reports from the year \u2192 AI generates a categorised summary + missing-document checklist \u2192 emails the accountant. Saves a week of January chaos.",
+      "nodes": 7,
+      "tags": [
+        "finance",
+        "tax",
+        "pattern-4"
+      ]
+    },
+    {
+      "file": "20-cash-position-daily.json",
+      "title": "Cash position daily snapshot",
+      "description": "Documents & finance \u2014 Pattern 4. Every weekday 8:30 pull bank balances (Plaid / banking API) + AR aging + AP due-in-7d \u2192 assemble a 4-line cash summary \u2192 post to #finance.",
+      "nodes": 7,
+      "tags": [
+        "finance",
+        "cash",
+        "pattern-4"
+      ]
+    },
+    {
+      "file": "21-question-to-blog-idea.json",
+      "title": "Inbound customer question \u2192 blog post idea",
+      "description": "Marketing & content \u2014 Pattern 4. Weekly Mon 9am scan: all customer-support emails + chat questions from the past week \u2192 AI clusters into themes \u2192 for each theme of >3 questions, draft a blog post outline \u2192 post to #content channel for review.",
+      "nodes": 6,
+      "tags": [
+        "marketing",
+        "content",
+        "pattern-4"
+      ]
+    },
+    {
+      "file": "22-competitor-changelog-monitor.json",
+      "title": "Competitor changelog / blog monitor",
+      "description": "Marketing & content \u2014 Pattern 5 (polling). Every Monday 10am poll RSS feeds of 5 competitor blogs + changelog pages \u2192 AI summarises what shipped \u2192 ranks 'genuine threat / interesting / noise' \u2192 Slack #competitive-intel.",
+      "nodes": 5,
+      "tags": [
+        "marketing",
+        "competitive",
+        "pattern-5"
+      ]
+    },
+    {
+      "file": "23-cross-channel-distribution.json",
+      "title": "Cross-channel content distribution (one source \u2192 5 channels)",
+      "description": "Marketing & content \u2014 Pattern 3 (fan-out). New blog post published webhook \u2192 AI generates variants \u2192 fan-out: Twitter thread, LinkedIn post, newsletter excerpt, Reddit-friendly post, Hacker News title.",
+      "nodes": 7,
+      "tags": [
+        "marketing",
+        "distribution",
+        "pattern-3"
+      ]
+    },
+    {
+      "file": "24-seo-audit-weekly.json",
+      "title": "SEO auto-audit weekly",
+      "description": "Marketing & content \u2014 Pattern 4. Every Monday 11am: pull Google Search Console + Ahrefs data for top 50 pages \u2192 AI identifies pages that dropped >5 positions, pages with low CTR, queries you're #11-#20 for \u2192 posts a 5-bullet 'this week's SEO priorities' to #marketing.",
+      "nodes": 6,
+      "tags": [
+        "marketing",
+        "seo",
+        "pattern-4"
+      ]
+    },
+    {
+      "file": "25-ugc-sentiment-digest.json",
+      "title": "User-generated content sentiment digest",
+      "description": "Marketing & content \u2014 Pattern 4 + AI. Every Friday 16:00 pull: Twitter mentions, LinkedIn comments, app store reviews, support emails, NPS comments from the week \u2192 AI extracts themes + sentiment \u2192 weekly digest to founders.",
+      "nodes": 9,
+      "tags": [
+        "marketing",
+        "voice-of-customer",
+        "pattern-4"
+      ]
+    }
+  ]
+}

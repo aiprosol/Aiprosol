@@ -1,0 +1,293 @@
+{
+  "name": "Aiprosol — Round-robin rep assignment",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "hot-lead-assign"
+      },
+      "id": "7f46c5fe-afe9-4dd1-acad-f8e582edfe4a",
+      "name": "Hot lead webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "sheet",
+        "operation": "read",
+        "documentId": "REPS_SHEET_ID",
+        "filters": {
+          "values": [
+            {
+              "lookupColumn": "territory",
+              "lookupValue": "={{ $json.country_code }}"
+            }
+          ]
+        }
+      },
+      "id": "357399fc-2071-4ea8-80a4-597b2832f56a",
+      "name": "Get rep table",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const sorted = $input.all().sort((a,b) => a.json.current_count - b.json.current_count); return [sorted[0]];"
+      },
+      "id": "1c50aa88-12a7-4d83-a54c-8f56004a2c75",
+      "name": "Pick lowest-load rep",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "sheet",
+        "operation": "update",
+        "documentId": "REPS_SHEET_ID",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "current_count",
+              "fieldValue": "={{ $json.current_count + 1 }}"
+            },
+            {
+              "fieldId": "last_assigned",
+              "fieldValue": "={{ $now.toISO() }}"
+            }
+          ]
+        }
+      },
+      "id": "5f3cbae6-ea2a-4874-b909-288fecb7d078",
+      "name": "Update rep load",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        840,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "select": "user",
+        "user": "={{ $json.slack_user_id }}",
+        "text": "=🔥 *Hot lead — 5 min SLA*\\n{{ $('Hot lead webhook').first().json.name }} at {{ $('Hot lead webhook').first().json.company }}\\nScore: {{ $('Hot lead webhook').first().json.total }}/100\\nProblem: {{ $('Hot lead webhook').first().json.problem }}\\nPhone: {{ $('Hot lead webhook').first().json.phone || 'not provided' }}\\nCalendar: {{ $('Hot lead webhook').first().json.calendar_link }}"
+      },
+      "id": "4a728853-03b4-4c48-8af8-45bca5297719",
+      "name": "Slack DM rep — 5min SLA",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        1040,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resume": "timeInterval",
+        "amount": 24,
+        "unit": "hours"
+      },
+      "id": "98716a68-86d8-44de-95da-6c4aa0ee4276",
+      "name": "Wait 24h",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "contact",
+        "operation": "get",
+        "contactId": "={{ $('Hot lead webhook').first().json.contact_id }}"
+      },
+      "id": "c9cf0abd-9bb3-4807-9ebe-6180563b45ef",
+      "name": "Check if contacted",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2,
+      "position": [
+        1440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true
+          },
+          "conditions": [
+            {
+              "id": "1",
+              "leftValue": "={{ $json.properties.last_outreach_at || '' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ]
+        }
+      },
+      "id": "98c81fcb-ecbc-4bb6-95c4-ae483ba1127e",
+      "name": "Escalate if no contact",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "#sales-leadership",
+        "text": "=⚠️ 24h SLA breach: {{ $('Hot lead webhook').first().json.name }} not yet contacted by {{ $('Pick lowest-load rep').first().json.name }}"
+      },
+      "id": "8a4a6b7f-709b-4922-b930-bf4a3a16bb7e",
+      "name": "Escalate to manager",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        1840,
+        250
+      ]
+    }
+  ],
+  "connections": {
+    "Hot lead webhook": {
+      "main": [
+        [
+          {
+            "node": "Get rep table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get rep table": {
+      "main": [
+        [
+          {
+            "node": "Pick lowest-load rep",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pick lowest-load rep": {
+      "main": [
+        [
+          {
+            "node": "Update rep load",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update rep load": {
+      "main": [
+        [
+          {
+            "node": "Slack DM rep — 5min SLA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slack DM rep — 5min SLA": {
+      "main": [
+        [
+          {
+            "node": "Wait 24h",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 24h": {
+      "main": [
+        [
+          {
+            "node": "Check if contacted",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check if contacted": {
+      "main": [
+        [
+          {
+            "node": "Escalate if no contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Escalate if no contact": {
+      "main": [
+        [
+          {
+            "node": "Escalate to manager",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "lead-gen"
+    },
+    {
+      "name": "sla"
+    },
+    {
+      "name": "routing"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "1c1d9fc5-8ed6-47e3-a013-176704bf1549",
+  "id": "caf75bc5-df5d-4bfd-9af9-537c2f1b5c49",
+  "_aiprosol": {
+    "description": "Hot lead → territory + workload check → assign rep → Slack with SLA",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

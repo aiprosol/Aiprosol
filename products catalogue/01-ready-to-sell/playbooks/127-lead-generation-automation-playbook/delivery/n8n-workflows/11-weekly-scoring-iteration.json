@@ -1,0 +1,250 @@
+{
+  "name": "Aiprosol — Weekly scoring iteration",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 9 * * 1"
+            }
+          ]
+        }
+      },
+      "id": "1117b85b-afc1-4933-8828-2f1fde254054",
+      "name": "Mon 9am",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "deal",
+        "operation": "getAll",
+        "filters": {
+          "propertiesCollection": {
+            "properties": [
+              "lead_score",
+              "fit_score",
+              "intent_score",
+              "engagement_score",
+              "urgency_score",
+              "amount"
+            ]
+          }
+        }
+      },
+      "id": "880e0527-ea82-4e3f-a55f-7e31d38cf20c",
+      "name": "Closed-won 90d",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2,
+      "position": [
+        440,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "deal",
+        "operation": "getAll",
+        "filters": {
+          "propertiesCollection": {
+            "properties": [
+              "lead_score",
+              "fit_score",
+              "intent_score",
+              "engagement_score",
+              "urgency_score",
+              "amount"
+            ]
+          }
+        }
+      },
+      "id": "2ba162da-221c-4284-bd2c-b48e0dd8d2cf",
+      "name": "Closed-lost 90d",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2,
+      "position": [
+        440,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition"
+      },
+      "id": "402d3938-79e2-4d08-98fc-4d73aa0ba9fa",
+      "name": "Merge + analyse",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const won = $('Closed-won 90d').all().map(i => i.json); const lost = $('Closed-lost 90d').all().map(i => i.json); const avg = (a,f) => a.reduce((s,i)=>s+Number(i[f]||0),0)/a.length; return [{json: {won_avg_score: avg(won,'lead_score'), lost_avg_score: avg(lost,'lead_score'), won_avg_fit: avg(won,'fit_score'), lost_avg_fit: avg(lost,'fit_score'), won_avg_intent: avg(won,'intent_score'), lost_avg_intent: avg(lost,'intent_score'), spread_fit: avg(won,'fit_score')-avg(lost,'fit_score'), spread_intent: avg(won,'intent_score')-avg(lost,'intent_score')}}];"
+      },
+      "id": "c942f76b-429d-42ac-85dc-566204543ca6",
+      "name": "Compute predictiveness",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        840,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You're a sales-ops analyst. Based on which scoring components have the biggest spread between won and lost deals, recommend a weight adjustment. Don't recommend changes for <50 deals."
+            },
+            {
+              "role": "user",
+              "content": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        }
+      },
+      "id": "0d687fbf-cbd9-43bb-85dd-357923a3f853",
+      "name": "AI recommendation",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        1040,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "#sales-ops",
+        "text": "=📊 *Weekly scoring review*\\n\\nWon avg: {{ $('Compute predictiveness').first().json.won_avg_score }}\\nLost avg: {{ $('Compute predictiveness').first().json.lost_avg_score }}\\n\\n{{ $json.message.content }}"
+      },
+      "id": "f61aa064-5345-4a1e-98da-c4898364324e",
+      "name": "Slack Monday",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        1240,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Mon 9am": {
+      "main": [
+        [
+          {
+            "node": "Closed-won 90d",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Closed-lost 90d",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Closed-won 90d": {
+      "main": [
+        [
+          {
+            "node": "Merge + analyse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Closed-lost 90d": {
+      "main": [
+        [
+          {
+            "node": "Merge + analyse",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge + analyse": {
+      "main": [
+        [
+          {
+            "node": "Compute predictiveness",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compute predictiveness": {
+      "main": [
+        [
+          {
+            "node": "AI recommendation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI recommendation": {
+      "main": [
+        [
+          {
+            "node": "Slack Monday",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "lead-gen"
+    },
+    {
+      "name": "iteration"
+    },
+    {
+      "name": "pattern-4"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "b7373c88-05af-4c5c-a40c-d05df5ae2d7b",
+  "id": "181eacab-015e-4534-8e0f-6f5c82f40f88",
+  "_aiprosol": {
+    "description": "Mon 9am → 90d closed deals → score-vs-outcome analysis → adjustment recommendation",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

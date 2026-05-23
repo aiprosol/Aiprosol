@@ -1,0 +1,131 @@
+{
+  "name": "Sales \u00b7 Lead inactive 14d \u2192 personalised re-engagement",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 9 * * *"
+            }
+          ]
+        }
+      },
+      "id": "347ac20c-3041-4e2d-85a9-5fb4c5d6d93a",
+      "name": "Cron \u00b7 daily 9am",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://YOUR_API/leads/inactive?days=14",
+        "method": "GET"
+      },
+      "id": "8cd6f555-c4ed-4daa-a030-7061a3d45ed2",
+      "name": "Find leads inactive 14d",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "model": "claude-3-5-sonnet-20241022",
+        "options": {
+          "temperature": 0.4,
+          "maxTokensToSample": 300
+        },
+        "text": "=Write a re-engagement email to {{ $json.name }} who went silent 14 days ago. Last touch: {{ $json.lastTouch }}. Their challenge: {{ $json.primaryChallenge }}. 100 words max. End with one specific question."
+      },
+      "id": "f640cf29-2e92-4e5f-9073-84ca9d9d4a3c",
+      "name": "Claude \u00b7 personalised re-engagement",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1,
+      "position": [
+        680,
+        300
+      ],
+      "credentials": {
+        "anthropicApi": {
+          "id": "REPLACE_ME",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "sendTo": "={{ $('Find leads inactive 14d').item.json.email }}",
+        "subject": "Still thinking about it?",
+        "message": "={{ $json.text }}"
+      },
+      "id": "18ca7f8c-b0cb-469e-bb5b-dad986608b34",
+      "name": "Send re-engagement",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 1,
+      "position": [
+        900,
+        300
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_ME",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Cron \u00b7 daily 9am": {
+      "main": [
+        [
+          {
+            "node": "Find leads inactive 14d",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find leads inactive 14d": {
+      "main": [
+        [
+          {
+            "node": "Claude \u00b7 personalised re-engagement",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude \u00b7 personalised re-engagement": {
+      "main": [
+        [
+          {
+            "node": "Send re-engagement",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "90ffb669-692b-4d34-9b79-68760ae46a85",
+  "id": "3d9333d9-f0a3-44ea-8f11-759529a09796",
+  "meta": {
+    "instanceId": "aiprosol-starter-library-v1"
+  },
+  "tags": [],
+  "pinData": {}
+}

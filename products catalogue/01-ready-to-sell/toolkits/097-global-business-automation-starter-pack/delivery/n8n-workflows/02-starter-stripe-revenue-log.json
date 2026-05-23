@@ -1,0 +1,120 @@
+{
+  "name": "Aiprosol Starter — Stripe payment → Sheet log + Slack",
+  "nodes": [
+    {
+      "parameters": {
+        "events": [
+          "payment_intent.succeeded"
+        ]
+      },
+      "id": "15981cac-b961-4357-90dd-7810158039fa",
+      "name": "Stripe trigger",
+      "type": "n8n-nodes-base.stripeTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "sheet",
+        "operation": "append",
+        "documentId": "SALES_SHEET_ID",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "Date",
+              "fieldValue": "={{ $now.toISO() }}"
+            },
+            {
+              "fieldId": "Customer",
+              "fieldValue": "={{ $json.customer_email }}"
+            },
+            {
+              "fieldId": "Amount",
+              "fieldValue": "={{ $json.amount / 100 }}"
+            },
+            {
+              "fieldId": "Country",
+              "fieldValue": "={{ $json.country }}"
+            }
+          ]
+        }
+      },
+      "id": "63c7d6ac-2f14-4fd5-916c-929ccd8992e9",
+      "name": "Append sale",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "#sales",
+        "text": "=🎉 New sale: ${{ $('Stripe trigger').first().json.amount/100 }} from {{ $('Stripe trigger').first().json.customer_email }}"
+      },
+      "id": "26402fd0-2f18-44ff-9667-65ef1e1d5ca8",
+      "name": "Slack sale",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        640,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Stripe trigger": {
+      "main": [
+        [
+          {
+            "node": "Append sale",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append sale": {
+      "main": [
+        [
+          {
+            "node": "Slack sale",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "starter"
+    },
+    {
+      "name": "revenue"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "f8012488-71e4-4e86-a5d2-0c619c7d20e3",
+  "id": "1f903b05-db57-496f-b3aa-2494f5c02738",
+  "_aiprosol": {
+    "description": "Every Stripe payment writes a row to a Sales Log sheet and pings #sales channel. The Day-2 challenge automation.",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

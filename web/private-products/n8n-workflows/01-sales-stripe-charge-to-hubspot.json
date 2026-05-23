@@ -1,0 +1,121 @@
+{
+  "name": "Sales \u00b7 Stripe charge \u2192 HubSpot deal closed-won",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "stripe-charge-succeeded",
+        "responseMode": "lastNode",
+        "options": {
+          "responseHeaders": {
+            "entries": []
+          }
+        }
+      },
+      "id": "963e5e44-7d06-4abc-bf4e-bf7e87089107",
+      "name": "Stripe Webhook (charge.succeeded)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "manual",
+        "duplicateItem": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1",
+              "name": "email",
+              "value": "={{ $json.body.data.object.customer_email }}",
+              "type": "string"
+            },
+            {
+              "id": "2",
+              "name": "amount",
+              "value": "={{ $json.body.data.object.amount / 100 }}",
+              "type": "number"
+            },
+            {
+              "id": "3",
+              "name": "customerId",
+              "value": "={{ $json.body.data.object.customer }}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "id": "dcec28e9-25c3-4c25-bcf2-061ac41a5737",
+      "name": "Extract customer fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [
+        480,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "resource": "deal",
+        "additionalFields": {
+          "amount": "={{ $json.amount }}",
+          "dealName": "Stripe charge for {{ $json.email }}",
+          "stage": "closedwon"
+        }
+      },
+      "id": "0c1ccdfb-6cdb-415e-a7d3-8ee625370160",
+      "name": "Upsert HubSpot deal",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 1,
+      "position": [
+        720,
+        300
+      ],
+      "credentials": {
+        "hubspotApi": {
+          "id": "REPLACE_ME",
+          "name": "HubSpot account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Stripe Webhook (charge.succeeded)": {
+      "main": [
+        [
+          {
+            "node": "Extract customer fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract customer fields": {
+      "main": [
+        [
+          {
+            "node": "Upsert HubSpot deal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "fc084471-436f-4c6b-a8aa-f0764ba24555",
+  "id": "db856e03-8f3f-4906-8cd7-8e900c2e8f5f",
+  "meta": {
+    "instanceId": "aiprosol-starter-library-v1"
+  },
+  "tags": [],
+  "pinData": {}
+}

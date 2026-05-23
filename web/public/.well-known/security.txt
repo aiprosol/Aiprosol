@@ -1,0 +1,17 @@
+# Aiprosol — security disclosure policy
+# https://aiprosol.com/.well-known/security.txt
+
+Contact: mailto:srijanpaudelofficial@gmail.com
+Expires: 2027-05-13T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://aiprosol.com/.well-known/security.txt
+Policy: https://aiprosol.com/privacy
+
+# If you've found a security issue on aiprosol.com or in any Aiprosol product,
+# please email the contact above with:
+#   - A description of the issue
+#   - Steps to reproduce
+#   - Any proof-of-concept (please don't act on or share user data)
+#
+# We respond to security reports within 48 hours. We don't run a paid bounty
+# yet, but we publicly credit researchers in the next changelog when fixes ship.

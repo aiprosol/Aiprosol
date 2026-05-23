@@ -1,0 +1,114 @@
+{
+  "version": "1.0",
+  "set": "Global Business Starter Pack",
+  "count": 10,
+  "workflows": [
+    {
+      "file": "01-starter-contact-form-to-email.json",
+      "title": "Contact form \u2192 instant email reply + log",
+      "description": "The simplest possible: webhook from your site contact form \u2192 AI generates a personalised acknowledgement reply \u2192 sends via Gmail \u2192 logs to a Google Sheet. 4 nodes.",
+      "nodes": 4,
+      "tags": [
+        "starter",
+        "lead-capture"
+      ]
+    },
+    {
+      "file": "02-starter-stripe-revenue-log.json",
+      "title": "Stripe payment \u2192 Sheet log + Slack",
+      "description": "Every Stripe payment writes a row to a Sales Log sheet and pings #sales channel. The Day-2 challenge automation.",
+      "nodes": 3,
+      "tags": [
+        "starter",
+        "revenue"
+      ]
+    },
+    {
+      "file": "03-starter-gmail-classifier.json",
+      "title": "Gmail inbox \u2192 AI auto-label",
+      "description": "Every new email gets AI-classified into 7 categories and the matching Gmail label is applied. Saves 30 min/day of inbox triage.",
+      "nodes": 4,
+      "tags": [
+        "starter",
+        "inbox",
+        "pattern-2"
+      ]
+    },
+    {
+      "file": "04-starter-calendar-prep-brief.json",
+      "title": "Calendar event \u2192 prep brief 2hrs before",
+      "description": "Two hours before any calendar event with an external attendee, AI scrapes their domain and posts a one-line summary to Slack.",
+      "nodes": 5,
+      "tags": [
+        "starter",
+        "calendar"
+      ]
+    },
+    {
+      "file": "05-starter-instagram-to-slack.json",
+      "title": "New social mention \u2192 Slack ping",
+      "description": "Polls Twitter/X (and optional Instagram) for new mentions of your brand \u2192 Slack ping with sentiment label so you can engage in real-time.",
+      "nodes": 4,
+      "tags": [
+        "starter",
+        "social",
+        "pattern-5"
+      ]
+    },
+    {
+      "file": "06-starter-invoice-to-accountant.json",
+      "title": "Invoice email \u2192 forward + log to accounting sheet",
+      "description": "Vendor invoice arrives via email \u2192 AI extracts vendor + amount + due date \u2192 row appended to Accounting Log \u2192 original PDF auto-filed in Drive.",
+      "nodes": 4,
+      "tags": [
+        "starter",
+        "finance",
+        "pattern-1"
+      ]
+    },
+    {
+      "file": "07-starter-website-form-to-crm.json",
+      "title": "Website form \u2192 simple CRM entry",
+      "description": "Form submission \u2192 AI extracts company + role from email signature \u2192 row appended to a Leads sheet (basic CRM). No HubSpot needed.",
+      "nodes": 4,
+      "tags": [
+        "starter",
+        "lead-capture",
+        "pattern-1"
+      ]
+    },
+    {
+      "file": "08-starter-weekly-stripe-summary.json",
+      "title": "Weekly Stripe revenue summary",
+      "description": "Every Friday 17:00: aggregates this week's Stripe revenue + customer count + biggest sale \u2192 emails the founder a 4-line summary.",
+      "nodes": 4,
+      "tags": [
+        "starter",
+        "reporting",
+        "pattern-4"
+      ]
+    },
+    {
+      "file": "09-starter-nps-pulse.json",
+      "title": "30-day NPS pulse \u2014 single-question email",
+      "description": "30 days after every Stripe customer is created, send them a 1-question NPS email. Responses logged in a Sheet.",
+      "nodes": 3,
+      "tags": [
+        "starter",
+        "feedback",
+        "pattern-7"
+      ]
+    },
+    {
+      "file": "10-starter-meta-automation-monitor.json",
+      "title": "Meta-automation \u2014 daily health check on your other workflows",
+      "description": "Every morning 7am: queries n8n API for executions of all your workflows in the past 24h \u2192 flags any with >5% failure rate \u2192 Slack ping. The starter version of automation-monitoring.",
+      "nodes": 4,
+      "tags": [
+        "starter",
+        "meta-monitoring",
+        "pattern-4"
+      ]
+    }
+  ]
+}

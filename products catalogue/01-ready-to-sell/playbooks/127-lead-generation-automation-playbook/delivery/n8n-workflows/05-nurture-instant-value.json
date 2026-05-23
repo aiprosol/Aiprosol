@@ -1,0 +1,219 @@
+{
+  "name": "Aiprosol — Nurture Email 1 (Day 0) — instant value",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 9 * * *"
+            }
+          ]
+        }
+      },
+      "id": "a4c73c38-4570-4774-bac6-b1b0b19cd8dd",
+      "name": "Wait until day 0",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "contact",
+        "operation": "getAll",
+        "filters": {
+          "propertiesCollection": {
+            "properties": [
+              "email",
+              "captured_at",
+              "role",
+              "industry",
+              "primary_problem"
+            ]
+          }
+        }
+      },
+      "id": "6f562547-2e69-47a8-a26f-713d1707a337",
+      "name": "Find leads at day 0",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const cutoff = Date.now() - 0*24*60*60*1000; return $input.all().filter(i => Math.abs(new Date(i.json.captured_at).getTime() - cutoff) < 24*60*60*1000 && i.json.lead_tier === 'warm');"
+      },
+      "id": "edd1d823-b3e6-4210-a1f1-8fe7bfff898c",
+      "name": "Filter to today's send batch",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Write Email 1 of a 5-touch nurture sequence. Brief: Deliver the lead magnet in para 1. Para 2: 'Here's the question I'd ask first if I were you'. Para 3: one tactical tip relevant to their stated problem. Sign-off + 'tomorrow I'll send a 4-min read on [their problem]'.. Tone: warm, specific, no marketing fluff. 150-250 words."
+            },
+            {
+              "role": "user",
+              "content": "=Lead: role={{ $json.role }}, industry={{ $json.industry }}, stated problem={{ $json.primary_problem }}"
+            }
+          ]
+        }
+      },
+      "id": "10c02047-adda-4a8d-8eda-f76c08f7f108",
+      "name": "AI-personalise body",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        840,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "send",
+        "to": "={ $('Find leads at day ' + str(0) + ').first().json.email }",
+        "subject": "=What you asked for · {LeadMagnetTitle}",
+        "message": "={{ $json.message.content }}"
+      },
+      "id": "a0114e5a-609d-4278-bbf7-bbad6e56d137",
+      "name": "Gmail send",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1040,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "contact",
+        "operation": "update",
+        "contactId": "={ $('Find leads at day ' + str(0) + ').first().json.id }",
+        "additionalFields": {
+          "properties": {
+            "property": [
+              {
+                "property": "nurture_email_1_sent",
+                "value": "={{ $now.toISO() }}"
+              }
+            ]
+          }
+        }
+      },
+      "id": "02f66754-5cb8-45e3-85c8-6e12bb27ff80",
+      "name": "Log send",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2,
+      "position": [
+        1240,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Wait until day 0": {
+      "main": [
+        [
+          {
+            "node": "Find leads at day 0",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find leads at day 0": {
+      "main": [
+        [
+          {
+            "node": "Filter to today's send batch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter to today's send batch": {
+      "main": [
+        [
+          {
+            "node": "AI-personalise body",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI-personalise body": {
+      "main": [
+        [
+          {
+            "node": "Gmail send",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail send": {
+      "main": [
+        [
+          {
+            "node": "Log send",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "lead-gen"
+    },
+    {
+      "name": "nurture"
+    },
+    {
+      "name": "day-0"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-v1"
+  },
+  "pinData": {},
+  "versionId": "dc137104-0a7a-4fe8-9bd8-4f9ede1b9611",
+  "id": "31f795dd-3463-4e10-82e8-702ece805960",
+  "_aiprosol": {
+    "description": "Day 0 trigger → AI-personalised body → Gmail send → log",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

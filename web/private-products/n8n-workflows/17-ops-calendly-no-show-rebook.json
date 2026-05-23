@@ -1,0 +1,126 @@
+{
+  "name": "Ops \u00b7 Calendly no-show \u2192 auto-rebook email",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "calendly-event-ended",
+        "responseMode": "lastNode"
+      },
+      "id": "373cd3a1-0d14-4568-ad4c-a6c24e1dfeaa",
+      "name": "Calendly event ended webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "1",
+              "leftValue": "={{ $json.body.attendance.attended }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "false"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "37132a91-a7c0-42e4-ac36-47baac422320",
+      "name": "Was no-show?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "sendTo": "={{ $('Calendly event ended webhook').item.json.body.invitee.email }}",
+        "subject": "Caught you at a bad time?",
+        "message": "=Hi {{ $('Calendly event ended webhook').item.json.body.invitee.name }}, no worries \u2014 life happens. If you'd like to reschedule, here's a fresh link: {{ $('Calendly event ended webhook').item.json.body.invitee.reschedule_url }}"
+      },
+      "id": "23a40d7b-51c0-4cc1-a562-1abaa5d8e5a3",
+      "name": "Send no-show rebook email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 1,
+      "position": [
+        680,
+        200
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_ME",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "5d208afa-3399-4ca9-a8c3-015769c8cb22",
+      "name": "Attended \u2014 log only",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        680,
+        400
+      ]
+    }
+  ],
+  "connections": {
+    "Calendly event ended webhook": {
+      "main": [
+        [
+          {
+            "node": "Was no-show?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Was no-show?": {
+      "main": [
+        [
+          {
+            "node": "Send no-show rebook email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Attended \u2014 log only",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "d14da6af-cf5d-4cd7-8f10-c50c79cebd6f",
+  "id": "4859d47e-2578-476f-ae4f-504819395e7a",
+  "meta": {
+    "instanceId": "aiprosol-starter-library-v1"
+  },
+  "tags": [],
+  "pinData": {}
+}

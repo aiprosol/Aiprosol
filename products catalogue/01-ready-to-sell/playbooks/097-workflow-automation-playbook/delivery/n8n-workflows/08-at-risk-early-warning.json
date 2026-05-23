@@ -1,0 +1,240 @@
+{
+  "name": "Aiprosol — At-risk customer early-warning",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * *"
+            }
+          ]
+        }
+      },
+      "id": "dc16cdb7-5e94-4eb5-8c9f-2055d493cca5",
+      "name": "Daily 8am",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "getAll",
+        "databaseId": "CUSTOMERS_DB_ID",
+        "filterType": "manual",
+        "matchType": "anyFilter",
+        "filters": {
+          "conditions": [
+            {
+              "key": "Status|select",
+              "condition": "equals",
+              "selectValue": "Active"
+            }
+          ]
+        }
+      },
+      "id": "ed17dc33-e131-4850-a64a-4825bf9b3900",
+      "name": "Get active customers",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.posthog.com/api/projects/PROJECT_ID/query",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"query\":{\"kind\":\"HogQLQuery\",\"query\":\"select distinct_id, max(timestamp) from events where distinct_id = '{{ $json.email }}' group by distinct_id\"}}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer ={{ $env.POSTHOG_KEY }}"
+            }
+          ]
+        }
+      },
+      "id": "972fecb9-beab-4069-997e-e3b714f4616d",
+      "name": "Get last-login data",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "modelId": {
+          "value": "gpt-4o-mini"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Score 0-100 churn risk for this customer based on signals. Return JSON {\"risk\":int,\"top_signal\":string,\"recommended_action\":string}"
+            },
+            {
+              "role": "user",
+              "content": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        },
+        "options": {
+          "responseFormat": "json_object"
+        }
+      },
+      "id": "44198af4-7500-4593-b9b1-db548c921997",
+      "name": "Score risk",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        840,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "1",
+              "leftValue": "={{ JSON.parse($json.message.content).risk }}",
+              "rightValue": 60,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ]
+        }
+      },
+      "id": "a1e073ed-67ff-4ad9-a4a9-e5533a8a96fd",
+      "name": "If risk > 60",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "post",
+        "channel": "#cs-alerts",
+        "text": "=🚨 At-risk: {{ $('Get active customers').first().json.name }} (risk {{ JSON.parse($json.message.content).risk }}/100)\\nTop signal: {{ JSON.parse($json.message.content).top_signal }}\\nNext: {{ JSON.parse($json.message.content).recommended_action }}"
+      },
+      "id": "5324d905-a188-4216-b3ba-35a2750d6ce8",
+      "name": "Slack — CS alert",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        1240,
+        200
+      ]
+    }
+  ],
+  "connections": {
+    "Daily 8am": {
+      "main": [
+        [
+          {
+            "node": "Get active customers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get active customers": {
+      "main": [
+        [
+          {
+            "node": "Get last-login data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get last-login data": {
+      "main": [
+        [
+          {
+            "node": "Score risk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Score risk": {
+      "main": [
+        [
+          {
+            "node": "If risk > 60",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If risk > 60": {
+      "main": [
+        [
+          {
+            "node": "Slack — CS alert",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "customer-success"
+    },
+    {
+      "name": "retention"
+    },
+    {
+      "name": "pattern-4"
+    }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "aiprosol-playbook-v1"
+  },
+  "pinData": {},
+  "versionId": "7604cf28-4fe4-4ad4-b6fd-b8c39998a023",
+  "id": "b2374d89-9485-4f59-9244-844cf31f7efb",
+  "_aiprosol": {
+    "description": "Daily 8am → pull customers → score risk via AI → Slack alerts over threshold",
+    "version": "1.0",
+    "license": "© 2026 Aiprosol Ltd · For purchaser's internal use"
+  }
+}

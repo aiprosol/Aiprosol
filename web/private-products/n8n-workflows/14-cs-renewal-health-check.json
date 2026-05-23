@@ -1,0 +1,226 @@
+{
+  "name": "CS \u00b7 Renewal 60d out \u2192 health score \u2192 retention branch",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * *"
+            }
+          ]
+        }
+      },
+      "id": "ff3e4a8d-a328-43b3-b7a8-5090990a81c8",
+      "name": "Cron \u00b7 daily 8am",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://YOUR_API/renewals?days_until=60",
+        "method": "GET"
+      },
+      "id": "1159d9af-453a-47a6-80a3-8569c44d4ce4",
+      "name": "Find renewals 60d out",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "model": "claude-3-5-sonnet-20241022",
+        "options": {
+          "temperature": 0.2,
+          "maxTokensToSample": 150
+        },
+        "text": "=Score this customer's health 1-10 for renewal. Inputs: usage trend {{ $json.usageTrend }}, last support sentiment {{ $json.lastSentiment }}, MRR {{ $json.mrr }}. Reply with JSON: {\"score\": N, \"risk\": \"low|med|high\", \"reason\": \"...\"}."
+      },
+      "id": "b981337d-79d2-4eae-bcbd-87495a6b1d5a",
+      "name": "Claude \u00b7 health score",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1,
+      "position": [
+        680,
+        300
+      ],
+      "credentials": {
+        "anthropicApi": {
+          "id": "REPLACE_ME",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const m = (items[0].json.text||'').match(/\\{[\\s\\S]*\\}/); let h = {score:5,risk:'med',reason:''}; if (m) try { h = JSON.parse(m[0]); } catch(e) {} return [{json:{...items[0].json,health:h}}];"
+      },
+      "id": "c387d3d3-ba65-42bd-9445-9df5bec5826a",
+      "name": "Parse score",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        900,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "expression",
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "loose"
+                },
+                "conditions": [
+                  {
+                    "id": "1",
+                    "leftValue": "={{ $json.health.risk }}",
+                    "rightValue": "high",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "outputKey": "high"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "id": "4800333f-49ea-4655-8140-11e1af745b53",
+      "name": "Route on risk",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [
+        1120,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "post",
+        "channel": "csm-risk",
+        "text": "=:rotating_light: At-risk renewal \u00b7 {{ $('Find renewals 60d out').item.json.company }} \u00b7 health {{ $json.health.score }}/10 \u00b7 reason: {{ $json.health.reason }}"
+      },
+      "id": "3fcb72e9-abf4-4ac1-ae73-1506829c834c",
+      "name": "Slack #csm-risk",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        200
+      ],
+      "credentials": {
+        "slackApi": {
+          "id": "REPLACE_ME",
+          "name": "Slack workspace"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "91f48605-6300-4a97-a56e-2b8b6b4cd551",
+      "name": "Healthy \u2014 log only",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        400
+      ]
+    }
+  ],
+  "connections": {
+    "Cron \u00b7 daily 8am": {
+      "main": [
+        [
+          {
+            "node": "Find renewals 60d out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find renewals 60d out": {
+      "main": [
+        [
+          {
+            "node": "Claude \u00b7 health score",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude \u00b7 health score": {
+      "main": [
+        [
+          {
+            "node": "Parse score",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse score": {
+      "main": [
+        [
+          {
+            "node": "Route on risk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route on risk": {
+      "main": [
+        [
+          {
+            "node": "Slack #csm-risk",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Healthy \u2014 log only",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1f809541-662d-4ba4-96e3-5d741cbe89d8",
+  "id": "b54efc8f-a80a-476e-9f5c-68eac36825e1",
+  "meta": {
+    "instanceId": "aiprosol-starter-library-v1"
+  },
+  "tags": [],
+  "pinData": {}
+}

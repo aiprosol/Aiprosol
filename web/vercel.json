@@ -1,0 +1,13 @@
+{
+  "crons": [
+    {
+      "path": "/api/agents/run-all",
+      "schedule": "0 9 * * *"
+    },
+    {
+      "path": "/api/indexnow",
+      "schedule": "30 9 * * *"
+    }
+  ]
+}
+

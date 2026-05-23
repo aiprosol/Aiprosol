@@ -1,0 +1,224 @@
+[
+  {
+    "slug": "intelligent-workflow-automation",
+    "title": "Intelligent Workflow Automation",
+    "icon": "⚙️",
+    "shortDescription": "Transform manual processes into self-running AI systems operating 24/7.",
+    "longDescription": "Stop the copy-paste, the chasing, the follow-up. We architect, build, and monitor workflows that handle the operational layer of your business so your team works on what compounds.",
+    "benefits": [
+      "Eliminate copy-paste, follow-up, and chasing",
+      "Reduce processing time by 60–90%",
+      "Self-healing workflows with monitoring + alerting",
+      "Documented + auditable, end-to-end"
+    ],
+    "process": [
+      "Process audit — we map every step of your current workflow",
+      "Architecture design — you approve before we build",
+      "Build & test — fully documented, in your stack",
+      "Go live + monitor — Arora watches for drift"
+    ],
+    "planMatch": "growth",
+    "caseStudyKeys": ["vortex"]
+  },
+  {
+    "slug": "custom-ai-chatbot-development",
+    "title": "Custom AI Chatbot Development",
+    "icon": "💬",
+    "shortDescription": "Bespoke AI assistant trained on your business — handles leads, support, bookings.",
+    "longDescription": "Not a generic chatbot. A bespoke AI agent trained on your knowledge base, tone, and policies. Qualifies leads before a human touches them, books meetings without back-and-forth, handles 24/7 with measurable conversion lift.",
+    "benefits": [
+      "Trained on your knowledge base, tone, and policies",
+      "Qualifies leads before a human touches them",
+      "Books meetings without back-and-forth",
+      "Handles 24/7 with measurable conversion lift"
+    ],
+    "process": [
+      "Discovery — content sources, tone, escalation paths",
+      "Build — model selection, knowledge ingestion, persona",
+      "Test — adversarial conversations + edge cases",
+      "Deploy — embed on site, integrate with CRM, monitor"
+    ],
+    "planMatch": "growth",
+    "caseStudyKeys": ["meridian"]
+  },
+  {
+    "slug": "ai-powered-lead-generation",
+    "title": "AI-Powered Lead Generation",
+    "icon": "🎯",
+    "shortDescription": "Automated lead machine — captures, scores, and delivers qualified prospects.",
+    "benefits": [
+      "ICP-aligned outbound at scale",
+      "Lead scoring on every inbound",
+      "Sub-3-minute response time",
+      "Pipeline visibility in your existing CRM"
+    ],
+    "process": [
+      "ICP definition + signal selection",
+      "Outbound + inbound architecture",
+      "Scoring engine + CRM sync",
+      "Iterate weekly on conversion data"
+    ],
+    "planMatch": "starter",
+    "caseStudyKeys": ["meridian"]
+  },
+  {
+    "slug": "business-process-audit-roadmap",
+    "title": "Business Process Audit & Automation Roadmap",
+    "icon": "🗺️",
+    "shortDescription": "Know exactly where to automate, in what order, and with what ROI.",
+    "benefits": [
+      "Workflow inventory across the team",
+      "Per-process ROI projection",
+      "Sequenced 90-day roadmap",
+      "Risk + dependency mapping"
+    ],
+    "process": [
+      "Stakeholder interviews + workflow mapping",
+      "Time + cost measurement",
+      "Opportunity ranking + roadmap",
+      "Hand-off or implementation"
+    ],
+    "planMatch": "starter",
+    "caseStudyKeys": ["hargreaves-sterling", "thornfield"]
+  },
+  {
+    "slug": "seamless-system-integration",
+    "title": "Seamless System Integration",
+    "icon": "🔗",
+    "shortDescription": "Connect every tool into one unified data ecosystem.",
+    "benefits": [
+      "Single source of truth across CRM, billing, support",
+      "Eliminate duplicate data entry",
+      "Real-time sync + audit trail",
+      "API-first — works with any modern stack"
+    ],
+    "process": [
+      "System inventory + data flow mapping",
+      "Integration design + middleware selection",
+      "Build + test + cutover",
+      "Monitoring + ongoing maintenance"
+    ],
+    "planMatch": "enterprise",
+    "caseStudyKeys": ["thornfield"]
+  },
+  {
+    "slug": "ai-sales-automation",
+    "title": "AI Sales Automation",
+    "icon": "📈",
+    "shortDescription": "Automate every stage of the pipeline from first touch to signed contract.",
+    "benefits": [
+      "Faster follow-ups, more touchpoints, better timing",
+      "Auto-personalised outreach at scale",
+      "Pipeline hygiene without rep effort",
+      "Forecast accuracy improves with more data"
+    ],
+    "process": [
+      "Pipeline audit + leak detection",
+      "Sequence design + content generation",
+      "CRM + email + dialer integration",
+      "Iteration loop on response rates"
+    ],
+    "planMatch": "growth",
+    "caseStudyKeys": ["meridian"]
+  },
+  {
+    "slug": "ai-driven-customer-intelligence",
+    "title": "AI-Driven Customer Intelligence",
+    "icon": "🧠",
+    "shortDescription": "Predict churn, find upsell, personalise every interaction.",
+    "benefits": [
+      "Churn signals 30–90 days early",
+      "Upsell opportunity scoring",
+      "Personalised journeys at scale",
+      "Cross-sell paths surfaced automatically"
+    ],
+    "process": [
+      "Data audit + segmentation",
+      "Model training + validation",
+      "Action layer + integration with comms tools",
+      "Continuous learning + feedback loop"
+    ],
+    "planMatch": "enterprise",
+    "caseStudyKeys": ["meridian", "thornfield"]
+  },
+  {
+    "slug": "zapier-make-automation-setup",
+    "title": "Zapier & Make Automation Setup",
+    "icon": "⚡",
+    "shortDescription": "Production-ready automations deployed in days, fully documented.",
+    "benefits": [
+      "No half-built workflows",
+      "Error handling + retry logic",
+      "Documented + handed over to your team",
+      "Cost-optimised across tasks"
+    ],
+    "process": [
+      "Workflow specification",
+      "Build in Zapier or Make",
+      "Test + edge cases",
+      "Documentation + handover"
+    ],
+    "planMatch": "starter",
+    "caseStudyKeys": ["hargreaves-sterling"]
+  },
+  {
+    "slug": "intelligent-document-processing",
+    "title": "Intelligent Document Processing",
+    "icon": "📄",
+    "shortDescription": "AI reads, interprets, and processes any document type at 99%+ accuracy.",
+    "benefits": [
+      "Invoices, contracts, applications, forms",
+      "99%+ accuracy with exception routing",
+      "Audit trail for compliance",
+      "Drops document handling time by 80–95%"
+    ],
+    "process": [
+      "Document type analysis + sample collection",
+      "Model selection + extraction logic",
+      "Exception handling + human-in-the-loop",
+      "Production deployment + monitoring"
+    ],
+    "planMatch": "growth",
+    "caseStudyKeys": ["hargreaves-sterling"]
+  },
+  {
+    "slug": "ai-content-marketing-automation",
+    "title": "AI Content & Marketing Automation",
+    "icon": "✍️",
+    "shortDescription": "Automated content production, scheduling, and distribution.",
+    "benefits": [
+      "Brand-consistent content at volume",
+      "Multi-channel scheduling",
+      "Performance feedback loop",
+      "SEO + paid + organic in one system"
+    ],
+    "process": [
+      "Brand voice capture + style guide",
+      "Content engine build",
+      "Distribution + measurement",
+      "Iterate on what converts"
+    ],
+    "planMatch": "growth",
+    "caseStudyKeys": []
+  },
+  {
+    "slug": "ai-training-enablement",
+    "title": "AI Training & Enablement",
+    "icon": "🎓",
+    "shortDescription": "Team training programmes for AI adoption and automation literacy.",
+    "benefits": [
+      "Department-tailored curricula",
+      "Hands-on labs, not theory",
+      "Adoption metrics + reporting",
+      "Internal champions identified"
+    ],
+    "process": [
+      "Skills baseline assessment",
+      "Curriculum design",
+      "Live + async delivery",
+      "Adoption follow-through"
+    ],
+    "planMatch": "enterprise",
+    "caseStudyKeys": []
+  }
+]

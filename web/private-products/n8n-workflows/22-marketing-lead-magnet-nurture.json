@@ -1,0 +1,182 @@
+{
+  "name": "Marketing \u00b7 Lead magnet \u2192 5-email nurture (Day 0, 2, 7, 14, 21)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-magnet-download",
+        "responseMode": "lastNode"
+      },
+      "id": "2910df52-3f1e-4569-99a1-dbf7cfc21ae5",
+      "name": "Lead magnet download webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "sendTo": "={{ $json.body.email }}",
+        "subject": "Your download is ready",
+        "message": "=Hi {{ $json.body.firstName }}, here's the asset: {{ $json.body.assetUrl }}. Below \u2014 4 more emails with how I'd use this if I were in your seat."
+      },
+      "id": "397ac1ce-3da4-4a08-9137-99b473977fbe",
+      "name": "Day 0 \u00b7 Asset delivery",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 1,
+      "position": [
+        460,
+        300
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_ME",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 2,
+        "unit": "days"
+      },
+      "id": "e0f7bd28-fb44-4925-ae18-0b47bad7f670",
+      "name": "Wait 2 days",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "sendTo": "={{ $('Lead magnet download webhook').item.json.body.email }}",
+        "subject": "The most-skipped step in this playbook",
+        "message": "=Hi {{ $('Lead magnet download webhook').item.json.body.firstName }}, the step most readers skip is X. Here's why it matters most."
+      },
+      "id": "1eedb6e7-2568-4f43-8509-f1a76fbdc827",
+      "name": "Day 2 \u00b7 Implementation pattern",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 1,
+      "position": [
+        900,
+        300
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_ME",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 5,
+        "unit": "days"
+      },
+      "id": "bccc6baf-24f7-4c39-b6ad-0937eb34f9b6",
+      "name": "Wait 5 more days",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "sendTo": "={{ $('Lead magnet download webhook').item.json.body.email }}",
+        "subject": "How {{ peer }} got to outcome in 30 days",
+        "message": "=Hi, here's a 2-min read on how a similar team applied this playbook. Free 60-second ROI Audit if you want a tailored one: https://aiprosol.com/roi-audit"
+      },
+      "id": "678c30cc-0918-4d74-bff6-cc381f97b7b1",
+      "name": "Day 7 \u00b7 Case study + soft CTA",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        300
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_ME",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Lead magnet download webhook": {
+      "main": [
+        [
+          {
+            "node": "Day 0 \u00b7 Asset delivery",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Day 0 \u00b7 Asset delivery": {
+      "main": [
+        [
+          {
+            "node": "Wait 2 days",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 2 days": {
+      "main": [
+        [
+          {
+            "node": "Day 2 \u00b7 Implementation pattern",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Day 2 \u00b7 Implementation pattern": {
+      "main": [
+        [
+          {
+            "node": "Wait 5 more days",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 5 more days": {
+      "main": [
+        [
+          {
+            "node": "Day 7 \u00b7 Case study + soft CTA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "5c870093-247b-4ed5-8d72-432f475a7a66",
+  "id": "80b37043-79f4-4176-8ca3-7a86799cd65c",
+  "meta": {
+    "instanceId": "aiprosol-starter-library-v1"
+  },
+  "tags": [],
+  "pinData": {}
+}

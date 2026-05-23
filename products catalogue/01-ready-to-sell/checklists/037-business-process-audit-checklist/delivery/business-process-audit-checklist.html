@@ -1,0 +1,646 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Business Process Audit Checklist — Aiprosol</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif; max-width: 880px; margin: 0 auto; padding: 56px 32px 96px; line-height: 1.65; color: #1F1B2E; background: #FAF8FF; }
+@media (prefers-color-scheme: dark) { body { color: #E5E7EB; background: #0A0613; } .q, .opts label { background: #1A1428; } input[type="text"], textarea { background: #1A1428; color: inherit; border-color: #2A1F3D; } .opts label { color: #C7CEDB; } }
+h1 { font-size: 36px; margin: 0 0 8px; font-weight: 800; background: linear-gradient(135deg, #8B5CF6, #C084FC); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+h2 { font-size: 22px; margin-top: 40px; margin-bottom: 12px; color: #8B5CF6; border-bottom: 1px solid rgba(139,92,246,0.3); padding-bottom: 6px; }
+.q { background: rgba(139,92,246,0.04); padding: 14px 20px; margin: 14px 0; border-radius: 8px; }
+.qtext { font-weight: 500; display: block; margin-bottom: 8px; }
+.opts { display: flex; flex-wrap: wrap; gap: 12px; }
+.opts label { background: white; padding: 6px 14px; border-radius: 999px; cursor: pointer; font-size: 14px; border: 1px solid rgba(139,92,246,0.2); }
+.opts label:hover { border-color: #8B5CF6; }
+.opts input { margin-right: 6px; }
+.actions { margin: 40px 0; display: flex; gap: 12px; flex-wrap: wrap; }
+button { background: linear-gradient(135deg, #8B5CF6, #C084FC); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; font-family: inherit; }
+button:hover { opacity: 0.9; }
+button.secondary { background: transparent; color: #8B5CF6; border: 1px solid #8B5CF6; }
+.results { margin: 40px 0; padding: 24px; background: rgba(139,92,246,0.06); border-radius: 12px; border-left: 4px solid #8B5CF6; }
+.score-row { display: flex; justify-content: space-between; align-items: center; margin: 10px 0; padding: 8px 0; border-bottom: 1px solid rgba(139,92,246,0.15); }
+.score-bar { flex: 1; height: 18px; background: rgba(139,92,246,0.1); border-radius: 8px; margin: 0 14px; overflow: hidden; position: relative; }
+.score-bar-fill { height: 100%; background: linear-gradient(90deg, #EF4444, #F59E0B, #22C55E); border-radius: 8px; }
+.tier-badge { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+.tier-high { background: #FEE2E2; color: #991B1B; }
+.tier-med { background: #FEF3C7; color: #92400E; }
+.tier-low { background: #D1FAE5; color: #065F46; }
+.opportunity-map { margin: 24px 0; }
+.opp-row { background: white; padding: 14px 18px; margin: 8px 0; border-radius: 8px; display: flex; justify-content: space-between; gap: 18px; }
+@media (prefers-color-scheme: dark) { .opp-row { background: #1A1428; } }
+textarea { width: 100%; padding: 10px; border: 1px solid rgba(139,92,246,0.3); border-radius: 6px; font-family: inherit; min-height: 60px; margin-top: 8px; }
+.brand-footer { margin-top: 60px; padding-top: 28px; border-top: 1px solid rgba(139,92,246,0.18); font-size: 12px; color: #6B7585; text-align: center; }
+</style></head><body>
+
+<h1>Business Process Audit Checklist</h1>
+<p style="color: #6B7585; margin: 0 0 28px;">Find your highest-ROI automation candidates in 90 minutes. 50 questions across 5 dimensions. © 2026 Aiprosol Ltd</p>
+
+<p>For each question, pick the answer that's most true today. Don't overthink. Don't gild it. Submit at the bottom and see your scored opportunity map.</p>
+
+<form id="auditForm">
+<section class="dim" data-dim="People"><h2>People</h2>
+
+        <div class="q">
+          <label class="qtext">Are there manual hand-offs between people for routine work?</label>
+          <div class="opts">
+            <label><input type="radio" name="q1" value="0" data-dim="People">Never</label>
+            <label><input type="radio" name="q1" value="1" data-dim="People">Sometimes</label>
+            <label><input type="radio" name="q1" value="2" data-dim="People">Often</label>
+            <label><input type="radio" name="q1" value="3" data-dim="People">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Do team members copy-paste data between systems?</label>
+          <div class="opts">
+            <label><input type="radio" name="q2" value="0" data-dim="People">Never</label>
+            <label><input type="radio" name="q2" value="1" data-dim="People">Sometimes</label>
+            <label><input type="radio" name="q2" value="2" data-dim="People">Often</label>
+            <label><input type="radio" name="q2" value="3" data-dim="People">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are people doing the same task repeatedly (>5 times/week)?</label>
+          <div class="opts">
+            <label><input type="radio" name="q3" value="0" data-dim="People">Never</label>
+            <label><input type="radio" name="q3" value="1" data-dim="People">Sometimes</label>
+            <label><input type="radio" name="q3" value="2" data-dim="People">Often</label>
+            <label><input type="radio" name="q3" value="3" data-dim="People">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Do new hires need to learn 'tribal knowledge' that's not documented?</label>
+          <div class="opts">
+            <label><input type="radio" name="q4" value="0" data-dim="People">Never</label>
+            <label><input type="radio" name="q4" value="1" data-dim="People">Sometimes</label>
+            <label><input type="radio" name="q4" value="2" data-dim="People">Often</label>
+            <label><input type="radio" name="q4" value="3" data-dim="People">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are senior staff doing tasks juniors could do?</label>
+          <div class="opts">
+            <label><input type="radio" name="q5" value="0" data-dim="People">Never</label>
+            <label><input type="radio" name="q5" value="1" data-dim="People">Sometimes</label>
+            <label><input type="radio" name="q5" value="2" data-dim="People">Often</label>
+            <label><input type="radio" name="q5" value="3" data-dim="People">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are there single points of failure (one person who knows X)?</label>
+          <div class="opts">
+            <label><input type="radio" name="q6" value="0" data-dim="People">Never</label>
+            <label><input type="radio" name="q6" value="1" data-dim="People">Sometimes</label>
+            <label><input type="radio" name="q6" value="2" data-dim="People">Often</label>
+            <label><input type="radio" name="q6" value="3" data-dim="People">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are people delayed waiting for approvals?</label>
+          <div class="opts">
+            <label><input type="radio" name="q7" value="0" data-dim="People">Never</label>
+            <label><input type="radio" name="q7" value="1" data-dim="People">Sometimes</label>
+            <label><input type="radio" name="q7" value="2" data-dim="People">Often</label>
+            <label><input type="radio" name="q7" value="3" data-dim="People">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are people doing data entry from emails/PDFs?</label>
+          <div class="opts">
+            <label><input type="radio" name="q8" value="0" data-dim="People">Never</label>
+            <label><input type="radio" name="q8" value="1" data-dim="People">Sometimes</label>
+            <label><input type="radio" name="q8" value="2" data-dim="People">Often</label>
+            <label><input type="radio" name="q8" value="3" data-dim="People">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are people manually building the same reports each week?</label>
+          <div class="opts">
+            <label><input type="radio" name="q9" value="0" data-dim="People">Never</label>
+            <label><input type="radio" name="q9" value="1" data-dim="People">Sometimes</label>
+            <label><input type="radio" name="q9" value="2" data-dim="People">Often</label>
+            <label><input type="radio" name="q9" value="3" data-dim="People">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are people answering the same questions repeatedly?</label>
+          <div class="opts">
+            <label><input type="radio" name="q10" value="0" data-dim="People">Never</label>
+            <label><input type="radio" name="q10" value="1" data-dim="People">Sometimes</label>
+            <label><input type="radio" name="q10" value="2" data-dim="People">Often</label>
+            <label><input type="radio" name="q10" value="3" data-dim="People">Always</label>
+          </div>
+        </div>
+</section>
+<section class="dim" data-dim="Process"><h2>Process</h2>
+
+        <div class="q">
+          <label class="qtext">Are there clear decision points (X happens, then Y)?</label>
+          <div class="opts">
+            <label><input type="radio" name="q11" value="0" data-dim="Process">Never</label>
+            <label><input type="radio" name="q11" value="1" data-dim="Process">Sometimes</label>
+            <label><input type="radio" name="q11" value="2" data-dim="Process">Often</label>
+            <label><input type="radio" name="q11" value="3" data-dim="Process">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are exceptions well-documented?</label>
+          <div class="opts">
+            <label><input type="radio" name="q12" value="0" data-dim="Process">Never</label>
+            <label><input type="radio" name="q12" value="1" data-dim="Process">Sometimes</label>
+            <label><input type="radio" name="q12" value="2" data-dim="Process">Often</label>
+            <label><input type="radio" name="q12" value="3" data-dim="Process">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are bottlenecks identified?</label>
+          <div class="opts">
+            <label><input type="radio" name="q13" value="0" data-dim="Process">Never</label>
+            <label><input type="radio" name="q13" value="1" data-dim="Process">Sometimes</label>
+            <label><input type="radio" name="q13" value="2" data-dim="Process">Often</label>
+            <label><input type="radio" name="q13" value="3" data-dim="Process">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are cycle times measured?</label>
+          <div class="opts">
+            <label><input type="radio" name="q14" value="0" data-dim="Process">Never</label>
+            <label><input type="radio" name="q14" value="1" data-dim="Process">Sometimes</label>
+            <label><input type="radio" name="q14" value="2" data-dim="Process">Often</label>
+            <label><input type="radio" name="q14" value="3" data-dim="Process">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are dependencies between processes mapped?</label>
+          <div class="opts">
+            <label><input type="radio" name="q15" value="0" data-dim="Process">Never</label>
+            <label><input type="radio" name="q15" value="1" data-dim="Process">Sometimes</label>
+            <label><input type="radio" name="q15" value="2" data-dim="Process">Often</label>
+            <label><input type="radio" name="q15" value="3" data-dim="Process">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are SLAs defined for key steps?</label>
+          <div class="opts">
+            <label><input type="radio" name="q16" value="0" data-dim="Process">Never</label>
+            <label><input type="radio" name="q16" value="1" data-dim="Process">Sometimes</label>
+            <label><input type="radio" name="q16" value="2" data-dim="Process">Often</label>
+            <label><input type="radio" name="q16" value="3" data-dim="Process">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are error/rework rates tracked?</label>
+          <div class="opts">
+            <label><input type="radio" name="q17" value="0" data-dim="Process">Never</label>
+            <label><input type="radio" name="q17" value="1" data-dim="Process">Sometimes</label>
+            <label><input type="radio" name="q17" value="2" data-dim="Process">Often</label>
+            <label><input type="radio" name="q17" value="3" data-dim="Process">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Is the happy path well understood?</label>
+          <div class="opts">
+            <label><input type="radio" name="q18" value="0" data-dim="Process">Never</label>
+            <label><input type="radio" name="q18" value="1" data-dim="Process">Sometimes</label>
+            <label><input type="radio" name="q18" value="2" data-dim="Process">Often</label>
+            <label><input type="radio" name="q18" value="3" data-dim="Process">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are edge cases handled consistently?</label>
+          <div class="opts">
+            <label><input type="radio" name="q19" value="0" data-dim="Process">Never</label>
+            <label><input type="radio" name="q19" value="1" data-dim="Process">Sometimes</label>
+            <label><input type="radio" name="q19" value="2" data-dim="Process">Often</label>
+            <label><input type="radio" name="q19" value="3" data-dim="Process">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are process owners identified?</label>
+          <div class="opts">
+            <label><input type="radio" name="q20" value="0" data-dim="Process">Never</label>
+            <label><input type="radio" name="q20" value="1" data-dim="Process">Sometimes</label>
+            <label><input type="radio" name="q20" value="2" data-dim="Process">Often</label>
+            <label><input type="radio" name="q20" value="3" data-dim="Process">Always</label>
+          </div>
+        </div>
+</section>
+<section class="dim" data-dim="Data"><h2>Data</h2>
+
+        <div class="q">
+          <label class="qtext">Is data stored in multiple places that should be in one?</label>
+          <div class="opts">
+            <label><input type="radio" name="q21" value="0" data-dim="Data">Never</label>
+            <label><input type="radio" name="q21" value="1" data-dim="Data">Sometimes</label>
+            <label><input type="radio" name="q21" value="2" data-dim="Data">Often</label>
+            <label><input type="radio" name="q21" value="3" data-dim="Data">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are there discrepancies between systems (same field, different values)?</label>
+          <div class="opts">
+            <label><input type="radio" name="q22" value="0" data-dim="Data">Never</label>
+            <label><input type="radio" name="q22" value="1" data-dim="Data">Sometimes</label>
+            <label><input type="radio" name="q22" value="2" data-dim="Data">Often</label>
+            <label><input type="radio" name="q22" value="3" data-dim="Data">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Is data freshness an issue?</label>
+          <div class="opts">
+            <label><input type="radio" name="q23" value="0" data-dim="Data">Never</label>
+            <label><input type="radio" name="q23" value="1" data-dim="Data">Sometimes</label>
+            <label><input type="radio" name="q23" value="2" data-dim="Data">Often</label>
+            <label><input type="radio" name="q23" value="3" data-dim="Data">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are data quality issues frustrating people?</label>
+          <div class="opts">
+            <label><input type="radio" name="q24" value="0" data-dim="Data">Never</label>
+            <label><input type="radio" name="q24" value="1" data-dim="Data">Sometimes</label>
+            <label><input type="radio" name="q24" value="2" data-dim="Data">Often</label>
+            <label><input type="radio" name="q24" value="3" data-dim="Data">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Is there a single source of truth for key entities?</label>
+          <div class="opts">
+            <label><input type="radio" name="q25" value="0" data-dim="Data">Never</label>
+            <label><input type="radio" name="q25" value="1" data-dim="Data">Sometimes</label>
+            <label><input type="radio" name="q25" value="2" data-dim="Data">Often</label>
+            <label><input type="radio" name="q25" value="3" data-dim="Data">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are reports built from manual data assembly?</label>
+          <div class="opts">
+            <label><input type="radio" name="q26" value="0" data-dim="Data">Never</label>
+            <label><input type="radio" name="q26" value="1" data-dim="Data">Sometimes</label>
+            <label><input type="radio" name="q26" value="2" data-dim="Data">Often</label>
+            <label><input type="radio" name="q26" value="3" data-dim="Data">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Is sensitive data well-controlled?</label>
+          <div class="opts">
+            <label><input type="radio" name="q27" value="0" data-dim="Data">Never</label>
+            <label><input type="radio" name="q27" value="1" data-dim="Data">Sometimes</label>
+            <label><input type="radio" name="q27" value="2" data-dim="Data">Often</label>
+            <label><input type="radio" name="q27" value="3" data-dim="Data">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are integrations stable?</label>
+          <div class="opts">
+            <label><input type="radio" name="q28" value="0" data-dim="Data">Never</label>
+            <label><input type="radio" name="q28" value="1" data-dim="Data">Sometimes</label>
+            <label><input type="radio" name="q28" value="2" data-dim="Data">Often</label>
+            <label><input type="radio" name="q28" value="3" data-dim="Data">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are exports/imports manual?</label>
+          <div class="opts">
+            <label><input type="radio" name="q29" value="0" data-dim="Data">Never</label>
+            <label><input type="radio" name="q29" value="1" data-dim="Data">Sometimes</label>
+            <label><input type="radio" name="q29" value="2" data-dim="Data">Often</label>
+            <label><input type="radio" name="q29" value="3" data-dim="Data">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are there 'shadow' spreadsheets that should be in a system?</label>
+          <div class="opts">
+            <label><input type="radio" name="q30" value="0" data-dim="Data">Never</label>
+            <label><input type="radio" name="q30" value="1" data-dim="Data">Sometimes</label>
+            <label><input type="radio" name="q30" value="2" data-dim="Data">Often</label>
+            <label><input type="radio" name="q30" value="3" data-dim="Data">Always</label>
+          </div>
+        </div>
+</section>
+<section class="dim" data-dim="Tools"><h2>Tools</h2>
+
+        <div class="q">
+          <label class="qtext">Are people using 5+ tools daily?</label>
+          <div class="opts">
+            <label><input type="radio" name="q31" value="0" data-dim="Tools">Never</label>
+            <label><input type="radio" name="q31" value="1" data-dim="Tools">Sometimes</label>
+            <label><input type="radio" name="q31" value="2" data-dim="Tools">Often</label>
+            <label><input type="radio" name="q31" value="3" data-dim="Tools">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are similar tools used redundantly?</label>
+          <div class="opts">
+            <label><input type="radio" name="q32" value="0" data-dim="Tools">Never</label>
+            <label><input type="radio" name="q32" value="1" data-dim="Tools">Sometimes</label>
+            <label><input type="radio" name="q32" value="2" data-dim="Tools">Often</label>
+            <label><input type="radio" name="q32" value="3" data-dim="Tools">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are integrations between tools well-established?</label>
+          <div class="opts">
+            <label><input type="radio" name="q33" value="0" data-dim="Tools">Never</label>
+            <label><input type="radio" name="q33" value="1" data-dim="Tools">Sometimes</label>
+            <label><input type="radio" name="q33" value="2" data-dim="Tools">Often</label>
+            <label><input type="radio" name="q33" value="3" data-dim="Tools">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are tools being underused (paying for features not used)?</label>
+          <div class="opts">
+            <label><input type="radio" name="q34" value="0" data-dim="Tools">Never</label>
+            <label><input type="radio" name="q34" value="1" data-dim="Tools">Sometimes</label>
+            <label><input type="radio" name="q34" value="2" data-dim="Tools">Often</label>
+            <label><input type="radio" name="q34" value="3" data-dim="Tools">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Is tool sprawl impacting productivity?</label>
+          <div class="opts">
+            <label><input type="radio" name="q35" value="0" data-dim="Tools">Never</label>
+            <label><input type="radio" name="q35" value="1" data-dim="Tools">Sometimes</label>
+            <label><input type="radio" name="q35" value="2" data-dim="Tools">Often</label>
+            <label><input type="radio" name="q35" value="3" data-dim="Tools">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are tools chosen ad-hoc vs strategically?</label>
+          <div class="opts">
+            <label><input type="radio" name="q36" value="0" data-dim="Tools">Never</label>
+            <label><input type="radio" name="q36" value="1" data-dim="Tools">Sometimes</label>
+            <label><input type="radio" name="q36" value="2" data-dim="Tools">Often</label>
+            <label><input type="radio" name="q36" value="3" data-dim="Tools">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are licenses reconciled against actual usage?</label>
+          <div class="opts">
+            <label><input type="radio" name="q37" value="0" data-dim="Tools">Never</label>
+            <label><input type="radio" name="q37" value="1" data-dim="Tools">Sometimes</label>
+            <label><input type="radio" name="q37" value="2" data-dim="Tools">Often</label>
+            <label><input type="radio" name="q37" value="3" data-dim="Tools">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are there 'cohort' tools (everyone uses same)?</label>
+          <div class="opts">
+            <label><input type="radio" name="q38" value="0" data-dim="Tools">Never</label>
+            <label><input type="radio" name="q38" value="1" data-dim="Tools">Sometimes</label>
+            <label><input type="radio" name="q38" value="2" data-dim="Tools">Often</label>
+            <label><input type="radio" name="q38" value="3" data-dim="Tools">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are tool changes coordinated with teams?</label>
+          <div class="opts">
+            <label><input type="radio" name="q39" value="0" data-dim="Tools">Never</label>
+            <label><input type="radio" name="q39" value="1" data-dim="Tools">Sometimes</label>
+            <label><input type="radio" name="q39" value="2" data-dim="Tools">Often</label>
+            <label><input type="radio" name="q39" value="3" data-dim="Tools">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are tool gotchas documented?</label>
+          <div class="opts">
+            <label><input type="radio" name="q40" value="0" data-dim="Tools">Never</label>
+            <label><input type="radio" name="q40" value="1" data-dim="Tools">Sometimes</label>
+            <label><input type="radio" name="q40" value="2" data-dim="Tools">Often</label>
+            <label><input type="radio" name="q40" value="3" data-dim="Tools">Always</label>
+          </div>
+        </div>
+</section>
+<section class="dim" data-dim="Outcomes"><h2>Outcomes</h2>
+
+        <div class="q">
+          <label class="qtext">Are key metrics measured weekly?</label>
+          <div class="opts">
+            <label><input type="radio" name="q41" value="0" data-dim="Outcomes">Never</label>
+            <label><input type="radio" name="q41" value="1" data-dim="Outcomes">Sometimes</label>
+            <label><input type="radio" name="q41" value="2" data-dim="Outcomes">Often</label>
+            <label><input type="radio" name="q41" value="3" data-dim="Outcomes">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are leading indicators visible?</label>
+          <div class="opts">
+            <label><input type="radio" name="q42" value="0" data-dim="Outcomes">Never</label>
+            <label><input type="radio" name="q42" value="1" data-dim="Outcomes">Sometimes</label>
+            <label><input type="radio" name="q42" value="2" data-dim="Outcomes">Often</label>
+            <label><input type="radio" name="q42" value="3" data-dim="Outcomes">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are outcomes tied to compensation/recognition?</label>
+          <div class="opts">
+            <label><input type="radio" name="q43" value="0" data-dim="Outcomes">Never</label>
+            <label><input type="radio" name="q43" value="1" data-dim="Outcomes">Sometimes</label>
+            <label><input type="radio" name="q43" value="2" data-dim="Outcomes">Often</label>
+            <label><input type="radio" name="q43" value="3" data-dim="Outcomes">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are dashboards built from current data (not 1-month-old)?</label>
+          <div class="opts">
+            <label><input type="radio" name="q44" value="0" data-dim="Outcomes">Never</label>
+            <label><input type="radio" name="q44" value="1" data-dim="Outcomes">Sometimes</label>
+            <label><input type="radio" name="q44" value="2" data-dim="Outcomes">Often</label>
+            <label><input type="radio" name="q44" value="3" data-dim="Outcomes">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are anomalies surfaced automatically?</label>
+          <div class="opts">
+            <label><input type="radio" name="q45" value="0" data-dim="Outcomes">Never</label>
+            <label><input type="radio" name="q45" value="1" data-dim="Outcomes">Sometimes</label>
+            <label><input type="radio" name="q45" value="2" data-dim="Outcomes">Often</label>
+            <label><input type="radio" name="q45" value="3" data-dim="Outcomes">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are trends (vs point-in-time) visible?</label>
+          <div class="opts">
+            <label><input type="radio" name="q46" value="0" data-dim="Outcomes">Never</label>
+            <label><input type="radio" name="q46" value="1" data-dim="Outcomes">Sometimes</label>
+            <label><input type="radio" name="q46" value="2" data-dim="Outcomes">Often</label>
+            <label><input type="radio" name="q46" value="3" data-dim="Outcomes">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are forecasts vs actuals tracked?</label>
+          <div class="opts">
+            <label><input type="radio" name="q47" value="0" data-dim="Outcomes">Never</label>
+            <label><input type="radio" name="q47" value="1" data-dim="Outcomes">Sometimes</label>
+            <label><input type="radio" name="q47" value="2" data-dim="Outcomes">Often</label>
+            <label><input type="radio" name="q47" value="3" data-dim="Outcomes">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are wins celebrated visibly?</label>
+          <div class="opts">
+            <label><input type="radio" name="q48" value="0" data-dim="Outcomes">Never</label>
+            <label><input type="radio" name="q48" value="1" data-dim="Outcomes">Sometimes</label>
+            <label><input type="radio" name="q48" value="2" data-dim="Outcomes">Often</label>
+            <label><input type="radio" name="q48" value="3" data-dim="Outcomes">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Are failures debriefed without blame?</label>
+          <div class="opts">
+            <label><input type="radio" name="q49" value="0" data-dim="Outcomes">Never</label>
+            <label><input type="radio" name="q49" value="1" data-dim="Outcomes">Sometimes</label>
+            <label><input type="radio" name="q49" value="2" data-dim="Outcomes">Often</label>
+            <label><input type="radio" name="q49" value="3" data-dim="Outcomes">Always</label>
+          </div>
+        </div>
+
+        <div class="q">
+          <label class="qtext">Is the team aligned on what 'success' looks like?</label>
+          <div class="opts">
+            <label><input type="radio" name="q50" value="0" data-dim="Outcomes">Never</label>
+            <label><input type="radio" name="q50" value="1" data-dim="Outcomes">Sometimes</label>
+            <label><input type="radio" name="q50" value="2" data-dim="Outcomes">Often</label>
+            <label><input type="radio" name="q50" value="3" data-dim="Outcomes">Always</label>
+          </div>
+        </div>
+</section>
+
+<section>
+<h2>Notes (optional)</h2>
+<textarea id="notes" placeholder="Any context you want to capture..."></textarea>
+</section>
+
+<div class="actions">
+<button type="button" onclick="scoreAudit()">Score this audit</button>
+<button type="button" class="secondary" onclick="resetAudit()">Reset</button>
+<button type="button" class="secondary" onclick="exportResults()">Export results (JSON)</button>
+</div>
+</form>
+
+<div id="results" class="results" style="display:none;">
+<h2 style="margin-top:0;">Your audit results</h2>
+<div id="dim-scores"></div>
+<h3>Top automation opportunities (highest score = most upside)</h3>
+<div id="opp-map" class="opportunity-map"></div>
+<p style="margin-top: 20px; font-size: 14px; color: #6B7585;">For each top dimension, the corresponding Aiprosol product covers the methodology + n8n workflows you can deploy this week. See aiprosol.com/products.</p>
+</div>
+
+<div class="brand-footer">© 2026 Aiprosol Ltd · <a href="https://aiprosol.com" style="color:#8B5CF6;">aiprosol.com</a> · <a href="mailto:hello@aiprosol.com" style="color:#8B5CF6;">hello@aiprosol.com</a><br>Licensed to the purchaser for unlimited internal use.</div>
+
+<script>
+const DIM_PRODUCT_MAP = {
+  "People": "Workflow Automation Playbook ($97) — 25 n8n workflows including AI-assisted handoffs",
+  "Process": "30-Day Business Automation Challenge ($47) — 30 daily exercises for systematic process automation",
+  "Data": "AI Tools Stack Starter Kit ($197) — 18 integration recipes connecting data across tools",
+  "Tools": "AI Tools Vault ($147) — 96 tools curated with verdicts + hidden gems + avoid list",
+  "Outcomes": "Lead Generation Automation Playbook ($127) — outcome-driven measurement + 12 n8n workflows"
+};
+
+function scoreAudit() {
+  const dims = {};
+  document.querySelectorAll('input[type="radio"]:checked').forEach(r => {
+    const d = r.dataset.dim;
+    dims[d] = dims[d] || { sum: 0, count: 0 };
+    dims[d].sum += Number(r.value);
+    dims[d].count++;
+  });
+
+  // Score per dim: average × 100/3
+  const scores = Object.entries(dims).map(([dim, s]) => ({
+    dim,
+    score: Math.round(s.sum / s.count * 100 / 3) || 0,
+    answered: s.count
+  })).sort((a, b) => b.score - a.score);
+
+  const container = document.getElementById('dim-scores');
+  container.innerHTML = scores.map(s => {
+    let tier = 'tier-low';
+    let tierLabel = 'Low priority';
+    if (s.score >= 65) { tier = 'tier-high'; tierLabel = 'High priority'; }
+    else if (s.score >= 35) { tier = 'tier-med'; tierLabel = 'Medium priority'; }
+    return `<div class="score-row">
+      <strong style="min-width:100px;">${s.dim}</strong>
+      <div class="score-bar"><div class="score-bar-fill" style="width:${s.score}%"></div></div>
+      <span style="min-width:50px;text-align:right;font-weight:600;">${s.score}/100</span>
+      <span class="tier-badge ${tier}">${tierLabel}</span>
+    </div>`;
+  }).join('');
+
+  const opps = scores.slice(0, 3);
+  const oppContainer = document.getElementById('opp-map');
+  oppContainer.innerHTML = opps.map((s, i) => `<div class="opp-row">
+    <div>
+      <strong>${i+1}. ${s.dim}</strong> (score ${s.score}/100)<br>
+      <span style="font-size:13px;color:#6B7585;">${DIM_PRODUCT_MAP[s.dim] || ''}</span>
+    </div>
+  </div>`).join('');
+
+  document.getElementById('results').style.display = 'block';
+  document.getElementById('results').scrollIntoView({behavior:'smooth'});
+}
+
+function resetAudit() {
+  document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+  document.getElementById('notes').value = '';
+  document.getElementById('results').style.display = 'none';
+}
+
+function exportResults() {
+  const dims = {};
+  document.querySelectorAll('input[type="radio"]:checked').forEach(r => {
+    const d = r.dataset.dim;
+    dims[d] = dims[d] || { sum: 0, count: 0 };
+    dims[d].sum += Number(r.value);
+    dims[d].count++;
+  });
+  const scores = Object.entries(dims).map(([dim, s]) => ({dim, score: Math.round(s.sum/s.count*100/3)||0}));
+  const data = {scores, notes: document.getElementById('notes').value, date: new Date().toISOString()};
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `audit-${new Date().toISOString().slice(0,10)}.json`; a.click();
+}
+</script>
+</body></html>

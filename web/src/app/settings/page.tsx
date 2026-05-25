@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getSession } from '@/lib/auth';
+import { getProfileByEmail } from '@/lib/profiles';
 import { DangerZone } from './DangerZone';
 import { ProfileForm } from '@/components/ProfileForm';
 
@@ -17,6 +18,12 @@ export default async function SettingsPage() {
   const sessionExpires = new Date(session.exp * 1000).toLocaleDateString('en-GB', {
     year: 'numeric', month: 'long', day: 'numeric',
   });
+
+  // Pull the full profile from Supabase (bio, picture, social URLs, etc.).
+  // Fall back to the JWT summary if Supabase is unavailable so the form
+  // still renders something the user can edit on a DB outage.
+  const dbProfile = await getProfileByEmail(session.email);
+  const fullProfile = dbProfile ?? session.profile ?? {};
 
   return (
     <div className="st-page">
@@ -47,7 +54,7 @@ export default async function SettingsPage() {
             <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 14, color: '#C7CEDB', margin: '0 0 14px', fontWeight: 700 }}>
               Optional details
             </h3>
-            <ProfileForm initial={session.profile ?? {}} />
+            <ProfileForm initial={fullProfile} />
           </div>
         </section>
 

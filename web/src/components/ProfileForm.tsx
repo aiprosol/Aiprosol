@@ -38,11 +38,20 @@ const ROLES = [
   'Other',
 ];
 
+// All editable fields — matches the editable subset on the API route.
+// (id, email, created_at, updated_at, auth_provider, email_verified are
+// server-managed and not exposed here.)
 interface Profile {
-  name?: string;
-  company?: string;
-  role?: string;
-  industry?: string;
+  name?: string | null;
+  company?: string | null;
+  role?: string | null;
+  industry?: string | null;
+  picture?: string | null;
+  bio?: string | null;
+  timezone?: string | null;
+  linkedin_url?: string | null;
+  twitter_url?: string | null;
+  website_url?: string | null;
 }
 
 interface Props {
@@ -142,6 +151,96 @@ export function ProfileForm({ initial, onSaved }: Props) {
         </label>
       </div>
 
+      {/* Avatar + bio · the second block of optional profile fields */}
+      <div className="pf-avatar-row">
+        {profile.picture ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={profile.picture}
+            alt="Profile avatar"
+            className="pf-avatar-img"
+            referrerPolicy="no-referrer"
+          />
+        ) : (
+          <div className="pf-avatar-fallback">
+            {(profile.name || '?').charAt(0).toUpperCase()}
+          </div>
+        )}
+        <label className="pf-field" style={{ flex: 1 }}>
+          <span className="pf-label">Avatar URL</span>
+          <input
+            type="url"
+            value={profile.picture || ''}
+            onChange={e => update('picture', e.target.value)}
+            placeholder="https://… (auto-set from Google sign-in)"
+            className="pf-input"
+            maxLength={500}
+          />
+        </label>
+      </div>
+
+      <label className="pf-field">
+        <span className="pf-label">Bio</span>
+        <textarea
+          value={profile.bio || ''}
+          onChange={e => update('bio', e.target.value)}
+          placeholder="One sentence about you and what you do. Keep it under 200 characters."
+          className="pf-input pf-textarea"
+          maxLength={600}
+          rows={3}
+        />
+      </label>
+
+      <div className="pf-row">
+        <label className="pf-field">
+          <span className="pf-label">LinkedIn URL</span>
+          <input
+            type="url"
+            value={profile.linkedin_url || ''}
+            onChange={e => update('linkedin_url', e.target.value)}
+            placeholder="https://linkedin.com/in/your-handle"
+            className="pf-input"
+            maxLength={200}
+          />
+        </label>
+        <label className="pf-field">
+          <span className="pf-label">X (Twitter) URL</span>
+          <input
+            type="url"
+            value={profile.twitter_url || ''}
+            onChange={e => update('twitter_url', e.target.value)}
+            placeholder="https://x.com/your-handle"
+            className="pf-input"
+            maxLength={200}
+          />
+        </label>
+      </div>
+
+      <div className="pf-row">
+        <label className="pf-field">
+          <span className="pf-label">Website</span>
+          <input
+            type="url"
+            value={profile.website_url || ''}
+            onChange={e => update('website_url', e.target.value)}
+            placeholder="https://your-company.com"
+            className="pf-input"
+            maxLength={200}
+          />
+        </label>
+        <label className="pf-field">
+          <span className="pf-label">Time zone</span>
+          <input
+            type="text"
+            value={profile.timezone || ''}
+            onChange={e => update('timezone', e.target.value)}
+            placeholder="e.g. Europe/London or America/New_York"
+            className="pf-input"
+            maxLength={60}
+          />
+        </label>
+      </div>
+
       <p className="pf-hint">
         Filled-in fields pre-populate the ROI Audit and let us show you the
         most relevant case studies. Nothing here is shared with third parties.
@@ -174,6 +273,10 @@ export function ProfileForm({ initial, onSaved }: Props) {
         .pf-input, .pf-select { padding: 12px 14px; background: #0A0613; border: 1px solid #2A1F3D; border-radius: 10px; color: #E5E7EB; font-size: 14px; font-family: 'Inter', system-ui, sans-serif; outline: none; transition: border 0.2s; width: 100%; box-sizing: border-box; }
         .pf-input:focus, .pf-select:focus { border-color: #8B5CF6; box-shadow: 0 0 0 3px rgba(139,92,246,0.15); }
         .pf-input::placeholder { color: #4a6280; }
+        .pf-textarea { font-family: 'Inter', system-ui, sans-serif; line-height: 1.5; resize: vertical; min-height: 72px; }
+        .pf-avatar-row { display: flex; align-items: center; gap: 14px; }
+        .pf-avatar-img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid #2A1F3D; flex-shrink: 0; box-shadow: 0 0 24px rgba(139, 92, 246, 0.18); }
+        .pf-avatar-fallback { width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #8B5CF6, #C084FC); color: #0A0613; font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 24px; flex-shrink: 0; }
         .pf-select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, #8B5CF6 50%), linear-gradient(135deg, #8B5CF6 50%, transparent 50%); background-position: calc(100% - 18px) center, calc(100% - 12px) center; background-size: 6px 6px, 6px 6px; background-repeat: no-repeat; padding-right: 32px; cursor: pointer; }
         .pf-hint { color: #9CA3B5; font-size: 12px; line-height: 1.6; margin: 4px 0 0; }
         .pf-actions { display: flex; align-items: center; gap: 14px; margin-top: 6px; }

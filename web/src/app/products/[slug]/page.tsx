@@ -144,7 +144,13 @@ export default function ProductDetailPage() {
         </div>
         <div className="pd-hero-body">
           <div className="pd-cat">{product.category}</div>
-          <h1 className="pd-h1">{product.name}</h1>
+          {/* On flagship pages, the H1 lives in the flagship hero above —
+              demote this to h2 so each page has exactly one h1 (a11y rule). */}
+          {product.flagship && product.flagshipHero ? (
+            <h2 className="pd-h1">{product.name}</h2>
+          ) : (
+            <h1 className="pd-h1">{product.name}</h1>
+          )}
           {product.shortDescription && <p className="pd-desc">{product.shortDescription}</p>}
 
           <div className="pd-meta">

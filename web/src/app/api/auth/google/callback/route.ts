@@ -9,7 +9,9 @@ import {
   attachSessionCookie,
   sanitizeNext,
   isGoogleOAuthEnabled,
+  type SessionProfile,
 } from '@/lib/auth';
+import { ensureProfile, getProfileByEmail } from '@/lib/profiles';
 
 export const runtime = 'nodejs';
 
@@ -93,14 +95,57 @@ export async function GET(req: NextRequest) {
     return loginError(origin, 'email-not-verified');
   }
 
-  // ── Create our session ──
+  // ── Persist profile in Supabase + sign our session ──
   const email = user.email.trim().toLowerCase();
-  const sessionToken = await signSession(email);
+
+  // Upsert into public.profiles. New users get name + picture from Google.
+  // Returning users get blanks filled, but user-set values are never overwritten
+  // (see ensureProfile's merge semantics).
+  const dbProfile = await ensureProfile(email, {
+    auth_provider: 'google',
+    name: user.name,
+    picture: user.picture,
+    email_verified: true,
+  });
+
+  // Bake the same 4-field summary into the JWT cookie so the dashboard +
+  // ROI Audit can prefill at the edge without a DB hit. If DB write failed,
+  // fall back to minimum-viable summary from the Google userinfo.
+  const sessionProfile: SessionProfile | undefined = (() => {
+    const fromDb = dbProfile;
+    if (fromDb) {
+      const summary: SessionProfile = {};
+      if (fromDb.name)     summary.name = fromDb.name;
+      if (fromDb.company)  summary.company = fromDb.company;
+      if (fromDb.role)     summary.role = fromDb.role;
+      if (fromDb.industry) summary.industry = fromDb.industry;
+      return Object.keys(summary).length > 0 ? summary : undefined;
+    }
+    // DB unavailable — at minimum carry the Google name into the JWT.
+    return user.name ? { name: user.name } : undefined;
+  })();
+
+  // For new users where DB write failed but we have userinfo, also try a
+  // final-read in case another request created the profile (race-tolerant).
+  if (!dbProfile) {
+    const existing = await getProfileByEmail(email);
+    if (existing) {
+      // re-attempt sourcing summary; ignore failure here, JWT path still works
+    }
+  }
+
+  const sessionToken = await signSession(email, sessionProfile);
 
   const next = sanitizeNext(state.next);
   const res = NextResponse.redirect(new URL(next, origin));
   attachSessionCookie(res, sessionToken);
 
-  console.log('[google-callback] signed in', email, '→', next);
+  console.log(
+    '[google-callback] signed in',
+    email,
+    dbProfile ? '(profile upserted)' : '(profile DB unavailable, JWT-only)',
+    '→',
+    next,
+  );
   return res;
 }

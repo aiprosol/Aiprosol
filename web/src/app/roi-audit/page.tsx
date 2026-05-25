@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { Children, cloneElement, isValidElement, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { calcROI, type CalcROIResult } from '@/lib/calc-roi';
 import { Events, identify, track } from '@/lib/analytics';
 import { LongWaitOverlay, InlineSpinner } from '@/components/AnimatedLogo';
@@ -351,10 +351,29 @@ export default function ROIAuditPage() {
 }
 
 function Field({ label, required, hint, children }: { label: string; required?: boolean; hint?: string; children: React.ReactNode }) {
+  // Generate a unique id once per Field render and inject it into the first
+  // form-control child so the <label htmlFor> binding is programmatic. This
+  // fixes the a11y "form controls without labels" violation across every
+  // input on the page — accessibility audit catches it as missing label.
+  const fieldId = useId();
+  const childrenWithId = Children.map(children, (child) => {
+    if (!isValidElement(child)) return child;
+    const t = (child as React.ReactElement).type;
+    if (t === 'input' || t === 'select' || t === 'textarea') {
+      const props = (child as React.ReactElement).props as { id?: string };
+      if (!props.id) {
+        return cloneElement(child as React.ReactElement<{ id: string; 'aria-label': string }>, {
+          id: fieldId,
+          'aria-label': label,
+        });
+      }
+    }
+    return child;
+  });
   return (
     <div className="ra-field">
-      <label className="ra-label">{label}{required && <span className="ra-req">*</span>}</label>
-      {children}
+      <label htmlFor={fieldId} className="ra-label">{label}{required && <span className="ra-req">*</span>}</label>
+      {childrenWithId}
       {hint && <div className="ra-hint">{hint}</div>}
     </div>
   );

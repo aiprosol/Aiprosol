@@ -1,0 +1,21 @@
+{
+  "site": "https://aiprosol.com",
+  "generatedAt": "2026-05-23T16:46:04.794Z",
+  "totals": {
+    "sitemapUrls": 216,
+    "uniqueInternalTargets": 280,
+    "ok": 279,
+    "redirects": 1,
+    "broken": 0
+  },
+  "broken": [],
+  "redirects": [
+    {
+      "url": "https://aiprosol.com/api/agent/google/start?next=/inbox",
+      "code": 307,
+      "linkedFrom": [
+        "https://aiprosol.com/inbox"
+      ]
+    }
+  ]
+}

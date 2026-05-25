@@ -1,0 +1,2459 @@
+{
+  "site": "https://aiprosol.com",
+  "generatedAt": "2026-05-24T03:17:54.169Z",
+  "totals": {
+    "urls": 216,
+    "errors": 231,
+    "warnings": 14,
+    "infos": 0
+  },
+  "byRule": {
+    "form-label": 231,
+    "heading-skip": 7,
+    "h1-missing": 1,
+    "h1-multiple": 6
+  },
+  "pages": [
+    {
+      "url": "https://aiprosol.com",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/digital-products",
+      "issues": [
+        {
+          "severity": "warning",
+          "rule": "heading-skip",
+          "count": 1,
+          "message": "1 heading level skip(s) (e.g. h2 → h4 without h3 in between)"
+        },
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 2,
+          "message": "2 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/services",
+      "issues": [
+        {
+          "severity": "warning",
+          "rule": "heading-skip",
+          "count": 1,
+          "message": "1 heading level skip(s) (e.g. h2 → h4 without h3 in between)"
+        },
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/pricing",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 3,
+          "message": "3 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/roi-audit",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 4,
+          "message": "4 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/roi-simulator",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 4,
+          "message": "4 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/case-studies",
+      "issues": [
+        {
+          "severity": "warning",
+          "rule": "heading-skip",
+          "count": 1,
+          "message": "1 heading level skip(s) (e.g. h2 → h4 without h3 in between)"
+        },
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/blog",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 2,
+          "message": "2 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/faqs",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 2,
+          "message": "2 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/about",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/founder",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/contact",
+      "issues": [
+        {
+          "severity": "warning",
+          "rule": "heading-skip",
+          "count": 1,
+          "message": "1 heading level skip(s) (e.g. h2 → h4 without h3 in between)"
+        },
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 5,
+          "message": "5 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/inbox",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/agents",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/transparency",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/authors",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/how-we-measure",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/press",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/search",
+      "issues": [
+        {
+          "severity": "warning",
+          "rule": "h1-missing",
+          "message": "No <h1> on page"
+        },
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/compare",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/industries",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/use-cases",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/how-to",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/guides",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/terms",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/privacy",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/cookies",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/refund-policy",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/products/global-business-automation-starter-pack",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/products/the-starter-bundle",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/products/the-playbook-pack",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/products/the-ai-tools-vault",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/products/the-agency-launch-bundle",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/products/the-complete-vault",
+      "issues": [
+        {
+          "severity": "warning",
+          "rule": "h1-multiple",
+          "count": 2,
+          "message": "2 <h1> tags on page — should be exactly 1"
+        },
+        {
+          "severity": "warning",
+          "rule": "heading-skip",
+          "count": 1,
+          "message": "1 heading level skip(s) (e.g. h2 → h4 without h3 in between)"
+        },
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/products/automation-roi-pitch-deck-template",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/products/business-process-audit-checklist",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/products/30-day-business-automation-challenge",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/products/ai-tools-master-comparison-guide-2026",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/products/lead-generation-automation-playbook",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/products/chatgpt-business-prompt-vault",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/products/zapier-make-power-user-bundle",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/products/ai-workflow-architecture-masterclass",
+      "issues": [
+        {
+          "severity": "warning",
+          "rule": "h1-multiple",
+          "count": 2,
+          "message": "2 <h1> tags on page — should be exactly 1"
+        },
+        {
+          "severity": "warning",
+          "rule": "heading-skip",
+          "count": 1,
+          "message": "1 heading level skip(s) (e.g. h2 → h4 without h3 in between)"
+        },
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/products/enterprise-ai-readiness-assessment-kit",
+      "issues": [
+        {
+          "severity": "warning",
+          "rule": "h1-multiple",
+          "count": 2,
+          "message": "2 <h1> tags on page — should be exactly 1"
+        },
+        {
+          "severity": "warning",
+          "rule": "heading-skip",
+          "count": 1,
+          "message": "1 heading level skip(s) (e.g. h2 → h4 without h3 in between)"
+        },
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/products/the-ai-automation-agency-starter-pack",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/products/ai-tools-stack-starter-kit",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/products/workflow-automation-playbook",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/products/ai-automation-roi-calculator",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/services/intelligent-workflow-automation",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/services/custom-ai-chatbot-development",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/services/ai-powered-lead-generation",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/services/business-process-audit-roadmap",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/services/seamless-system-integration",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/services/ai-sales-automation",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/services/ai-driven-customer-intelligence",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/services/zapier-make-automation-setup",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/services/intelligent-document-processing",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/services/ai-content-marketing-automation",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/services/ai-training-enablement",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/case-studies/hargreaves-sterling",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/case-studies/meridian",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/case-studies/vortex",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/case-studies/thornfield",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/case-studies/lumen-studio",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/case-studies/helix-industries",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/case-studies/apex-talent",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/blog/what-is-an-ai-led-operating-model",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/blog/what-is-an-ai-ceo",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/blog/how-to-evaluate-an-ai-automation-consultancy",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/blog/we-built-a-consultancy-run-by-ai-agents",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/blog/state-of-ai-automation-2026",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/blog/5-workflows-services-business-should-automate-first",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/blog/why-sub-3-minute-response-triples-conversion",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/blog/intelligent-document-processing-99-accuracy",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/blog/build-vs-buy-when-to-stop-using-saas-ai",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/blog/how-to-calculate-roi-of-ai-workflow",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/blog/zapier-vs-make-vs-n8n-honest-comparison",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/compare/aiprosol-vs-zapier-consultant",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/compare/aiprosol-vs-in-house-build",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/compare/aiprosol-vs-big-4-ai-consulting",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/compare/aiprosol-vs-self-serve-ai-tools",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/compare/aiprosol-vs-make-agency",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/compare/aiprosol-vs-hubspot-operations-hub",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/compare/aiprosol-vs-salesforce-einstein",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/compare/aiprosol-vs-microsoft-copilot-studio",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/ai-agent",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/ai-automation",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/workflow-automation",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/llm",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/rag",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/vector-database",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/n8n",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/zapier",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/make",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/roi-of-ai-automation",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/hours-reclaimed",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/managed-plan",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/automation-audit",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/lead-scoring",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/sub-3-minute-response",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/lead-nurture",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/cold-outreach",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/mrr",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/churn",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/lead-routing",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/tool-stack",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/prompt-engineering",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/tool-use",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/embeddings",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/idempotency",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/webhook",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/crm",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/agent-orchestration",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/system-prompt",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/few-shot-prompting",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/token",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/context-window",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/fine-tuning",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/hallucination",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/human-in-the-loop",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/approval-gate",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/json-mode",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/latency",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/streaming",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/mrr-expansion",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/net-dollar-retention",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/icp",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/pql",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/drip-campaign",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/webhook-signature-verification",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/cron-job",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/idempotency-key",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/sales-sla",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/knowledge-base",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/csat",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/nps",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/api-rate-limit",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/exponential-backoff",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/dead-letter-queue",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/schema-evolution",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/multi-tenancy",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/zero-data-retention",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/compliance-posture",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/gdpr",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/ccpa",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/soc2",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/iso-27001",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/privacy-impact-assessment",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/cac",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/ltv",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/acv",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/arr",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/churn-cohort",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/retention",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/onboarding",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/activation-rate",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/time-to-value",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/ai-safety",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/prompt-injection",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/tool-calling-reliability",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/cost-per-action",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/cro-conversion-rate-optimisation",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/attribution-model",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/bounce-rate",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/page-authority",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/geo",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/seo",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/backlink",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/internal-linking",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/anchor-text",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/featured-snippet",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/ai-overview",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/domain-authority",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/canonical-url",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/open-graph",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/core-web-vitals",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/lcp",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/inp",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/cls",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/alt-text",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/accessibility",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/semantic-html",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/glossary/wcag",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/industries/legal",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/industries/real-estate",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/industries/financial-services",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/industries/saas",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/industries/professional-services",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/industries/e-commerce",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/use-cases/lead-generation-automation",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/use-cases/customer-support-automation",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/use-cases/document-processing",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/use-cases/sales-pipeline-automation",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/how-to/automate-lead-routing",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/how-to/audit-business-processes-for-automation",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/how-to/score-leads-with-ai",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/how-to/deploy-first-n8n-workflow",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/how-to/calculate-roi-of-ai-automation",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/how-to/build-customer-support-ai",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/how-to/automate-document-processing",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/how-to/pick-zapier-vs-make-vs-n8n",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/guides/definitive-guide-ai-automation-smbs-2026",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/guides/definitive-guide-lead-generation-automation-2026",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/guides/definitive-guide-customer-support-ai-2026",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/agents/arora",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/agents/coo",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/agents/cmo",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/agents/cco",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/agents/cto",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/agents/cro",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/agents/clo",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/agents/cpo",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/agents/cpm",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/agents/da",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/authors/srijan-paudel",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    },
+    {
+      "url": "https://aiprosol.com/authors/arora",
+      "issues": [
+        {
+          "severity": "error",
+          "rule": "form-label",
+          "count": 1,
+          "message": "1 form control(s) missing labels (no <label for>, no aria-label, no aria-labelledby)"
+        }
+      ]
+    }
+  ]
+}

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getSession } from '@/lib/auth';
 import { getCaseStudies } from '@/lib/content';
+import { getProfileByEmail } from '@/lib/profiles';
 
 export const metadata = { title: 'Dashboard' };
 export const dynamic = 'force-dynamic';
@@ -31,9 +32,13 @@ export default async function DashboardPage() {
     redirect('/login?next=/dashboard');
   }
 
-  const profile = session.profile ?? {};
+  // Prefer Supabase (full picture, bio, etc.); fall back to JWT summary for
+  // the 4 core fields if DB is unavailable so the dashboard never blanks out.
+  const dbProfile = await getProfileByEmail(session.email);
+  const profile = dbProfile ?? session.profile ?? {};
   const firstName = (profile.name || session.email).split(/\s|@/)[0];
   const initial = (profile.name || session.email).charAt(0).toUpperCase();
+  const pictureUrl = dbProfile?.picture || null;
   const memberSince = new Date(session.iat * 1000).toLocaleDateString('en-GB', {
     year: 'numeric', month: 'long', day: 'numeric',
   });
@@ -51,7 +56,19 @@ export default async function DashboardPage() {
         <div className="db-eyebrow">Account</div>
 
         <div className="db-head">
-          <div className="db-avatar">{initial}</div>
+          {pictureUrl ? (
+            // Real OAuth avatar — referrerPolicy=no-referrer because Google's
+            // CDN sometimes 403s requests with a strict referrer.
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={pictureUrl}
+              alt={`${firstName}'s avatar`}
+              className="db-avatar db-avatar-img"
+              referrerPolicy="no-referrer"
+            />
+          ) : (
+            <div className="db-avatar">{initial}</div>
+          )}
           <div>
             <h1>Welcome back, {firstName}.</h1>
             <p className="db-email">{session.email}</p>
@@ -145,6 +162,7 @@ export default async function DashboardPage() {
         .db-eyebrow { display: inline-block; padding: 4px 12px; background: rgba(139, 92, 246,0.08); border: 1px solid rgba(139, 92, 246,0.25); border-radius: 999px; color: #8B5CF6; font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 18px; }
         .db-head { display: flex; align-items: center; gap: 18px; margin-bottom: 20px; }
         .db-avatar { width: 60px; height: 60px; border-radius: 16px; background: linear-gradient(135deg, #8B5CF6, #C084FC); color: #0A0613; display: inline-flex; align-items: center; justify-content: center; font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 26px; flex-shrink: 0; box-shadow: 0 0 24px rgba(139,92,246,0.35); }
+        .db-avatar-img { object-fit: cover; background: #13101F; }
         .db-card h1 { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: clamp(26px, 3.4vw, 32px); line-height: 1.1; margin: 0 0 6px; }
         .db-email { color: #C7CEDB; font-size: 15px; margin: 0 0 4px; word-break: break-all; }
         .db-meta-line { color: #9CA3B5; font-size: 12px; margin: 0; }

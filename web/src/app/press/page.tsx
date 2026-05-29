@@ -165,7 +165,7 @@ export default function PressPage() {
           <h2>At a glance</h2>
           <div className="pr-glance">
             <Row label="Company"        value="Aiprosol" />
-            <Row label="Legal name"     value="Aiprosol Ltd" />
+            <Row label="Status"         value="Pre-incorporation (trading as Aiprosol)" />
             <Row label="Founded"        value="April 2026" />
             <Row label="Founder & Chairman" value="Srijan Paudel" />
             <Row label="AI CEO"         value="Arora" />

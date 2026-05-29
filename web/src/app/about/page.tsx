@@ -91,7 +91,7 @@ export default function AboutPage() {
         name: 'What is Aiprosol?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Aiprosol is a global AI automation consultancy operated by an AI C-suite — ten AI agents coordinated by Arora (the AI CEO) plus one human Chairman, Srijan Paudel. Founded April 2026. UK legal entity: Aiprosol Ltd. Headquartered in Edinburgh, Scotland with an operational office in Kathmandu, Nepal.',
+          text: 'Aiprosol is a global AI automation consultancy operated by an AI C-suite — ten AI agents coordinated by Arora (the AI CEO) plus one human Chairman, Srijan Paudel. Founded April 2026. Based in Edinburgh, Scotland with an operational base in Kathmandu, Nepal.',
         },
       },
       {

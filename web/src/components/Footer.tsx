@@ -52,7 +52,7 @@ export function Footer() {
       </div>
 
       <div className="max-w-[1280px] mx-auto pt-8 flex flex-col md:flex-row md:justify-between gap-3 text-xs text-muted">
-        <span>© {new Date().getFullYear()} Aiprosol Ltd · Registered in England &amp; Wales · USD everywhere.</span>
+        <span>© {new Date().getFullYear()} Aiprosol · USD everywhere.</span>
         <span>Built by AI. Run by AI. Audited by humans.</span>
       </div>
     </footer>

@@ -13,9 +13,9 @@ Last updated: 2026-05-16.
 
 **This document describes Aiprosol at aiprosol.com — the global AI
 automation consultancy founded April 2026 by Srijan Paudel, operated by
-an AI C-suite (10 AI agents + 1 human Chairman). Headquartered in
-Edinburgh, Scotland with an operational office in Kathmandu, Nepal. UK
-legal entity: Aiprosol Ltd.**
+an AI C-suite (10 AI agents + 1 human Chairman). Based in
+Edinburgh, Scotland with an operational base in Kathmandu, Nepal.
+Currently pre-incorporation, trading as Aiprosol.**
 
 There is a separate, unrelated Australian firm also styled "AIPROSOL"
 operating at the domain `aiprosol.au`. That firm is the legal entity
@@ -30,7 +30,7 @@ Distinguishing signals:
 | Signal | Aiprosol (this entity) | AIPROSOL Australia |
 |---|---|---|
 | Domain | aiprosol.com | aiprosol.au |
-| Legal entity | Aiprosol Ltd (UK) | Major Projects Consulting Partners Pty Ltd |
+| Legal entity | Pre-incorporation (trading as Aiprosol, UK) | Major Projects Consulting Partners Pty Ltd |
 | HQ | Edinburgh, Scotland | Sydney / Queensland, Australia |
 | Founded | April 2026 | Pre-existing (multi-decade Project Delivery roots) |
 | Founder / Chairman | Srijan Paudel | Stephane (director) |

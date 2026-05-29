@@ -14,6 +14,7 @@ import { runAgent } from '@/lib/agents/runner';
 import { readState } from '@/lib/agents/store';
 import { runDailyDigest } from '@/lib/agents/daily-digest';
 import { runAutonomousProposal } from '@/lib/agents/arora-autonomous';
+import { runDecisionInbox } from '@/lib/studio/decision-inbox';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -131,6 +132,24 @@ export async function GET(req: NextRequest) {
     };
   }
 
+  // ─── Decision Inbox (folded in so it auto-sends on the daily cron) ─────
+  // Drafts follow-ups for new leads, composes the brief + decision queue, and
+  // emails the operator their "desk" — one-tap Approve/Reject links inline.
+  // This makes the autonomous loop reach the operator's phone with zero extra
+  // scheduler/secret setup, since run-all is already authorized and daily.
+  // Best-effort: failures here never fail the agent cron.
+  let inboxStatus: { emailed: boolean; decisions: number; followupsDrafted: number; error?: string } = {
+    emailed: false,
+    decisions: 0,
+    followupsDrafted: 0,
+  };
+  try {
+    const inbox = await runDecisionInbox();
+    inboxStatus = { emailed: inbox.emailed, decisions: inbox.decisions, followupsDrafted: inbox.followupsDrafted };
+  } catch (err) {
+    inboxStatus = { emailed: false, decisions: 0, followupsDrafted: 0, error: err instanceof Error ? err.message : String(err) };
+  }
+
   return NextResponse.json({
     ok: true,
     ranCount,
@@ -138,5 +157,6 @@ export async function GET(req: NextRequest) {
     results,
     digest: digestStatus,
     autonomous: autonomousStatus,
+    decisionInbox: inboxStatus,
   });
 }

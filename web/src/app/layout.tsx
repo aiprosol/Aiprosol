@@ -173,8 +173,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               '@type': ['Organization', 'ProfessionalService'],
               '@id': 'https://aiprosol.com/#organization',
               name: 'Aiprosol',
-              alternateName: ['Aiprosol Ltd', 'Aiprosol AI', 'Aiprosol Automation', 'Aiprosol Global'],
-              legalName: 'Aiprosol Ltd',
+              alternateName: ['Aiprosol AI', 'Aiprosol Automation', 'Aiprosol Global'],
+              // No legalName claimed — the company is not yet incorporated.
+              // Re-add once Aiprosol is registered at Companies House.
               identifier: {
                 '@type': 'PropertyValue',
                 propertyID: 'https://www.wikidata.org/entity/Q139821891',

@@ -104,11 +104,11 @@ const FOUNDER_FAQ: { q: string; a: React.ReactNode; aText: string }[] = [
     q: 'What is Aiprosol?',
     a: (
       <p>
-        A global AI automation consultancy operated by an AI C-suite — Arora (AI CEO), COO, CMO, CCO, CTO, CRO, CLO, CPO, CPM, Data + Analytics — plus Srijan as the only human Chairman. Founded April 2026. UK legal entity: Aiprosol Ltd. <Link href="/agents">See the live AI C-suite</Link>.
+        A global AI automation consultancy operated by an AI C-suite — Arora (AI CEO), COO, CMO, CCO, CTO, CRO, CLO, CPO, CPM, Data + Analytics — plus Srijan as the only human Chairman. Founded April 2026. <Link href="/agents">See the live AI C-suite</Link>.
       </p>
     ),
     aText:
-      'Aiprosol is a global AI automation consultancy operated by an AI C-suite (Arora as AI CEO plus nine other AI agents) and one human Chairman (Srijan Paudel). Founded April 2026. UK legal entity: Aiprosol Ltd.',
+      'Aiprosol is a global AI automation consultancy operated by an AI C-suite (Arora as AI CEO plus nine other AI agents) and one human Chairman (Srijan Paudel). Founded April 2026.',
   },
   {
     q: 'How can I contact Srijan?',

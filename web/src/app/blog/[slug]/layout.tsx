@@ -18,7 +18,17 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
     (post as { summary?: string }).summary ||
     (post as { description?: string }).description ||
     '';
-  const description = excerpt.slice(0, 200);
+  // Meta descriptions should stay under ~160 chars (Google truncates beyond
+  // that). Truncate on a word boundary with an ellipsis rather than a hard
+  // 200-char cut that ran over the limit + chopped mid-word. Applies to every
+  // blog post, not just long ones.
+  const description = (() => {
+    const MAX = 155;
+    if (excerpt.length <= MAX) return excerpt;
+    const cut = excerpt.slice(0, MAX);
+    const lastSpace = cut.lastIndexOf(' ');
+    return (lastSpace > 40 ? cut.slice(0, lastSpace) : cut).replace(/[\s.,;:—-]+$/, '') + '…';
+  })();
   const image =
     (post as { coverImage?: string }).coverImage ||
     (post as { image?: string }).image ||

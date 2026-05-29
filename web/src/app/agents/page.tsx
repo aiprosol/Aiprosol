@@ -8,6 +8,49 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ROLES, ROLE_META, type Role, type AgentState } from '@/lib/agents/types';
 import { readAllStates } from '@/lib/agents/store';
+import { isSupabaseConfigured, requireSupabaseAdmin } from '@/lib/db/supabase';
+
+// Current assignment per role — populated from project-linked tasks. NULL
+// for roles with no open work. Used to render the "Working on" line on
+// each agent card so the team feels actively engaged, not just polling.
+type CurrentAssignment = {
+  projectTitle: string;
+  taskTitle: string;
+  status: 'todo' | 'in_progress' | 'review';
+} | null;
+
+async function readCurrentAssignments(): Promise<Record<Role, CurrentAssignment>> {
+  const empty = Object.fromEntries(ROLES.map((r) => [r, null])) as Record<Role, CurrentAssignment>;
+  if (!isSupabaseConfigured()) return empty;
+  try {
+    const db = requireSupabaseAdmin();
+    const { data, error } = await db
+      .from('tasks')
+      .select('owner_role, title, status, priority, updated_at, projects(title)')
+      .in('status', ['todo', 'in_progress', 'review'])
+      .not('project_id', 'is', null)
+      .order('priority', { ascending: false })
+      .order('updated_at', { ascending: false });
+    if (error || !data) return empty;
+    const out = { ...empty };
+    for (const row of data) {
+      const r = (row as { owner_role: string | null }).owner_role;
+      if (!r || !(ROLES as readonly string[]).includes(r)) continue;
+      const key = r as Role;
+      if (out[key]) continue; // keep highest-priority / most-recent
+      const proj = (row as { projects?: { title?: string } | null }).projects;
+      out[key] = {
+        projectTitle: proj?.title ?? '(unlinked project)',
+        taskTitle: (row as { title: string }).title,
+        status: (row as { status: 'todo' | 'in_progress' | 'review' }).status,
+      };
+    }
+    return out;
+  } catch (err) {
+    console.warn('[/agents] readCurrentAssignments failed:', err);
+    return empty;
+  }
+}
 
 export const metadata: Metadata = {
   title: 'Agents · The AI C-Suite Running Aiprosol',
@@ -20,7 +63,10 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 60;
 
 export default async function AgentsPage() {
-  const states = await readAllStates();
+  const [states, assignments] = await Promise.all([
+    readAllStates(),
+    readCurrentAssignments(),
+  ]);
   const onlineCount = ROLES.filter((r) => states[r]?.health === 'ok').length;
   const totalItems = ROLES.reduce(
     (n, r) => n + (states[r]?.lastOutput.items.length ?? 0),
@@ -51,7 +97,12 @@ export default async function AgentsPage() {
 
       <div className="ag-grid">
         {ROLES.map((role) => (
-          <AgentCard key={role} role={role} state={states[role]} />
+          <AgentCard
+            key={role}
+            role={role}
+            state={states[role]}
+            assignment={assignments[role]}
+          />
         ))}
         {/* Chairman card (human) */}
         <ChairmanCard />
@@ -62,7 +113,15 @@ export default async function AgentsPage() {
   );
 }
 
-function AgentCard({ role, state }: { role: Role; state: AgentState | null }) {
+function AgentCard({
+  role,
+  state,
+  assignment,
+}: {
+  role: Role;
+  state: AgentState | null;
+  assignment: CurrentAssignment;
+}) {
   const meta = ROLE_META[role];
   const isOnline = state?.health === 'ok';
   return (
@@ -81,6 +140,16 @@ function AgentCard({ role, state }: { role: Role; state: AgentState | null }) {
           {isOnline ? <><span className="ag-pip" /> ONLINE</> : 'OFFLINE'}
         </div>
       </div>
+
+      {assignment && (
+        <div className="ag-card-assignment" style={{ borderLeft: `3px solid ${meta.color}` }}>
+          <div className="ag-card-assignment-label">
+            {assignment.status === 'review' ? 'Awaiting review' : 'Working on'}
+          </div>
+          <div className="ag-card-assignment-task">{assignment.taskTitle}</div>
+          <div className="ag-card-assignment-project">Project: {assignment.projectTitle}</div>
+        </div>
+      )}
 
       <div className="ag-card-body">
         {state ? (
@@ -275,6 +344,11 @@ function Styles() {
       .ag-alert-tag { font-family: 'Space Grotesk', sans-serif; font-size: 8px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 5px; background: currentColor; color: #0A0613; border-radius: 3px; flex-shrink: 0; margin-top: 1px; }
 
       .ag-card-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(42, 31, 61, 0.6); font-size: 10px; color: #6B7280; }
+
+      .ag-card-assignment { padding: 10px 12px; margin-bottom: 4px; background: rgba(139, 92, 246, 0.06); border-left: 3px solid #8B5CF6; border-radius: 4px; display: flex; flex-direction: column; gap: 3px; }
+      .ag-card-assignment-label { font-family: 'Space Grotesk', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.14em; color: #C084FC; text-transform: uppercase; }
+      .ag-card-assignment-task { font-size: 13px; color: #E5E7EB; line-height: 1.4; font-weight: 600; }
+      .ag-card-assignment-project { font-size: 11px; color: #9CA3B5; line-height: 1.35; font-style: italic; }
     `}</style>
   );
 }

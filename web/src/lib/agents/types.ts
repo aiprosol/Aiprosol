@@ -195,12 +195,79 @@ export const ProposedTaskSchema = z.object({
   notes: z.string().max(500).optional(),
 });
 
+// ─── Deliverables — concrete artifacts produced when executing a project task ──
+// Each deliverable has a polymorphic payload shaped by its `type`. The runner
+// uses `type` to route the row into the correct table (outreach_drafts /
+// linkedin_posts / sops / project_artifacts). The agent populates `task_id`
+// with the UUID of the assigned task this deliverable fulfills — the runner
+// validates the task exists, is owned by this role, and is non-terminal
+// before inserting; mismatched task_ids are logged + skipped (no insert).
+
+export const OutreachDraftPayloadSchema = z.object({
+  channel: z.preprocess(
+    (v) => (typeof v === 'string' ? v.toLowerCase() : v),
+    z.enum(['gmail', 'linkedin', 'other'])
+  ).optional().default('gmail'),
+  target_segment: z.string().min(1).max(160),
+  recipient_name: z.string().max(160).optional(),
+  recipient_email: z.string().max(200).optional(),
+  subject: z.string().min(1).max(240),
+  body: z.string().min(20).max(6000),
+});
+
+export const LinkedInPostPayloadSchema = z.object({
+  title: z.string().max(200).optional(),
+  hook: z.string().max(360).optional(),
+  body: z.string().min(20).max(6000),
+  industry: z.string().max(80).optional(),
+  scheduled_for: z.string().max(40).optional(), // ISO-ish; runner is tolerant
+});
+
+export const SopNotePayloadSchema = z.object({
+  slug: z.string().min(2).max(160),
+  title: z.string().min(2).max(240),
+  category: z.string().max(80).optional(),
+  content_markdown: z.string().min(20).max(20000),
+  owner_role: z.string().max(40).optional(),
+});
+
+export const AnalysisPayloadSchema = z.object({
+  title: z.string().min(2).max(240),
+  body_markdown: z.string().min(20).max(20000),
+  data_json: z.record(z.string(), z.unknown()).optional(),
+});
+
+export const DeliverableSchema = z.discriminatedUnion('type', [
+  z.object({
+    task_id: z.string().min(8).max(64), // tolerant: validate UUID shape downstream
+    type: z.literal('outreach_draft'),
+    payload: OutreachDraftPayloadSchema,
+  }),
+  z.object({
+    task_id: z.string().min(8).max(64),
+    type: z.literal('linkedin_post'),
+    payload: LinkedInPostPayloadSchema,
+  }),
+  z.object({
+    task_id: z.string().min(8).max(64),
+    type: z.literal('sop_note'),
+    payload: SopNotePayloadSchema,
+  }),
+  z.object({
+    task_id: z.string().min(8).max(64),
+    type: z.literal('analysis'),
+    payload: AnalysisPayloadSchema,
+  }),
+]);
+
 export const AgentRunOutputSchema = z.object({
   summary: z.string().min(1).max(500),
   items: z.array(AgentItemSchema).max(20),
   alerts: z.array(AgentAlertSchema).max(10).default([]),
   kpis: z.array(AgentKpiSchema).max(10).default([]),
   proposed_tasks: z.array(ProposedTaskSchema).max(5).default([]),
+  // NEW — structured deliverables tied back to assigned project tasks.
+  deliverables: z.array(DeliverableSchema).max(8).default([]),
   next_focus: z.string().max(400).optional(),
 });
 
@@ -208,7 +275,92 @@ export type AgentItem = z.infer<typeof AgentItemSchema>;
 export type AgentAlert = z.infer<typeof AgentAlertSchema>;
 export type AgentKpi = z.infer<typeof AgentKpiSchema>;
 export type ProposedTask = z.infer<typeof ProposedTaskSchema>;
+export type Deliverable = z.infer<typeof DeliverableSchema>;
+export type OutreachDraftPayload = z.infer<typeof OutreachDraftPayloadSchema>;
+export type LinkedInPostPayload = z.infer<typeof LinkedInPostPayloadSchema>;
+export type SopNotePayload = z.infer<typeof SopNotePayloadSchema>;
+export type AnalysisPayload = z.infer<typeof AnalysisPayloadSchema>;
 export type AgentRunOutput = z.infer<typeof AgentRunOutputSchema>;
+
+// ─── Arora-as-router (Chairman briefs a project; Arora decomposes) ──────
+export const RoutingDecisionSchema = z.object({
+  rationale: z.string().min(10).max(1500),
+  tasks: z
+    .array(
+      z.object({
+        title: z.string().min(3).max(280),
+        owner_role: z
+          .preprocess((v) => (typeof v === 'string' ? v.toLowerCase() : v),
+            z.enum(['arora', 'coo', 'cmo', 'cco', 'cto', 'cro', 'clo', 'cpo', 'cpm', 'da'])),
+        priority: z
+          .preprocess((v) => (v === 'urgent' ? 'now' : (typeof v === 'string' ? v.toLowerCase() : v)),
+            z.enum(['low', 'normal', 'high', 'now']))
+          .optional()
+          .default('normal'),
+        deliverable_type: z
+          .preprocess((v) => (typeof v === 'string' ? v.toLowerCase() : v),
+            z.enum(['outreach_draft', 'linkedin_post', 'sop_note', 'analysis', 'none']))
+          .optional()
+          .default('none'),
+        notes: z.string().min(5).max(1500),
+      }),
+    )
+    .min(1)
+    .max(6),
+});
+
+export type RoutingDecision = z.infer<typeof RoutingDecisionSchema>;
+
+// ─── Arora-autonomous (Phase 3: daily proposals at 09:00 cron) ──────────
+export const AutonomousProposalSchema = z.object({
+  rationale: z.string().min(10).max(1500),
+  projects: z
+    .array(
+      z.object({
+        title: z.string().min(3).max(200),
+        brief: z.string().min(20).max(3000),
+        target_outcome: z.string().min(5).max(800),
+        urgency: z
+          .preprocess((v) => (typeof v === 'string' ? v.toLowerCase() : v),
+            z.enum(['now', 'this_week', 'when_capacity']))
+          .optional()
+          .default('this_week'),
+      }),
+    )
+    .max(2)
+    .default([]),
+});
+
+export type AutonomousProposal = z.infer<typeof AutonomousProposalSchema>;
+
+// ─── Project + ProjectArtifact (matches Supabase migration projects_v1) ──
+export type ProjectStatus = 'briefed' | 'routing' | 'in_progress' | 'review' | 'shipped' | 'cancelled';
+export type ProjectAssignedBy = 'chairman' | 'arora';
+
+export type Project = {
+  id: string;
+  title: string;
+  brief: string;
+  target_outcome: string | null;
+  assigned_by: ProjectAssignedBy;
+  status: ProjectStatus;
+  decomposition: { rationale: string; tasks: Array<Record<string, unknown>> } | null;
+  created_at: string;
+  kicked_off_at: string | null;
+  completed_at: string | null;
+};
+
+export type ProjectArtifact = {
+  id: string;
+  project_id: string;
+  task_id: string | null;
+  role: Role;
+  type: 'analysis' | 'report' | 'spec' | 'memo';
+  title: string;
+  body_markdown: string;
+  data_json: Record<string, unknown> | null;
+  created_at: string;
+};
 
 // Persisted state file — public/agents/<role>/state.json
 export type AgentState = {

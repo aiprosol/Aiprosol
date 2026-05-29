@@ -13,6 +13,7 @@ import { ROLES } from '@/lib/agents/types';
 import { runAgent } from '@/lib/agents/runner';
 import { readState } from '@/lib/agents/store';
 import { runDailyDigest } from '@/lib/agents/daily-digest';
+import { runAutonomousProposal } from '@/lib/agents/arora-autonomous';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -104,11 +105,38 @@ export async function GET(req: NextRequest) {
     digestStatus = { ok: false, emailed: false, error: err instanceof Error ? err.message : String(err) };
   }
 
+  // ─── Autonomous Arora proposal (Phase 3) ──────────────────────────────
+  // After the digest, Arora reviews backlog + KPIs + peer next_focus and
+  // proposes 0–2 new projects (briefed, NOT auto-routed). Chairman approves
+  // in /studio. Failures here don't fail the cron.
+  let autonomousStatus: {
+    ok: boolean;
+    proposedCount: number;
+    rationale?: string | null;
+    error?: string;
+  } = { ok: false, proposedCount: 0 };
+  try {
+    const auto = await runAutonomousProposal();
+    autonomousStatus = {
+      ok: auto.ok,
+      proposedCount: auto.proposal?.projects.length ?? 0,
+      rationale: auto.proposal?.rationale ?? null,
+      error: auto.error,
+    };
+  } catch (err) {
+    autonomousStatus = {
+      ok: false,
+      proposedCount: 0,
+      error: err instanceof Error ? err.message : String(err),
+    };
+  }
+
   return NextResponse.json({
     ok: true,
     ranCount,
     okCount,
     results,
     digest: digestStatus,
+    autonomous: autonomousStatus,
   });
 }

@@ -11,12 +11,13 @@
 //   6. Fallback to canned content if Groq is unavailable
 // ─────────────────────────────────────────────────────────────────────────
 
-import { ROLE_META, type Role, type AgentState, type AgentRunOutput, AgentRunOutputSchema } from './types';
+import { ROLE_META, type Role, type AgentState, type AgentRunOutput, type Deliverable, AgentRunOutputSchema } from './types';
 import { AGENT_PROMPTS } from './prompts';
 import { readAllStates, writeState, appendLog } from './store';
 import { loadContext, renderContext } from './context';
 import { runKpiRollup } from './kpi-rollup';
 import { getProducts, getServices } from '@/lib/content';
+import { isSupabaseConfigured, requireSupabaseAdmin } from '@/lib/db/supabase';
 
 const GROQ_ENDPOINT = 'https://api.groq.com/openai/v1/chat/completions';
 const DEFAULT_MODEL = 'llama-3.3-70b-versatile';
@@ -25,6 +26,10 @@ const DEFAULT_MODEL = 'llama-3.3-70b-versatile';
 async function buildContext(role: Role, otherStates: Record<Role, AgentState | null>): Promise<string> {
   const now = new Date();
   const utc = now.toISOString();
+
+  // Project assignments come FIRST in the message — this is the priority work.
+  // If empty, the agent falls back to its normal operational cycle.
+  const assignmentsBlock = await renderAssignments(role);
 
   // Compact view of what every other agent reported last
   const peerDigest = Object.entries(otherStates)
@@ -52,6 +57,8 @@ You are running as: ${role.toUpperCase()} (${ROLE_META[role].title} · ${ROLE_ME
 Your cadence: every ${ROLE_META[role].cadenceHrs} hours
 Your KPIs to track: ${ROLE_META[role].ownsKpis.join(', ')}
 
+${assignmentsBlock}
+
 # CATALOGUE SNAPSHOT
 ${productSummary}
 ${serviceSummary}
@@ -66,11 +73,59 @@ ${ctxMarkdown || '(no role-specific data loaded yet — operate from system prom
 Run your cycle now. Generate the JSON output per the OUTPUT FORMAT in your system prompt.
 
 **HARD RULES for this cycle:**
-1. Reference actual items from "YOUR LIVE DATA" by name/ID/slug when relevant — don't invent fictional ones.
-2. If your live data shows an empty table, say so honestly in the summary and propose what to seed it with.
-3. If a task in the backlog is yours to action, mention it explicitly in items[].
-4. Specific dollar amounts and time estimates — but ground them in the catalogue (the price range above) and the peer activity, not random numbers.
+1. **Project assignments come first.** If "YOUR CURRENT ASSIGNMENTS" is non-empty, populate deliverables[] to ship those tasks before doing anything else.
+2. Reference actual items from "YOUR LIVE DATA" by name/ID/slug when relevant — don't invent fictional ones.
+3. If your live data shows an empty table, say so honestly in the summary and propose what to seed it with.
+4. If a task in the backlog is yours to action, mention it explicitly in items[].
+5. Specific dollar amounts and time estimates — but ground them in the catalogue (the price range above) and the peer activity, not random numbers.
 `;
+}
+
+// ─── Project assignments fetch + render ─────────────────────────────────
+// Returns a markdown block listing every open project-linked task assigned
+// to this role. Each entry exposes the task UUID so the agent can reference
+// it in deliverables[].task_id. Empty block when nothing is assigned.
+async function renderAssignments(role: Role): Promise<string> {
+  if (!isSupabaseConfigured()) {
+    return '# YOUR CURRENT ASSIGNMENTS\n(Supabase not configured — no assignments to surface.)';
+  }
+  try {
+    const db = requireSupabaseAdmin();
+    const { data, error } = await db
+      .from('tasks')
+      .select('id, title, status, priority, deliverable_type, notes, project_id, projects(title, brief, target_outcome)')
+      .eq('owner_role', role)
+      .in('status', ['todo', 'in_progress'])
+      .not('project_id', 'is', null)
+      .order('priority', { ascending: false })
+      .limit(4);
+    if (error) {
+      console.warn(`[agents/runner] renderAssignments(${role}) failed:`, error.message);
+      return '# YOUR CURRENT ASSIGNMENTS\n(Could not load assignments — fall back to your normal cycle.)';
+    }
+    if (!data || data.length === 0) {
+      return '# YOUR CURRENT ASSIGNMENTS\n(No project tasks assigned to you right now — run your normal cycle and populate deliverables: [].)';
+    }
+    const lines = data.map((t) => {
+      const proj = (t as { projects?: { title?: string; brief?: string; target_outcome?: string | null } | null }).projects;
+      const projTitle = proj?.title ?? '(unlinked)';
+      const projBrief = (proj?.brief ?? '').slice(0, 400);
+      const target = (proj?.target_outcome ?? '').slice(0, 200);
+      const notes = (t.notes ?? '').slice(0, 400);
+      return `- [Project: "${projTitle}"] Task ${t.id}
+    Title:           ${t.title}
+    Deliverable:     ${t.deliverable_type || 'none'}
+    Priority:        ${t.priority || 'normal'}
+    Status:          ${t.status}
+    Notes:           ${notes || '(none)'}
+    Project brief:   ${projBrief || '(no brief)'}
+    Target outcome:  ${target || '(none)'}`;
+    });
+    return `# YOUR CURRENT ASSIGNMENTS (Projects from Chairman/CEO — execute these FIRST)\nFor each task here, produce a deliverables[] entry with payload type matching the Deliverable column.\nUse the exact Task UUID as deliverables[].task_id.\n\n${lines.join('\n\n')}`;
+  } catch (err) {
+    console.warn(`[agents/runner] renderAssignments(${role}) threw:`, err);
+    return '# YOUR CURRENT ASSIGNMENTS\n(Error loading assignments — fall back to your normal cycle.)';
+  }
 }
 
 // Single-cycle agent run
@@ -193,6 +248,14 @@ export async function runAgent(role: Role): Promise<{
       await persistProposedTasks(role, validated.proposed_tasks);
     }
 
+    // ─── Persist agent deliverables ─────────────────────────────────
+    // Each deliverable fans out into the right table (outreach_drafts /
+    // linkedin_posts / sops / project_artifacts) and marks the originating
+    // task as status='review' with deliverable_id pointing at the artifact.
+    if (validated.deliverables?.length) {
+      await persistDeliverables(role, validated.deliverables);
+    }
+
     // ─── DA runs the daily KPI roll-up after its LLM cycle ──────────
     // We do this for DA only — the other agents shouldn't be writing
     // analytics. Failures don't kill the run; they just go in the log.
@@ -229,10 +292,165 @@ export async function runAgent(role: Role): Promise<{
   }
 }
 
+// ─────────────────────────────────────────────────────────────────────────
+// persistDeliverables — fan out structured deliverables into the right table
+// + mark the originating task as 'review' so the chairman sees it in /studio.
+//
+// Safety checks per deliverable:
+//   1. task_id must look like a UUID
+//   2. The task row must exist, be owned by this role, have a project_id,
+//      and be in a non-terminal status (todo|in_progress).
+//   3. Mismatched task_ids are warn-logged + skipped (no insert).
+// ─────────────────────────────────────────────────────────────────────────
+async function persistDeliverables(role: Role, deliverables: Deliverable[]): Promise<void> {
+  if (!deliverables || deliverables.length === 0) return;
+  if (!isSupabaseConfigured()) return;
+  const db = requireSupabaseAdmin();
+
+  const uuidRe = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+  for (const d of deliverables) {
+    try {
+      if (!uuidRe.test(d.task_id)) {
+        console.warn(`[agents/runner] ${role}: deliverable rejected — task_id not a UUID: ${d.task_id}`);
+        continue;
+      }
+      const { data: task, error: taskErr } = await db
+        .from('tasks')
+        .select('id, owner_role, status, project_id, deliverable_type')
+        .eq('id', d.task_id)
+        .maybeSingle();
+      if (taskErr) {
+        console.warn(`[agents/runner] ${role}: deliverable rejected — task lookup failed:`, taskErr.message);
+        continue;
+      }
+      if (!task) {
+        console.warn(`[agents/runner] ${role}: deliverable rejected — task ${d.task_id} not found`);
+        continue;
+      }
+      if (task.owner_role !== role) {
+        console.warn(`[agents/runner] ${role}: deliverable rejected — task ${d.task_id} owned by ${task.owner_role}, not ${role}`);
+        continue;
+      }
+      if (!task.project_id) {
+        console.warn(`[agents/runner] ${role}: deliverable rejected — task ${d.task_id} has no project_id`);
+        continue;
+      }
+      if (task.status !== 'todo' && task.status !== 'in_progress') {
+        console.warn(`[agents/runner] ${role}: deliverable rejected — task ${d.task_id} in terminal status ${task.status}`);
+        continue;
+      }
+
+      let deliverableId: string | null = null;
+
+      if (d.type === 'outreach_draft') {
+        const p = d.payload;
+        const { data: row, error } = await db
+          .from('outreach_drafts')
+          .insert({
+            channel: p.channel ?? 'gmail',
+            target_segment: p.target_segment,
+            recipient_name: p.recipient_name ?? null,
+            recipient_email: p.recipient_email ?? null,
+            subject: p.subject,
+            body: p.body,
+            status: 'draft',
+            sent_by: role,
+          })
+          .select('id')
+          .maybeSingle();
+        if (error) {
+          console.warn(`[agents/runner] ${role}: outreach_drafts insert failed:`, error.message);
+          continue;
+        }
+        deliverableId = row?.id ?? null;
+      } else if (d.type === 'linkedin_post') {
+        const p = d.payload;
+        const { data: row, error } = await db
+          .from('linkedin_posts')
+          .insert({
+            title: p.title ?? null,
+            body: p.body,
+            hook: p.hook ?? null,
+            industry: p.industry ?? null,
+            scheduled_for: p.scheduled_for ?? null,
+            status: 'draft',
+          })
+          .select('id')
+          .maybeSingle();
+        if (error) {
+          console.warn(`[agents/runner] ${role}: linkedin_posts insert failed:`, error.message);
+          continue;
+        }
+        deliverableId = row?.id ?? null;
+      } else if (d.type === 'sop_note') {
+        const p = d.payload;
+        const safeSlug = `${p.slug}-${Date.now().toString(36)}`; // sops.slug is likely unique
+        const { data: row, error } = await db
+          .from('sops')
+          .insert({
+            slug: safeSlug,
+            title: p.title,
+            category: p.category ?? null,
+            content_markdown: p.content_markdown,
+            owner_role: p.owner_role ?? role,
+          })
+          .select('id')
+          .maybeSingle();
+        if (error) {
+          console.warn(`[agents/runner] ${role}: sops insert failed:`, error.message);
+          continue;
+        }
+        deliverableId = row?.id ?? null;
+      } else if (d.type === 'analysis') {
+        const p = d.payload;
+        const { data: row, error } = await db
+          .from('project_artifacts')
+          .insert({
+            project_id: task.project_id,
+            task_id: task.id,
+            role,
+            type: 'analysis',
+            title: p.title,
+            body_markdown: p.body_markdown,
+            data_json: p.data_json ?? null,
+          })
+          .select('id')
+          .maybeSingle();
+        if (error) {
+          console.warn(`[agents/runner] ${role}: project_artifacts insert failed:`, error.message);
+          continue;
+        }
+        deliverableId = row?.id ?? null;
+      }
+
+      if (!deliverableId) {
+        console.warn(`[agents/runner] ${role}: deliverable persisted but no id returned (skip task update)`);
+        continue;
+      }
+
+      // Mark task as 'review' (ready for chairman approval) with FK to artifact.
+      const { error: updErr } = await db
+        .from('tasks')
+        .update({
+          status: 'review',
+          deliverable_type: d.type,
+          deliverable_id: deliverableId,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', d.task_id);
+      if (updErr) {
+        console.warn(`[agents/runner] ${role}: task ${d.task_id} update failed:`, updErr.message);
+      }
+    } catch (err) {
+      console.warn(`[agents/runner] ${role}: deliverable processing threw:`, err);
+    }
+  }
+}
+
 async function persistProposedTasks(role: Role, tasks: AgentRunOutput['proposed_tasks']): Promise<void> {
   if (!tasks || tasks.length === 0) return;
   try {
-    const { requireSupabaseAdmin, isSupabaseConfigured } = await import('@/lib/db/supabase');
     if (!isSupabaseConfigured()) return;
     const db = requireSupabaseAdmin();
 
@@ -324,6 +542,7 @@ function fallbackOutput(role: Role): AgentRunOutput {
     ],
     kpis: [],
     proposed_tasks: [],
+    deliverables: [],
     next_focus: 'Resume normal cycle when LLM is back online.',
   };
 }

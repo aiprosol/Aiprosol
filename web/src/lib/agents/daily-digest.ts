@@ -11,6 +11,7 @@
 import { isSupabaseConfigured, requireSupabaseAdmin } from '@/lib/db/supabase';
 import { ROLES, ROLE_META, type Role, type AgentRunOutput } from './types';
 import { readKpiTimeseries } from './kpi-rollup';
+import { readTodaysAroraProposals } from './arora-autonomous';
 import { sendEmail, isResendConfigured } from '@/lib/resend';
 
 type StateRow = {
@@ -55,8 +56,9 @@ async function gatherDigestData() {
   const newLeads = leadsRes.data ?? [];
 
   const kpis = await readKpiTimeseries(2); // today vs yesterday for delta
+  const aroraProposals = await readTodaysAroraProposals();
 
-  return { states, runs, newTasks, newDrafts, newLeads, kpis };
+  return { states, runs, newTasks, newDrafts, newLeads, kpis, aroraProposals };
 }
 
 // Build the markdown + HTML bodies for the digest.
@@ -64,7 +66,7 @@ export async function composeDigest(): Promise<DigestPayload | null> {
   const data = await gatherDigestData();
   if (!data) return null;
   const day = todayUTC();
-  const { states, runs, newTasks, newDrafts, newLeads, kpis } = data;
+  const { states, runs, newTasks, newDrafts, newLeads, kpis, aroraProposals } = data;
 
   // ─── Headline counters ────────────────────────────────────────────────
   const agentsRun24h = runs.filter((r) => r.status === 'ok').length;
@@ -121,6 +123,11 @@ export async function composeDigest(): Promise<DigestPayload | null> {
     .slice(0, 6)
     .map((a) => `- [${a.level.toUpperCase()}] ${a.message}`);
 
+  // ─── Arora-proposed projects (Phase 3 autonomous mode) ────────────────
+  const proposalLines = aroraProposals.length
+    ? aroraProposals.map((p) => `- **${p.title}** — ${p.target_outcome || '(no target outcome)'}`)
+    : [];
+
   // ─── Compose ──────────────────────────────────────────────────────────
   const subject = `Aiprosol · ${day} · ${agentsRun24h} agents ran, ${newLeads.length} new lead${newLeads.length === 1 ? '' : 's'}, ${allAlerts.length} alert${allAlerts.length === 1 ? '' : 's'}`;
 
@@ -143,6 +150,11 @@ export async function composeDigest(): Promise<DigestPayload | null> {
     `## Alerts`,
     alertLines.length ? alertLines.join('\n') : '_(no warnings or errors)_',
     '',
+    `## Proposed by Arora today`,
+    proposalLines.length
+      ? `${proposalLines.join('\n')}\n\n_Open /studio → Projects to dispatch or cancel._`
+      : '_(nothing proposed this cycle)_',
+    '',
     `## Agent summaries`,
     agentLines.join('\n'),
     '',
@@ -164,6 +176,7 @@ export async function composeDigest(): Promise<DigestPayload | null> {
     activityLines,
     alertLines,
     agentLines,
+    proposalLines,
   });
 
   return {
@@ -192,6 +205,7 @@ function digestHtml(d: {
   activityLines: string[];
   alertLines: string[];
   agentLines: string[];
+  proposalLines: string[];
 }): string {
   // Cheap markdown-to-html for the body sections — bullets + bold only.
   const renderLines = (lines: string[]): string =>
@@ -230,6 +244,7 @@ function digestHtml(d: {
       ${card('KPI movement', d.kpiLines)}
       ${card('Activity (last 24h)', d.activityLines)}
       ${card('Alerts', d.alertLines)}
+      ${card('Proposed by Arora today', d.proposalLines)}
       ${card('Agent summaries', d.agentLines)}
 
       <div style="margin-top:24px;padding-top:18px;border-top:1px solid #E5E7EB;color:#9CA3AF;font-size:12px">

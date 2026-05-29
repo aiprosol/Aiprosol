@@ -22,6 +22,10 @@ import { sendViaGmail } from '@/lib/gmail/send';
 import { publishToLinkedIn, isLinkedInConfigured } from '@/lib/linkedin/publish';
 import { sendEmail, isResendConfigured } from '@/lib/resend';
 import type { ProviderTool } from './providers/types';
+import { getFunnel } from '@/lib/studio/funnel';
+import { getRevenue } from '@/lib/studio/revenue';
+import { getSystemSnapshot } from '@/lib/studio/system';
+import { composeBrief, saveBrief, getLatestBrief } from './brief';
 
 export type ToolRisk = 'safe' | 'confirm';
 
@@ -104,6 +108,12 @@ const sendOutreachSchema = z.object({
   to: z.string().email().max(200).optional(),
   toName: z.string().max(160).optional(),
 });
+
+// ─── Copilot v2 read/memory/brief tool schemas ───
+const getFunnelSchema = z.object({ days: z.number().int().min(1).max(90).optional() });
+const emptySchema = z.object({});
+const rememberSchema = z.object({ key: z.string().min(1).max(80), value: z.string().min(1).max(1000) });
+const recallSchema = z.object({ key: z.string().max(80).optional() });
 
 export const TOOLS: ToolDef[] = [
   {
@@ -280,6 +290,116 @@ export const TOOLS: ToolDef[] = [
         .maybeSingle();
       if (error) return { ok: false, summary: `Create failed: ${error.message}`, error: error.message };
       return { ok: true, summary: `Briefed project "${a.title}" (dispatch it from the Projects tab).`, data };
+    },
+  },
+
+  {
+    name: 'get_funnel',
+    description: 'Read the conversion funnel (PostHog) for the last N days (default 7): visits → ROI audit → product view → checkout intent, plus top pages.',
+    parameters: getFunnelSchema,
+    risk: 'safe',
+    jsonSchema: {
+      type: 'object',
+      properties: { days: { type: 'integer', description: 'Window in days (1-90, default 7).' } },
+      additionalProperties: false,
+    },
+    async run(raw) {
+      const { days } = getFunnelSchema.parse(raw);
+      const f = await getFunnel(days ?? 7);
+      if (!f.configured) return { ok: false, summary: 'Funnel not configured (PostHog key missing).', error: 'not-configured' };
+      return { ok: true, summary: `Funnel ${f.windowDays}d: ${f.stages.map((s) => `${s.label} ${s.count}`).join(' → ')}`, data: { stages: f.stages, topPages: f.topPages } };
+    },
+  },
+
+  {
+    name: 'get_revenue',
+    description: 'Read live revenue from Stripe: today, month-to-date, MRR, active subscriptions, by-product, recent orders.',
+    parameters: emptySchema,
+    risk: 'safe',
+    jsonSchema: { type: 'object', properties: {}, additionalProperties: false },
+    async run() {
+      const r = await getRevenue();
+      if (!r.configured) return { ok: false, summary: 'Revenue not configured (Stripe key missing).', error: 'not-configured' };
+      return { ok: true, summary: `Today ${r.currency} ${r.today} · MTD ${r.mtd} · MRR ${r.mrr} · ${r.orderCount} recent orders`, data: r };
+    },
+  },
+
+  {
+    name: 'system_status',
+    description: 'Check system health: which API keys are configured, agent errors (24h), and database status.',
+    parameters: emptySchema,
+    risk: 'safe',
+    jsonSchema: { type: 'object', properties: {}, additionalProperties: false },
+    async run() {
+      const s = await getSystemSnapshot();
+      const missing = s.env.filter((e) => !e.set).map((e) => e.name);
+      return {
+        ok: true,
+        summary: `${s.env.length - missing.length}/${s.env.length} keys set · ${s.agents.errors24h} agent errors 24h · db ${s.supabase.ok ? 'ok' : 'down'}`,
+        data: { missingKeys: missing, agents: s.agents, supabase: s.supabase, digest: s.digest },
+      };
+    },
+  },
+
+  {
+    name: 'remember',
+    description: 'Save a standing fact or preference so you recall it in future conversations (e.g. preferred tone, a recurring instruction).',
+    parameters: rememberSchema,
+    risk: 'safe',
+    jsonSchema: {
+      type: 'object',
+      properties: { key: { type: 'string', description: 'Short label, e.g. "tone" or "weekly_focus".' }, value: { type: 'string' } },
+      required: ['key', 'value'],
+      additionalProperties: false,
+    },
+    async run(raw, ctx) {
+      const { key, value } = rememberSchema.parse(raw);
+      const { error } = await ctx.db
+        .from('assistant_memory')
+        .upsert({ operator_email: ctx.operatorEmail, key, value, updated_at: new Date().toISOString() }, { onConflict: 'operator_email,key' });
+      if (error) return { ok: false, summary: `Couldn't save: ${error.message}`, error: error.message };
+      return { ok: true, summary: `Remembered "${key}".` };
+    },
+  },
+
+  {
+    name: 'recall',
+    description: 'Recall saved operator memory — all items, or one by key.',
+    parameters: recallSchema,
+    risk: 'safe',
+    jsonSchema: { type: 'object', properties: { key: { type: 'string', description: 'Optional specific key.' } }, additionalProperties: false },
+    async run(raw, ctx) {
+      const { key } = recallSchema.parse(raw);
+      let q = ctx.db.from('assistant_memory').select('key, value').eq('operator_email', ctx.operatorEmail);
+      if (key) q = q.eq('key', key);
+      const { data } = await q.limit(50);
+      return { ok: true, summary: `${(data ?? []).length} memory item(s).`, data: data ?? [] };
+    },
+  },
+
+  {
+    name: 'get_latest_brief',
+    description: 'Get the most recent operator brief.',
+    parameters: emptySchema,
+    risk: 'safe',
+    jsonSchema: { type: 'object', properties: {}, additionalProperties: false },
+    async run() {
+      const b = await getLatestBrief();
+      return { ok: Boolean(b), summary: b ? `Latest brief (${b.created_at.slice(0, 16).replace('T', ' ')})` : 'No brief yet — use generate_brief.', data: b };
+    },
+  },
+
+  {
+    name: 'generate_brief',
+    description: "Generate a fresh operator brief now from live revenue, funnel, agent and system state. Use when asked for a 'brief', 'summary', or 'how are we doing'.",
+    parameters: emptySchema,
+    risk: 'safe',
+    jsonSchema: { type: 'object', properties: {}, additionalProperties: false },
+    async run(_raw, ctx) {
+      const b = await composeBrief(Date.now());
+      if (!b) return { ok: false, summary: 'No model configured for the brief.', error: 'no-provider' };
+      await saveBrief(b.content, b.provider, ctx.operatorEmail, false);
+      return { ok: true, summary: 'Brief generated.', data: { content: b.content } };
     },
   },
 

@@ -13,6 +13,7 @@ import { getProvider, isProviderId } from '@/lib/assistant/providers';
 import type { ToolResultMsg } from '@/lib/assistant/providers/types';
 import { COPILOT_SYSTEM_PROMPT } from '@/lib/assistant/prompt';
 import { getOperatorGrounding } from '@/lib/assistant/operator-grounding';
+import { getOperatorMemoryText } from '@/lib/assistant/memory';
 import { runLoop, executeToolCall, toEvent, type ToolEvent } from '@/lib/assistant/loop';
 import { TOOL_MAP, type ToolContext } from '@/lib/assistant/tools';
 import { generateTitle } from '@/lib/assistant/title';
@@ -66,7 +67,11 @@ export async function POST(req: NextRequest) {
   const ctx: ToolContext = { operatorEmail, db: requireSupabaseAdmin() };
   const model = provider.modelId();
   const system = COPILOT_SYSTEM_PROMPT;
-  const grounding = await getOperatorGrounding(Date.now());
+  const [baseGrounding, memoryText] = await Promise.all([
+    getOperatorGrounding(Date.now()),
+    getOperatorMemoryText(operatorEmail),
+  ]);
+  const grounding = [baseGrounding, memoryText].filter(Boolean).join('\n\n');
 
   let conversationId = parsed.conversationId ?? null;
   const preEvents: ToolEvent[] = [];

@@ -84,7 +84,7 @@ export function createAnthropicProvider(): Provider {
         model,
         max_tokens: maxTokens,
         system: systemBlocks,
-        tools: toolParams,
+        ...(toolParams.length ? { tools: toolParams } : {}),
         messages: toAnthropicMessages(messages),
       });
 

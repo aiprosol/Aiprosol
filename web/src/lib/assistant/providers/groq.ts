@@ -67,20 +67,24 @@ export function createGroqProvider(): Provider {
       if (!apiKey) throw new Error('GROQ_API_KEY not configured');
       const model = process.env.GROQ_MODEL || DEFAULT_MODEL;
 
+      const payload: Record<string, unknown> = {
+        model,
+        messages: toOpenAIMessages(system, grounding, messages),
+        max_tokens: maxTokens,
+        temperature: 0.4,
+      };
+      if (tools.length) {
+        payload.tools = tools.map((t) => ({
+          type: 'function',
+          function: { name: t.name, description: t.description, parameters: t.parameters },
+        }));
+        payload.tool_choice = 'auto';
+      }
+
       const res = await fetch(GROQ_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
-        body: JSON.stringify({
-          model,
-          messages: toOpenAIMessages(system, grounding, messages),
-          tools: tools.map((t) => ({
-            type: 'function',
-            function: { name: t.name, description: t.description, parameters: t.parameters },
-          })),
-          tool_choice: 'auto',
-          max_tokens: maxTokens,
-          temperature: 0.4,
-        }),
+        body: JSON.stringify(payload),
       });
 
       if (!res.ok) {

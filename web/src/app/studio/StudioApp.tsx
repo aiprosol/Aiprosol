@@ -14,6 +14,7 @@ import type {
   KpiSeries,
   Project,
 } from '@/lib/studio/data';
+import { CopilotWidget } from './CopilotWidget';
 
 // ─────────────────────────────────────────────────────────────────────────
 // AIPROSOL · STUDIO · Operations Console
@@ -277,6 +278,8 @@ export function StudioApp({
           onSubmit={createProject}
         />
       )}
+
+      <CopilotWidget refresh={refresh} operatorEmail={session.email} />
 
       <Styles />
     </div>

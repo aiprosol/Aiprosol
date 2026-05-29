@@ -6,14 +6,14 @@
 // ─────────────────────────────────────────────────────────────────────────
 
 import { isSupabaseConfigured, requireSupabaseAdmin } from '@/lib/db/supabase';
-import { ROLES, type Role, type AgentState } from '@/lib/agents/types';
+import { ROLES, type Role, type AgentState, type Project, type ProjectArtifact } from '@/lib/agents/types';
 import { readKpiTimeseries } from '@/lib/agents/kpi-rollup';
 import { readLatestDigest } from '@/lib/agents/daily-digest';
 
 export type Task = {
   id: string;
   title: string;
-  status: 'todo' | 'in_progress' | 'done' | 'blocked';
+  status: 'todo' | 'in_progress' | 'done' | 'blocked' | 'review';
   owner_role: string | null;
   priority: 'low' | 'normal' | 'high' | 'now' | null;
   due_date: string | null;
@@ -21,7 +21,14 @@ export type Task = {
   source: 'human' | 'agent' | 'system';
   source_role: string | null;
   created_at: string;
+  // projects_v1 migration
+  project_id: string | null;
+  deliverable_type: 'outreach_draft' | 'linkedin_post' | 'sop_note' | 'analysis' | 'none' | null;
+  deliverable_id: string | null;
 };
+
+// Re-export so /studio can use without going through agents/types
+export type { Project, ProjectArtifact };
 
 export type OutreachDraft = {
   id: string;
@@ -123,6 +130,8 @@ export type StudioSnapshot = {
   }>;
   kpis: KpiSeries[];
   latestDigest: DailyDigest | null;
+  projects: Project[];
+  artifacts: ProjectArtifact[];
 };
 
 export async function loadStudioSnapshot(): Promise<StudioSnapshot> {
@@ -137,11 +146,13 @@ export async function loadStudioSnapshot(): Promise<StudioSnapshot> {
     recentRuns: [],
     kpis: [],
     latestDigest: null,
+    projects: [],
+    artifacts: [],
   };
   if (!isSupabaseConfigured()) return empty;
   const db = requireSupabaseAdmin();
 
-  const [tasksRes, draftsRes, postsRes, leadsRes, partnersRes, sopsRes, statesRes, runsRes, kpis, latestDigest] =
+  const [tasksRes, draftsRes, postsRes, leadsRes, partnersRes, sopsRes, statesRes, runsRes, kpis, latestDigest, projectsRes, artifactsRes] =
     await Promise.all([
       db.from('tasks').select('*').order('priority', { ascending: false }).order('created_at', { ascending: false }),
       db.from('outreach_drafts').select('*').order('created_at', { ascending: false }),
@@ -153,6 +164,8 @@ export async function loadStudioSnapshot(): Promise<StudioSnapshot> {
       db.from('agent_log').select('*').order('at', { ascending: false }).limit(30),
       readKpiTimeseries(14),
       readLatestDigest(),
+      db.from('projects').select('*').order('created_at', { ascending: false }).limit(80),
+      db.from('project_artifacts').select('*').order('created_at', { ascending: false }).limit(80),
     ]);
 
   const agentStates = { ...empty.agentStates };
@@ -195,5 +208,7 @@ export async function loadStudioSnapshot(): Promise<StudioSnapshot> {
     })),
     kpis,
     latestDigest,
+    projects: (projectsRes.data ?? []) as Project[],
+    artifacts: (artifactsRes.data ?? []) as ProjectArtifact[],
   };
 }

@@ -41,6 +41,12 @@ const RESOURCES: Record<string, { table: string; allowed: string[] }> = {
     table: 'affiliate_partners',
     allowed: ['status', 'contact_email', 'contact_name', 'website', 'notes', 'name', 'category'],
   },
+  // Chairman can cancel a project or mark it shipped manually; routing/in_progress
+  // transitions are driven by the trigger + Arora-router, not direct PATCH.
+  projects: {
+    table: 'projects',
+    allowed: ['status', 'title', 'brief', 'target_outcome'],
+  },
 };
 
 export async function PATCH(

@@ -12,6 +12,7 @@ import type {
   Partner,
   Sop,
   KpiSeries,
+  Project,
 } from '@/lib/studio/data';
 
 // ─────────────────────────────────────────────────────────────────────────
@@ -20,7 +21,7 @@ import type {
 // Actions hit /api/studio/[resource]/[id] (PATCH) or /api/studio/run-agent.
 // ─────────────────────────────────────────────────────────────────────────
 
-type Tab = 'overview' | 'tasks' | 'outreach' | 'content' | 'leads' | 'partners' | 'sops' | 'kpis' | 'agents';
+type Tab = 'overview' | 'projects' | 'tasks' | 'outreach' | 'content' | 'leads' | 'partners' | 'sops' | 'kpis' | 'agents';
 
 export function StudioApp({
   session,
@@ -33,6 +34,7 @@ export function StudioApp({
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [flash, setFlash] = useState<string | null>(null);
+  const [newProjectOpen, setNewProjectOpen] = useState(false);
 
   const refresh = () => startTransition(() => router.refresh());
 
@@ -65,7 +67,55 @@ export function StudioApp({
     setTimeout(() => setFlash(null), 5000);
   }
 
+  // ─── Project actions ─────────────────────────────────────────────────
+  async function createProject(payload: { title: string; brief: string; target_outcome: string }) {
+    setFlash('⏳ Arora is routing the brief…');
+    const res = await fetch('/api/studio/projects', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      const taskCount = data.decomposition?.tasks?.length ?? 0;
+      setFlash(
+        taskCount > 0
+          ? `✓ Project briefed · Arora decomposed into ${taskCount} task${taskCount === 1 ? '' : 's'}`
+          : `✓ Project briefed${data.routerError ? ` · router error: ${data.routerError}` : ''}`,
+      );
+      setNewProjectOpen(false);
+      refresh();
+    } else {
+      setFlash(`× ${data.error || 'Project creation failed'}`);
+    }
+    setTimeout(() => setFlash(null), 6000);
+    return data;
+  }
+
+  async function dispatchProject(projectId: string) {
+    setFlash('⏳ Arora is routing this proposal…');
+    const res = await fetch('/api/agents/arora/route', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ projectId }),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      const taskCount = data.decomposition?.tasks?.length ?? 0;
+      setFlash(`✓ Dispatched · ${taskCount} task${taskCount === 1 ? '' : 's'} created`);
+      refresh();
+    } else {
+      setFlash(`× ${data.error || 'Dispatch failed'}`);
+    }
+    setTimeout(() => setFlash(null), 6000);
+  }
+
+  async function cancelProject(projectId: string) {
+    await patchRow('projects', projectId, { status: 'cancelled' });
+  }
+
   const counts = {
+    projects: snapshot.projects.filter((p) => p.status !== 'shipped' && p.status !== 'cancelled').length,
     tasks: snapshot.tasks.filter((t) => t.status === 'todo' || t.status === 'in_progress').length,
     outreach: snapshot.drafts.filter((d) => d.status === 'draft').length,
     content: snapshot.posts.filter((p) => p.status === 'draft' || p.status === 'scheduled').length,
@@ -94,6 +144,7 @@ export function StudioApp({
       <nav className="st-tabs">
         {([
           ['overview', 'Overview', null],
+          ['projects', 'Projects', counts.projects],
           ['tasks', 'Tasks', counts.tasks],
           ['outreach', 'Outreach', counts.outreach],
           ['content', 'Content', counts.content],
@@ -118,6 +169,15 @@ export function StudioApp({
 
       <main className="st-main">
         {tab === 'overview' && <Overview snapshot={snapshot} onRunAgent={runAgent} />}
+        {tab === 'projects' && (
+          <ProjectsTab
+            projects={snapshot.projects}
+            tasks={snapshot.tasks}
+            onNew={() => setNewProjectOpen(true)}
+            onDispatch={dispatchProject}
+            onCancel={cancelProject}
+          />
+        )}
         {tab === 'tasks' && <TasksTab tasks={snapshot.tasks} onPatch={patchRow} />}
         {tab === 'outreach' && <OutreachTab drafts={snapshot.drafts} onPatch={patchRow} />}
         {tab === 'content' && <ContentTab posts={snapshot.posts} onPatch={patchRow} />}
@@ -127,6 +187,13 @@ export function StudioApp({
         {tab === 'kpis' && <KpisTab kpis={snapshot.kpis} onRunAgent={runAgent} />}
         {tab === 'agents' && <AgentsTab states={snapshot.agentStates} runs={snapshot.recentRuns} onRunAgent={runAgent} />}
       </main>
+
+      {newProjectOpen && (
+        <NewProjectModal
+          onClose={() => setNewProjectOpen(false)}
+          onSubmit={createProject}
+        />
+      )}
 
       <Styles />
     </div>
@@ -273,8 +340,423 @@ function Kpi({ label, value }: { label: string; value: number | string }) {
 }
 
 function Status({ status }: { status: string }) {
-  const m: Record<string, string> = { ok: 'st-status-ok', error: 'st-status-err', fallback: 'st-status-warn', sent: 'st-status-ok', done: 'st-status-ok', published: 'st-status-ok', draft: 'st-status-warn', todo: 'st-status-warn', scheduled: 'st-status-warn', in_progress: 'st-status-warn', blocked: 'st-status-err', new: 'st-status-warn', qualified: 'st-status-ok', identified: 'st-status-warn', contacted: 'st-status-warn', researched: 'st-status-warn' };
+  const m: Record<string, string> = {
+    ok: 'st-status-ok', error: 'st-status-err', fallback: 'st-status-warn',
+    sent: 'st-status-ok', done: 'st-status-ok', published: 'st-status-ok', shipped: 'st-status-ok',
+    draft: 'st-status-warn', todo: 'st-status-warn', scheduled: 'st-status-warn', in_progress: 'st-status-warn',
+    review: 'st-status-warn', briefed: 'st-status-warn', routing: 'st-status-warn',
+    blocked: 'st-status-err', cancelled: 'st-status-err',
+    new: 'st-status-warn', qualified: 'st-status-ok',
+    identified: 'st-status-warn', contacted: 'st-status-warn', researched: 'st-status-warn',
+  };
   return <span className={`st-status ${m[status] || ''}`}>{status}</span>;
+}
+
+// ─── PROJECTS ──────────────────────────────────────────────────────────
+
+function ProjectsTab({
+  projects,
+  tasks,
+  onNew,
+  onDispatch,
+  onCancel,
+}: {
+  projects: Project[];
+  tasks: Task[];
+  onNew: () => void;
+  onDispatch: (id: string) => void;
+  onCancel: (id: string) => void;
+}) {
+  // Group projects by status, ordered by priority of attention.
+  const groups: Record<'briefed' | 'in_progress' | 'review' | 'shipped' | 'cancelled', Project[]> = {
+    briefed: [], in_progress: [], review: [], shipped: [], cancelled: [],
+  };
+  for (const p of projects) {
+    // 'routing' folds into briefed visually (in-flight router call)
+    const key = p.status === 'routing' ? 'briefed' : p.status;
+    if (groups[key]) groups[key].push(p);
+  }
+
+  const tasksByProject = new Map<string, Task[]>();
+  for (const t of tasks) {
+    if (!t.project_id) continue;
+    const list = tasksByProject.get(t.project_id) ?? [];
+    list.push(t);
+    tasksByProject.set(t.project_id, list);
+  }
+
+  return (
+    <div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
+        <h3 className="st-h3" style={{ margin: 0 }}>
+          Projects · {groups.briefed.length + groups.in_progress.length + groups.review.length} active
+        </h3>
+        <button className="st-btn st-btn-success" onClick={onNew}>
+          + New Project
+        </button>
+      </div>
+
+      {groups.briefed.length > 0 && (
+        <div className="st-card">
+          <div className="st-card-hdr"><strong>BRIEFED</strong> ({groups.briefed.length}) — awaiting Arora-router or chairman dispatch</div>
+          <ul className="st-list">
+            {groups.briefed.map((p) => (
+              <ProjectRow
+                key={p.id}
+                project={p}
+                tasks={tasksByProject.get(p.id) ?? []}
+                onDispatch={onDispatch}
+                onCancel={onCancel}
+              />
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {groups.in_progress.length > 0 && (
+        <div className="st-card">
+          <div className="st-card-hdr"><strong>IN PROGRESS</strong> ({groups.in_progress.length})</div>
+          <ul className="st-list">
+            {groups.in_progress.map((p) => (
+              <ProjectRow
+                key={p.id}
+                project={p}
+                tasks={tasksByProject.get(p.id) ?? []}
+                onDispatch={onDispatch}
+                onCancel={onCancel}
+              />
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {groups.review.length > 0 && (
+        <div className="st-card">
+          <div className="st-card-hdr"><strong>AWAITING REVIEW</strong> ({groups.review.length}) — all tasks shipped deliverables</div>
+          <ul className="st-list">
+            {groups.review.map((p) => (
+              <ProjectRow
+                key={p.id}
+                project={p}
+                tasks={tasksByProject.get(p.id) ?? []}
+                onDispatch={onDispatch}
+                onCancel={onCancel}
+              />
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {groups.shipped.length > 0 && (
+        <details className="st-card">
+          <summary><strong>Shipped</strong> ({groups.shipped.length})</summary>
+          <ul className="st-list">
+            {groups.shipped.map((p) => (
+              <ProjectRow
+                key={p.id}
+                project={p}
+                tasks={tasksByProject.get(p.id) ?? []}
+                onDispatch={onDispatch}
+                onCancel={onCancel}
+              />
+            ))}
+          </ul>
+        </details>
+      )}
+
+      {groups.cancelled.length > 0 && (
+        <details className="st-card">
+          <summary><strong>Cancelled</strong> ({groups.cancelled.length})</summary>
+          <ul className="st-list">
+            {groups.cancelled.map((p) => (
+              <li key={p.id} className="st-list-item is-done">
+                <span>{p.title}</span>
+              </li>
+            ))}
+          </ul>
+        </details>
+      )}
+
+      {projects.length === 0 && (
+        <div className="st-card">
+          <div className="st-item-notes">
+            No projects yet. Click <strong>+ New Project</strong> to hand Arora a brief — she&apos;ll decompose it into role-specific tasks and the C-Suite will execute.
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ProjectRow({
+  project,
+  tasks,
+  onDispatch,
+  onCancel,
+}: {
+  project: Project;
+  tasks: Task[];
+  onDispatch: (id: string) => void;
+  onCancel: (id: string) => void;
+}) {
+  const [expanded, setExpanded] = useState(false);
+  const counts = {
+    todo: tasks.filter((t) => t.status === 'todo').length,
+    in_progress: tasks.filter((t) => t.status === 'in_progress').length,
+    review: tasks.filter((t) => t.status === 'review').length,
+    done: tasks.filter((t) => t.status === 'done').length,
+    blocked: tasks.filter((t) => t.status === 'blocked').length,
+  };
+  const isAroraProposed = project.assigned_by === 'arora' && (project.status === 'briefed' || project.status === 'routing');
+  const isBriefedChairman = project.assigned_by === 'chairman' && (project.status === 'briefed' || project.status === 'routing');
+
+  return (
+    <li className="st-list-item" style={{ flexDirection: 'column', alignItems: 'stretch', gap: 10 }}>
+      {isAroraProposed && (
+        <div
+          style={{
+            padding: '6px 10px',
+            background: 'rgba(139, 92, 246, 0.12)',
+            border: '1px solid rgba(139, 92, 246, 0.45)',
+            borderRadius: 6,
+            fontSize: 11,
+            color: '#C084FC',
+            fontFamily: "'Space Grotesk', sans-serif",
+            fontWeight: 700,
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
+          }}
+        >
+          ◉ Proposed by Arora — review the brief and dispatch (or cancel)
+        </div>
+      )}
+
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
+        <div className="st-item-body" style={{ flex: 1 }}>
+          <div className="st-item-title">
+            {project.title}
+            <span className="st-tag">{project.assigned_by}</span>
+            <Status status={project.status} />
+            {tasks.length > 0 && (
+              <span className="st-tag" style={{ background: 'rgba(34, 197, 94, 0.1)', color: '#86EFAC', borderColor: 'rgba(34, 197, 94, 0.35)' }}>
+                {counts.done}/{tasks.length} done
+              </span>
+            )}
+          </div>
+          <div className="st-item-notes" style={{ marginTop: 4 }}>
+            {project.brief.slice(0, 240)}{project.brief.length > 240 ? '…' : ''}
+          </div>
+          {project.target_outcome && (
+            <div className="st-item-notes" style={{ marginTop: 4, fontStyle: 'italic' }}>
+              Target: {project.target_outcome.slice(0, 200)}
+            </div>
+          )}
+        </div>
+        <div className="st-actions" style={{ flexShrink: 0 }}>
+          {isAroraProposed && (
+            <>
+              <button className="st-btn st-btn-success" onClick={() => onDispatch(project.id)}>Dispatch</button>
+              <button className="st-btn st-btn-warn" onClick={() => onCancel(project.id)}>Cancel</button>
+            </>
+          )}
+          {isBriefedChairman && project.status === 'briefed' && (
+            <button className="st-btn" onClick={() => onDispatch(project.id)}>Retry router</button>
+          )}
+          {project.status !== 'cancelled' && project.status !== 'shipped' && !isAroraProposed && (
+            <button className="st-btn st-btn-warn" onClick={() => onCancel(project.id)}>Cancel</button>
+          )}
+          {tasks.length > 0 && (
+            <button className="st-btn" onClick={() => setExpanded((v) => !v)}>
+              {expanded ? 'Hide tasks' : `Tasks (${tasks.length})`}
+            </button>
+          )}
+        </div>
+      </div>
+
+      {expanded && tasks.length > 0 && (
+        <div style={{ paddingTop: 8, borderTop: '1px dashed rgba(148, 163, 184, 0.2)' }}>
+          <ul className="st-list" style={{ marginTop: 4 }}>
+            {tasks
+              .slice()
+              .sort((a, b) => (a.status === 'done' ? 1 : 0) - (b.status === 'done' ? 1 : 0))
+              .map((t) => (
+                <li key={t.id} className="st-list-item">
+                  <div className="st-item-body">
+                    <div className="st-item-title">
+                      {t.title}
+                      <span className="st-tag">{t.owner_role || 'unassigned'}</span>
+                      <Status status={t.status} />
+                      {t.deliverable_type && t.deliverable_type !== 'none' && (
+                        <span className="st-tag" style={{ background: 'rgba(34,211,238,0.12)', color: '#22D3EE', borderColor: 'rgba(34,211,238,0.4)' }}>
+                          {t.deliverable_type}
+                          {t.deliverable_id ? ' ✓' : ''}
+                        </span>
+                      )}
+                    </div>
+                    {t.notes && <div className="st-item-notes">{t.notes.slice(0, 200)}</div>}
+                  </div>
+                </li>
+              ))}
+          </ul>
+        </div>
+      )}
+
+      {project.decomposition && expanded && (
+        <details style={{ marginTop: 4 }}>
+          <summary style={{ fontSize: 11, color: '#9CA3B5', cursor: 'pointer' }}>
+            Arora&apos;s routing rationale
+          </summary>
+          <div className="st-item-notes" style={{ marginTop: 6, paddingLeft: 8 }}>
+            {project.decomposition.rationale}
+          </div>
+        </details>
+      )}
+    </li>
+  );
+}
+
+function NewProjectModal({
+  onClose,
+  onSubmit,
+}: {
+  onClose: () => void;
+  onSubmit: (p: { title: string; brief: string; target_outcome: string }) => Promise<unknown>;
+}) {
+  const [title, setTitle] = useState('');
+  const [brief, setBrief] = useState('');
+  const [targetOutcome, setTargetOutcome] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+
+  async function handleSubmit() {
+    if (title.trim().length < 3 || brief.trim().length < 20) return;
+    setSubmitting(true);
+    try {
+      await onSubmit({
+        title: title.trim(),
+        brief: brief.trim(),
+        target_outcome: targetOutcome.trim(),
+      });
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      style={{
+        position: 'fixed',
+        inset: 0,
+        background: 'rgba(10, 6, 19, 0.75)',
+        backdropFilter: 'blur(4px)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 50,
+        padding: 16,
+      }}
+      onClick={onClose}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          width: '100%',
+          maxWidth: 640,
+          background: 'rgba(20, 13, 35, 0.98)',
+          border: '1px solid rgba(139, 92, 246, 0.35)',
+          borderRadius: 12,
+          padding: 24,
+          boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)',
+        }}
+      >
+        <h3 className="st-h3" style={{ marginTop: 0 }}>Brief Arora</h3>
+        <p className="st-item-notes" style={{ marginBottom: 16 }}>
+          Type the project as if you were asking the C-Suite directly. Arora decomposes it into 1–6 tasks, each assigned to one agent. Every deliverable lands as a draft in /studio for your approval — nothing gets sent or published automatically.
+        </p>
+
+        <label style={{ display: 'block', marginBottom: 4, fontSize: 11, fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, letterSpacing: '0.1em', color: '#9CA3B5', textTransform: 'uppercase' }}>
+          Title
+        </label>
+        <input
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          maxLength={200}
+          placeholder="e.g. Cold outreach to 25 Edinburgh law firms"
+          style={{
+            width: '100%',
+            padding: '10px 12px',
+            background: 'rgba(10, 6, 19, 0.6)',
+            border: '1px solid rgba(148, 163, 184, 0.2)',
+            borderRadius: 6,
+            color: '#E5E7EB',
+            fontFamily: 'inherit',
+            fontSize: 14,
+            marginBottom: 14,
+          }}
+        />
+
+        <label style={{ display: 'block', marginBottom: 4, fontSize: 11, fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, letterSpacing: '0.1em', color: '#9CA3B5', textTransform: 'uppercase' }}>
+          Brief
+        </label>
+        <textarea
+          value={brief}
+          onChange={(e) => setBrief(e.target.value)}
+          maxLength={5000}
+          rows={8}
+          placeholder="Describe the project: who the customer is, what the C-Suite should produce, voice/tone constraints, channel, deadline (if any). 50-500 words works well."
+          style={{
+            width: '100%',
+            padding: '10px 12px',
+            background: 'rgba(10, 6, 19, 0.6)',
+            border: '1px solid rgba(148, 163, 184, 0.2)',
+            borderRadius: 6,
+            color: '#E5E7EB',
+            fontFamily: 'inherit',
+            fontSize: 14,
+            marginBottom: 14,
+            resize: 'vertical',
+          }}
+        />
+
+        <label style={{ display: 'block', marginBottom: 4, fontSize: 11, fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, letterSpacing: '0.1em', color: '#9CA3B5', textTransform: 'uppercase' }}>
+          Target outcome (optional)
+        </label>
+        <textarea
+          value={targetOutcome}
+          onChange={(e) => setTargetOutcome(e.target.value)}
+          maxLength={800}
+          rows={3}
+          placeholder="What 'done' looks like. 1-2 sentences. Concrete + measurable. E.g. '3 outreach_draft rows in Supabase, ready to send.'"
+          style={{
+            width: '100%',
+            padding: '10px 12px',
+            background: 'rgba(10, 6, 19, 0.6)',
+            border: '1px solid rgba(148, 163, 184, 0.2)',
+            borderRadius: 6,
+            color: '#E5E7EB',
+            fontFamily: 'inherit',
+            fontSize: 14,
+            marginBottom: 18,
+            resize: 'vertical',
+          }}
+        />
+
+        <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+          <button className="st-btn" onClick={onClose} disabled={submitting}>
+            Cancel
+          </button>
+          <button
+            className="st-btn st-btn-success"
+            onClick={handleSubmit}
+            disabled={submitting || title.trim().length < 3 || brief.trim().length < 20}
+          >
+            {submitting ? 'Briefing Arora…' : 'Submit to Arora'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 // ─── TASKS ─────────────────────────────────────────────────────────────

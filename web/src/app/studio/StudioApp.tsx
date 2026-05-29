@@ -20,6 +20,7 @@ import { RevenueTab } from './RevenueTab';
 import { FunnelTab } from './FunnelTab';
 import { CatalogTab } from './CatalogTab';
 import { AgentControlTab } from './AgentControlTab';
+import { InboxTab } from './InboxTab';
 
 // ─────────────────────────────────────────────────────────────────────────
 // AIPROSOL · STUDIO · Operations Console
@@ -27,7 +28,7 @@ import { AgentControlTab } from './AgentControlTab';
 // Actions hit /api/studio/[resource]/[id] (PATCH) or /api/studio/run-agent.
 // ─────────────────────────────────────────────────────────────────────────
 
-type Tab = 'overview' | 'revenue' | 'funnel' | 'projects' | 'tasks' | 'outreach' | 'content' | 'leads' | 'partners' | 'sops' | 'kpis' | 'agents' | 'control' | 'catalog' | 'system';
+type Tab = 'overview' | 'inbox' | 'revenue' | 'funnel' | 'projects' | 'tasks' | 'outreach' | 'content' | 'leads' | 'partners' | 'sops' | 'kpis' | 'agents' | 'control' | 'catalog' | 'system';
 
 export function StudioApp({
   session,
@@ -203,6 +204,11 @@ export function StudioApp({
     leads: snapshot.leads.filter((l) => l.status !== 'won' && l.status !== 'lost' && l.status !== 'dead').length,
     partners: snapshot.partners.filter((p) => p.status === 'identified' || p.status === 'researched' || p.status === 'contacted').length,
     sops: snapshot.sops.length,
+    inbox:
+      snapshot.drafts.filter((d) => d.status === 'draft').length +
+      snapshot.posts.filter((p) => p.status === 'draft' || p.status === 'scheduled').length +
+      snapshot.projects.filter((p) => p.assigned_by === 'arora' && (p.status === 'briefed' || p.status === 'routing')).length +
+      snapshot.tasks.filter((t) => t.status === 'review').length,
   };
 
   return (
@@ -225,6 +231,7 @@ export function StudioApp({
       <nav className="st-tabs">
         {([
           ['overview', 'Overview', null],
+          ['inbox', 'Inbox', counts.inbox],
           ['revenue', 'Revenue', null],
           ['funnel', 'Funnel', null],
           ['projects', 'Projects', counts.projects],
@@ -255,6 +262,7 @@ export function StudioApp({
 
       <main className="st-main">
         {tab === 'overview' && <Overview snapshot={snapshot} onRunAgent={runAgent} onWipeDummy={wipeDummy} />}
+        {tab === 'inbox' && <InboxTab refresh={refresh} />}
         {tab === 'revenue' && <RevenueTab />}
         {tab === 'funnel' && <FunnelTab />}
         {tab === 'projects' && (

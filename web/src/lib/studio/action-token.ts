@@ -10,7 +10,7 @@
 
 import crypto from 'node:crypto';
 
-export type DecisionAction = 'send_outreach' | 'publish_linkedin' | 'publish_substack' | 'dispatch_project';
+export type DecisionAction = 'send_outreach' | 'publish_linkedin' | 'publish_substack' | 'dispatch_project' | 'rerun_agent';
 export type Decision = 'approve' | 'reject';
 
 export type DecisionPayload = {

@@ -10,6 +10,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { isStudioAdmin } from '@/lib/studio/auth';
 import { composeBrief } from '@/lib/assistant/brief';
 import { getPendingDecisions, type PendingDecision } from '@/lib/studio/decisions';
+import { draftFollowupsForNewLeads } from '@/lib/studio/revenue-loop';
+import { getSystemSnapshot } from '@/lib/studio/system';
 import { sendEmail, isResendConfigured } from '@/lib/resend';
 
 export const runtime = 'nodejs';
@@ -30,8 +32,11 @@ function decisionRowHtml(d: PendingDecision): string {
   </td></tr>`;
 }
 
-function emailHtml(brief: string | null, decisions: PendingDecision[]): string {
+function emailHtml(brief: string | null, decisions: PendingDecision[], opsLine: string | null): string {
   const site = process.env.NEXT_PUBLIC_SITE_URL || 'https://aiprosol.com';
+  const opsBlock = opsLine
+    ? `<div style="font-size:12px;color:#9CA3B5;background:rgba(148,163,184,0.06);border:1px solid #2A1F3D;border-radius:10px;padding:10px 14px;margin:0 0 24px;"><span style="color:#C084FC;font-weight:700;">Ops ·</span> ${opsLine}</div>`
+    : '';
   const briefBlock = brief
     ? `<p style="font-family:'Space Grotesk',Arial,sans-serif;font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#C084FC;margin:0 0 8px;">Morning brief</p>
        <div style="font-size:14px;line-height:1.65;color:#C7CEDB;white-space:pre-wrap;margin:0 0 28px;">${brief.replace(/</g, '&lt;')}</div>`
@@ -46,6 +51,7 @@ function emailHtml(brief: string | null, decisions: PendingDecision[]): string {
       <tr><td>
         <div style="font-family:'Space Grotesk',Arial,sans-serif;font-weight:800;font-size:20px;color:#E5E7EB;margin:0 0 20px;">Aiprosol · your desk</div>
         ${briefBlock}
+        ${opsBlock}
         ${queueBlock}
         <div style="margin-top:28px;border-top:1px solid #2A1F3D;padding-top:16px;font-size:12px;color:#9CA3B5;">
           Approve or decline right here — no login. Or open the <a href="${site}/studio" style="color:#C084FC;text-decoration:none;">full studio →</a>
@@ -63,10 +69,19 @@ async function run(req: NextRequest) {
   const ok = isVercelCron || auth.ok || (Boolean(secret) && bearer === `Bearer ${secret}`);
   if (!ok) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
 
-  const [brief, decisions] = await Promise.all([
+  // Autonomous revenue loop: draft follow-ups for new ROI-audit leads FIRST so
+  // they surface in this same inbox run.
+  const followups = await draftFollowupsForNewLeads(5).catch(() => ({ drafted: 0, skipped: 0 }));
+
+  const [brief, decisions, system] = await Promise.all([
     composeBrief(Date.now()).then((b) => b?.content ?? null).catch(() => null),
     getPendingDecisions(),
+    getSystemSnapshot().catch(() => null),
   ]);
+
+  const opsLine = system
+    ? `${system.agents.errors24h} agent error(s)/24h · DB ${system.supabase.ok ? 'ok' : 'down'} · ${system.env.filter((e) => !e.set).length} env key(s) unset`
+    : null;
 
   const to = process.env.RESEND_DIGEST_TO || process.env.BRIEF_EMAIL || null;
   let emailed = false;
@@ -74,14 +89,14 @@ async function run(req: NextRequest) {
     const r = await sendEmail({
       to,
       subject: decisions.length > 0 ? `Aiprosol · ${decisions.length} decision${decisions.length === 1 ? '' : 's'} need you` : 'Aiprosol · all clear',
-      html: emailHtml(brief, decisions),
+      html: emailHtml(brief, decisions, opsLine),
       text: `${brief ? brief + '\n\n' : ''}${decisions.length} decisions need you. Open ${process.env.NEXT_PUBLIC_SITE_URL || 'https://aiprosol.com'}/studio`,
       tags: [{ name: 'category', value: 'decision-inbox' }],
     });
     emailed = r.ok;
   }
 
-  return NextResponse.json({ ok: true, emailed, to, decisions: decisions.length, hasBrief: Boolean(brief) });
+  return NextResponse.json({ ok: true, emailed, to, decisions: decisions.length, followupsDrafted: followups.drafted, hasBrief: Boolean(brief) });
 }
 
 export const GET = run;

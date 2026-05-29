@@ -9,7 +9,7 @@ import { isSupabaseConfigured, requireSupabaseAdmin } from '@/lib/db/supabase';
 import { signDecisionToken, type DecisionAction } from './action-token';
 
 export type PendingDecision = {
-  kind: 'outreach' | 'linkedin' | 'substack' | 'project' | 'task';
+  kind: 'outreach' | 'linkedin' | 'substack' | 'project' | 'task' | 'ops';
   id: string;
   title: string;
   summary: string;
@@ -46,11 +46,12 @@ export async function getPendingDecisions(): Promise<PendingDecision[]> {
   const out: PendingDecision[] = [];
 
   try {
-    const [drafts, posts, projects, reviews] = await Promise.all([
+    const [drafts, posts, projects, reviews, agentsRes] = await Promise.all([
       db.from('outreach_drafts').select('id, subject, body, target_segment, recipient_email').eq('status', 'draft').order('created_at', { ascending: false }).limit(10),
       db.from('linkedin_posts').select('id, title, hook, body, industry').in('status', ['draft', 'scheduled']).order('created_at', { ascending: false }).limit(10),
       db.from('projects').select('id, title, brief, assigned_by').eq('status', 'briefed').eq('assigned_by', 'arora').order('created_at', { ascending: false }).limit(6),
       db.from('tasks').select('id, title, owner_role, deliverable_type').eq('status', 'review').order('created_at', { ascending: false }).limit(10),
+      db.from('agent_state').select('role, health, last_run_at').neq('health', 'ok').limit(10),
     ]);
 
     for (const d of drafts.data ?? []) {
@@ -98,6 +99,18 @@ export async function getPendingDecisions(): Promise<PendingDecision[]> {
         title: `Review deliverable: ${t.title}`,
         summary: `${t.owner_role?.toUpperCase() || 'agent'} shipped a ${t.deliverable_type || 'deliverable'} — review it in the studio.`,
         action: null, // judgment-heavy; review in studio rather than one-tap
+      });
+    }
+    for (const a of (agentsRes.data ?? []) as Array<{ role: string; health: string | null }>) {
+      out.push({
+        kind: 'ops',
+        id: a.role,
+        title: `Re-run ${a.role.toUpperCase()} — last run ${a.health || 'unknown'}`,
+        summary: `This agent's last cycle was "${a.health}". Re-run it now, or dismiss.`,
+        action: 'rerun_agent',
+        approveLabel: 'Re-run',
+        rejectLabel: 'Dismiss',
+        ...urls('rerun_agent', a.role),
       });
     }
   } catch (err) {

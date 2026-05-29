@@ -49,6 +49,9 @@ async function describe(p: DecisionPayload): Promise<{ label: string; terminal: 
       const { data } = await db.from('projects').select('title, status').eq('id', p.id).maybeSingle();
       return { label: `Dispatch project — "${data?.title || p.id}"`, terminal: !!data && data.status !== 'briefed' };
     }
+    if (p.a === 'rerun_agent') {
+      return { label: `Re-run agent ${p.id.toUpperCase()}`, terminal: false };
+    }
   } catch {
     /* ignore */
   }
@@ -62,6 +65,7 @@ async function execute(p: DecisionPayload): Promise<{ ok: boolean; message: stri
   };
 
   if (p.d === 'reject') {
+    if (p.a === 'rerun_agent') return { ok: true, message: 'Dismissed — left as-is.' };
     try {
       if (p.a === 'send_outreach') await ctx.db.from('outreach_drafts').update({ status: 'archived' }).eq('id', p.id);
       else if (p.a === 'publish_linkedin' || p.a === 'publish_substack') await ctx.db.from('linkedin_posts').update({ status: 'archived' }).eq('id', p.id);
@@ -79,6 +83,12 @@ async function execute(p: DecisionPayload): Promise<{ ok: boolean; message: stri
       return r.ok
         ? { ok: true, message: `Dispatched. Arora decomposed it into ${r.decomposition?.tasks?.length ?? 0} task(s).` }
         : { ok: false, message: r.error || 'router-failed' };
+    }
+    if (p.a === 'rerun_agent') {
+      const runTool = TOOL_MAP.get('run_agent');
+      if (!runTool) return { ok: false, message: 'run_agent unavailable' };
+      const res = await runTool.run({ role: p.id }, ctx);
+      return { ok: res.ok, message: res.summary };
     }
     const tool = TOOL_MAP.get(p.a);
     if (!tool) return { ok: false, message: `Unknown action: ${p.a}` };

@@ -98,6 +98,13 @@ export async function GET(req: NextRequest) {
   // ── Persist profile in Supabase + sign our session ──
   const email = user.email.trim().toLowerCase();
 
+  // Single-operator lockdown: Google-OAuth accounts only get sessions if
+  // they're on the studio admin allowlist. Same rule as magic-link.
+  const { isAdminEmail } = await import('@/lib/studio/auth');
+  if (!isAdminEmail(email)) {
+    return loginError(origin, 'access_denied');
+  }
+
   // Upsert into public.profiles. New users get name + picture from Google.
   // Returning users get blanks filled, but user-set values are never overwritten
   // (see ensureProfile's merge semantics).

@@ -114,6 +114,81 @@ export function StudioApp({
     await patchRow('projects', projectId, { status: 'cancelled' });
   }
 
+  // ─── Publish actions (real API calls) ────────────────────────────────
+  async function publishLinkedIn(postId: string) {
+    setFlash('⏳ Posting to LinkedIn…');
+    const res = await fetch(`/api/studio/linkedin/${postId}/publish`, { method: 'POST' });
+    const data = await res.json();
+    if (data.ok) {
+      setFlash(`✓ Published · ${data.postUrl ? 'view it on LinkedIn' : 'check your feed'}`);
+      refresh();
+    } else {
+      setFlash(`× ${data.error || 'LinkedIn publish failed'}${data.hint ? ' · ' + data.hint : ''}`);
+    }
+    setTimeout(() => setFlash(null), 6000);
+  }
+
+  async function publishSubstack(postId: string) {
+    setFlash('⏳ Sending to Substack…');
+    const res = await fetch(`/api/studio/substack/${postId}/publish`, { method: 'POST' });
+    const data = await res.json();
+    if (data.ok) {
+      setFlash(`✓ Sent to Substack at ${data.sentTo} · ${data.note || 'check your dashboard'}`);
+      refresh();
+    } else {
+      setFlash(`× ${data.error || 'Substack send failed'}${data.hint ? ' · ' + data.hint : ''}`);
+    }
+    setTimeout(() => setFlash(null), 6000);
+  }
+
+  async function copyPostToClipboard(post: LinkedInPost) {
+    const parts = [post.title, post.hook, post.body].filter((s): s is string => Boolean(s?.trim()));
+    const text = parts.join('\n\n');
+    try {
+      await navigator.clipboard.writeText(text);
+      setFlash('✓ Copied — paste into LinkedIn / X');
+    } catch {
+      setFlash('× Clipboard blocked by browser');
+    }
+    setTimeout(() => setFlash(null), 4000);
+  }
+
+  async function sendOutreach(draftId: string) {
+    setFlash('⏳ Sending via Gmail…');
+    const res = await fetch(`/api/studio/outreach/${draftId}/send`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({}),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      setFlash(`✓ Sent · message ${(data.messageId || '').slice(0, 12)}…`);
+      refresh();
+    } else {
+      setFlash(`× ${data.error || 'Send failed'}${data.message ? ' · ' + data.message : ''}`);
+    }
+    setTimeout(() => setFlash(null), 6000);
+  }
+
+  async function wipeDummy() {
+    if (!confirm('Permanently delete all unlinked tasks, drafts, posts, partners, leads? Project-linked tasks stay.')) return;
+    setFlash('⏳ Wiping dummy data…');
+    const res = await fetch('/api/studio/admin/wipe-dummy', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ confirm: 'WIPE' }),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      const b = data.before, a = data.after;
+      setFlash(`✓ Wiped: ${b.tasks_unlinked} tasks, ${b.outreach_drafts} drafts, ${b.linkedin_posts} posts, ${b.affiliate_partners} partners, ${b.leads} leads → after: ${a.tasks_total} tasks total`);
+      refresh();
+    } else {
+      setFlash(`× ${data.error || 'Wipe failed'}`);
+    }
+    setTimeout(() => setFlash(null), 10000);
+  }
+
   const counts = {
     projects: snapshot.projects.filter((p) => p.status !== 'shipped' && p.status !== 'cancelled').length,
     tasks: snapshot.tasks.filter((t) => t.status === 'todo' || t.status === 'in_progress').length,
@@ -168,7 +243,7 @@ export function StudioApp({
       {flash && <div className="st-flash">{flash}</div>}
 
       <main className="st-main">
-        {tab === 'overview' && <Overview snapshot={snapshot} onRunAgent={runAgent} />}
+        {tab === 'overview' && <Overview snapshot={snapshot} onRunAgent={runAgent} onWipeDummy={wipeDummy} />}
         {tab === 'projects' && (
           <ProjectsTab
             projects={snapshot.projects}
@@ -180,7 +255,15 @@ export function StudioApp({
         )}
         {tab === 'tasks' && <TasksTab tasks={snapshot.tasks} onPatch={patchRow} />}
         {tab === 'outreach' && <OutreachTab drafts={snapshot.drafts} onPatch={patchRow} />}
-        {tab === 'content' && <ContentTab posts={snapshot.posts} onPatch={patchRow} />}
+        {tab === 'content' && (
+          <ContentTab
+            posts={snapshot.posts}
+            onPatch={patchRow}
+            onPublishLinkedIn={publishLinkedIn}
+            onPublishSubstack={publishSubstack}
+            onCopy={copyPostToClipboard}
+          />
+        )}
         {tab === 'leads' && <LeadsTab leads={snapshot.leads} onPatch={patchRow} />}
         {tab === 'partners' && <PartnersTab partners={snapshot.partners} onPatch={patchRow} />}
         {tab === 'sops' && <SopsTab sops={snapshot.sops} />}
@@ -205,12 +288,17 @@ export function StudioApp({
 function Overview({
   snapshot,
   onRunAgent,
+  onWipeDummy,
 }: {
   snapshot: StudioSnapshot;
   onRunAgent: (r: Role) => void;
+  onWipeDummy: () => void;
 }) {
   const totalRuns = ROLES.reduce((n, r) => n + (snapshot.agentStates[r]?.runs ?? 0), 0);
   const onlineAgents = ROLES.filter((r) => snapshot.agentStates[r]?.health === 'ok').length;
+  const unlinkedTasks = snapshot.tasks.filter((t) => !t.project_id).length;
+  const dummyDataPresent = unlinkedTasks > 10 || snapshot.drafts.length > 5 || snapshot.posts.length > 5 || snapshot.partners.length > 5 || snapshot.leads.length > 5;
+
   return (
     <div className="st-overview">
       <div className="st-kpi-row">
@@ -221,6 +309,37 @@ function Overview({
         <Kpi label="Leads in pipeline" value={snapshot.leads.length} />
         <Kpi label="Partners (pipeline)" value={snapshot.partners.length} />
       </div>
+
+      {dummyDataPresent && (
+        <div
+          className="st-card"
+          style={{
+            background: 'rgba(245, 158, 11, 0.06)',
+            border: '1px solid rgba(245, 158, 11, 0.35)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '14px 20px',
+            gap: 16,
+          }}
+        >
+          <div>
+            <div className="st-card-hdr" style={{ marginBottom: 4 }}>
+              <strong style={{ color: '#FCD34D' }}>DUMMY DATA DETECTED</strong>
+            </div>
+            <div className="st-item-notes">
+              {unlinkedTasks} unlinked tasks · {snapshot.drafts.length} drafts · {snapshot.posts.length} posts · {snapshot.partners.length} partners · {snapshot.leads.length} leads. Wipe to start from a clean baseline (Arora-routed project work + sops + KPIs are preserved).
+            </div>
+          </div>
+          <button
+            className="st-btn st-btn-warn"
+            onClick={onWipeDummy}
+            style={{ flexShrink: 0, padding: '8px 16px' }}
+          >
+            Wipe dummy data
+          </button>
+        </div>
+      )}
 
       {/* Errored agents widget — only renders when there ARE errors. Cuts to the
           point: which agent broke, when, and what the error was. Clicking the role
@@ -971,42 +1090,68 @@ function OutreachItem({
 
 // ─── CONTENT ───────────────────────────────────────────────────────────
 
-function ContentTab({ posts, onPatch }: { posts: LinkedInPost[]; onPatch: (r: string, id: string, b: Record<string, unknown>) => void }) {
+function ContentTab({
+  posts,
+  onPatch,
+  onPublishLinkedIn,
+  onPublishSubstack,
+  onCopy,
+}: {
+  posts: LinkedInPost[];
+  onPatch: (r: string, id: string, b: Record<string, unknown>) => void;
+  onPublishLinkedIn: (id: string) => void;
+  onPublishSubstack: (id: string) => void;
+  onCopy: (post: LinkedInPost) => void;
+}) {
   return (
     <div>
       <h3 className="st-h3">Content calendar · {posts.length} posts</h3>
       <div className="st-card">
         {posts.length === 0 ? (
           <div className="st-empty">
-            No posts yet. CMO agent will queue drafts here from the Content Calendar in Notion (pending bulk import).
+            No posts yet. CMO agent drafts will queue here once a project routes one.
           </div>
         ) : (
           <ul className="st-list">
-            {posts.map((p) => (
-              <li key={p.id} className="st-list-item">
-                <div className="st-item-body">
-                  <div className="st-item-title">
-                    {p.title || '(untitled)'}
-                    {p.industry && <span className="st-tag">{p.industry}</span>}
-                    <Status status={p.status} />
+            {posts.map((p) => {
+              const isSubstack = (p.industry || '').toLowerCase().includes('substack');
+              return (
+                <li key={p.id} className="st-list-item">
+                  <div className="st-item-body">
+                    <div className="st-item-title">
+                      {p.title || '(untitled)'}
+                      {p.industry && <span className="st-tag">{p.industry}</span>}
+                      <Status status={p.status} />
+                    </div>
+                    {p.hook && <div className="st-item-notes"><em>Hook:</em> {p.hook}</div>}
+                    <details className="st-item-notes">
+                      <summary>View body</summary>
+                      <pre className="st-pre">{p.body}</pre>
+                    </details>
                   </div>
-                  {p.hook && <div className="st-item-notes"><em>Hook:</em> {p.hook}</div>}
-                  <details className="st-item-notes">
-                    <summary>View body</summary>
-                    <pre className="st-pre">{p.body}</pre>
-                  </details>
-                </div>
-                <div className="st-actions">
-                  {p.status === 'draft' && (
-                    <button className="st-btn" onClick={() => onPatch('linkedin', p.id, { status: 'scheduled', scheduled_for: new Date(Date.now() + 86400_000).toISOString() })}>Schedule for tomorrow</button>
-                  )}
-                  {p.status !== 'published' && (
-                    <button className="st-btn st-btn-success" onClick={() => onPatch('linkedin', p.id, { status: 'published' })}>Mark published</button>
-                  )}
-                  <button className="st-btn" onClick={() => onPatch('linkedin', p.id, { status: 'archived' })}>Archive</button>
-                </div>
-              </li>
-            ))}
+                  <div className="st-actions">
+                    {p.status !== 'published' && !isSubstack && (
+                      <button className="st-btn st-btn-success" onClick={() => onPublishLinkedIn(p.id)}>
+                        Publish → LinkedIn
+                      </button>
+                    )}
+                    {p.status !== 'published' && isSubstack && (
+                      <button className="st-btn st-btn-success" onClick={() => onPublishSubstack(p.id)}>
+                        Publish → Substack
+                      </button>
+                    )}
+                    <button className="st-btn" onClick={() => onCopy(p)}>Copy</button>
+                    {p.status === 'draft' && (
+                      <button className="st-btn" onClick={() => onPatch('linkedin', p.id, { status: 'scheduled', scheduled_for: new Date(Date.now() + 86400_000).toISOString() })}>Schedule</button>
+                    )}
+                    {p.status !== 'published' && (
+                      <button className="st-btn" onClick={() => onPatch('linkedin', p.id, { status: 'published' })}>Mark published</button>
+                    )}
+                    <button className="st-btn" onClick={() => onPatch('linkedin', p.id, { status: 'archived' })}>Archive</button>
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         )}
       </div>

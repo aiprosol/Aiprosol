@@ -6,6 +6,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { signMagicLink, sanitizeNext } from '@/lib/auth';
+import { isAdminEmail } from '@/lib/studio/auth';
 import { sendEmail, isResendConfigured } from '@/lib/resend';
 import { magicLinkSubject, magicLinkHtml, magicLinkText } from '@/lib/emails/magic-link';
 
@@ -38,6 +39,16 @@ export async function POST(req: NextRequest) {
     const email = parsed.data.email.trim().toLowerCase();
     const next = sanitizeNext(parsed.data.next);
     const profile = parsed.data.profile;
+
+    // Single-operator lockdown: only emails on the studio admin allowlist
+    // can request a magic link. Anyone else gets a polite refusal so the
+    // form just looks closed without leaking which addresses are valid.
+    if (!isAdminEmail(email)) {
+      return NextResponse.json(
+        { error: 'signup-closed', message: 'Sign-in is restricted. Contact srijanpaudelofficial@gmail.com if you need access.' },
+        { status: 403 },
+      );
+    }
 
     const token = await signMagicLink(email, next, profile);
     const origin =

@@ -1,17 +1,19 @@
-import { LoginForm } from '../login/LoginForm';
-import { isGoogleOAuthEnabled } from '@/lib/auth';
+// ─────────────────────────────────────────────────────────────────────────
+// /signup → /login
+// Signup is closed. Aiprosol is a single-operator console; new accounts
+// aren't being provisioned. The login page handles magic-link auth for the
+// existing admin allowlist (see lib/studio/auth.ts).
+// ─────────────────────────────────────────────────────────────────────────
+
+import { redirect } from 'next/navigation';
 
 export const metadata = {
-  // Root layout's title template appends " · Aiprosol" automatically.
-  title: 'Create your account',
-  description: 'Create your Aiprosol account in 30 seconds. Magic-link or Google OAuth — no passwords. Free ROI Audit unlocked the moment you sign in.',
-  alternates: { canonical: '/signup' },
+  title: 'Sign in',
+  description: 'Sign in to Aiprosol.',
+  robots: { index: false, follow: false },
+  alternates: { canonical: '/login' },
 };
 
-// force-dynamic lets the inner client component use useSearchParams without
-// a Suspense boundary, which means the <h1> is in the server-rendered HTML.
-export const dynamic = 'force-dynamic';
-
-export default function SignupPage() {
-  return <LoginForm mode="signup" googleEnabled={isGoogleOAuthEnabled()} />;
+export default function SignupClosedPage() {
+  redirect('/login');
 }

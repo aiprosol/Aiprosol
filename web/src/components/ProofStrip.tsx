@@ -5,17 +5,17 @@ import { useEffect, useState } from 'react';
 
 // ─────────────────────────────────────────────────────────────────────────
 // AIPROSOL · ABOVE-THE-FOLD PROOF STRIP
-// Slim band that sits between the hero phase 1 CTAs and the workflow
-// visualizer. Cycles through three of the strongest case-study metrics.
-// Until we have signable client logos, the proof is the metrics
-// themselves — each links to the relevant case study.
+// Slim band between the hero CTAs and the workflow visualizer. We're in our
+// charter-customer phase — no named clients yet — so the "proof" is what is
+// genuinely real and verifiable about the operating model, never invented
+// client metrics. Each point links to the live page that backs it.
 // ─────────────────────────────────────────────────────────────────────────
 
 const PROOFS = [
-  { metric: '78% ↓', label: 'Contract-review hours', co: 'Legal · Hargreaves & Sterling', slug: 'hargreaves-sterling' },
-  { metric: '6hr → 3 min', label: 'Lead response time', co: 'Real Estate · Meridian Property', slug: 'meridian' },
-  { metric: '4.1% → 0.6%', label: 'Defect rate', co: 'Manufacturing · Vortex Components', slug: 'vortex' },
-  { metric: '$95k', label: 'Annual stockout saving', co: 'Retail · Thornfield Stores', slug: 'thornfield' },
+  { metric: '11-role', label: 'AI C-suite running live', co: 'Watch them work · /agents', slug: '/agents' },
+  { metric: 'Public', label: 'log of every agent action', co: 'Audit it · /transparency', slug: '/transparency' },
+  { metric: '35 hrs/wk', label: 'reclaim or we work free', co: '90-day guarantee · /pricing', slug: '/pricing' },
+  { metric: '60-sec', label: 'ROI estimate, free', co: 'Run the ROI Audit', slug: '/roi-audit' },
 ];
 
 const ROTATE_MS = 4000;
@@ -32,14 +32,14 @@ export function ProofStrip() {
     <div className="ps-wrap" aria-live="polite">
       <div className="ps-strip">
         <div className="ps-static">
-          <span className="ps-eyebrow">Proof</span>
+          <span className="ps-eyebrow">Live</span>
           <span className="ps-divider" aria-hidden />
         </div>
         <div className="ps-rotator" key={idx}>
           {PROOFS.map((p, i) => (
             <Link
               key={p.slug}
-              href={`/case-studies/${p.slug}`}
+              href={p.slug}
               className={`ps-item ${i === idx ? 'ps-item-on' : ''}`}
               aria-hidden={i !== idx}
               tabIndex={i === idx ? 0 : -1}

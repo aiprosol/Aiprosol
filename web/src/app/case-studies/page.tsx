@@ -19,19 +19,29 @@ export default function CaseStudiesPage() {
     return cases.filter(c => c.industry === activeIndustry);
   }, [cases, activeIndustry]);
 
+  const isEmpty = cases.length === 0;
+
   return (
     <div className="cs-page">
       <header className="cs-hero">
-        <div className="cs-eyebrow">{cases.length} case studies · {industries.length - 1} industries</div>
+        <div className="cs-eyebrow">{isEmpty ? 'Charter-customer phase' : `${cases.length} case studies · ${industries.length - 1} industries`}</div>
         <h1 className="cs-h1">
-          The numbers tell the <span className="cs-grad">whole story</span>
+          {isEmpty ? (<>Real numbers, <span className="cs-grad">honestly earned</span></>) : (<>The numbers tell the <span className="cs-grad">whole story</span></>)}
         </h1>
         <p className="cs-sub">
-          Every engagement is engineered to prove its value financially before scope expands.
-          Pick your industry to see the closest match.
+          {isEmpty
+            ? "We don't run invented case studies. Aiprosol is in its charter-customer phase — the first pilots are being run now, and verified, named results will be published here as they complete. In the meantime, see exactly how we measure ROI and watch the AI C-suite work live."
+            : 'Every engagement is engineered to prove its value financially before scope expands. Pick your industry to see the closest match.'}
         </p>
+        {isEmpty && (
+          <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', marginTop: 24 }}>
+            <Link className="cs-cta-btn" href="/how-we-measure">How we measure ROI →</Link>
+            <Link className="cs-cta-btn" href="/agents" style={{ background: 'transparent', border: '1px solid rgba(139,92,246,0.4)' }}>Watch the AI C-suite live →</Link>
+          </div>
+        )}
       </header>
 
+      {!isEmpty && (
       <div className="cs-tabs">
         {industries.map(ind => (
           <button
@@ -46,6 +56,7 @@ export default function CaseStudiesPage() {
           </button>
         ))}
       </div>
+      )}
 
       <div className="cs-grid">
         {filtered.map((c, i) => {

@@ -5,36 +5,36 @@ import { useEffect, useState } from 'react';
 
 // ─────────────────────────────────────────────────────────────────────────
 // AIPROSOL · HERO PROOF LINE
-// Compact rotating proof element that lives INSIDE Hero Phase 1 (above the
-// stats row). Gives first-time visitors a case-study reference without
-// needing to scroll past the 280vh scroll-jacked hero. Auto-cycles every
-// 5 seconds. Each metric deep-links to the relevant case study.
+// Compact rotating proof element inside Hero Phase 1. We are in our
+// charter-customer phase with no named clients yet — so the proof is what's
+// REAL and verifiable about the operating model, never invented client
+// results. Each point links to the live page that backs the claim.
 // ─────────────────────────────────────────────────────────────────────────
 
 const PROOFS = [
   {
-    metric: '78% ↓',
-    label: 'contract-review hours',
-    co: 'Hargreaves & Sterling (Legal)',
-    slug: 'hargreaves-sterling',
+    metric: '11 roles',
+    label: 'AI C-suite, live',
+    co: 'See every agent · /agents',
+    href: '/agents',
   },
   {
-    metric: '6 hr → 3 min',
-    label: 'lead response',
-    co: 'Meridian Property (Real Estate)',
-    slug: 'meridian',
+    metric: 'Every action',
+    label: 'logged in public',
+    co: 'Open ledger · /transparency',
+    href: '/transparency',
   },
   {
-    metric: '$95k / yr',
-    label: 'stockout saving',
-    co: 'Thornfield Stores (Retail)',
-    slug: 'thornfield',
+    metric: '35 hrs/wk',
+    label: 'reclaim — or we work free',
+    co: '90-day guarantee · /pricing',
+    href: '/pricing',
   },
   {
-    metric: '4.1% → 0.6%',
-    label: 'defect rate',
-    co: 'Vortex Components (Manufacturing)',
-    slug: 'vortex',
+    metric: '60 sec',
+    label: 'to your own ROI estimate',
+    co: 'Free ROI Audit',
+    href: '/roi-audit',
   },
 ];
 
@@ -59,8 +59,8 @@ export function HeroProofLine() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <Link href={`/case-studies/${cur.slug}`} className="hpl-pill">
-        <span className="hpl-eyebrow">Real ROI</span>
+      <Link href={cur.href} className="hpl-pill">
+        <span className="hpl-eyebrow">Live now</span>
         <span className="hpl-divider" aria-hidden />
         <span className="hpl-metric">{cur.metric}</span>
         <span className="hpl-label">{cur.label}</span>
@@ -71,7 +71,7 @@ export function HeroProofLine() {
       <div className="hpl-dots" role="tablist" aria-label="Rotate proof points">
         {PROOFS.map((p, i) => (
           <button
-            key={p.slug}
+            key={p.href}
             role="tab"
             aria-selected={i === idx}
             aria-label={`${p.metric} ${p.label}`}

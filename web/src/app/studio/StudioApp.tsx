@@ -15,6 +15,7 @@ import type {
   Project,
 } from '@/lib/studio/data';
 import { CopilotWidget } from './CopilotWidget';
+import { SystemTab } from './SystemTab';
 
 // ─────────────────────────────────────────────────────────────────────────
 // AIPROSOL · STUDIO · Operations Console
@@ -22,7 +23,7 @@ import { CopilotWidget } from './CopilotWidget';
 // Actions hit /api/studio/[resource]/[id] (PATCH) or /api/studio/run-agent.
 // ─────────────────────────────────────────────────────────────────────────
 
-type Tab = 'overview' | 'projects' | 'tasks' | 'outreach' | 'content' | 'leads' | 'partners' | 'sops' | 'kpis' | 'agents';
+type Tab = 'overview' | 'projects' | 'tasks' | 'outreach' | 'content' | 'leads' | 'partners' | 'sops' | 'kpis' | 'agents' | 'system';
 
 export function StudioApp({
   session,
@@ -229,6 +230,7 @@ export function StudioApp({
           ['sops', 'SOPs', counts.sops],
           ['kpis', 'KPIs', snapshot.kpis.length],
           ['agents', 'Agents', ROLES.length],
+          ['system', 'System', null],
         ] as Array<[Tab, string, number | null]>).map(([id, label, count]) => (
           <button
             key={id}
@@ -270,6 +272,7 @@ export function StudioApp({
         {tab === 'sops' && <SopsTab sops={snapshot.sops} />}
         {tab === 'kpis' && <KpisTab kpis={snapshot.kpis} onRunAgent={runAgent} />}
         {tab === 'agents' && <AgentsTab states={snapshot.agentStates} runs={snapshot.recentRuns} onRunAgent={runAgent} />}
+        {tab === 'system' && <SystemTab />}
       </main>
 
       {newProjectOpen && (

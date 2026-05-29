@@ -7,11 +7,10 @@ import { getProfileByEmail } from '@/lib/profiles';
 export const metadata = { title: 'Dashboard' };
 export const dynamic = 'force-dynamic';
 
-// Industry → case-study slug mapping. Falls back to Hargreaves (Legal) which
-// is our highest-impact metric (45 hrs/week reclaimed) when the user's
-// industry doesn't have a direct match. Profile industries that don't map
-// cleanly (Professional Services, SaaS, Healthcare, Financial Services,
-// E-commerce, Other) still get a "highest-relevance" pick.
+// Industry → case-study slug mapping. NOTE: case-studies.json is empty during
+// the charter-customer phase, so featuredCase resolves to undefined and the
+// spotlight is hidden (guarded below). This map is dormant until REAL, named
+// case studies exist — do not point it at illustrative/fabricated slugs.
 const INDUSTRY_TO_CASE: Record<string, string> = {
   'Legal': 'hargreaves-sterling',
   'Real Estate': 'meridian',
@@ -43,8 +42,9 @@ export default async function DashboardPage() {
     year: 'numeric', month: 'long', day: 'numeric',
   });
 
-  // Pick a case study to surface — industry-relevant if the user has one,
-  // otherwise the strongest-headline case (Hargreaves).
+  // Pick a case study to surface — industry-relevant if the user has one.
+  // During the charter phase getCaseStudies() is empty, so this resolves to
+  // undefined and the spotlight below is hidden.
   const cases = getCaseStudies();
   const caseSlug = (profile.industry && INDUSTRY_TO_CASE[profile.industry]) || 'hargreaves-sterling';
   const featuredCase = cases.find(c => c.slug === caseSlug) || cases[0];

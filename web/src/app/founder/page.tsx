@@ -345,12 +345,13 @@ export default function FounderPage() {
             company should run on it. Otherwise we&apos;re selling vibes.
           </p>
           <p>
-            That&apos;s the entire idea. Every automation we ship to a customer
-            is something we already use to run Aiprosol itself. The lead-response
-            stack that took Meridian Property from six-hour reply times to three
-            minutes? Runs our inbound too. The IDP layer that gave Hargreaves &
-            Sterling forty-five hours a week back? Reads every contract we
-            receive. Operators serving operators.
+            That&apos;s the entire idea. Every automation we&apos;d ship to a
+            customer is something we already run on ourselves first. The
+            sub-three-minute lead-response stack handles our own inbound. The
+            document-processing layer reads every contract we receive. We&apos;re
+            in our charter-customer phase — so the proof we point to is our own
+            operation, live and auditable, not borrowed logos. Operators serving
+            operators.
           </p>
         </div>
       </section>

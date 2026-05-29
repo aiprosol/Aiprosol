@@ -20,11 +20,15 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
     (cs as { shortSummary?: string }).shortSummary ||
     (cs as { excerpt?: string }).excerpt ||
     '';
-  const description = summary.slice(0, 200);
+  const description = summary.slice(0, 160);
   return {
     title: `${cs.headline} · ${industry || 'Case study'}`,
     description: description ||
-      `${cs.headline}: ${headlineMetric || 'real automation outcome'} ${industry ? `in ${industry.toLowerCase()}.` : '.'}`,
+      `${cs.headline}: ${headlineMetric || 'automation outcome'} ${industry ? `in ${industry.toLowerCase()}.` : '.'}`,
+    // Charter-customer phase: case-study pages stay out of the index until
+    // they describe real, verified, named engagements. Prevents search +
+    // AI engines from citing illustrative outcomes as fact.
+    robots: { index: false, follow: true },
     alternates: { canonical: `/case-studies/${cs.slug}` },
     openGraph: {
       title: `${cs.headline} · Aiprosol Case Study`,
@@ -146,32 +150,11 @@ export default async function CaseStudyLayout({
         ],
         keywords: metrics.map((m) => `${m.label}: ${m.value}`).join(', '),
       },
-      ...(c.quote
-        ? [
-            {
-              '@type': 'Review',
-              '@id': `${siteUrl}/case-studies/${slug}#review`,
-              reviewBody: c.quote,
-              author: {
-                '@type': 'Person',
-                name: c.quoteAuthor || 'Customer',
-                ...(c.quoteRole && { jobTitle: c.quoteRole }),
-                ...(c.companyName && {
-                  worksFor: {
-                    '@type': 'Organization',
-                    name: c.companyName,
-                    // Customers are anonymised — point url at the case study itself
-                    url: `${siteUrl}/case-studies/${slug}`,
-                    logo: `${siteUrl}/opengraph-image`,
-                    description: `Anonymised ${c.industry || 'industry'} customer (composite ROI projection)`,
-                  },
-                }),
-              },
-              itemReviewed: { '@id': `${siteUrl}/#organization` },
-              publisher: { '@id': `${siteUrl}/#organization` },
-            },
-          ]
-        : []),
+      // NOTE: No Review / aggregateRating schema is emitted. Review markup
+      // requires a genuine, verifiable customer review with a real author —
+      // emitting it from an illustrative quote is fabricated structured data
+      // (Google penalty + UK ASA/CMA + US FTC exposure). Re-add ONLY when a
+      // real, named, consenting customer review exists.
       {
         '@type': 'BreadcrumbList',
         itemListElement: [

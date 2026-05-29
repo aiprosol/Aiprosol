@@ -98,7 +98,7 @@ deliverables[] item shape (discriminated by \`type\`):
     "payload": {
       "channel": "gmail",                       // gmail | linkedin | other
       "target_segment": "Edinburgh law firms 5-20 partners",
-      "recipient_name": "Sarah Hargreaves",     // optional
+      "recipient_name": "Jordan Lee",           // optional
       "recipient_email": "sarah@firm.com",      // optional — only if real
       "subject": "Free workflow pilot for [Firm]",
       "body": "Hi Sarah, ... (200-500 words of real email body)"

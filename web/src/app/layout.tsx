@@ -9,6 +9,7 @@ import { ScrollProgressBar } from '@/components/ScrollProgressBar';
 import { StatusOrb } from '@/components/StatusOrb';
 import { PostHogProvider } from '@/components/PostHogProvider';
 import { CookieBanner } from '@/components/CookieBanner';
+import { ChromeGate } from '@/components/ChromeGate';
 import './globals.css';
 
 const display = Space_Grotesk({
@@ -135,17 +136,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main" className="skip-link">Skip to main content</a>
 
         <PostHogProvider>
-          <ScrollProgressBar />
-          <CharterBanner />
-          <Nav />
+          {/* Public-site chrome — hidden on /studio so the operator console
+              renders as a clean standalone admin shell (only Copilot floats). */}
+          <ChromeGate>
+            <ScrollProgressBar />
+            <CharterBanner />
+            <Nav />
+          </ChromeGate>
           <main id="main">{children}</main>
-          <Footer />
-
-          {/* Widgets mounted globally — all are client components */}
-          <StatusOrb />
-          <AroraChatWidget />
-          <ExitIntentModal />
-          <CookieBanner />
+          <ChromeGate>
+            <Footer />
+            {/* Widgets mounted globally — all are client components */}
+            <StatusOrb />
+            <AroraChatWidget />
+            <ExitIntentModal />
+            <CookieBanner />
+          </ChromeGate>
         </PostHogProvider>
 
         {/* Structured data for the organisation — rich enough that Google can

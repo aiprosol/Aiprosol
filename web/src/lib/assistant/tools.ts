@@ -26,6 +26,7 @@ import { getFunnel } from '@/lib/studio/funnel';
 import { getRevenue } from '@/lib/studio/revenue';
 import { getSystemSnapshot } from '@/lib/studio/system';
 import { composeBrief, saveBrief, getLatestBrief } from './brief';
+import { applyContentEdit } from '@/lib/studio/content-edit';
 
 export type ToolRisk = 'safe' | 'confirm';
 
@@ -114,6 +115,7 @@ const getFunnelSchema = z.object({ days: z.number().int().min(1).max(90).optiona
 const emptySchema = z.object({});
 const rememberSchema = z.object({ key: z.string().min(1).max(80), value: z.string().min(1).max(1000) });
 const recallSchema = z.object({ key: z.string().max(80).optional() });
+const editContentSchema = z.object({ type: z.enum(['product', 'service']), slug: z.string().min(1).max(120), fields: z.record(z.string(), z.unknown()) });
 
 export const TOOLS: ToolDef[] = [
   {
@@ -518,6 +520,31 @@ export const TOOLS: ToolDef[] = [
         })
         .eq('id', a.id);
       return { ok: true, summary: `Sent to ${to} via Gmail.`, data: { messageId: result.messageId, to } };
+    },
+  },
+
+  {
+    name: 'edit_content',
+    description:
+      'Edit a product or service in the catalog (price, availability, copy). OUTWARD ACTION — commits to the repo and deploys the site, so it requires operator confirmation.',
+    parameters: editContentSchema,
+    risk: 'confirm',
+    preview: (a) => `Edit ${String(a.type)} "${String(a.slug)}" (${Object.keys((a.fields as Record<string, unknown>) || {}).join(', ')}) → commit + deploy`,
+    jsonSchema: {
+      type: 'object',
+      properties: {
+        type: { type: 'string', enum: ['product', 'service'] },
+        slug: { type: 'string' },
+        fields: { type: 'object', description: 'Whitelisted: products[price, available, shortDescription, longDescription, name, expectedShipDate]; services[title, shortDescription, longDescription].' },
+      },
+      required: ['type', 'slug', 'fields'],
+      additionalProperties: false,
+    },
+    async run(raw) {
+      const a = editContentSchema.parse(raw);
+      const res = await applyContentEdit(a);
+      if (!res.ok) return { ok: false, summary: `Content edit failed: ${res.error}`, error: res.error };
+      return { ok: true, summary: `Committed ${a.type} ${a.slug} (${Object.keys(res.applied || {}).join(', ')}) — deploys in ~70s.`, data: { sha: res.sha } };
     },
   },
 ];

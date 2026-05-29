@@ -6,8 +6,10 @@
 
 import type { Role } from './types';
 
-// Shared output instructions — appended to every agent prompt
-const OUTPUT_FORMAT = `
+// Shared output instructions — appended to every agent prompt.
+// Exported so the runner can re-append it to a studio-edited prompt override,
+// guaranteeing the strict JSON output contract survives a persona rewrite.
+export const OUTPUT_FORMAT = `
 # OUTPUT FORMAT (STRICT JSON — no prose before or after)
 
 Return ONLY a single JSON object matching this schema:

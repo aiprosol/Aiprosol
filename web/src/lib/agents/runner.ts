@@ -12,7 +12,8 @@
 // ─────────────────────────────────────────────────────────────────────────
 
 import { ROLE_META, type Role, type AgentState, type AgentRunOutput, type Deliverable, AgentRunOutputSchema } from './types';
-import { AGENT_PROMPTS } from './prompts';
+import { AGENT_PROMPTS, OUTPUT_FORMAT } from './prompts';
+import { loadAgentConfig } from './config';
 import { readAllStates, writeState, appendLog } from './store';
 import { loadContext, renderContext } from './context';
 import { runKpiRollup } from './kpi-rollup';
@@ -136,7 +137,18 @@ export async function runAgent(role: Role): Promise<{
   durationMs: number;
 }> {
   const t0 = Date.now();
-  const systemPrompt = AGENT_PROMPTS[role];
+
+  // Studio overrides (C-Suite control): a disabled agent no-ops; a prompt
+  // override replaces the persona, with OUTPUT_FORMAT re-appended so the JSON
+  // contract can't be broken. Falls back to code defaults on any miss.
+  const cfg = await loadAgentConfig(role);
+  if (cfg?.enabled === false) {
+    return { ok: true, state: null, error: 'agent-disabled', durationMs: Date.now() - t0 };
+  }
+  const systemPrompt = cfg?.systemPromptOverride && cfg.systemPromptOverride.trim()
+    ? `${cfg.systemPromptOverride.trim()}\n\n${OUTPUT_FORMAT}`
+    : AGENT_PROMPTS[role];
+
   const apiKey = process.env.GROQ_API_KEY;
   const model = process.env.GROQ_MODEL || DEFAULT_MODEL;
 

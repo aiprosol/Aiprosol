@@ -18,6 +18,8 @@ import { CopilotWidget } from './CopilotWidget';
 import { SystemTab } from './SystemTab';
 import { RevenueTab } from './RevenueTab';
 import { FunnelTab } from './FunnelTab';
+import { CatalogTab } from './CatalogTab';
+import { AgentControlTab } from './AgentControlTab';
 
 // ─────────────────────────────────────────────────────────────────────────
 // AIPROSOL · STUDIO · Operations Console
@@ -25,7 +27,7 @@ import { FunnelTab } from './FunnelTab';
 // Actions hit /api/studio/[resource]/[id] (PATCH) or /api/studio/run-agent.
 // ─────────────────────────────────────────────────────────────────────────
 
-type Tab = 'overview' | 'revenue' | 'funnel' | 'projects' | 'tasks' | 'outreach' | 'content' | 'leads' | 'partners' | 'sops' | 'kpis' | 'agents' | 'system';
+type Tab = 'overview' | 'revenue' | 'funnel' | 'projects' | 'tasks' | 'outreach' | 'content' | 'leads' | 'partners' | 'sops' | 'kpis' | 'agents' | 'control' | 'catalog' | 'system';
 
 export function StudioApp({
   session,
@@ -234,6 +236,8 @@ export function StudioApp({
           ['sops', 'SOPs', counts.sops],
           ['kpis', 'KPIs', snapshot.kpis.length],
           ['agents', 'Agents', ROLES.length],
+          ['control', 'Agent control', null],
+          ['catalog', 'Catalog', null],
           ['system', 'System', null],
         ] as Array<[Tab, string, number | null]>).map(([id, label, count]) => (
           <button
@@ -278,6 +282,8 @@ export function StudioApp({
         {tab === 'sops' && <SopsTab sops={snapshot.sops} />}
         {tab === 'kpis' && <KpisTab kpis={snapshot.kpis} onRunAgent={runAgent} />}
         {tab === 'agents' && <AgentsTab states={snapshot.agentStates} runs={snapshot.recentRuns} onRunAgent={runAgent} />}
+        {tab === 'control' && <AgentControlTab />}
+        {tab === 'catalog' && <CatalogTab />}
         {tab === 'system' && <SystemTab />}
       </main>
 

@@ -16,6 +16,8 @@ import type {
 } from '@/lib/studio/data';
 import { CopilotWidget } from './CopilotWidget';
 import { SystemTab } from './SystemTab';
+import { RevenueTab } from './RevenueTab';
+import { FunnelTab } from './FunnelTab';
 
 // ─────────────────────────────────────────────────────────────────────────
 // AIPROSOL · STUDIO · Operations Console
@@ -23,7 +25,7 @@ import { SystemTab } from './SystemTab';
 // Actions hit /api/studio/[resource]/[id] (PATCH) or /api/studio/run-agent.
 // ─────────────────────────────────────────────────────────────────────────
 
-type Tab = 'overview' | 'projects' | 'tasks' | 'outreach' | 'content' | 'leads' | 'partners' | 'sops' | 'kpis' | 'agents' | 'system';
+type Tab = 'overview' | 'revenue' | 'funnel' | 'projects' | 'tasks' | 'outreach' | 'content' | 'leads' | 'partners' | 'sops' | 'kpis' | 'agents' | 'system';
 
 export function StudioApp({
   session,
@@ -221,6 +223,8 @@ export function StudioApp({
       <nav className="st-tabs">
         {([
           ['overview', 'Overview', null],
+          ['revenue', 'Revenue', null],
+          ['funnel', 'Funnel', null],
           ['projects', 'Projects', counts.projects],
           ['tasks', 'Tasks', counts.tasks],
           ['outreach', 'Outreach', counts.outreach],
@@ -247,6 +251,8 @@ export function StudioApp({
 
       <main className="st-main">
         {tab === 'overview' && <Overview snapshot={snapshot} onRunAgent={runAgent} onWipeDummy={wipeDummy} />}
+        {tab === 'revenue' && <RevenueTab />}
+        {tab === 'funnel' && <FunnelTab />}
         {tab === 'projects' && (
           <ProjectsTab
             projects={snapshot.projects}

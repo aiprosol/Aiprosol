@@ -7,7 +7,7 @@
 // with zero env setup; override with RESEND_DIGEST_TO / BRIEF_EMAIL.
 // ─────────────────────────────────────────────────────────────────────────
 
-import { composeBrief } from '@/lib/assistant/brief';
+import { composeBrief, saveBrief } from '@/lib/assistant/brief';
 import { getPendingDecisions, type PendingDecision } from '@/lib/studio/decisions';
 import { draftFollowupsForNewLeads } from '@/lib/studio/revenue-loop';
 import { getSystemSnapshot } from '@/lib/studio/system';
@@ -63,11 +63,12 @@ export async function runDecisionInbox(): Promise<{ ok: boolean; emailed: boolea
   // Autonomous revenue loop first, so fresh follow-ups surface in this run.
   const followups = await draftFollowupsForNewLeads(3).catch(() => ({ drafted: 0, skipped: 0 }));
 
-  const [brief, decisions, system] = await Promise.all([
-    composeBrief(Date.now()).then((b) => b?.content ?? null).catch(() => null),
+  const [briefObj, decisions, system] = await Promise.all([
+    composeBrief(Date.now()).catch(() => null),
     getPendingDecisions(),
     getSystemSnapshot().catch(() => null),
   ]);
+  const brief = briefObj?.content ?? null;
 
   const opsLine = system
     ? `${system.agents.errors24h} agent error(s)/24h · DB ${system.supabase.ok ? 'ok' : 'down'} · ${system.env.filter((e) => !e.set).length} env key(s) unset`
@@ -85,6 +86,10 @@ export async function runDecisionInbox(): Promise<{ ok: boolean; emailed: boolea
     });
     emailed = r.ok;
   }
+
+  // Persist the brief so the Copilot's get_latest_brief + the studio surface
+  // today's brief — not just the email. Best-effort; no-op without Supabase.
+  if (briefObj) await saveBrief(briefObj.content, briefObj.provider, to, emailed).catch(() => {});
 
   return { ok: true, emailed, to, decisions: decisions.length, followupsDrafted: followups.drafted, hasBrief: Boolean(brief) };
 }

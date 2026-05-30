@@ -55,6 +55,26 @@ export function Hero() {
   const dot2 = useTransform(smooth, [0.32, 0.42, 0.6, 0.7], [0.3, 1, 1, 0.3]);
   const dot3 = useTransform(smooth, [0.65, 0.78], [0.3, 1]);
 
+  // Defer the three.js background constellation until AFTER first paint + idle.
+  // It's a decorative background behind the headline; initialising it during
+  // hydration steals the main thread in the LCP window (mobile LCP was 3.6s).
+  // Gating it on requestIdleCallback (setTimeout fallback for Safari) keeps the
+  // visual on every device but moves its heavy init off the critical path.
+  // Skill rules: main-thread-budget, lazy-loading, transform-performance.
+  const [showConstellation, setShowConstellation] = useState(false);
+  useEffect(() => {
+    const w = window as typeof window & {
+      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+      cancelIdleCallback?: (id: number) => void;
+    };
+    if (typeof w.requestIdleCallback === 'function') {
+      const id = w.requestIdleCallback(() => setShowConstellation(true), { timeout: 2500 });
+      return () => w.cancelIdleCallback?.(id);
+    }
+    const t = setTimeout(() => setShowConstellation(true), 1500);
+    return () => clearTimeout(t);
+  }, []);
+
   return (
     <section
       ref={sectionRef}
@@ -65,7 +85,7 @@ export function Hero() {
       <div className="sticky top-0 h-screen overflow-hidden flex items-center justify-center">
         {/* Background agent constellation (subtle scale-on-scroll) */}
         <motion.div style={{ scale: sphereScale }} className="absolute inset-0">
-          <AgentConstellation />
+          {showConstellation && <AgentConstellation />}
         </motion.div>
 
         <GridOverlay />

@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { Hero } from '@/components/Hero';
 import { BentoGrid } from '@/components/BentoGrid';
 import { WorkflowVisualizer } from '@/components/WorkflowVisualizer';
@@ -14,12 +15,35 @@ import { TestimonialsSection } from '@/components/TestimonialsSection';
 import { RevealOnScroll } from '@/components/RevealOnScroll';
 import { getVisitorSegment } from '@/lib/personalize';
 
-export default async function HomePage() {
-  // Server-side personalisation read — middleware sets the cookie based on
-  // Vercel-geo country, UTM source, and time-of-day. Falls through to a
-  // generic segment if anything is missing (localhost dev, no UTM, etc.).
+// ─────────────────────────────────────────────────────────────────────────
+// Personalised below-the-fold sections.
+//
+// HomePage used to `await getVisitorSegment()` at the very top of an async
+// server component. With app/loading.tsx present, that suspended the WHOLE
+// route behind the full-screen RouteLoader: the loader painted first (FCP ~0.9s)
+// and the real hero only appeared after the route resolved and the client
+// swapped the fallback out — pushing mobile LCP to ~3.5s on throttled connections.
+//
+// The hero uses zero personalisation, so it must never wait on the cookie read.
+// HomePage is now a synchronous component (no top-level await → no full-page
+// suspense → loading.tsx no longer gates the homepage), and the cookie read is
+// pushed down into these two async children, each wrapped in its own <Suspense>.
+// The hero now ships in the first streamed flush; the personalised sections
+// stream in just after (they're below the fold, so invisible to LCP). Fallbacks
+// render the same components with default (non-personalised) ordering — identical
+// layout, so the personalise-swap introduces no layout shift.
+// ─────────────────────────────────────────────────────────────────────────
+async function PersonalizedServices() {
   const segment = await getVisitorSegment();
+  return <HomeServices segment={segment} />;
+}
 
+async function PersonalizedCases() {
+  const segment = await getVisitorSegment();
+  return <HomeCases segment={segment} />;
+}
+
+export default function HomePage() {
   return (
     <>
       <Hero />
@@ -52,7 +76,9 @@ export default async function HomePage() {
 
       <div data-orb-section="services">
         <RevealOnScroll>
-          <HomeServices segment={segment} />
+          <Suspense fallback={<HomeServices />}>
+            <PersonalizedServices />
+          </Suspense>
         </RevealOnScroll>
       </div>
 
@@ -68,7 +94,9 @@ export default async function HomePage() {
 
       <div data-orb-section="cases">
         <RevealOnScroll>
-          <HomeCases segment={segment} />
+          <Suspense fallback={<HomeCases />}>
+            <PersonalizedCases />
+          </Suspense>
         </RevealOnScroll>
       </div>
 

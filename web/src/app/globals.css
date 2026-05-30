@@ -68,13 +68,20 @@
 }
 
 @keyframes hero-fade-in {
-  from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: translateY(0); }
+  /* Transform-only entrance — opacity is deliberately NOT animated. Animating
+     the hero content from opacity:0 hid the LCP element (the H1 / lead copy)
+     until the fade completed, which pushed mobile LCP to 3.6s. A composited
+     translateY "rise" keeps every element painted at full opacity from the
+     first frame (LCP-safe) and causes no layout shift. */
+  from { transform: translateY(16px); }
+  to   { transform: translateY(0); }
 }
 
 .hero-fade-in {
-  opacity: 0;
-  animation: hero-fade-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  /* `both` fill applies the `from` transform during animation-delay too, so
+     staggered (delayed) elements start 16px low instead of jumping. Opacity
+     stays at its default 1 the whole time. */
+  animation: hero-fade-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* Accessibility — keyboard skip link. Hidden visually until focused. */
@@ -123,7 +130,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .hero-fade-in {
-    opacity: 1;
     animation: none;
     transform: none;
   }

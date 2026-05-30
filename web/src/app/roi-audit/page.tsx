@@ -11,6 +11,11 @@ import { LongWaitOverlay, InlineSpinner } from '@/components/AnimatedLogo';
 // · tier-routed CTA · email-me checkbox.
 // Submits to POST /api/capture-lead which persists + scores + fires Zapier.
 // Falls back to local calc if the API errors.
+//
+// A11y + conversion pass: inline per-field validation (no silently-disabled
+// Next), focus moves to the step heading on change + to the first invalid field
+// on a failed advance, chips expose aria-pressed, inputs carry autoComplete/
+// inputMode, and all motion respects prefers-reduced-motion.
 // ─────────────────────────────────────────────────────────────────────────
 
 const INDUSTRIES = ['Professional Services', 'Real Estate', 'Legal', 'Financial Services', 'E-commerce', 'Manufacturing', 'Healthcare', 'SaaS', 'Other'];
@@ -26,9 +31,15 @@ interface FormData {
   primaryChallenge: string; automationExperience: string;
 }
 
+function prefersReducedMotion(): boolean {
+  return typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
 function AnimNum({ to, prefix = '', suffix = '', dur = 1400 }: { to: number; prefix?: string; suffix?: string; dur?: number }) {
   const [v, setV] = useState(0);
   useEffect(() => {
+    // Respect reduced-motion: skip the count-up, show the final value instantly.
+    if (prefersReducedMotion()) { setV(to); return; }
     const start = performance.now();
     const tick = (t: number) => {
       const p = Math.min((t - start) / dur, 1);
@@ -36,7 +47,8 @@ function AnimNum({ to, prefix = '', suffix = '', dur = 1400 }: { to: number; pre
       setV(Math.round(to * eased));
       if (p < 1) requestAnimationFrame(tick);
     };
-    requestAnimationFrame(tick);
+    const raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
   }, [to, dur]);
   return <>{prefix}{v.toLocaleString()}{suffix}</>;
 }
@@ -47,6 +59,8 @@ export default function ROIAuditPage() {
   const [submitting, setSubmitting] = useState(false);
   const [report, setReport] = useState<CalcROIResult | null>(null);
   const [emailMe, setEmailMe] = useState(true);
+  // Errors are only surfaced after the user tries to advance an incomplete step.
+  const [attempted, setAttempted] = useState(false);
 
   const [data, setData] = useState<FormData>({
     name: '', email: '', company: '',
@@ -54,6 +68,10 @@ export default function ROIAuditPage() {
     manualHours: '', hourlyCost: '',
     primaryChallenge: '', automationExperience: '',
   });
+
+  const cardRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const firstRender = useRef(true);
 
   // Pre-fill from /roi-simulator handoff (?employees=&manualHours=&hourlyCost=&industry=)
   useEffect(() => {
@@ -91,6 +109,15 @@ export default function ROIAuditPage() {
     return () => { cancelled = true; };
   }, []);
 
+  // On step change: clear stale errors and move focus to the new step heading so
+  // keyboard + screen-reader users follow the flow. Skips the initial mount so
+  // the step-0 name field keeps its autoFocus.
+  useEffect(() => {
+    if (firstRender.current) { firstRender.current = false; return; }
+    setAttempted(false);
+    titleRef.current?.focus();
+  }, [step]);
+
   const startedRef = useRef(false);
   const update = (k: keyof FormData, v: string) => {
     if (!startedRef.current) {
@@ -100,12 +127,25 @@ export default function ROIAuditPage() {
     setData(prev => ({ ...prev, [k]: v }));
   };
 
-  const canAdvance = useMemo(() => {
-    if (step === 0) return data.name.trim().length > 1 && /\S+@\S+\.\S+/.test(data.email);
-    if (step === 1) return !!(data.industry && data.employees && data.monthlyRevenue);
-    if (step === 2) return !!(data.manualHours && data.hourlyCost);
-    return true;
+  // Per-field errors for the current step. Single source of truth — `canAdvance`
+  // is derived from this, so the gate and the messages can never disagree.
+  const fieldErrors = useMemo(() => {
+    const e: Partial<Record<keyof FormData, string>> = {};
+    if (step === 0) {
+      if (data.name.trim().length <= 1) e.name = 'Enter your name';
+      if (!/\S+@\S+\.\S+/.test(data.email)) e.email = 'Enter a valid email address';
+    } else if (step === 1) {
+      if (!data.industry) e.industry = 'Pick the closest industry';
+      if (!data.employees) e.employees = 'How many people on the team?';
+      if (!data.monthlyRevenue) e.monthlyRevenue = 'Select a revenue range';
+    } else if (step === 2) {
+      if (!data.manualHours) e.manualHours = 'Estimate the weekly hours';
+      if (!data.hourlyCost) e.hourlyCost = 'Add an average hourly cost';
+    }
+    return e;
   }, [step, data]);
+
+  const canAdvance = Object.keys(fieldErrors).length === 0;
 
   const livePreview = useMemo(() => {
     if (!data.manualHours || !data.hourlyCost) return null;
@@ -122,6 +162,26 @@ export default function ROIAuditPage() {
 
   const next = () => { setDirection(1); setStep(s => Math.min(3, s + 1)); };
   const back = () => { setDirection(-1); setStep(s => Math.max(0, s - 1)); };
+
+  // Move keyboard focus to the first field that failed validation. Falls back to
+  // scrolling the first error message into view (e.g. when only a chip group is
+  // missing and there's no focusable input to land on).
+  const focusFirstInvalid = () => {
+    const card = cardRef.current;
+    if (!card) return;
+    const firstInvalid = card.querySelector<HTMLElement>('[aria-invalid="true"]');
+    if (firstInvalid) { firstInvalid.focus(); return; }
+    card.querySelector('.ra-error')?.scrollIntoView({ block: 'center', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+  };
+
+  const tryAdvance = (action: () => void) => {
+    if (!canAdvance) {
+      setAttempted(true);
+      requestAnimationFrame(focusFirstInvalid); // wait for aria-invalid to render
+      return;
+    }
+    action();
+  };
 
   const generate = async () => {
     setSubmitting(true);
@@ -231,22 +291,22 @@ export default function ROIAuditPage() {
       </div>
 
       <div className="ra-shell">
-        <div key={step} className={`ra-card ra-anim-${direction === 1 ? 'in-right' : 'in-left'}`}>
+        <div ref={cardRef} key={step} className={`ra-card ra-anim-${direction === 1 ? 'in-right' : 'in-left'}`}>
           {step === 0 && (
             <div className="ra-step">
               <div className="ra-step-eyebrow">Step 1 of 4</div>
-              <h2 className="ra-step-title">Who&apos;s the report for?</h2>
+              <h2 className="ra-step-title" ref={titleRef} tabIndex={-1}>Who&apos;s the report for?</h2>
               <p className="ra-step-sub">No spam. No call. Just your personalised report — and a follow-up only if you ask for one.</p>
               <div className="ra-row">
-                <Field label="Your name" required>
-                  <input value={data.name} onChange={e => update('name', e.target.value)} placeholder="Sarah Johnson" autoFocus />
+                <Field label="Your name" required error={attempted ? fieldErrors.name : undefined}>
+                  <input value={data.name} onChange={e => update('name', e.target.value)} placeholder="Sarah Johnson" autoComplete="name" autoFocus />
                 </Field>
-                <Field label="Email" required>
-                  <input type="email" value={data.email} onChange={e => update('email', e.target.value)} placeholder="sarah@company.com" />
+                <Field label="Email" required error={attempted ? fieldErrors.email : undefined}>
+                  <input type="email" value={data.email} onChange={e => update('email', e.target.value)} placeholder="sarah@company.com" autoComplete="email" inputMode="email" />
                 </Field>
               </div>
               <Field label="Company (optional)">
-                <input value={data.company} onChange={e => update('company', e.target.value)} placeholder="Acme Ltd" />
+                <input value={data.company} onChange={e => update('company', e.target.value)} placeholder="Acme Ltd" autoComplete="organization" />
               </Field>
             </div>
           )}
@@ -254,20 +314,20 @@ export default function ROIAuditPage() {
           {step === 1 && (
             <div className="ra-step">
               <div className="ra-step-eyebrow">Step 2 of 4</div>
-              <h2 className="ra-step-title">Tell me about your business</h2>
+              <h2 className="ra-step-title" ref={titleRef} tabIndex={-1}>Tell me about your business</h2>
               <p className="ra-step-sub">This shapes which case studies and product recommendations apply to you.</p>
-              <Field label="Industry" required>
-                <div className="ra-chips">
+              <Field label="Industry" required error={attempted ? fieldErrors.industry : undefined}>
+                <div className="ra-chips" role="group" aria-label="Industry">
                   {INDUSTRIES.map(i => (
-                    <button key={i} type="button" className={`ra-chip ${data.industry === i ? 'is-on' : ''}`} onClick={() => update('industry', i)}>{i}</button>
+                    <button key={i} type="button" aria-pressed={data.industry === i} className={`ra-chip ${data.industry === i ? 'is-on' : ''}`} onClick={() => update('industry', i)}>{i}</button>
                   ))}
                 </div>
               </Field>
               <div className="ra-row">
-                <Field label="Employees" required>
-                  <input type="number" min={1} value={data.employees} onChange={e => update('employees', e.target.value)} placeholder="25" />
+                <Field label="Employees" required error={attempted ? fieldErrors.employees : undefined}>
+                  <input type="number" min={1} inputMode="numeric" value={data.employees} onChange={e => update('employees', e.target.value)} placeholder="25" />
                 </Field>
-                <Field label="Monthly revenue" required>
+                <Field label="Monthly revenue" required error={attempted ? fieldErrors.monthlyRevenue : undefined}>
                   <select value={data.monthlyRevenue} onChange={e => update('monthlyRevenue', e.target.value)}>
                     <option value="">Select…</option>
                     {REVENUES.map(r => <option key={r} value={r}>{r}</option>)}
@@ -280,27 +340,27 @@ export default function ROIAuditPage() {
           {step === 2 && (
             <div className="ra-step">
               <div className="ra-step-eyebrow">Step 3 of 4</div>
-              <h2 className="ra-step-title">Where&apos;s the time going?</h2>
+              <h2 className="ra-step-title" ref={titleRef} tabIndex={-1}>Where&apos;s the time going?</h2>
               <p className="ra-step-sub">Be honest with the numbers — they only inform your projection.</p>
               <div className="ra-row">
-                <Field label="Manual hours per week" required hint="Across the team — repetitive, copy-paste, follow-up work">
-                  <input type="number" min={0} value={data.manualHours} onChange={e => update('manualHours', e.target.value)} placeholder="40" />
+                <Field label="Manual hours per week" required hint="Across the team — repetitive, copy-paste, follow-up work" error={attempted ? fieldErrors.manualHours : undefined}>
+                  <input type="number" min={0} inputMode="numeric" value={data.manualHours} onChange={e => update('manualHours', e.target.value)} placeholder="40" />
                 </Field>
-                <Field label="Avg hourly cost ($)" required hint="Loaded cost: salary + overhead">
-                  <input type="number" min={0} value={data.hourlyCost} onChange={e => update('hourlyCost', e.target.value)} placeholder="35" />
+                <Field label="Avg hourly cost ($)" required hint="Loaded cost: salary + overhead" error={attempted ? fieldErrors.hourlyCost : undefined}>
+                  <input type="number" min={0} inputMode="decimal" value={data.hourlyCost} onChange={e => update('hourlyCost', e.target.value)} placeholder="35" />
                 </Field>
               </div>
               <Field label="Primary challenge">
-                <div className="ra-chips">
+                <div className="ra-chips" role="group" aria-label="Primary challenge">
                   {CHALLENGES.map(c => (
-                    <button key={c} type="button" className={`ra-chip ${data.primaryChallenge === c ? 'is-on' : ''}`} onClick={() => update('primaryChallenge', c)}>{c}</button>
+                    <button key={c} type="button" aria-pressed={data.primaryChallenge === c} className={`ra-chip ${data.primaryChallenge === c ? 'is-on' : ''}`} onClick={() => update('primaryChallenge', c)}>{c}</button>
                   ))}
                 </div>
               </Field>
               <Field label="Automation experience">
-                <div className="ra-chips">
+                <div className="ra-chips" role="group" aria-label="Automation experience">
                   {EXPERIENCES.map(x => (
-                    <button key={x} type="button" className={`ra-chip ${data.automationExperience === x ? 'is-on' : ''}`} onClick={() => update('automationExperience', x)}>{x}</button>
+                    <button key={x} type="button" aria-pressed={data.automationExperience === x} className={`ra-chip ${data.automationExperience === x ? 'is-on' : ''}`} onClick={() => update('automationExperience', x)}>{x}</button>
                   ))}
                 </div>
               </Field>
@@ -330,9 +390,9 @@ export default function ROIAuditPage() {
           <div className="ra-nav">
             {step > 0 ? <button className="ra-back" onClick={back}>← Back</button> : <span />}
             {step < 2 ? (
-              <button className="ra-next" onClick={next} disabled={!canAdvance}>Next →</button>
+              <button className="ra-next" onClick={() => tryAdvance(next)}>Next →</button>
             ) : (
-              <button className="ra-next ra-next-final" onClick={generate} disabled={!canAdvance || submitting}>
+              <button className="ra-next ra-next-final" onClick={() => tryAdvance(generate)} disabled={submitting}>
                 {submitting ? (
                   <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, justifyContent: 'center' }}>
                     <InlineSpinner label="Generating ROI report" />
@@ -350,21 +410,25 @@ export default function ROIAuditPage() {
   );
 }
 
-function Field({ label, required, hint, children }: { label: string; required?: boolean; hint?: string; children: React.ReactNode }) {
+function Field({ label, required, hint, error, children }: { label: string; required?: boolean; hint?: string; error?: string; children: React.ReactNode }) {
   // Generate a unique id once per Field render and inject it into the first
-  // form-control child so the <label htmlFor> binding is programmatic. This
-  // fixes the a11y "form controls without labels" violation across every
-  // input on the page — accessibility audit catches it as missing label.
+  // form-control child so the <label htmlFor> binding is programmatic. When an
+  // error is present, also wire aria-invalid + aria-describedby so screen readers
+  // announce the problem. (No aria-label injection — the visible <label> is
+  // already associated, and a duplicate aria-label makes SRs read it twice.)
   const fieldId = useId();
+  const errId = `${fieldId}-err`;
+  const hintId = `${fieldId}-hint`;
   const childrenWithId = Children.map(children, (child) => {
     if (!isValidElement(child)) return child;
     const t = (child as React.ReactElement).type;
     if (t === 'input' || t === 'select' || t === 'textarea') {
       const props = (child as React.ReactElement).props as { id?: string };
       if (!props.id) {
-        return cloneElement(child as React.ReactElement<{ id: string; 'aria-label': string }>, {
+        return cloneElement(child as React.ReactElement<{ id: string; 'aria-invalid'?: boolean; 'aria-describedby'?: string }>, {
           id: fieldId,
-          'aria-label': label,
+          'aria-invalid': error ? true : undefined,
+          'aria-describedby': error ? errId : (hint ? hintId : undefined),
         });
       }
     }
@@ -374,7 +438,8 @@ function Field({ label, required, hint, children }: { label: string; required?: 
     <div className="ra-field">
       <label htmlFor={fieldId} className="ra-label">{label}{required && <span className="ra-req">*</span>}</label>
       {childrenWithId}
-      {hint && <div className="ra-hint">{hint}</div>}
+      {hint && !error && <div id={hintId} className="ra-hint">{hint}</div>}
+      {error && <div id={errId} className="ra-error" role="alert">{error}</div>}
     </div>
   );
 }
@@ -510,6 +575,8 @@ function Styles() {
       .ra-anim-in-right { animation: ra-in-right 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
       .ra-anim-in-left  { animation: ra-in-left 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
 
+      .ra-step-title:focus-visible { outline: 2px solid #C084FC; outline-offset: 4px; border-radius: 6px; }
+
       .ra-step-eyebrow { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; color: #8B5CF6; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
       .ra-step-title { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 26px; line-height: 1.2; margin-bottom: 8px; }
       .ra-step-sub { color: #9CA3B5; font-size: 14px; margin-bottom: 28px; }
@@ -521,12 +588,16 @@ function Styles() {
       .ra-label { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; color: #9CA3B5; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; display: flex; gap: 4px; }
       .ra-req { color: #8B5CF6; }
       .ra-hint { font-size: 12px; color: #9CA3B5; margin-top: 6px; }
+      .ra-error { font-size: 12px; color: #FCA5A5; margin-top: 6px; font-weight: 600; display: flex; align-items: center; gap: 5px; }
+      .ra-error::before { content: '!'; display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border-radius: 50%; background: #FCA5A5; color: #0A0613; font-size: 10px; font-weight: 800; flex-shrink: 0; }
       .ra-field input, .ra-field select { width: 100%; padding: 12px 14px; background: #0A0613; border: 1px solid #2A1F3D; color: #E5E7EB; border-radius: 10px; font-family: 'Inter', system-ui, sans-serif; font-size: 14px; outline: none; transition: border 0.2s, box-shadow 0.2s; }
       .ra-field input:focus, .ra-field select:focus { border-color: #8B5CF6; box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15); }
+      .ra-field input[aria-invalid="true"], .ra-field select[aria-invalid="true"] { border-color: #FCA5A5; }
+      .ra-field input[aria-invalid="true"]:focus, .ra-field select[aria-invalid="true"]:focus { box-shadow: 0 0 0 3px rgba(252, 165, 165, 0.18); }
       .ra-field input::placeholder { color: #4a6280; }
 
       .ra-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-      .ra-chip { padding: 8px 14px; background: #0A0613; border: 1px solid #2A1F3D; border-radius: 999px; color: #E5E7EB; font-size: 13px; cursor: pointer; transition: all 0.15s; font-family: 'Inter', system-ui, sans-serif; }
+      .ra-chip { padding: 0 16px; min-height: 44px; background: #0A0613; border: 1px solid #2A1F3D; border-radius: 999px; color: #E5E7EB; font-size: 13px; cursor: pointer; transition: all 0.15s; font-family: 'Inter', system-ui, sans-serif; display: inline-flex; align-items: center; }
       .ra-chip:hover { border-color: #8B5CF6; color: #8B5CF6; }
       .ra-chip.is-on { background: linear-gradient(135deg, #8B5CF6, #C084FC); border-color: transparent; color: #0A0613; font-weight: 700; }
 
@@ -602,6 +673,15 @@ function Styles() {
 
       .ra-trust { font-size: 11px; color: #9CA3B5; padding-top: 16px; border-top: 1px solid #2A1F3D; }
       .ra-trust strong { color: #8B5CF6; }
+
+      /* Respect prefers-reduced-motion — disable step slides, bar fills, spinner,
+         and dot transitions. The count-up numbers are guarded in JS (AnimNum). */
+      @media (prefers-reduced-motion: reduce) {
+        .ra-anim-in-right, .ra-anim-in-left { animation: none; }
+        .ra-bar-fill { animation: none; }
+        .ra-spinner { animation: none; }
+        .ra-progress-dot, .ra-progress-line, .ra-bar-track, .ra-next, .ra-back, .ra-chip, .ra-field input, .ra-field select { transition: none; }
+      }
     `}</style>
   );
 }

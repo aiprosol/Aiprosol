@@ -221,6 +221,15 @@
     color: var(--color-bg);
   }
 
+  /* Sitewide keyboard focus ring (WCAG 2.4.7). :focus-visible only fires for
+     keyboard/AT users, never on mouse click. :where() keeps specificity 0 so any
+     component can still override. Matches the .skip-link outline style above. */
+  :where(a, button, input, select, textarea, summary, [role="button"], [tabindex]:not([tabindex="-1"])):focus-visible {
+    outline: 2px solid var(--color-cyan-2);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
   ::-webkit-scrollbar { width: 8px; height: 8px; }
   ::-webkit-scrollbar-track { background: var(--color-bg); }
   ::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 4px; }

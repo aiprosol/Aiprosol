@@ -29,11 +29,11 @@ export const FOUNDER_PROFILE = {
   name: 'Srijan Paudel',
   role: 'Founder & Chairman',
   company: 'Aiprosol',
-  tagline: 'The only human at our AI-led C-suite table.',
+  tagline: 'I chair a company run by AI.',
   bio50:
     'Srijan Paudel is the Founder & Chairman of Aiprosol, a global AI automation consultancy that runs as an AI-led C-suite — Arora the AI CEO plus ten AI agents under a single human seat. Aiprosol\'s customers reclaim 35+ hours a week with a 90-day guarantee.',
   bio100:
-    'Srijan Paudel is the Founder & Chairman of Aiprosol, a global AI automation consultancy headquartered nowhere and run from anywhere. He\'s the only human at the company\'s C-suite table — operational leadership belongs to Arora, an AI CEO who runs strategy, customer interactions, and ~80% of day-to-day decisions, supported by ten AI agents across COO, CMO, CTO, CRO, CCO, CPM, CLO, CPO, DA, and CHM roles. Aiprosol\'s customers — including legal, real estate, manufacturing, and retail teams — reclaim an average of 35+ hours a week, backed by a 90-day money-back guarantee.',
+    'Srijan Paudel is the Founder & Chairman of Aiprosol, a global AI automation consultancy headquartered nowhere and run from anywhere. He\'s the chairman of a company run by AI — operational leadership belongs to Arora, an AI CEO who runs strategy, customer interactions, and ~80% of day-to-day decisions, supported by ten AI agents across COO, CMO, CTO, CRO, CCO, CPM, CLO, CPO, DA, and CHM roles. Aiprosol\'s customers — including legal, real estate, manufacturing, and retail teams — reclaim an average of 35+ hours a week, backed by a 90-day money-back guarantee.',
   // Personal social handles. Some may not yet exist — they\'re aspirational
   // anchors for the sameAs array and will start working the moment Srijan
   // claims each handle. (See build/FOUNDER-BRAND-CHAIRMAN.md §3.)

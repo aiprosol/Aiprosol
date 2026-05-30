@@ -18,7 +18,7 @@ export const metadata = {
   alternates: { canonical: '/links' },
   openGraph: {
     title: 'Srijan Paudel · Founder & Chairman, Aiprosol',
-    description: 'The only human at our AI-led C-suite. Start with a free ROI Audit.',
+    description: 'I chair a company run by AI. Start with a free ROI Audit.',
     url: '/links',
     type: 'profile',
     images: [`${SITE.url}/founder/opengraph-image`],
@@ -56,7 +56,7 @@ export default function LinksPage() {
 
         <h1 className="lk-name">Srijan Paudel</h1>
         <div className="lk-role">Founder &amp; Chairman · Aiprosol</div>
-        <p className="lk-tag">The only human at our AI-led C-suite table.</p>
+        <p className="lk-tag">I chair a company run by AI.</p>
 
         <nav className="lk-links" aria-label="Aiprosol links">
           {LINKS.map((l) => (

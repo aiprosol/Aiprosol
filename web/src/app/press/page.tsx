@@ -85,7 +85,7 @@ export default function PressPage() {
         birthDate: '2004',
         jobTitle: 'Founder & Chairman, Aiprosol',
         description:
-          'Founder and Chairman of Aiprosol — the only human at an AI-led C-suite of ten AI agents. Based in Edinburgh, Scotland with an operational office in Kathmandu, Nepal. Educated at Edinburgh Napier University.',
+          'Founder and Chairman of Aiprosol, a company run by an AI C-suite of ten AI agents. Based in Edinburgh, Scotland with an operational office in Kathmandu, Nepal. Educated at Edinburgh Napier University.',
         url: `${SITE.url}/founder`,
         image: `${SITE.url}/founder/opengraph-image`,
         worksFor: { '@id': `${SITE.url}/#organization` },

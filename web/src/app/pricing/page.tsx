@@ -148,7 +148,7 @@ export default function PricingPage() {
           <div className="pp-trust-eyebrow">Who runs it</div>
           <Link href="/founder" className="pp-trust-link">
             <strong>Meet the founder →</strong>
-            <span>Srijan Paudel — Founder &amp; Chairman. The only human at our AI-led C-suite.</span>
+            <span>Srijan Paudel — Founder &amp; Chairman of a company run by AI.</span>
           </Link>
         </div>
         <div className="pp-trust-card">

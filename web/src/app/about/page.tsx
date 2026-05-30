@@ -17,7 +17,7 @@ export const metadata = {
 };
 
 const C_SUITE = [
-  { role: 'Chairman', name: 'Srijan Paudel', desc: 'Founder. Sets direction, owns vision. The only human seat at the C-suite table.' },
+  { role: 'Chairman', name: 'Srijan Paudel', desc: 'Founder. Sets direction, owns vision. Chairs a company run by AI.' },
   { role: 'CEO', name: 'Arora', desc: 'Strategy, architecture, CMS, content. The operational lead — runs the business day to day.', highlight: true },
   { role: 'COO', name: 'COO', desc: 'Operations. 5 Zapier automations that keep Aiprosol itself running.' },
   { role: 'CMO', name: 'CMO', desc: 'Marketing. The brand voice, the campaigns, the LinkedIn content.' },

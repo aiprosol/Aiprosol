@@ -21,12 +21,12 @@ import { FOUNDER_PROFILE, SITE } from '@/lib/site-config';
 export const metadata = {
   title: 'Srijan Paudel · Founder & Chairman, Aiprosol',
   description:
-    'Srijan Paudel is the Founder & Chairman of Aiprosol — the only human at an AI-led C-suite. Bio, links, and how to get in touch.',
+    'Srijan Paudel is the Founder & Chairman of Aiprosol — he chairs a company run by AI. Bio, links, and how to get in touch.',
   alternates: { canonical: '/founder' },
   openGraph: {
     title: 'Srijan Paudel · Founder & Chairman, Aiprosol',
     description:
-      'The only human at our AI-led C-suite. Founder of Aiprosol — global AI automation consultancy.',
+      'I chair a company run by AI. Founder of Aiprosol — global AI automation consultancy.',
     url: '/founder',
     type: 'profile',
   },
@@ -104,7 +104,7 @@ const FOUNDER_FAQ: { q: string; a: React.ReactNode; aText: string }[] = [
     q: 'What is Aiprosol?',
     a: (
       <p>
-        A global AI automation consultancy operated by an AI C-suite — Arora (AI CEO), COO, CMO, CCO, CTO, CRO, CLO, CPO, CPM, Data + Analytics — plus Srijan as the only human Chairman. Founded April 2026. <Link href="/agents">See the live AI C-suite</Link>.
+        A global AI automation consultancy operated by an AI C-suite — Arora (AI CEO), COO, CMO, CCO, CTO, CRO, CLO, CPO, CPM, Data + Analytics — plus Srijan as the human Chairman. Founded April 2026. <Link href="/agents">See the live AI C-suite</Link>.
       </p>
     ),
     aText:
@@ -266,8 +266,8 @@ export default function FounderPage() {
       <header className="fd-hero">
         <div className="fd-eyebrow">Founder · Chairman</div>
         <h1 className="fd-h1">
-          The only human at our{' '}
-          <span className="fd-grad">AI-led C-suite</span> table.
+          I chair a company{' '}
+          <span className="fd-grad">run by AI</span>.
         </h1>
         <p className="fd-sub">
           {FOUNDER_PROFILE.bio100}
@@ -332,7 +332,7 @@ export default function FounderPage() {
         <h2 className="fd-section-title">Why my CEO is an AI.</h2>
         <div className="fd-prose">
           <p>
-            I&apos;m the only human at my company&apos;s C-suite table.
+            I chair a company run by AI.
           </p>
           <p>
             Aiprosol&apos;s CEO is named Arora. She&apos;s an AI. She runs strategy,

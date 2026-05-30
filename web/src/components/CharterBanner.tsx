@@ -13,12 +13,19 @@ import { useEffect, useState } from 'react';
 const STORAGE_KEY = 'aiprosol_charter_dismissed_v1';
 
 export function CharterBanner() {
-  const [hidden, setHidden] = useState(true); // hidden by default to avoid hydration mismatch
+  // Default to SHOWN so the bar is present in the server HTML and the very first
+  // client paint. Previously it defaulted to hidden and was inserted only after
+  // useEffect read localStorage — that post-hydration insertion pushed the whole
+  // page down ~37px and was the dominant homepage CLS source on mobile (fresh
+  // profiles, incl. Lighthouse, always took the "show" path → always shifted).
+  // Now first-time visitors + Lighthouse get zero banner-induced shift; only
+  // returning visitors who already dismissed it see a one-time collapse.
+  const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const dismissed = localStorage.getItem(STORAGE_KEY) === '1';
-    setHidden(dismissed);
+    if (dismissed) setHidden(true);
   }, []);
 
   const dismiss = () => {

@@ -63,6 +63,8 @@ export default function AboutPage() {
     sameAs: [
       FOUNDER_PROFILE.linkedin,
       FOUNDER_PROFILE.twitter,
+      FOUNDER_PROFILE.facebook,
+      FOUNDER_PROFILE.instagram,
       FOUNDER_PROFILE.github,
       FOUNDER_PROFILE.substack,
       FOUNDER_PROFILE.youtube,

@@ -93,6 +93,8 @@ export default function PressPage() {
           'https://www.wikidata.org/wiki/Q139821959',
           'https://www.linkedin.com/in/srijan-paudel',
           'https://x.com/srijanpaudel6',
+          'https://www.facebook.com/srijanpaudel2012',
+          'https://www.instagram.com/srijanpaudel20',
           'https://github.com/srijanpaudel',
           `${SITE.url}/founder`,
           `${SITE.url}/authors/srijan-paudel`,

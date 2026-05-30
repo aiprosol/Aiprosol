@@ -39,6 +39,8 @@ export const FOUNDER_PROFILE = {
   // claims each handle. (See build/FOUNDER-BRAND-CHAIRMAN.md §3.)
   linkedin: 'https://www.linkedin.com/in/srijan-paudel',
   twitter: 'https://x.com/srijanpaudel6',
+  facebook: 'https://www.facebook.com/srijanpaudel2012',
+  instagram: 'https://www.instagram.com/srijanpaudel20',
   github: 'https://github.com/srijanpaudel',
   substack: 'https://srijanpaudel.substack.com',
   youtube: '',           // not active yet — left blank, sameAs filters it out

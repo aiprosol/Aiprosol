@@ -156,6 +156,8 @@ function buildSameAs(): string[] {
   return [
     FOUNDER_PROFILE.linkedin,
     FOUNDER_PROFILE.twitter,
+    FOUNDER_PROFILE.facebook,
+    FOUNDER_PROFILE.instagram,
     FOUNDER_PROFILE.github,
     FOUNDER_PROFILE.substack,
     FOUNDER_PROFILE.youtube,
@@ -407,6 +409,16 @@ export default function FounderPage() {
           <a className="fd-link" href={FOUNDER_PROFILE.twitter} target="_blank" rel="noopener noreferrer">
             <span className="fd-link-name">X (formerly Twitter)</span>
             <span className="fd-link-handle">@srijanpaudel</span>
+            <span className="fd-link-arrow">↗</span>
+          </a>
+          <a className="fd-link" href={FOUNDER_PROFILE.facebook} target="_blank" rel="noopener noreferrer">
+            <span className="fd-link-name">Facebook</span>
+            <span className="fd-link-handle">/srijanpaudel2012</span>
+            <span className="fd-link-arrow">↗</span>
+          </a>
+          <a className="fd-link" href={FOUNDER_PROFILE.instagram} target="_blank" rel="noopener noreferrer">
+            <span className="fd-link-name">Instagram</span>
+            <span className="fd-link-handle">@srijanpaudel20</span>
             <span className="fd-link-arrow">↗</span>
           </a>
           <a className="fd-link" href={FOUNDER_PROFILE.github} target="_blank" rel="noopener noreferrer">

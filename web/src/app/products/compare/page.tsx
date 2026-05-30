@@ -137,7 +137,7 @@ function ComparisonTable({ a, b }: { a?: Product; b?: Product }) {
     },
     {
       label: 'Availability',
-      render: (p) => p ? (p.available ? <span className="cmp-avail-yes">⤓ Instant download</span> : <span className="cmp-avail-pre">Coming soon · {p.expectedShipDate || 'soon'}</span>) : '—',
+      render: (p) => p ? (p.available ? <span className="cmp-avail-yes">⤓ Instant download</span> : <span className="cmp-avail-pre">Pre-order · {p.expectedShipDate || 'soon'}</span>) : '—',
     },
   ];
 

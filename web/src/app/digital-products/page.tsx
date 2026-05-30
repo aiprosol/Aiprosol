@@ -167,7 +167,7 @@ export default function DigitalProductsPage() {
                     className="dp-thumb-img"
                   />
                   {available && <span className="dp-badge dp-badge-available">⤓ Instant download</span>}
-                  {!available && <span className="dp-badge dp-badge-pending">Pre-order · {expectedShip ?? 'soon'}</span>}
+                  {!available && <span className="dp-badge dp-badge-pending">Coming soon · {expectedShip ?? 'soon'}</span>}
                 </div>
                 <span className="dp-cat">{p.category}</span>
                 <h3 className="dp-name">{p.name}</h3>

@@ -26,6 +26,32 @@ export const ROLES = [
 
 export type Role = (typeof ROLES)[number];
 
+// LLM outputs (especially the lighter fallback model) occasionally hallucinate
+// or typo a role — e.g. "ccco", "ceo", "sales", "marketing". A strict z.enum
+// would reject it and fail the ENTIRE agent run on one bad suggestion (this was
+// the root cause of CRO's daily `invalid_enum_value: "ccco"` error). normalizeRole
+// repairs common variants and maps anything still-unknown to undefined, so a
+// malformed owner_role drops the assignment instead of crashing the run.
+const ROLE_REPAIR: Record<string, Role> = {
+  ceo: 'arora', founder: 'arora', chairman: 'arora', cao: 'arora',
+  ccco: 'cco', cso: 'cco', success: 'cco', 'customer success': 'cco', support: 'cco',
+  cfo: 'da', analyst: 'da', data: 'da', analytics: 'da',
+  ops: 'coo', operations: 'coo',
+  marketing: 'cmo', brand: 'cmo', content: 'cmo',
+  growth: 'cro', sales: 'cro', revenue: 'cro',
+  legal: 'clo', compliance: 'clo',
+  product: 'cpm', catalog: 'cpm', catalogue: 'cpm', pricing: 'cpm',
+  partnerships: 'cpo', partners: 'cpo', partnership: 'cpo',
+  engineering: 'cto', tech: 'cto', technology: 'cto', eng: 'cto',
+};
+
+export function normalizeRole(v: unknown): Role | undefined {
+  if (typeof v !== 'string') return undefined;
+  const s = v.toLowerCase().trim();
+  if ((ROLES as readonly string[]).includes(s)) return s as Role;
+  return ROLE_REPAIR[s];
+}
+
 // Public-facing metadata for each role — shown on /agents + /about
 export const ROLE_META: Record<Role, {
   title: string;
@@ -183,14 +209,20 @@ export const AgentKpiSchema = z.object({
 // Status starts as 'todo' — admin can Accept (no-op), Block, or mark Done in /studio.
 export const ProposedTaskSchema = z.object({
   title: z.string().min(3).max(280),
-  owner_role: z
-    .preprocess((v) => (typeof v === 'string' ? v.toLowerCase() : v),
-      z.enum(['arora', 'coo', 'cmo', 'cco', 'cto', 'cro', 'clo', 'cpo', 'cpm', 'da']))
-    .optional(),
+  // Tolerant: repair/drop bad roles instead of failing the whole agent run.
+  // normalizeRole returns undefined for the unknown rest; the inner .optional()
+  // accepts that, so the task is still created — just unassigned.
+  owner_role: z.preprocess(normalizeRole,
+    z.enum(['arora', 'coo', 'cmo', 'cco', 'cto', 'cro', 'clo', 'cpo', 'cpm', 'da']).optional()),
   priority: z
-    .preprocess((v) => (v === 'urgent' || v === 'NOW' ? 'now' : (typeof v === 'string' ? v.toLowerCase() : v)),
+    .preprocess(
+      (v) => {
+        if (typeof v !== 'string') return 'normal';
+        const s = v.toLowerCase().trim();
+        if (s === 'urgent' || s === 'asap' || s === 'critical') return 'now';
+        return ['low', 'normal', 'high', 'now'].includes(s) ? s : 'normal';
+      },
       z.enum(['low', 'normal', 'high', 'now']))
-    .optional()
     .default('normal'),
   notes: z.string().max(500).optional(),
 });
@@ -289,18 +321,28 @@ export const RoutingDecisionSchema = z.object({
     .array(
       z.object({
         title: z.string().min(3).max(280),
-        owner_role: z
-          .preprocess((v) => (typeof v === 'string' ? v.toLowerCase() : v),
-            z.enum(['arora', 'coo', 'cmo', 'cco', 'cto', 'cro', 'clo', 'cpo', 'cpm', 'da'])),
+        // Required here (a routed task must have an owner) — repair bad roles,
+        // and default the unknown rest to 'coo' so routing never crashes on a
+        // hallucinated role.
+        owner_role: z.preprocess((v) => normalizeRole(v) ?? 'coo',
+          z.enum(['arora', 'coo', 'cmo', 'cco', 'cto', 'cro', 'clo', 'cpo', 'cpm', 'da'])),
         priority: z
-          .preprocess((v) => (v === 'urgent' ? 'now' : (typeof v === 'string' ? v.toLowerCase() : v)),
+          .preprocess(
+            (v) => {
+              if (typeof v !== 'string') return 'normal';
+              const s = v.toLowerCase().trim();
+              if (s === 'urgent' || s === 'asap' || s === 'critical') return 'now';
+              return ['low', 'normal', 'high', 'now'].includes(s) ? s : 'normal';
+            },
             z.enum(['low', 'normal', 'high', 'now']))
-          .optional()
           .default('normal'),
         deliverable_type: z
-          .preprocess((v) => (typeof v === 'string' ? v.toLowerCase() : v),
+          .preprocess((v) => {
+            if (typeof v !== 'string') return 'none';
+            const s = v.toLowerCase().trim();
+            return ['outreach_draft', 'linkedin_post', 'sop_note', 'analysis', 'none'].includes(s) ? s : 'none';
+          },
             z.enum(['outreach_draft', 'linkedin_post', 'sop_note', 'analysis', 'none']))
-          .optional()
           .default('none'),
         notes: z.string().min(5).max(1500),
       }),

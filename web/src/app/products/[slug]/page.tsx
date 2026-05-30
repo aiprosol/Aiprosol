@@ -1,7 +1,6 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import NotifyMe from '@/components/NotifyMe';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { getProductBySlug, getProducts } from '@/lib/content';
@@ -77,23 +76,20 @@ export default function ProductDetailPage() {
     );
   }
 
-  const isAvailable = Boolean((product as { available?: boolean }).available);
-  const expectedShipDate = (product as { expectedShipDate?: string | null }).expectedShipDate ?? null;
-  // Available → Gumroad / on-site checkout. Pre-launch → scroll to the Notify-me
-  // form; we never charge for a product that hasn't shipped yet.
-  const buyUrl = isAvailable ? (product.buyUrl || `/checkout?product=${product.slug}`) : '#notify-form';
-  const buyLabel = isAvailable ? 'Buy now →' : '🔔 Notify me when it launches';
-  const buyLabelLong = isAvailable ? `Buy for $${product.price} →` : '🔔 Notify me when it launches';
+  const buyUrl = product.buyUrl || `/checkout?product=${product.slug}`;
   // Prefer per-product FAQs; fall back to the generic price-band set if a
   // product has not been individually authored yet.
   const faq = (product.faqs && product.faqs.length > 0) ? product.faqs : buildFAQ(product.price);
+  const isAvailable = Boolean((product as { available?: boolean }).available);
+  const expectedShipDate = (product as { expectedShipDate?: string | null }).expectedShipDate ?? null;
+  const buyLabel = isAvailable ? 'Buy now →' : `Reserve · ships ${expectedShipDate ?? 'soon'} →`;
+  const buyLabelLong = isAvailable ? `Buy for $${product.price} →` : `Reserve at $${product.price} → ships ${expectedShipDate ?? 'soon'}`;
 
   // Product Schema.org JSON-LD lives in products/[slug]/layout.tsx (with
   // Product + Brand + Offer + BreadcrumbList + HowTo). Do not duplicate
   // it here — Google's Rich Results Test flags duplicate entities as invalid.
 
   const onBuyClick = () => {
-    if (!isAvailable) return; // pre-launch CTAs only scroll to the notify form
     track(Events.ProductCheckoutClicked, {
       slug: product.slug,
       name: product.name,
@@ -184,22 +180,9 @@ export default function ProductDetailPage() {
 
           <div className="pd-buy-row">
             <div className="pd-price">${product.price}</div>
-            {isAvailable ? (
-              <Link className="pd-buy" href={buyUrl} onClick={onBuyClick}>{buyLabel}</Link>
-            ) : (
-              <span className="pd-meta-chip">Ships {expectedShipDate ?? 'soon'}</span>
-            )}
+            <Link className="pd-buy" href={buyUrl} onClick={onBuyClick}>{buyLabel}</Link>
           </div>
-          {isAvailable ? (
-            <div className="pd-trust">✓ Secure checkout · ✓ Instant download · ✓ 7-day refund if it doesn&apos;t fit</div>
-          ) : (
-            <div id="notify-form" style={{ marginTop: 14 }}>
-              <div style={{ color: '#9CA3B5', fontSize: 14, marginBottom: 10 }}>
-                Launching {expectedShipDate ?? 'soon'} — get the email the moment it&apos;s live. No charge until it ships.
-              </div>
-              <NotifyMe slug={product.slug} shipDate={expectedShipDate} />
-            </div>
-          )}
+          <div className="pd-trust">✓ Secure checkout · ✓ Instant download · ✓ 7-day refund if it doesn&apos;t fit</div>
         </div>
       </article>
 
